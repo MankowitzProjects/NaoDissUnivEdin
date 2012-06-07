@@ -1,0 +1,133 @@
+****************************************
+The match corresponds to keypoint locations (453.25, 457.75) and second (608.812, 350.943)
+The number of keypoints in image 1, 2 are: 215 , 263
+The first index is 73 and second 179 and distance is 8.21895
+This corresponds to keypoints (453.25, 457.75) and second (608.812, 350.943)
+The size 1: 17.9999 The size 2: 48
+The angle 1: -1 The angle 2: -1
+The response 1: 70.333 The response 2: 141.894
+The octave 1: 0 The octave 2: 5
+The class id 1: -1 The class id 2: -1
+The distance between 73 and 179 is 0.12167
+The matching score between 73 and 179 is 8.21895
+The number of matches is : 1
+****************************************
+****************************************
+The match corresponds to keypoint locations (248.298, 359.717) and second (632.96, 271.752)
+The number of keypoints in image 1, 2 are: 215 , 352
+The first index is 63 and second 130 and distance is 6.83689
+This corresponds to keypoints (248.298, 359.717) and second (632.96, 271.752)
+The size 1: 13.9367 The size 2: 35.441
+The angle 1: -1 The angle 2: -1
+The response 1: 82.1155 The response 2: 56.0179
+The octave 1: 0 The octave 2: 3
+The class id 1: -1 The class id 2: -1
+The distance between 63 and 130 is 0.146265
+The matching score between 63 and 130 is 6.83689
+The number of matches is : 1
+****************************************
+The match corresponds to keypoint locations (248.298, 359.717) and second (202, 57.6591)
+The number of keypoints in image 1, 2 are: 215 , 352
+The first index is 63 and second 190 and distance is 7.53193
+This corresponds to keypoints (248.298, 359.717) and second (202, 57.6591)
+The size 1: 13.9367 The size 2: 96
+The angle 1: -1 The angle 2: -1
+The response 1: 82.1155 The response 2: 45
+The octave 1: 0 The octave 2: 6
+The class id 1: -1 The class id 2: -1
+The distance between 63 and 190 is 0.132768
+The matching score between 63 and 190 is 7.53193
+****************************************
+****************************************
+The match corresponds to keypoint locations (200.667, 396.206) and second (464.63, 350.642)
+The number of keypoints in image 1, 2 are: 638 , 538
+The first index is 301 and second 144 and distance is 6.80777
+This corresponds to keypoints (200.667, 396.206) and second (464.63, 350.642)
+The size 1: 17 The size 2: 12.6787
+The angle 1: -1 The angle 2: -1
+The response 1: 31.1667 The response 2: 61.3383
+The octave 1: 1 The octave 2: 0
+The class id 1: -1 The class id 2: -1
+The distance between 301 and 144 is 0.146891
+The matching score between 301 and 144 is 6.80777
+The number of matches is : 1
+****************************************
+The match corresponds to keypoint locations (324.505, 409.74) and second (523.516, 381.566)
+The number of keypoints in image 1, 2 are: 638 , 538
+The first index is 199 and second 335 and distance is 8.07406
+This corresponds to keypoints (324.505, 409.74) and second (523.516, 381.566)
+The size 1: 14.7494 The size 2: 25.1063
+The angle 1: -1 The angle 2: -1
+The response 1: 24.1464 The response 2: 22.671
+The octave 1: 0 The octave 2: 2
+The class id 1: -1 The class id 2: -1
+The distance between 199 and 335 is 0.123853
+The matching score between 199 and 335 is 8.07406
+****************************************
+****************************************
+The match corresponds to keypoint locations (185.657, 396.945) and second (455.906, 432.989)
+The number of keypoints in image 1, 2 are: 638 , 803
+The first index is 186 and second 247 and distance is 7.74553
+This corresponds to keypoints (185.657, 396.945) and second (455.906, 432.989)
+The size 1: 12.6279 The size 2: 20.25
+The angle 1: -1 The angle 2: -1
+The response 1: 33.2355 The response 2: 21.5625
+The octave 1: 0 The octave 2: 1
+The class id 1: -1 The class id 2: -1
+The distance between 186 and 247 is 0.129107
+The matching score between 186 and 247 is 7.74553
+****************************************
+****************************************
+The match corresponds to keypoint locations (220.576, 430.382) and second (144, 268)
+The number of keypoints in image 1, 2 are: 359 , 512
+The first index is 115 and second 23 and distance is 8.09265
+This corresponds to keypoints (220.576, 430.382) and second (144, 268)
+The size 1: 14.7573 The size 2: 13.1379
+The angle 1: -1 The angle 2: -1
+The response 1: 47.1912 The response 2: 71.0431
+The octave 1: 0 The octave 2: 0
+The class id 1: -1 The class id 2: -1
+The distance between 115 and 23 is 0.123569
+The matching score between 115 and 23 is 8.09265
+The number of matches is : 1
+****************************************
+The match corresponds to keypoint locations (261.698, 356.414) and second (290.581, 436.879)
+The number of keypoints in image 1, 2 are: 359 , 512
+The first index is 244 and second 123 and distance is 6.85684
+This corresponds to keypoints (261.698, 356.414) and second (290.581, 436.879)
+The size 1: 41.0807 The size 2: 12.2239
+The angle 1: -1 The angle 2: -1
+The response 1: 150.916 The response 2: 61.0466
+The octave 1: 3 The octave 2: 0
+The class id 1: -1 The class id 2: -1
+The distance between 244 and 123 is 0.14584
+The matching score between 244 and 123 is 6.85684
+The number of matches is : 1
+****************************************
+The match corresponds to keypoint locations (44.4544, 405.889) and second (181.432, 311.192)
+The number of keypoints in image 1, 2 are: 359 , 512
+The first index is 251 and second 172 and distance is 6.72526
+This corresponds to keypoints (44.4544, 405.889) and second (181.432, 311.192)
+The size 1: 42 The size 2: 17.4
+The angle 1: -1 The angle 2: -1
+The response 1: 46.9926 The response 2: 34.2
+The octave 1: 3 The octave 2: 1
+The class id 1: -1 The class id 2: -1
+The distance between 251 and 172 is 0.148693
+The matching score between 251 and 172 is 6.72526
+The number of matches is : 1
+****************************************
+The match corresponds to keypoint locations (10.3047, 403.711) and second (285.644, 113.692)
+The number of keypoints in image 1, 2 are: 359 , 512
+The first index is 218 and second 236 and distance is 7.10936
+This corresponds to keypoints (10.3047, 403.711) and second (285.644, 113.692)
+The size 1: 25.7974 The size 2: 37.1
+The angle 1: -1 The angle 2: -1
+The response 1: 39.5052 The response 2: 82.0008
+The octave 1: 2 The octave 2: 3
+The class id 1: -1 The class id 2: -1
+The distance between 218 and 236 is 0.14066
+The matching score between 218 and 236 is 7.10936
+****************************************
+
+
