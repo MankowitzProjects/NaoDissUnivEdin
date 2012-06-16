@@ -1,0 +1,17 @@
+13/06/2012
+
+TO DO:
+
+1. Add the method for detecting invalid features based on the ordering constraint. **
+2. Incorporate OpenSurf into the code (Removing the dependance on OpenCV from SURF descriptor's perspective. **
+3. Test BRISK BRISK - Sent email, awaiting reply
+4. Compare times, accuracy for SURF, BRISK, SIFT etc.
+5. Look at reducing the run-time of the code, by modifying SURF descriptor.
+6. Try and compile the code on the Nao **
+7. Adapt the formula in determining the optimal radius and threshold to take weights into account. **
+8. Look at Benji's idea of invariant scale and rotation.
+
+//Tests to perform
+1. Once the new weighting formula has been found, re-run the matching tests.
+2. Create a test to find the difference in size between each of the keypoints
+3. Create a test to find the length (xdist, ydist and euclidean) between each of the keypoints

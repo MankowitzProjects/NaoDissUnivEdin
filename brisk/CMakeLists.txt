@@ -100,20 +100,20 @@ ENDIF ( )
 
 
 #agast
-add_subdirectory (${PROJECT_SOURCE_DIR}/thirdparty/agast) 
-include_directories (${PROJECT_SOURCE_DIR}/thirdparty/agast/include) 
+add_subdirectory (${PROJECT_SOURCE_DIR}/briskCode/agast) 
+include_directories (${PROJECT_SOURCE_DIR}/briskCode/agast/include) 
 
-file(GLOB BRISK_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/src/brisk.cpp")
+file(GLOB BRISK_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/briskCode/brisk.cpp")
 
-file(GLOB BRISK_HEADER_FILES  "${PROJECT_SOURCE_DIR}/include/brisk/brisk.h")
+file(GLOB BRISK_HEADER_FILES  "${PROJECT_SOURCE_DIR}/briskCode/include/brisk.h")
 
-file(GLOB DATA_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/src/DataAnalysis.cpp")
+file(GLOB DATA_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/briskCode/DataAnalysis.cpp")
 
-file(GLOB DATA_HEADER_FILES  "${PROJECT_SOURCE_DIR}/include/brisk/DataAnalysis.h")
+file(GLOB DATA_HEADER_FILES  "${PROJECT_SOURCE_DIR}/briskCode/include/DataAnalysis.h")
 
-file(GLOB FEATURE_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/src/FeatureExtraction.cpp")
+file(GLOB FEATURE_SOURCE_FILES  "${PROJECT_SOURCE_DIR}/briskCode/FeatureExtraction.cpp")
 
-file(GLOB FEATURE_HEADER_FILES  "${PROJECT_SOURCE_DIR}/include/brisk/FeatureExtraction.h")
+file(GLOB FEATURE_HEADER_FILES  "${PROJECT_SOURCE_DIR}/briskCode/include/FeatureExtraction.h")
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include/)
 
@@ -131,24 +131,24 @@ ENDIF(BRISK_BUILD_SHARED)
 
 #build the demo
 #ADD_EXECUTABLE( demo src/demo.cpp )
-#ADD_EXECUTABLE(thresholds src/thresholds.cpp)
-#ADD_EXECUTABLE(matches src/compareMatches.cpp)
+ADD_EXECUTABLE(thresholds briskCode/thresholds.cpp)
+ADD_EXECUTABLE(matches briskCode/compareMatches.cpp)
 #ADD_EXECUTABLE(backup src/demoBackup.cpp)
 #ADD_EXECUTABLE(nonmatches src/compareNonMatches.cpp)
-ADD_EXECUTABLE(robot src/robotImplementation.cpp)
+ADD_EXECUTABLE(robot briskCode/robotImplementation.cpp)
 
 #link brisk
 IF(BRISK_BUILD_SHARED)
     #TARGET_LINK_LIBRARIES( demo ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
-    #TARGET_LINK_LIBRARIES( thresholds ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
-    #TARGET_LINK_LIBRARIES( matches ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
+    TARGET_LINK_LIBRARIES( thresholds ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
+    TARGET_LINK_LIBRARIES( matches ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
     #TARGET_LINK_LIBRARIES( nonmatches ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
     TARGET_LINK_LIBRARIES( robot ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
     #TARGET_LINK_LIBRARIES( backup ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
 ELSE(BRISK_BUILD_SHARED)
     #TARGET_LINK_LIBRARIES( demo brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
-    #TARGET_LINK_LIBRARIES( thresholds brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
-    #TARGET_LINK_LIBRARIES( matches brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
+    TARGET_LINK_LIBRARIES( thresholds brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
+    TARGET_LINK_LIBRARIES( matches brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
     #TARGET_LINK_LIBRARIES( nonmatches brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
     TARGET_LINK_LIBRARIES( robot ${SPEC_OPENCV_LIBS} brisk agast DataAnalysis FeatureExtraction)
     #TARGET_LINK_LIBRARIES( backup brisk_static ${SPEC_OPENCV_LIBS} DataAnalysis FeatureExtraction)
