@@ -37,15 +37,15 @@ IplImage *Integral(IplImage *source)
   }
 
   // remaining cells are sum above and to the left
-  for(int i=1; i<height; ++i) 
-  {
-    rs = 0.0f;
-    for(int j=0; j<width; ++j) 
-    {
-      rs += data[i*step+j]; 
-      i_data[i*step+j] = rs + i_data[(i-1)*step+j];
-    }
-  }
+//  for(int i=1; i<height; ++i)
+//  {
+//    rs = 0.0f;
+//    for(int j=0; j<width; ++j)
+//    {
+//      rs += data[i*step+j];
+//      i_data[i*step+j] = rs + i_data[(i-1)*step+j];
+//    }
+//  }
 
   // release the gray image
   cvReleaseImage(&img);

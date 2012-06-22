@@ -24,7 +24,7 @@ typedef std::vector<std::pair<Ipoint, Ipoint> > IpPairVec;
 //-------------------------------------------------------
 
 //! Ipoint operations
-void getMatches(IpVec &ipts1, IpVec &ipts2, IpPairVec &matches);
+void getMatches(IpVec &ipts1, IpVec &ipts2, IpPairVec &matches, int method);
 int translateCorners(IpPairVec &matches, const CvPoint src_corners[4], CvPoint dst_corners[4]);
 
 //-------------------------------------------------------
@@ -43,13 +43,13 @@ public:
   float operator-(const Ipoint &rhs)
   {
     float sum=0.f;
-    for(int i=0; i < 64; ++i)
+    for(int i=0; i < 8; ++i)//64
       sum += (this->descriptor[i] - rhs.descriptor[i])*(this->descriptor[i] - rhs.descriptor[i]);
     return sqrt(sum);
   };
 
   //! Coordinates of the detected interest point
-  float x, y;
+  float x,y;
 
   //! Detected scale
   float scale;
@@ -61,10 +61,10 @@ public:
   int laplacian;
 
   //! Vector of descriptor components
-  float descriptor[64];
+  float descriptor[8];//[64]
 
   //! Placeholds for point motion (can be used for frame to frame motion analysis)
-  float dx, dy;
+  float dx,dy;
 
   //! Used to store cluster index
   int clusterIndex;

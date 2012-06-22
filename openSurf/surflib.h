@@ -33,7 +33,7 @@ inline void surfDetDes(IplImage *img,  /* image to find Ipoints in */
 {
   // Create integral-image representation of the image
   IplImage *int_img = Integral(img);
-  
+  cvWaitKey(0);
   // Create Fast Hessian Object
   FastHessian fh(int_img, ipts, octaves, intervals, init_sample, thres);
  
@@ -59,10 +59,16 @@ inline void surfDet(IplImage *img,  /* image to find Ipoints in */
                     int init_sample = INIT_SAMPLE, /* initial sampling step */
                     float thres = THRES /* blob response threshold */)
 {
+
+  //Transform the image into a 1D image
+  //IplImage *one_int_Image = getRowOfPixels(img);
+
   // Create integral image representation of the image
   IplImage *int_img = Integral(img);
 
-  // Create Fast Hessian Object
+  // Create Fast Hessian Object.
+  //MC: The Fast Hessian is computed using box filters and the integral image
+  //MC: We construct and convolve box filters with integral image
   FastHessian fh(int_img, ipts, octaves, intervals, init_sample, thres);
 
   // Extract interest points and store in vector ipts

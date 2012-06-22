@@ -133,7 +133,7 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 			cout<<"Reached Here"<<endl;
 			if(threshold==0)
 				threshold = 30;
-			detector = new cv::BriskFeatureDetector(threshold,4);
+			detector = new cv::BriskFeatureDetector(threshold,0);//Should be 4
 		}
 		else if("SURF"== feat_detector){
 			if(threshold==0)

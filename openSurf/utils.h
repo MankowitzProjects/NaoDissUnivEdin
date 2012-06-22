@@ -54,6 +54,9 @@ void saveSurf(char *filename, std::vector<Ipoint> &ipts);
 //! Load the SURF features from file
 void loadSurf(char *filename, std::vector<Ipoint> &ipts);
 
+//!1D SURF: Get an averaged row of pixels from the image
+IplImage* getRowOfPixels(IplImage *image, int &horizonStart, int &horizonHeight);
+
 //! Round float to nearest integer
 inline int fRound(float flt)
 {

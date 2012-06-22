@@ -2,7 +2,7 @@
 CC      = g++
 
 # Specifies compilator options
-CFLAGS  = -O3 -Wall `pkg-config --cflags opencv` -D LINUX
+CFLAGS  = -O0 -g -Wall `pkg-config --cflags opencv` -D LINUX 
 LDFLAGS =
 LDLIBS  = `pkg-config --libs opencv`
 

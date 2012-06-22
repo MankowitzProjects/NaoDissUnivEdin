@@ -41,10 +41,15 @@ class Surf {
     //! Calculate the value of the 2d gaussian at x,y
     inline float gaussian(int x, int y, float sig);
     inline float gaussian(float x, float y, float sig);
+    //! 1D SURF Calculate the value of the 1d gaussian at x
+    inline float gaussian1D(int x,float sig);
+    inline float gaussian1D(float x,float sig);
 
     //! Calculate Haar wavelet responses in x and y directions
     inline float haarX(int row, int column, int size);
     inline float haarY(int row, int column, int size);
+    //! 1D SURF Calculate Haar wavelet responses in x direction
+    inline float haarX1D(int row, int column, int s);
 
     //! Get the angle from the +ve x-axis of the vector given by [X Y]
     float getAngle(float X, float Y);

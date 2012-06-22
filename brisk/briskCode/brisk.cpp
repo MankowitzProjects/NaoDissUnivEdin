@@ -57,7 +57,7 @@ const float BriskDescriptorExtractor::scalerange_   =30;        // 40->4 Octaves
                                                                 //MC: Also used to define the scale discretisation
 const unsigned int BriskDescriptorExtractor::n_rot_ =1024;	 // discretization of the rotation look-up
 
-const float BriskScaleSpace::safetyFactor_          =0.5; //MC: Usually 1.0
+const float BriskScaleSpace::safetyFactor_          =0.7; //MC: Usually 1.0
 const float BriskScaleSpace::basicSize_             =12.0;
 
 // constructors

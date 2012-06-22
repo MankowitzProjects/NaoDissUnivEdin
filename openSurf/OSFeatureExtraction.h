@@ -21,6 +21,7 @@ public:
 	OSFeatureExtraction();
 	virtual ~OSFeatureExtraction();
 	bool verifyMatch(const IplImage &image,Ipoint &ipt1, Ipoint &ipt2);
+	bool verifyMatch1D(const IplImage &image,Ipoint &ipt1, Ipoint &ipt2);
 };
 
 #endif /* OSFEATUREEXTRACTION_H_ */

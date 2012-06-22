@@ -109,8 +109,8 @@ int main(int argc, char ** argv) {
 	//*****************************************************************
 
 	//The directory where the files are stored
-	std::string dir = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
-	std::string dir1 = "../../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 	//Names of the two image files
 	std::string name1 = "9";
 	std::string name2 = "2";

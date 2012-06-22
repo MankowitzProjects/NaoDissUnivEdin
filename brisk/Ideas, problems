@@ -8,8 +8,72 @@ Problem: If there are invalid matches, then the Euclidean distance will be incor
 3. Try and transform the image in terms of rotation and scale in order to get it standard. Calculate the projection matrix using
 the bank image and the actual image and see good the projection matrix is. If it seems good, then a good match has occurred. 
 4. Maybe use response or size in order to detect valid features. Are two matching keypoints the same size/ have similar responses?
+5. Remember to implement a KNN matching of 2 points and then check how close those points are to one another
 
 Problems:
 1. The SSE2 and SSSE3 instruction sets are not enabled. 
 Solution: Add the command -msse2 and -msse4.2 to the relevant buildfiles in the Nao. These are Nao.make.zbuild etc...
 Note: -msse3 and -msse4.2 should be added to SimulatedNao.zbuild makefile
+
+17/06/12
+
+1. OpenCV does not compile on bhuman.
+Possible Solution: add "opencv/" to both "cv.h" and "highgui.h"
+
+2. Remember that you declare the sub-class first and then the main class if the main
+class intends to utilise the sub-class in a header file
+
+3. Problem: The CvPoint is not defined. 
+Solution: Remove translateCorners from iPoints. This shouldnt even compile on most
+linux distributions
+
+
+4. There is a Base class from which every module is derived
+
+18/07/12
+
+1. Problem: The debugger does not work. Solution: It seems that you need to start a project with all the files imported into the main project
+Remember to set the Debug Configuration to GDB Create Process Launcher. Otherwise CLEAN the project and rebuild. Sometimes may need to make in the terminal after the cleaning has occured.
+
+19/06/12
+
+1. In order to speed up the BRISK algorithm, only use a single octave. This means you won't do a scale-space interpolation, meaning that you may
+not find the optimum scale for the image. You have also relaxed the criterion for detecting keypoints as they dont need to be compared to the layers
+above and below.
+
+20/06/12
+
+1. When compiling, it may say multiple declarations. This means that there are possibly 2 files that are exactly the same dispersed amongst the 
+source code.
+
+21/06/12
+
+1. Cannot use a value from the NaturalLandmarkPercept: "theNaturalLandmarkPercept" in NaturalLandmarkSensorModel" - This was because I didn't update the
+name of the percept in the SelfLocator.h class when defining the representations REQUIRES and PROVIDED by the module.
+
+22/06/12
+
+Ideas:
+Motivation for using my localisation approach:
+1. Using MonoSLAM requires Structure From Motion. You therefore need to consistently estimate the pose. You also need to take an initial snapshot
+of the location of the robot from a known distance to the features. This creates a reference frame. My method does not require that technique. - CHECK
+2. SFM needs to take a number of frameshots to get depth hypotheses. Even if it gets these hypotheses, these are approximations and may not be 
+very accurate.
+3. It may also take a larger amount of time as the robot needs to take a number of snapshots in different directions to ensure that it finds a match. This means that far more snapshots are required than simply deciding where the robot has been placed.
+4. My method also allows for the robot to be placed on the halfway line on the opponents side of the goal.
+
+Disadvantages of my approach:
+
+1. The assumption is that the robot is always placed facing the opponents goal or on the half-way line.  - FIX: The robot can retry to localise itself,. If that doesn't work, then the robot will turn around and try again.
+2. It cannot be placed facing the opponents goal, in the opponents half of the field. - FIX: The robot can use the distance to the opponents goal to determine where he has been placed on the field. This will remove particles that are far away from the opponents goal, or too close to the opponents goal.
+
+
+
+
+
+
+
+
+
+
+

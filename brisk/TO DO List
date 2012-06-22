@@ -15,3 +15,55 @@ TO DO:
 1. Once the new weighting formula has been found, re-run the matching tests.
 2. Create a test to find the difference in size between each of the keypoints
 3. Create a test to find the length (xdist, ydist and euclidean) between each of the keypoints
+
+17/06/12
+
+1. A routine needs to be created whereby the robot compares its received image to a bank of test images
+ - The robot needs to take the current image and match it with the other images. 
+ - The image with the closest match will be the one that the robot chooses. 
+2. A routine needs to be developed that takes images with the robot before the match begins such that it can
+store images in the image bank.
+
+//The code
+1. Find the point where the image is created and pass the image through to the image processing step (For now, just create an image object)
+2. In the image processing step, perform the matching routine and pass the number of matches to the LandmarkPerceptOR
+3. Once the matches have been found, update the matchedKeypoints and send them through to the NaturalLandmarkSensorModel
+
+//The Feature Extraction
+1. Convert the 2D SURF to the 1D SURF implementation that has been implemented by the RUNSwift team.
+
+
+18/06/12
+
+1. Review OpenCV IplImage. Read in theImage in bhuman code. -DONE
+2. Review and understand the YUV422 image structure and determine how to convert it to Grayscale -DONE (Not for Bhuman yet)
+
+
+19/06/12
+
+1. Add in the edit distance algorithm to add an ordering constraint into nearest neighbors. SAME - Add the feature matching criteria that takes the order of the features into account
+2. Determine if there are ways to speed up the BRISK Detection process
+3. Add the feature matching criteria that gets the 2 KNN and then determines the distance between the matches
+
+20/06/12
+
+1. Incorporate the BRISK BRISK method into the Bhuman Codebase - DONE
+2. Try and implement the reweighting routine.
+3. Find a way to determine the angles to the features (For both 1D SURF and BRISK) (PROBABLY NOT NEEDED as you can use heuristics)
+
+21/06/12
+
+1. The weightings have been added to the code. The next step is to add the robots head turning routine when it enters the field.
+2. In addition, the routine to take the images at the start of the game needs to be implemented
+3. I need some way to get the robot's head angle. (HeadMotionRequest perhaps?)
+4. I also need to get the Grayscale image from the code
+
+
+
+
+
+
+
+
+
+

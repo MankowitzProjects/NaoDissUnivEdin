@@ -31,7 +31,7 @@ IplImage *Integral(IplImage *img);
 
 
 //! Computes the sum of pixels within the rectangle specified by the top-left start
-//! co-ordinate and size
+//! co-ordinate and size. Here we have A - B - C + D
 inline float BoxIntegral(IplImage *img, int row, int col, int rows, int cols) 
 {
   float *data = (float *) img->imageData;
@@ -49,7 +49,9 @@ inline float BoxIntegral(IplImage *img, int row, int col, int rows, int cols)
   if (r2 >= 0 && c1 >= 0) C = data[r2 * step + c1];
   if (r2 >= 0 && c2 >= 0) D = data[r2 * step + c2];
 
-  return std::max(0.f, A - B - C + D);
+  //return std::max(0.f, A - B - C + D);
+  //MC: 1D SURF
+  return std::max(0.f, B-A);
 }
 
 #endif
