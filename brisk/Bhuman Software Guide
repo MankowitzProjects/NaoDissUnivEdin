@@ -1,0 +1,20 @@
+BHUMAN Software Guide
+
+21/06/12
+
+Util/GameController/RoboCupGameControlData.h
+
+Contains all of the game states
+A penalty has occured if its not PENALTY_NONE
+
+Representations/MotionControl/HeadMotionRequest.h
+
+This representation can be accessed and used to request the head to turn at a specific angle
+
+Src/Representations/BehaviourControl
+
+Lets you change the colour of LEDS
+
+Src/Modules/BehaviourControl/BH2011.../Symbols
+
+Contains the conversion from xabsl behaviours to cpp code.
