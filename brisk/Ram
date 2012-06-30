@@ -1,0 +1,7 @@
+To Discuss with Ram:
+
+25/06/12
+
+1. Using BRISK instead of 1D SURF or as an alternative - Discuss performance criterion
+2. Cannot perform ordering. (Matching features according to an ordering constraint is time consuming)
+3. The localisation technique that is used for reweighting the particles

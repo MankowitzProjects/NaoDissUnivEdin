@@ -1,0 +1,58 @@
+Nao's Guidelines
+
+LED Information - Bhuman guide, page 120
+
+Call alcommon and install bhuman SDK
+
+********************************************
+OpenCV
+********************************************
+OpenCV is found on the nao SDK called naoqi-sdk-1.12.5-linux32.tar.gz in a folder called opencv.
+Now we need to find out how to add new files to this SDK
+
+1. It seems these packages are called using the alcommoninstall script from the nao-sdk
+2. These packages are then installed into the ehuman framework into /Util/Alcommon/
+3. It seems that these files are copied from the tar "naoqi-sdk-1.12.3-linux32.tar.gz" (Why not naoqi-sdk-1.10???)
+
+
+********************************************
+To uninstall opencv
+********************************************
+
+Thanks! Just what I was looking for. I uninstalled the packages, then ran sudo find / -name "opencv" -exec rm -i {} \; then reinstalled the packages. Fixed my last error by running sudo dpkg -i --force-overwrite path-to-package. OpenCV seems to work now, though I'm yet to test it thoroughly. Python-OpenCV is working like before. 
+
+To uninstall opencv, you need to use the command "sudo make uninstall"
+
+Note: An error may occur in ubuntu 11.04:
+Something like "linux/videodev.h not found.
+Solution: The library is not available and therefore the simplest solution if you dont need the library is to build the package without "WITH_V4l"
+
+
+Note: GTK support refers to cvShowImage, cvWaitKey etc. This has to be disabled which means that various libraries cannot be called upon
+Solution: However, hopefully, by installing my version of open cv onto the SDK, I will be able to use all the drawing functions etc...
+
+
+I need to try and copy the relevant libray files into the usr/bin or usr/lib (probably lib) that are relevant to my building procedure on the Nao.
+These lib files come from the opencv library
+
+I can then just build my libraries exactly as before on my pc and then connect this to the Nao.
+
+********************************************
+Copying files to the Nao
+********************************************
+When copying files to the Nao, make sure to add build flags to the file Nao.cmake.zBuild. The flags are -msse2, -msse4.2
+This will enable the relevant instruction sets
+
+
+********************************************
+Symbolic links do not work when the original library is moved to a new folder. Therefore, you need to recreate the links.
+
+
+
+
+
+
+
+
+
+

@@ -92,8 +92,8 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 80;
-	int hammingDistance = 100;//BRISK BRISK
+	int threshold = 20;
+	int hammingDistance = 400;//BRISK BRISK
 	double radius = 0.15;//BRISK SURF
 	std::string feat_descriptor = "BRISK";
 
@@ -102,6 +102,36 @@ int main(int argc, char ** argv) {
 
 	//Create data analysis object
 	DataAnalysis dataAnalysis;
+
+	//*************************************
+	//Get the current time for saving purposes and set the file to save to
+	//*************************************
+	time_t rawtime;
+	struct tm * timeinfo;
+	char filename [80];
+	string testThresholdString = to_string<int>(threshold);
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+	string file = "../data/singleImage/singleImageData_threshold_26062012_BRISK_100_BRISK_KNN_keypoints";
+	//		file.append(threshold.c_str());
+	//		file.append("Directory_");
+	//		file.append(tempDir.c_str());
+	//		file.append("_");
+	//		file.append(stringRad.c_str());
+	file.append(".txt");
+	cout<<file<<endl;
+	string file1 = "../data/singleImage/singleImageData_threshold_26062012_BRISK_100_BRISK_KNN_matches";
+	//		file.append(threshold.c_str());
+	//		file.append("Directory_");
+	//		file.append(tempDir.c_str());
+	//		file.append("_");
+	//		file.append(stringRad.c_str());
+	file1.append(".txt");
+	cout<<file1<<endl;
+	//*************************************
+
+
+
 
 	// Declare the extractor. Only needs to be performed once since it computes lookup
 	//tables for each of the various patterns on initialisation
@@ -115,9 +145,13 @@ int main(int argc, char ** argv) {
 	//The directory where the files are stored
 	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
 	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+
+	//dir = to_string<int>(ss);
+	std::string tempDir = to_string<int>(1);
+
 	//Names of the two image files
-	std::string name1 = "12";
-	std::string name2 = "2";
+	std::string name1 = "2";
+	std::string name2 = "12";
 
 	//For changing the threshold
 	int testThreshold = 10;
@@ -135,8 +169,8 @@ int main(int argc, char ** argv) {
 	// names of the two images
 	std::string fname1;
 	std::string fname2;
-		cv::Mat imgRGB1;
-		cv::Mat imgRGB2;
+	cv::Mat imgRGB1;
+	cv::Mat imgRGB2;
 	//	cv::Mat imgRGB3;
 	cv::Mat imgGray1Full;
 	cv::Mat imgGray2Full;
@@ -175,7 +209,7 @@ int main(int argc, char ** argv) {
 	}
 	//*****************************************************************
 	//We only need the keypoints above the horizon
-	int horizonLine = 200;
+	int horizonLine = 300;
 	imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
 	imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
 
@@ -211,6 +245,12 @@ int main(int argc, char ** argv) {
 
 
 	//*****************************************************************
+	//This is where we add the openSURF
+	//Convert Mat to IPlImage
+	IplImage iplimg1 = imgGray1;
+	IplImage iplimg2 = imgGray2;
+
+
 	//*****************************************************************
 	// get the descriptors
 	cv::Mat descriptors, descriptors2;
@@ -236,35 +276,22 @@ int main(int argc, char ** argv) {
 		descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
 	else
 		descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
+	if(hamming)
+		//descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
 
-	if(hamming){
-		descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
-		cout<<descriptors.type()<<", "<<descriptors.rows<<", "<<descriptors.cols<<endl;
-		cout<<descriptors2.type()<<", "<<descriptors2.rows<<", "<<descriptors2.cols<<endl;
-		cout<<CV_32FC1<<endl;
 		//The first parameter is the query descriptor. The second parameter is the train descriptor
-		//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-	}else{
+		descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+	else{
 		//Messing with the maxdistance value will drastically reduce the number of matches
-		descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);//radiusMatch radius
-		cout<<descriptors.type()<<", "<<descriptors.rows<<", "<<descriptors.cols<<endl;
-		cout<<descriptors2.type()<<", "<<descriptors2.rows<<", "<<descriptors2.cols<<endl;
-		cout<<CV_32FC1<<endl;
-		//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-
+		descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);//radiusMatch radius
 	}
-
 	//For the above method, we could use KnnMatch. All values less than 0.21 max distance are selected
 
 	//*****************************************************************
 	//Image created for drawing
 	cv::Mat outimg;
 
-	//Write the data to a file
-	//    ofstream writeFile;
-	//
-	//    std::string filename = "../../data/implementation/matchingData.txt";
-	//    writeFile.open(filename.c_str(), ios::app);//ios::app
+
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifys);
 
@@ -281,6 +308,46 @@ int main(int argc, char ** argv) {
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
 	double overallTime = diff(ts,te).tv_nsec/1000000;
 
+	//Write the data to a file
+	ofstream writeFile;
+	writeFile.open(file.c_str(), ios::app);
+
+	//1. Write all the keypoints to the first image file
+
+	//Swap hamming distance with radius
+	for(int im1 = 0;im1<keypoints.size();im1++){
+		//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
+		writeFile <<name1<<", "<<hammingDistance<<", "<<testThreshold<<", "<<im1<<", "<<keypoints[im1].pt.x<<", "<<keypoints[im1].pt.y<<", "<<keypoints[im1].angle<<", "<<keypoints[im1].size<<", "<<keypoints[im1].octave<<", "<<keypoints[im1].response<<"\n";
+	}
+
+	//2. Write all the keypoints to the second image file
+	//Swap hamming distance with radius
+	for(int im2 = 0;im2<keypoints2.size();im2++){
+		//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
+		writeFile <<name2<<", "<<hammingDistance<<", "<<testThreshold<<", "<<im2<<", "<<keypoints2[im2].pt.x<<", "<<keypoints2[im2].pt.y<<", "<<keypoints2[im2].angle<<", "<<keypoints2[im2].size<<", "<<keypoints2[im2].octave<<", "<<keypoints2[im2].response<<"\n";
+	}
+
+	//Close the file
+	writeFile.close();
+	writeFile.clear();
+
+	//Write the data to a file
+	writeFile.open(file1.c_str(), ios::app);
+
+	//Write all the information to a file
+	//image num left, image num right, queryIdx, trainIdx,  keypoint1 x, kp1y, angle size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance
+	//Swap hamming distance with radius
+	for(int mIdx = 0;mIdx<matches.size();mIdx++){
+		for(int nIdx = 0;nIdx<matches[mIdx].size();nIdx++)
+		{
+			int q = matches[mIdx][nIdx].queryIdx;
+			int t = matches[mIdx][nIdx].trainIdx;
+			writeFile <<name1<<", "<<name2<<", "<<q<<", "<<t<<", "<<keypoints[q].pt.x<<", "<<keypoints[q].pt.y<<", "<<keypoints[q].angle<<", "<<keypoints[q].size<<", "<<keypoints[q].octave<<", "<<keypoints[q].response<<", "<<keypoints2[t].pt.x<<", "<<keypoints2[t].pt.y<<", "<<keypoints2[t].angle<<", "<<keypoints2[t].size<<", "<<keypoints2[t].octave<<", "<<keypoints2[t].response<<", "<<nIdx<<", "<<matches[q][t].distance<<"\n";
+		}
+	}
+	//Close the file
+	writeFile.close();
+	writeFile.clear();
 
 #if (DEBUG_MODE)
 	cout<<"****************************************"<<endl;

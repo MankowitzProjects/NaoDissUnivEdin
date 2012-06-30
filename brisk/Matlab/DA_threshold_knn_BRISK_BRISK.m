@@ -3,7 +3,7 @@
 clear all
 clc
 %load 'DA_Radius_Threshold_11062012_4_directories.mat'
-load 'DA_Radius_Threshold_14062012_BRISK_BRISK.mat'
+load 'DA_threshold_knn_BRISK_BRISK.mat'
 %Initial values:
 %radius = 0.05;
 %For BRISK BRISK
@@ -38,28 +38,28 @@ dataset3Processed =  calculateScore(dataset3);
 dataset4Processed =  calculateScore(dataset4);
 
 %Generate the statistics for the current dataset
-[msm, mtmm, mbmm, motm, mScore] = createDataMatrices(dataset1Processed, 19,0 , 1,1);
-[msm2, mtmm2, mbmm2, motm2, mScore2] = createDataMatrices(dataset2Processed, 19,0 , 1,1);
-[msm3, mtmm3, mbmm3, motm3, mScore3] = createDataMatrices(dataset3Processed, 19,0 , 1,1);
-[msm4, mtmm4, mbmm4, motm4, mScore4] = createDataMatrices(dataset4Processed, 19,0 , 1,1);
+[msm, mtmm, mbmm, motm, mScore] = createDataMatricesKNN(dataset1Processed, 19,0 , 1);
+[msm2, mtmm2, mbmm2, motm2, mScore2] = createDataMatricesKNN(dataset2Processed, 19,0 , 1);
+[msm3, mtmm3, mbmm3, motm3, mScore3] = createDataMatricesKNN(dataset3Processed, 19,0 , 1);
+[msm4, mtmm4, mbmm4, motm4, mScore4] = createDataMatricesKNN(dataset4Processed, 19,0 , 1);
 
 
 %Calculate the final scores for each dataset
-[finalDistance(1,1), finalThreshold(1,2)] = getRadiusThreshold(mScore,distance, threshold);
-[finalDistance(2,1), finalThreshold(2,2)] = getRadiusThreshold(mScore2,distance, threshold);
-[finalDistance(3,1), finalThreshold(3,2)] = getRadiusThreshold(mScore3,distance, threshold);
-[finalDistance(4,1), finalThreshold(4,2)] = getRadiusThreshold(mScore4,distance, threshold);
+[finalDistance(1,1)] = getThresholdKNN(mScore, threshold);
+[finalDistance(1,2)] = getThresholdKNN(mScore2,threshold);
+[finalDistance(1,3)] = getThresholdKNN(mScore3,threshold);
+[finalDistance(1,4)] = getThresholdKNN(mScore4, threshold);
 
 %The radius and threshold to use are:
-distance = mean(finalDistance)
-threshold = mean(finalThreshold)
+%distance = mean(finalDistance)
+threshold = mean(finalDistance)
 
 %Generate the mean score matrix
 mScoreSum = (mScore + mScore2 + mScore3 + mScore4)./4;
 
 figure(5)
 %The mean overall time matrix
-surf(1:19,1:19,mScoreSum);
+plot(mScoreSum);
 title('Mean Overall score');
 xlabel('Threshold');
 ylabel('Distance');

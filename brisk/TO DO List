@@ -4,10 +4,10 @@ TO DO:
 
 1. Add the method for detecting invalid features based on the ordering constraint. **
 2. Incorporate OpenSurf into the code (Removing the dependance on OpenCV from SURF descriptor's perspective. **
-3. Test BRISK BRISK - Sent email, awaiting reply
+3. Test BRISK BRISK - Sent email, awaiting reply - DONE
 4. Compare times, accuracy for SURF, BRISK, SIFT etc.
 5. Look at reducing the run-time of the code, by modifying SURF descriptor.
-6. Try and compile the code on the Nao **
+6. Try and compile the code on the Nao ** - In Process
 7. Adapt the formula in determining the optimal radius and threshold to take weights into account. **
 8. Look at Benji's idea of invariant scale and rotation.
 
@@ -36,27 +36,72 @@ store images in the image bank.
 18/06/12
 
 1. Review OpenCV IplImage. Read in theImage in bhuman code. -DONE
-2. Review and understand the YUV422 image structure and determine how to convert it to Grayscale -DONE (Not for Bhuman yet)
+2. Review and understand the YUV422 image structure and determine how to convert it to Grayscale -DONE 
 
 
 19/06/12
 
-1. Add in the edit distance algorithm to add an ordering constraint into nearest neighbors. SAME - Add the feature matching criteria that takes the order of the features into account
-2. Determine if there are ways to speed up the BRISK Detection process
-3. Add the feature matching criteria that gets the 2 KNN and then determines the distance between the matches
+1. Add in the edit distance algorithm to add an ordering constraint into nearest neighbors. SAME - Add the feature matching criteria that takes the order of the features into account (Cannot be done as not robust enough)
+2. Determine if there are ways to speed up the BRISK Detection process - DONE (Create a single octave)
+3. Add the feature matching criteria that gets the 2 KNN and then determines the distance between the matches - DONE (Created the distance ratio)
 
 20/06/12
 
 1. Incorporate the BRISK BRISK method into the Bhuman Codebase - DONE
-2. Try and implement the reweighting routine.
+2. Try and implement the reweighting routine. - DONE (To be tested)
 3. Find a way to determine the angles to the features (For both 1D SURF and BRISK) (PROBABLY NOT NEEDED as you can use heuristics)
 
 21/06/12
 
 1. The weightings have been added to the code. The next step is to add the robots head turning routine when it enters the field.
 2. In addition, the routine to take the images at the start of the game needs to be implemented
-3. I need some way to get the robot's head angle. (HeadMotionRequest perhaps?)
-4. I also need to get the Grayscale image from the code
+3. I need some way to turn the robot's head and get the robot's head angle. (HeadMotionRequest perhaps?) - I may need to create a new behaviour. (That information is from the camera matrix. Gives the robots coordinates and you can determine its relative position)
+4. I also need to get the Grayscale image from the code - DONE (But not very efficient. I should try and take the pixels above the horizon into account.) - DONE except for the openSURF implementation. I need to find a way to extract a sub-region of an IplImage to be used for further processing
+
+
+25/06/12
+
+TESTS
+***************************
+1. We need to determine the performance under different rotations, scales, translations, occlusions
+2. Determine the repeatability (find definition) of the feature extractor under changing angles, scale, blur.
+3. Compare BRISK-BRISK, BRISK BRISK(NO SCALE SPACE), BRISK SURF, BRISK USURF, SIFT SIFT, 1D SURF etc
+4. Compute the mean distance between features over a number of images. E.g. take a number of keypoints from 20 images and compute their mean distances
+5. Compute the distance ratio between features that have are matches and features that are not matches
+
+
+***************************
+1. Setup a file that is able to calculate a number of properties for a single image. I.e. keypoint distance, scale, response, size, matches etc... 
+
+#The general image properties can be calculated for both properties
+
+The image properties are
+
+image num, keypoint x, keypoint y, angle, size, octave, response
+
+#This is calculated for the single image
+
+The matching properties are:
+
+image num left, image num right, queryIdx, trainIdx,  keypoint1 x, kp1y, angle size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance
+
+
+28/06/12
+
+1. make OpenCV, port it to the SDK
+2. Include the relevant files into the bhuman framework
+3. Hope for the best :)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

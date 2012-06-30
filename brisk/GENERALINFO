@@ -10,3 +10,9 @@
  1. When declaring a new percept, you MUST add it to the blackboard.h class and the blackboard.cpp class
  2. Once you create a new module, you should potentially update modules.cfg to show that you have added a new module and it
 	is providing a representation
+
+24/06/12
+
+1. In order to stop the program running in Eclipse, go to the debug panel, right-click on the main thread and terminate
+
+

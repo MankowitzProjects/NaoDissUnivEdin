@@ -67,6 +67,46 @@ Disadvantages of my approach:
 1. The assumption is that the robot is always placed facing the opponents goal or on the half-way line.  - FIX: The robot can retry to localise itself,. If that doesn't work, then the robot will turn around and try again.
 2. It cannot be placed facing the opponents goal, in the opponents half of the field. - FIX: The robot can use the distance to the opponents goal to determine where he has been placed on the field. This will remove particles that are far away from the opponents goal, or too close to the opponents goal.
 
+24/06/12
+
+Problem: The path is not found when compiling in the terminal. Solution: the path is incorrect. You need an extra '../' This is because you are running this application from the executable which is found in \unix\bin. Thus you have to go back twice, I.e. '../../' in order to reach the images directory.
+
+Problem: The problem with the libraries is something to do with the code I have added. It could possibly be the addition of the build flags -msse2 and -msse4.2 which were added at the end of the file
+
+
+27/06/12
+
+1. Problem: The python scripts were not executable. This is a permission issue
+To add permission to the files, use the command sudo chmod -R 777 /folder_name
+Use ls -l in order to view the permissions of all the files
+
+2. Idea: Instead of using the x,y threshold idea, rather remove samples that have different orientations to the current direction that the Nao is facing
+3. Run the robot images on the example code to see if depth hypotheses are a possibility
+4. Create a behaviour that enables the Nao to turn its head up to the ceiling.
+
+
+30/07/12
+
+1. Problem:
+There has been a persistent problem when using ./copyfiles script to compile the code for the Nao. This uses the makefile, Nao.make.zbuild in order to link the various libraries. The libraries are dynamically linked using the "*.so" extension. 
+
+Solution: In order to include these libraries when compiling, they must be added to the libs section in the makefile as follows:
+
+libs = { 
+    "rt", "jpeg-mmx", "protobuf", "pthread", "b-script-geode", "dl", "opencv_core", "opencv_contrib", "opencv_features2d",  "opencv_flann", "opencv_gpu", "opencv_highgui", "opencv_imgproc", "opencv_ml", "opencv_legacy", "opencv_objdetect"
+  }
+
+The files are found in the opencv library. Note that the files are called E.g. "libopencv_test". To include it in the makefile, use "opencv_test"
+
+2. Problem:
+Certain files are not included in the files section in the Makefiles. This creates the following error:
+fatal error: cvWrapper.h: No such file or directory
+compilation terminated.
+
+In order to resolve this error, add the folders to search for these files in the "file" section of the Makefile.
+
+3. Problem: It cannot find directories within the src files of the agast library
+Solution: Add the terms "../include/agast/" to the files "cvWrapper.h" and "xxx.h"
 
 
 

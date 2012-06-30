@@ -5,7 +5,7 @@ global stats;
 
 %Now determine the average matching score for matching set
 meanBestMatchingScore1 = mean(dataset1(:,7));
-meanGeneralMatchingScore1 = mean(dataset1(:,7));
+meanGeneralMatchingScore1 = mean(dataset1(:,8));
 
 %Now determine the standard deviation for matching set
 stdMeanBestMatchingScore1 =  std(dataset1(:,7));

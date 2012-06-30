@@ -1,4 +1,4 @@
-function [matchingScoreMatrix, meanTotalMatchesMatrix, meanBestMatchesMatrix, meanOverallTimeMatrix, meanScoreMatrix] = createDataMatrices(dataset, dim, displayStats, plot)
+function [matchingScoreMatrix, meanTotalMatchesMatrix, meanBestMatchesMatrix, meanOverallTimeMatrix, meanScoreMatrix] = createDataMatrices(dataset, dim, displayStats, plot, matchType)
 
 %Create the various Matrices
 matchingScoreMatrix = zeros(dim,dim);
@@ -24,8 +24,15 @@ for distanceCounter=1:19
     
     number = sum(find(dataset(:,2)==distance)>0);
     distance  = Roundoff(distance,2);
+    
+    if matchType==1
+    %For matching using Hamming distance or Euclidean Distance
     row1Match = strmatch([distance threshold], dataset(:,2:3));
-
+    elseif matchType ==2
+    %For Knn Neighbors
+    row1Match = strmatch([threshold], dataset(:,3));
+    end
+    
     numberofPtsFound = sum(row1Match>0);
     %radius = radius
     %threshold = threshold
@@ -34,15 +41,21 @@ for distanceCounter=1:19
     %Find the mean number of overall keypoints;
     meanKeypointsImage1  = mean(dataset(row1Match,6));
     meanKeypointsImage2  = mean(dataset(row1Match,7));
-    %Find the mean matching score
+    %Find the mean best matching score
     meanMatchingScore1 = mean(dataset(row1Match,8));
     %Mean number of total matches
     meanTotalMatches1 = mean(dataset(row1Match,10));
-    %Mean number of best matches
+    %Mean number of best matches (I.e. valid matches with repititions)
     meanBestMatches1 = mean(dataset(row1Match,11));
-    %find the mean overallTime
-    meanOverallTime = mean(dataset(row1Match, 15));
     
+    
+    %find the mean overallTime
+    if matchType==1
+    meanOverallTime = mean(dataset(row1Match, 15));
+    elseif matchType==2
+    %For KNN
+    meanOverallTime = mean(dataset(row1Match, 17));
+    end
     %Find the score for the particular threshold and radius
     summedScore = sum(dataset(row1Match,17));
     %take zero valid matches into account

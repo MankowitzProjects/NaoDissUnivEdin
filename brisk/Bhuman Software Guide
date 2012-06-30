@@ -18,3 +18,107 @@ Lets you change the colour of LEDS
 Src/Modules/BehaviourControl/BH2011.../Symbols
 
 Contains the conversion from xabsl behaviours to cpp code.
+
+Src/Modules/BehaviourControl/BH2011.../Symbols/BH2011HeadSymbols
+
+contains the functions getTitl(), getPan(), getSpeed()
+However, I may need to create a behaviour to get the desired results.
+These functions may potentially be called using getTilt()
+
+Tools/Math/Geometry calculateHorizon
+Calculates the horizon line of the image
+
+BhumanEdinferno/Tools/Xabsl/XabslEngine/XabslEngine.h
+Executes a behaviour that was specified in the Xabsl language
+
+
+******************************************************
+Setting up the Nao
+******************************************************
+
+Run the script ./createNewRobot.sh -d -t num1 -r num2 Name
+This creates the configuration file for the Nao robot
+
+Note: To change the team number, do so in Config/settings.cfg
+
+Once this has been achieved, download the OS-robocup-system-image v1.10.52 and place this in Install/Images.
+Note that you can compress the file to bz2 to save space.
+
+Then remove the flash from the robots head (located under the plastic framework) and plug into your PC
+Then run the script flashAndInstall <name> and this will load the system image onto the Nao
+
+Boot the Nao
+
+PROBLEM: The Nao has a local ethernet address
+
+Run the script ./phase2 
+
+The Nao should now be ready to use
+
+
+In order to run the Nao:
+***************************************************
+You dont need to run ./createNewRobot
+The settings.cfg team number and the robot team number do not need to coincide
+
+1. In order to setup the Naos using ehuman. 
+a. First run the command sudo chmod 777 /ehuman to add permissions to all the folders.
+b. Then run ./generate
+c. Then make the files (This may not be necessary if you are copying files to the Nao)
+
+Wireless settings:
+***************************************************
+The naos now have static IPs: For Dunlop 11.0.1.11
+To ssh into dunlop, run ssh nao@dunlop.local
+
+To setup the wireless router:
+
+a. First get the wireless ip address of the nao by running ifconfig
+b. Then check the third part of the address (eg. 192.168.ThirdPart.xxx)
+c. Logon to the wireless router using (192.168.1.254 for the robot lab router) and change the third part to correspond with the robot
+d. This should then enable you to connect to the router
+
+If there is still a problem, then the robot may need to connect to the laptop using an ethernet cable
+
+To find the wireless scripts:
+Go to cd /etc/init.d/
+Run utwired or utwireless
+
+**************************************************
+
+Nao Runtime:
+
+1. The control actions are run after image
+
+************************************************** 
+To reinstall the Robot
+
+1. Put in the USB stick
+2. Hold down the chest button until the button starts flashing blue
+2.1 When complete, plug Ethernet cable into his head
+3. cd /home/nao
+4. cd Install/ (if no install folder, copy it from the local directory of ehuman)
+5. Run ./flashAndInstall <robot_name> (May have to run twice)
+6. Go to root
+6. run ./phase2.h (May have to run twice)
+7. Halt
+8. Logon to the website of the robot <name>.local and connect to the wireless
+
+DONE
+
+To create an image to flash the robot
+*****************************************************
+1. Download nao-flasher-<version number> from the Aldebaran website
+2. Run the flash as a superuser. I.e. sudo flasher
+3. A dialog box will come up. Select image atom-<version_number>
+4. Select your usb drive
+5. DO NOT select factory settings (Unless you did it without and the robot didnt work)
+6. Copy the image to the flash
+
+
+
+
+
+
+
+
