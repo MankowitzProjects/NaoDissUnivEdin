@@ -49,7 +49,7 @@
 #define DEBUG_MODE 0
 #define SINGLE_IMAGE_TEST 1
 #define MULTIPLE_IMAGE_TEST 0
-#define DISPLAY 1
+#define DISPLAY 0
 
 template <class T>
 inline std::string to_string (const T& t)
@@ -81,18 +81,18 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 int main(int argc, char ** argv) {
 
 	//For SBRISK SURF2D Using radius = 0.20, threshold = 70
-//	bool hamming=false;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "SURF";
-//	double hammingDistance = 0.05;
-//	int threshold = 20;
+	bool hamming=false;
+	std::string feat_detector = "BRISK";
+	std::string feat_descriptor = "SURF";
+	double hammingDistance = 0.1;
+	int threshold = 20;
 
 	//For S-BRISK, hammingDistance = 85, Threshold = 100
-	bool hamming=true;
-	std::string feat_detector = "BRISK";
-	std::string feat_descriptor = "BRISK";
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
 	int testThreshold = 20;
-	int hammingDistance = 40;//BRISK BRISK
+//	int hammingDistance = 40;//BRISK BRISK
 
 	//For BRISK (Multiple scales)
 //	bool hamming=true;
@@ -154,7 +154,7 @@ int main(int argc, char ** argv) {
 		time ( &rawtime );
 		timeinfo = localtime ( &rawtime );
 		//*****************************************
-		string file = "../data/Thresholds/threshold_SBRISK_SBRISK_Hamming_threshold_05072012_1825_AllImages";
+		string file = "../../data/Thresholds/threshold_SBRISK_SURF2D_Hamming_threshold_05072012_2304_AllImages";
 		//*****************************************
 		file.append(".txt");
 		cout<<file<<endl;
@@ -162,8 +162,8 @@ int main(int argc, char ** argv) {
 
 
 		//*****************************************
-		int hammingDistance = 40;
-		//double hammingDistance = 0.1;
+		//int hammingDistance = 40;
+		double hammingDistance = 0.1;
 		//*****************************************
 
 		for (int rr=1;rr<=20;rr++)//rr<20
@@ -403,7 +403,7 @@ int main(int argc, char ** argv) {
 			//Increment the radius
 			//*****************************************
 			//radius = radius+ 0.01;//For BRISK_SURF
-			hammingDistance = hammingDistance + 5;//For BRISK BRISK
+			hammingDistance = hammingDistance + 0.01;//For BRISK BRISK
 			//*****************************************
 		}//End of rr loop for radius
 

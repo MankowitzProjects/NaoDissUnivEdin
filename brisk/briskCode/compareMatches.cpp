@@ -85,28 +85,28 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 int main(int argc, char ** argv) {
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-	bool hamming=false;
-	std::string feat_detector = "BRISK";
-	std::string feat_descriptor = "SURF";
-	double hammingDistance = 0.14;
-	//int threshold = 45;
-	int threshold = 33.75;
+//	bool hamming=false;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "SURF";
+//	double hammingDistance = 0.14;
+//	double threshold = 30;//45
+//	double threshold = 33.75;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-//	bool hamming=true;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "BRISK";
-//	int threshold = 30;//46.25;//46.25 KNN
-//	int threshold = 95;//Hamming
-//	int hammingDistance = 93.75;//Hamming
+	bool hamming=true;
+	std::string feat_detector = "BRISK";
+	std::string feat_descriptor = "BRISK";
+	//double threshold = 30;//46.25;//46.25 KNN
+	double threshold = 78.75;//Hamming
+	double hammingDistance = 40.14;//Hamming
 
 	//For BRISK4 (4 octaves)
 //	bool hamming=true;
 //	std::string feat_detector = "BRISK";
 //	std::string feat_descriptor = "BRISK";
-//	//int threshold = 51.25; //KNN
-//	int threshold = 88.75;//Hamming
-//	int hammingDistance = 116.25;//Hamming
+//	double threshold = 30; //KNN 51.25
+//	double threshold = 88.75;//Hamming
+//	double hammingDistance = 116.25;//Hamming
 
 	//For 1D SURF
 
@@ -142,7 +142,7 @@ int main(int argc, char ** argv) {
 			std::string name2;
 
 			//For changing the threshold
-			int testThreshold = 10;
+			double testThreshold = 0;
 
 			//Set the directory names and determine the number of images in each directory
 			int jpegCounter = dataAnalysis.getNumImagesInDirectory(&dir);
@@ -167,7 +167,7 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../data/Matches/nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_0250_33";
+			string filename = "../../data/Matches/nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070521012_2318_78_40_mScoreFixed";
 			//		file.append(testThresholdString.c_str());
 			//		file.append("Directory_");
 			//		file.append(tempDir.c_str());
@@ -176,18 +176,18 @@ int main(int argc, char ** argv) {
 			filename.append(".txt");
 			cout<<filename<<endl;
 			//*************************************
-			//Make sure that there are the same number of images in each frame
-			if(jpegCounter>jpegCounter1)
-				jpegCounter = jpegCounter1;
-			else
-				jpegCounter1 = jpegCounter;
+			//Make sure that there are the same number of images in each frame (Not for non matches)
+//			if(jpegCounter>jpegCounter1)
+//				jpegCounter = jpegCounter1;
+//			else
+//				jpegCounter1 = jpegCounter;
 
 			//Remember that for non-matches, we can compare 1,1;2,2;3,3...etc
 			//Determine matches without repetition
 			for (int ii = 1;ii<=jpegCounter;ii++)
 			{
 
-				for (int jj = 1; jj<ii;jj++)
+				for (int jj = 1; jj<jpegCounter1;jj++)//jpegCounter1
 				{
 					//Choose the images to compare
 					name1 = to_string<int>(ii);
@@ -312,18 +312,18 @@ int main(int argc, char ** argv) {
 					else
 						descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
 					if(hamming)
-					//descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
-					descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+					descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+					//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 					else{
-//						if(descriptors2.rows>0)
-//						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-//						else
-//							matches.clear();
-						//Decreasing with the maxdistance value will drastically reduce the number of matches
 						if(descriptors2.rows>0)
-						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 						else
 							matches.clear();
+						//Decreasing with the maxdistance value will drastically reduce the number of matches
+//						if(descriptors2.rows>0)
+//						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+//						else
+//							matches.clear();
 					}
 
 					cv::Mat outimg;

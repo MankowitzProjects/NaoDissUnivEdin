@@ -255,7 +255,7 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		//Verify the Knn Neighbors matching criteria
 		if (matches[i].size()>0){
 
-			verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
+			//verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
 
 #if (FEATURE_DEBUG_MATCHES)
 			cout<<"The index is: "<<i<<endl;
@@ -272,8 +272,8 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		isTrueMatchFound = false;
 
 		//Check if the matches satisifies the Knn Criteria
-		if(isKnnMatch)
-		{
+//		if(isKnnMatch)
+//		{
 			//If it satisfies the Knn criteria, then check the angle and distance criteria
 			while(counter<matchSize)
 			{
@@ -394,36 +394,36 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 				imageMatchingScore = imageMatchingScore + matchingScore;
 			}
 
-		}//End if KnnMatches Criteria
-		else{
-			//Remove matches if they do not satisfy the KNN criterion
-			if(matches[i].size()>0)
-			{
-				//cout<<"Matches size: "<<matches[i].size()<<endl;
-				//This will work because we are looking at only the two nearest matches
-				for(size_t j=0;j<=matches[i].size();j++)
-				{
-#if (FEATURE_DEBUG_MATCHES)
-					//Add the invalid match to the respective vectors
-					leftPointsKNN.push_back(keypoints[matches[i].begin()->queryIdx]);
-					rightPointsKNN.push_back(keypoints2[matches[i].begin()->trainIdx]);
-					keypointDistanceKNN.push_back(matches[i].begin()->distance);
-					neighborIndexKNN.push_back(j);
-
-					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
-					cout<<"Matches size: "<<matches[i].size()<<endl;
-					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
-					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
-					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
-#endif
-					matches[i].erase(matches[i].begin());
-					totalNumInvalidMatches++;
-
-
-				}
-			}
-
-		}//End else KnnMatches Criteria
+//		}//End if KnnMatches Criteria
+//		else{
+//			//Remove matches if they do not satisfy the KNN criterion
+//			if(matches[i].size()>0)
+//			{
+//				//cout<<"Matches size: "<<matches[i].size()<<endl;
+//				//This will work because we are looking at only the two nearest matches
+//				for(size_t j=0;j<=matches[i].size();j++)
+//				{
+//#if (FEATURE_DEBUG_MATCHES)
+//					//Add the invalid match to the respective vectors
+//					leftPointsKNN.push_back(keypoints[matches[i].begin()->queryIdx]);
+//					rightPointsKNN.push_back(keypoints2[matches[i].begin()->trainIdx]);
+//					keypointDistanceKNN.push_back(matches[i].begin()->distance);
+//					neighborIndexKNN.push_back(j);
+//
+//					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
+//					cout<<"Matches size: "<<matches[i].size()<<endl;
+//					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
+//					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
+//					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
+//#endif
+//					matches[i].erase(matches[i].begin());
+//					totalNumInvalidMatches++;
+//
+//
+//				}
+//			}
+//
+//		}//End else KnnMatches Criteria
 
 		totalNumValidMatches = totalNumValidMatches + matches[i].size();
 		totalNumMatches = totalNumMatches + allMatches;
