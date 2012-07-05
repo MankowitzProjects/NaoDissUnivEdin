@@ -16,3 +16,7 @@
 1. In order to stop the program running in Eclipse, go to the debug panel, right-click on the main thread and terminate
 
 
+02/07/12
+
+1. To use LAN and wireless simultaneously on the Nao:
+First connect using LAN and then connect using wireless

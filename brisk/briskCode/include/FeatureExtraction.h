@@ -37,9 +37,15 @@ class FeatureExtraction
         int totalNumMatches;
         int totalNumInvalidMatches;
         int totalNumBestMatches;
-        //Stores the incorrect matches
-    	std::vector<cv::Point2f> leftPoints;
-    	std::vector<cv::Point2f> rightPoints;
+        //Stores the incorrect KNN matches
+    	std::vector<cv::KeyPoint> leftPointsKNN;
+    	std::vector<cv::KeyPoint> rightPointsKNN;
+    	std::vector<float> keypointDistanceKNN;
+    	std::vector<int> neighborIndexKNN;
+    	//Stores the incorrect angle matches
+    	std::vector<cv::KeyPoint> leftPointsAngle;
+    	std::vector<cv::KeyPoint> rightPointsAngle;
+    	std::vector<float> keypointDistanceAngle;
 
     protected:
     private:
@@ -49,6 +55,7 @@ class FeatureExtraction
         float distanceRatio;
         //KNN variables
         bool isKnnMatch;
+
 
 
 

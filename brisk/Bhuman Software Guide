@@ -62,7 +62,7 @@ You dont need to run ./createNewRobot
 The settings.cfg team number and the robot team number do not need to coincide
 
 1. In order to setup the Naos using ehuman. 
-a. First run the command sudo chmod 777 /ehuman to add permissions to all the folders.
+a. First run the command sudo chmod -R 777 /ehuman to add permissions to all the folders.
 b. Then run ./generate
 c. Then make the files (This may not be necessary if you are copying files to the Nao)
 

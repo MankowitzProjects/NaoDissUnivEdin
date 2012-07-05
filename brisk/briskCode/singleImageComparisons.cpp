@@ -52,7 +52,7 @@
 #define OUTPUT 0
 #define SINGLE_IMAGE_TEST 1
 #define MULTIPLE_IMAGE_TEST 1
-#define DISPLAY 1
+#define DISPLAY 0
 
 template <class T>
 inline std::string to_string (const T& t)
@@ -92,9 +92,9 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 20;
-	int hammingDistance = 400;//BRISK BRISK
-	double radius = 0.15;//BRISK SURF
+	int threshold = 46.25;
+	int hammingDistance = 40;//BRISK BRISK
+	//double radius = 0.15;//BRISK SURF
 	std::string feat_descriptor = "BRISK";
 
 	//Create the Feature extraction object
@@ -112,334 +112,405 @@ int main(int argc, char ** argv) {
 	string testThresholdString = to_string<int>(threshold);
 	time ( &rawtime );
 	timeinfo = localtime ( &rawtime );
-	string file = "../data/singleImage/singleImageData_threshold_26062012_BRISK_100_BRISK_KNN_keypoints";
-	//		file.append(threshold.c_str());
-	//		file.append("Directory_");
-	//		file.append(tempDir.c_str());
-	//		file.append("_");
-	//		file.append(stringRad.c_str());
+	string file = "../../data/singleImage/singleImageData_keypoints_SBRISK_SBRISK_KNN_07052012_1534";
 	file.append(".txt");
 	cout<<file<<endl;
-	string file1 = "../data/singleImage/singleImageData_threshold_26062012_BRISK_100_BRISK_KNN_matches";
-	//		file.append(threshold.c_str());
-	//		file.append("Directory_");
-	//		file.append(tempDir.c_str());
-	//		file.append("_");
-	//		file.append(stringRad.c_str());
+	string file1 = "../../data/singleImage/singleImageData_matches_SBRISK_SBRISK_KNN_07052012_1534";
 	file1.append(".txt");
 	cout<<file1<<endl;
+	//For the invalid matches
+	string file2 = "../../data/singleImage/singleImageData_invalid_matches_KNN_SBRISK_SBRISK_KNN_07052012_1534";
+	file2.append(".txt");
+	cout<<file2<<endl;
+
+	string file3 = "../../data/singleImage/singleImageData_invalid_matches_AngleDistance_SBRISK_SBRISK_KNN_07052012_1534";
+	file3.append(".txt");
+	cout<<file3<<endl;
+
 	//*************************************
 
-
-
-
-	// Declare the extractor. Only needs to be performed once since it computes lookup
-	//tables for each of the various patterns on initialisation
-	//*****************************************************************
-	cv::Ptr<cv::DescriptorExtractor> descriptorExtractor;
-	descriptorExtractor = feature.getExtractor(argc, feat_descriptor, hamming, descriptorExtractor);
-	//*****************************************************************
-	timespec ts, te, matchings, matchinge, detectors, detectore, extractors, extractore, verifys, verifye;
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
-
-	//The directory where the files are stored
-	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
-
-	//dir = to_string<int>(ss);
-	std::string tempDir = to_string<int>(1);
-
-	//Names of the two image files
-	std::string name1 = "2";
-	std::string name2 = "12";
-
-	//For changing the threshold
-	int testThreshold = 10;
-
-	//Choose the images to compare
-	//    name1 = to_string<int>(ii);
-	//    if(ii==jj)
-	//    continue;
-	//
-	//    name2 = to_string<int>(jj);
-
-	cout<<"Image in directory 1: "<<name1<<", Image in directory 2: "<<name2<<endl;
-
-
-	// names of the two images
-	std::string fname1;
-	std::string fname2;
-	cv::Mat imgRGB1;
-	cv::Mat imgRGB2;
-	//	cv::Mat imgRGB3;
-	cv::Mat imgGray1Full;
-	cv::Mat imgGray2Full;
-	cv::Mat imgGray1;
-	cv::Mat imgGray2;
-
-	bool do_rot=false;
-	// standard file extensions
-	std::vector<std::string> fextensions;
-	fextensions.push_back(".jpeg");
-	fextensions.push_back(".jpg");
-
-
-
-
-	// if no arguments are passed:
-	//Read in images
-	//*****************************************************************
-	int i=0;
-	int fextensions_size=fextensions.size();
-	while(imgGray1Full.empty()||imgGray2Full.empty()){
-		fname1 = dir+"/"+name1+".jpg";
-		fname2 = dir1+"/"+name2+".jpg";
-		//imgRGB1 = cv::imread(fname1);
-		//imgRGB2 = cv::imread(fname2);
-		imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
-		imgGray2Full = cv::imread(fname2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
-
-		i++;
-		if(i>=fextensions_size) break;
-	}
-	if (imgGray1Full.empty()||imgGray2Full.empty())
+	for (int kk=1;kk<=4; kk++)
 	{
-		std::cout<<"image(s)"<<fname1<<", "<<fname2<<" not found." << std::endl;
-		return 2;
-	}
-	//*****************************************************************
-	//We only need the keypoints above the horizon
-	int horizonLine = 300;
-	imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
-	imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
-
-
-	// convert to grayscale
-	//*****************************************************************
-	//	imgGray1;
-	//	cv::cvtColor(imgRGB1, imgGray1, CV_BGR2GRAY);
-	//	imgGray2;
-	//	if(!do_rot){
-	//		cv::cvtColor(imgRGB2, imgGray2, CV_BGR2GRAY);
-	//	}
-	//*****************************************************************
-
-
-	//MC: Generate a vector of keypoints
-	std::vector<cv::KeyPoint> keypoints, keypoints2;
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
-	// create the detector:
-	//*****************************************************************
-	cv::Ptr<cv::FeatureDetector> detector;
-	detector = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
-	//*****************************************************************
-
-	// run the detector:
-	//*****************************************************************
-	detector->detect(imgGray1,keypoints);
-	detector->detect(imgGray2,keypoints2);
-	//*****************************************************************
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectore);
-	double detectionTime = diff(detectors,detectore).tv_nsec/1000000;
-
-
-	//*****************************************************************
-	//This is where we add the openSURF
-	//Convert Mat to IPlImage
-	IplImage iplimg1 = imgGray1;
-	IplImage iplimg2 = imgGray2;
-
-
-	//*****************************************************************
-	// get the descriptors
-	cv::Mat descriptors, descriptors2;
-	std::vector<cv::DMatch> indices;
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractors);
-	// second image. Computes the descriptor for each of the keypoints.
-	//Outputs a 64 bit vector describing the keypoints.
-	descriptorExtractor->compute(imgGray2,keypoints2,descriptors2);
-	// and the first one
-	descriptorExtractor->compute(imgGray1,keypoints,descriptors);
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractore);
-	double extractionTime = diff(extractors,extractore).tv_nsec/1000000;
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchings);
-
-	// matching
-	//*****************************************************************
-	std::vector<std::vector<cv::DMatch> > matches;
-	cv::Ptr<cv::DescriptorMatcher> descriptorMatcher;
-	if(hamming)
-		descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
-	else
-		descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
-	if(hamming)
-		//descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
-
-		//The first parameter is the query descriptor. The second parameter is the train descriptor
-		descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-	else{
-		//Messing with the maxdistance value will drastically reduce the number of matches
-		descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);//radiusMatch radius
-	}
-	//For the above method, we could use KnnMatch. All values less than 0.21 max distance are selected
-
-	//*****************************************************************
-	//Image created for drawing
-	cv::Mat outimg;
-
-
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifys);
-
-	//Perform the matching verification
-	//*************************************************************************
-	feature.performMatchingValidation(imgGray1,keypoints, keypoints2, matches, hamming);
-	//*************************************************************************
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifye);
-	double verifyTime = diff(verifys,verifye).tv_nsec/1000;
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchinge);
-	double matchingTime = diff(matchings,matchinge).tv_nsec/1000;
-
-	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
-	double overallTime = diff(ts,te).tv_nsec/1000000;
-
-	//Write the data to a file
-	ofstream writeFile;
-	writeFile.open(file.c_str(), ios::app);
-
-	//1. Write all the keypoints to the first image file
-
-	//Swap hamming distance with radius
-	for(int im1 = 0;im1<keypoints.size();im1++){
-		//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
-		writeFile <<name1<<", "<<hammingDistance<<", "<<testThreshold<<", "<<im1<<", "<<keypoints[im1].pt.x<<", "<<keypoints[im1].pt.y<<", "<<keypoints[im1].angle<<", "<<keypoints[im1].size<<", "<<keypoints[im1].octave<<", "<<keypoints[im1].response<<"\n";
-	}
-
-	//2. Write all the keypoints to the second image file
-	//Swap hamming distance with radius
-	for(int im2 = 0;im2<keypoints2.size();im2++){
-		//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
-		writeFile <<name2<<", "<<hammingDistance<<", "<<testThreshold<<", "<<im2<<", "<<keypoints2[im2].pt.x<<", "<<keypoints2[im2].pt.y<<", "<<keypoints2[im2].angle<<", "<<keypoints2[im2].size<<", "<<keypoints2[im2].octave<<", "<<keypoints2[im2].response<<"\n";
-	}
-
-	//Close the file
-	writeFile.close();
-	writeFile.clear();
-
-	//Write the data to a file
-	writeFile.open(file1.c_str(), ios::app);
-
-	//Write all the information to a file
-	//image num left, image num right, queryIdx, trainIdx,  keypoint1 x, kp1y, angle size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance
-	//Swap hamming distance with radius
-	for(int mIdx = 0;mIdx<matches.size();mIdx++){
-		for(int nIdx = 0;nIdx<matches[mIdx].size();nIdx++)
+		for (int ss=kk;ss<=kk;ss++)
 		{
-			int q = matches[mIdx][nIdx].queryIdx;
-			int t = matches[mIdx][nIdx].trainIdx;
-			writeFile <<name1<<", "<<name2<<", "<<q<<", "<<t<<", "<<keypoints[q].pt.x<<", "<<keypoints[q].pt.y<<", "<<keypoints[q].angle<<", "<<keypoints[q].size<<", "<<keypoints[q].octave<<", "<<keypoints[q].response<<", "<<keypoints2[t].pt.x<<", "<<keypoints2[t].pt.y<<", "<<keypoints2[t].angle<<", "<<keypoints2[t].size<<", "<<keypoints2[t].octave<<", "<<keypoints2[t].response<<", "<<nIdx<<", "<<matches[q][t].distance<<"\n";
-		}
-	}
-	//Close the file
-	writeFile.close();
-	writeFile.clear();
 
-#if (DEBUG_MODE)
-	cout<<"****************************************"<<endl;
-	cout<<"The matching score for the image (condsidering all matches) is "<<feature.imageMatchingScore<<endl;
-	cout<<"The matching score for the image (condsidering best match only) is "<<feature.imageMatchingScoreBest<<endl;
-	cout<<"The total number of matches is "<<feature.totalNumMatches<<endl;
-	cout<<"The total number of valid matches is "<<feature.totalNumValidMatches<<endl;
-	cout<<"****************************************"<<endl;
+			std::string dir, dir1;
+			dir = to_string<int>(kk);
+			dir1 = to_string<int>(ss);
+
+			std::string tempDir = to_string<int>(kk);
+			std::string tempDir1 = to_string<int>(ss);
+
+			//Names of the two image files
+			std::string name1;
+			std::string name2;
+
+			//For changing the threshold
+			int testThreshold = 10;
+
+			//Set the directory names and determine the number of images in each directory
+			int jpegCounter = dataAnalysis.getNumImagesInDirectory(&dir);
+			int jpegCounter1 = dataAnalysis.getNumImagesInDirectory(&dir1);
+
+			std::cout<<"The number of images in the directory is: "<<jpegCounter<<endl;
+
+
+			// Declare the extractor. Only needs to be performed once since it computes lookup
+			//tables for each of the various patterns on initialisation
+			//*****************************************************************
+			cv::Ptr<cv::DescriptorExtractor> descriptorExtractor;
+			descriptorExtractor = feature.getExtractor(argc, feat_descriptor, hamming, descriptorExtractor);
+			//*****************************************************************
+			//Make sure that there are the same number of images in each frame
+			if(jpegCounter>jpegCounter1)
+				jpegCounter = jpegCounter1;
+			else
+				jpegCounter1 = jpegCounter;
+
+			//Remember that for non-matches, we can compare 1,1;2,2;3,3...etc
+			//Determine matches without repetition
+			for (int ii = 1;ii<=5;ii++)
+			{
+
+				for (int jj = 1; jj<ii;jj++)
+				{
+					//Choose the images to compare
+					name1 = to_string<int>(ii);
+					//if(ii==jj)
+					//	continue;images
+
+					name2 = to_string<int>(jj);
+
+					cout<<"Image "<<ii<<", Image "<<jj<<endl;
+
+
+
+
+					timespec ts, te, matchings, matchinge, detectors, detectore, extractors, extractore, verifys, verifye;
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
+
+					//For changing the threshold
+					int testThreshold = 10;
+
+					//Choose the images to compare
+					//    name1 = to_string<int>(ii);
+					//    if(ii==jj)
+					//    continue;
+					//
+					//    name2 = to_string<int>(jj);
+
+					cout<<"Image in directory 1: "<<name1<<", Image in directory 2: "<<name2<<endl;
+
+
+					// names of the two images
+					std::string fname1;
+					std::string fname2;
+
+					cv::Mat imgGray1Full;
+					cv::Mat imgGray2Full;
+					cv::Mat imgGray1;
+					cv::Mat imgGray2;
+
+					bool do_rot=false;
+					// standard file extensions
+					std::vector<std::string> fextensions;
+					fextensions.push_back(".jpeg");
+					fextensions.push_back(".jpg");
+
+					// if no arguments are passed:
+					//Read in images
+					//*****************************************************************
+					int i=0;
+					int fextensions_size=fextensions.size();
+					while(imgGray1Full.empty()||imgGray2Full.empty()){
+						fname1 = dir+"/"+name1+".jpg";
+						fname2 = dir1+"/"+name2+".jpg";
+						//imgRGB1 = cv::imread(fname1);
+						//imgRGB2 = cv::imread(fname2);
+						imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+						imgGray2Full = cv::imread(fname2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+
+						i++;
+						if(i>=fextensions_size) break;
+					}
+					if (imgGray1Full.empty()||imgGray2Full.empty())
+					{
+						std::cout<<"image(s)"<<fname1<<", "<<fname2<<" not found." << std::endl;
+						return 2;
+					}
+					//*****************************************************************
+					//We only need the keypoints above the horizon
+					int horizonLine = 300;
+					imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
+					imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
+
+
+					// convert to grayscale
+					//*****************************************************************
+					//	imgGray1;
+					//	cv::cvtColor(imgRGB1, imgGray1, CV_BGR2GRAY);
+					//	imgGray2;
+					//	if(!do_rot){
+					//		cv::cvtColor(imgRGB2, imgGray2, CV_BGR2GRAY);
+					//	}
+					//*****************************************************************
+
+
+					//MC: Generate a vector of keypoints
+					std::vector<cv::KeyPoint> keypoints, keypoints2;
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
+					// create the detector:
+					//*****************************************************************
+					cv::Ptr<cv::FeatureDetector> detector;
+					detector = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
+					//*****************************************************************
+
+					// run the detector:
+					//*****************************************************************
+					detector->detect(imgGray1,keypoints);
+					detector->detect(imgGray2,keypoints2);
+					//*****************************************************************
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectore);
+					double detectionTime = diff(detectors,detectore).tv_nsec/1000000;
+
+
+					//*****************************************************************
+					//This is where we add the openSURF
+					//Convert Mat to IPlImage
+					IplImage iplimg1 = imgGray1;
+					IplImage iplimg2 = imgGray2;
+
+
+					//*****************************************************************
+					// get the descriptors
+					cv::Mat descriptors, descriptors2;
+					std::vector<cv::DMatch> indices;
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractors);
+					// second image. Computes the descriptor for each of the keypoints.
+					//Outputs a 64 bit vector describing the keypoints.
+					descriptorExtractor->compute(imgGray2,keypoints2,descriptors2);
+					// and the first one
+					descriptorExtractor->compute(imgGray1,keypoints,descriptors);
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractore);
+					double extractionTime = diff(extractors,extractore).tv_nsec/1000000;
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchings);
+
+					// matching
+					//*****************************************************************
+					std::vector<std::vector<cv::DMatch> > matches;
+					cv::Ptr<cv::DescriptorMatcher> descriptorMatcher;
+					if(hamming)
+						descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
+					else
+						descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
+					if(hamming)
+						//descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+
+						//The first parameter is the query descriptor. The second parameter is the train descriptor
+						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+					else{
+						//Messing with the maxdistance value will drastically reduce the number of matches
+						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);//radiusMatch radius
+					}
+					//For the above method, we could use KnnMatch. All values less than 0.21 max distance are selected
+
+					//*****************************************************************
+					//Image created for drawing
+					cv::Mat outimg;
+
+
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifys);
+
+					//Perform the matching verification
+					//*************************************************************************
+					feature.performMatchingValidation(imgGray1,keypoints, keypoints2, matches, hamming);
+					//*************************************************************************
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifye);
+					double verifyTime = diff(verifys,verifye).tv_nsec/1000;
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchinge);
+					double matchingTime = diff(matchings,matchinge).tv_nsec/1000;
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
+					double overallTime = diff(ts,te).tv_nsec/1000000;
+
+					//Write the data to a file
+					ofstream writeFile;
+					writeFile.open(file.c_str(), ios::app);
+
+					//1. Write all the keypoints to the first image file
+
+					//Swap hamming distance with radius
+					for(int im1 = 0;im1<keypoints.size();im1++){
+						//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
+						writeFile <<kk<<", "<<ss<<", "<<name1<<", "<<hammingDistance<<", "<<threshold<<", "<<im1<<", "<<keypoints[im1].pt.x<<", "<<keypoints[im1].pt.y<<", "<<keypoints[im1].angle<<", "<<keypoints[im1].size<<", "<<keypoints[im1].octave<<", "<<keypoints[im1].response<<"\n";
+					}
+
+					//2. Write all the keypoints to the second image file
+					//Swap hamming distance with radius
+					for(int im2 = 0;im2<keypoints2.size();im2++){
+						//[image num, hammingdist, threshold, kp1x, kp1y, angle, size, octave]
+						writeFile <<kk<<", "<<ss<<", "<<name2<<", "<<hammingDistance<<", "<<threshold<<", "<<im2<<", "<<keypoints2[im2].pt.x<<", "<<keypoints2[im2].pt.y<<", "<<keypoints2[im2].angle<<", "<<keypoints2[im2].size<<", "<<keypoints2[im2].octave<<", "<<keypoints2[im2].response<<"\n";
+					}
+
+					//Close the file
+					writeFile.close();
+					writeFile.clear();
+
+					//Write the data to a file
+					writeFile.open(file1.c_str(), ios::app);
+
+					//Write all the matches data to a file
+					//image num left, image num right, queryIdx, trainIdx,  keypoint1 x, kp1y, angle size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance
+					//Swap hamming distance with radius
+					for(size_t mIdx = 0;mIdx<matches.size();mIdx++){
+						cout<<"Matches size: "<<matches[mIdx].size()<<endl;
+						for(size_t nIdx = 0;nIdx<matches[mIdx].size();nIdx++)
+						{
+							int q = matches[mIdx][nIdx].queryIdx;
+							int t = matches[mIdx][nIdx].trainIdx;
+
+
+							cout<<"neighbor index: "<<nIdx<<endl;
+							cout<<"Matches size: "<<matches[mIdx].size()<<endl;
+							cout<<"Keypoint Left to be erased row,col : "<<keypoints[q].pt.y<<", "<<keypoints[q].pt.x<<endl;
+							cout<<"Keypoint Right to be erased row,col : "<<keypoints2[t].pt.y<<", "<<keypoints2[t].pt.x<<endl;
+							cout<<"The match distance is: "<<matches[q][t].distance<<endl;
+
+							writeFile <<kk<<", "<<ss<<", "<<name1<<", "<<name2<<", "<<q<<", "<<t<<", "<<keypoints[q].pt.x<<", "<<keypoints[q].pt.y<<", "<<keypoints[q].angle<<", "<<keypoints[q].size<<", "<<keypoints[q].octave<<", "<<keypoints[q].response<<", "<<keypoints2[t].pt.x<<", "<<keypoints2[t].pt.y<<", "<<keypoints2[t].angle<<", "<<keypoints2[t].size<<", "<<keypoints2[t].octave<<", "<<keypoints2[t].response<<", "<<nIdx<<", "<<matches[q][t].distance<<"\n";
+						}
+					}
+					//Close the file
+					writeFile.close();
+					writeFile.clear();
+
+					//Write the invalid KNN matches data to a file
+					writeFile.open(file2.c_str(), ios::app);
+
+					for (size_t it = 0; it<feature.leftPointsKNN.size(); it++)
+					{
+//						cout<<"it index: "<<it<<endl;
+//						cout<<"Matches size: "<<feature.leftPointsKNN.size()<<endl;
+//						cout<<"Keypoint Left to be erased row,col : "<<feature.leftPointsKNN[it].pt.y<<", "<<feature.leftPointsKNN[it].pt.x<<endl;
+//						cout<<"Keypoint Right to be erased row,col : "<<feature.rightPointsKNN[it].pt.y<<", "<<feature.rightPointsKNN[it].pt.x<<endl;
+//						cout<<"The match distance is: "<<feature.keypointDistanceKNN[it]<<endl;
+
+						writeFile <<kk<<", "<<ss<<", "<<name1<<", "<<name2<<", "<<feature.leftPointsKNN[it].pt.x<<", "<<feature.leftPointsKNN[it].pt.y<<", "<<feature.leftPointsKNN[it].angle<<", "<<feature.leftPointsKNN[it].size<<", "<<feature.leftPointsKNN[it].octave<<", "<<feature.leftPointsKNN[it].response<<", "<<feature.rightPointsKNN[it].pt.x<<", "<<feature.rightPointsKNN[it].pt.y<<", "<<feature.rightPointsKNN[it].angle<<", "<<feature.rightPointsKNN[it].size<<", "<<feature.rightPointsKNN[it].octave<<", "<<feature.rightPointsKNN[it].response<<", "<<feature.neighborIndexKNN[it]<<", "<<feature.keypointDistanceKNN[it]<<"\n";
+					}
+
+					//Close the file
+					writeFile.close();
+					writeFile.clear();
+
+					//Write the invalid angle and distance matches data to a file
+					writeFile.open(file3.c_str(), ios::app);
+
+					for (int it = 0; it<feature.leftPointsAngle.size(); it++)
+					{
+						writeFile <<kk<<", "<<ss<<", "<<name1<<", "<<name2<<", "<<feature.leftPointsAngle[it].pt.x<<", "<<feature.leftPointsAngle[it].pt.y<<", "<<feature.leftPointsAngle[it].angle<<", "<<feature.leftPointsAngle[it].size<<", "<<feature.leftPointsAngle[it].octave<<", "<<feature.leftPointsAngle[it].response<<", "<<feature.rightPointsAngle[it].pt.x<<", "<<feature.rightPointsAngle[it].pt.y<<", "<<feature.rightPointsAngle[it].angle<<", "<<feature.rightPointsAngle[it].size<<", "<<feature.rightPointsAngle[it].octave<<", "<<feature.rightPointsAngle[it].response<<", "<<feature.keypointDistanceAngle[it]<<"\n";
+					}
+
+					//Close the file
+					writeFile.close();
+					writeFile.clear();
+#if 1// (DEBUG_MODE)
+					cout<<"****************************************"<<endl;
+					cout<<"The matching score for the image (condsidering all matches) is "<<feature.imageMatchingScore<<endl;
+					cout<<"The matching score for the image (condsidering best match only) is "<<feature.imageMatchingScoreBest<<endl;
+					cout<<"The total number of matches is "<<feature.totalNumMatches<<endl;
+					cout<<"The total number of valid matches is "<<feature.totalNumValidMatches<<endl;
+					cout<<"The total number of invalid matches is "<<feature.totalNumInvalidMatches<<endl;
+					cout<<"****************************************"<<endl;
 #endif
 #if (DEBUG_TIMES)
-	std::cout<<"The times:"<<endl;
-	std::cout<<"Detection Time: "<<detectionTime<<" ms"<<endl;
-	std::cout<<"Extraction Time: "<<extractionTime<<" ms"<<endl;
-	std::cout<<"Matching Time: "<<matchingTime<<" us"<<endl;
-	std::cout<<"Verify Matches Time: "<<verifyTime<<" us"<<endl;
-	std::cout<<"Overall Time: "<<overallTime<<" ms"<<endl;
+					std::cout<<"The times:"<<endl;
+					std::cout<<"Detection Time: "<<detectionTime<<" ms"<<endl;
+					std::cout<<"Extraction Time: "<<extractionTime<<" ms"<<endl;
+					std::cout<<"Matching Time: "<<matchingTime<<" us"<<endl;
+					std::cout<<"Verify Matches Time: "<<verifyTime<<" us"<<endl;
+					std::cout<<"Overall Time: "<<overallTime<<" ms"<<endl;
 #endif
-	threshold = atoi(argv[3]+5);
-	//    writeFile <<threshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<imageMatchingScoreBest<<", "<<imageMatchingScore<<","<<totalNumMatches<<", "<<totalNumBestMatches<<"\n";
-	//    //close the file
-	//    writeFile.close();
+
 #if (DEBUG_MODE)
-	cout<<"The total number of keypoints in image 1 is: "<<keypoints.size()<<endl;
-	cout<<"The total number of keypoints in image 2 is: "<<keypoints2.size()<<endl;
+					cout<<"The total number of keypoints in image 1 is: "<<keypoints.size()<<endl;
+					cout<<"The total number of keypoints in image 2 is: "<<keypoints2.size()<<endl;
 #endif
 
 
 #if (DISPLAY)
-	drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
-			cv::Scalar(0,255,0), cv::Scalar(0,0,255),
-			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
-	//NOT_DRAW_SINGLE_POINTS
+					drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
+							cv::Scalar(0,255,0), cv::Scalar(0,0,255),
+							std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+					//NOT_DRAW_SINGLE_POINTS
 
-	//Note: leftpoints correspond to keypoints - Image 1. rightpoints correspond to keypoints2 - Image 2.
-	int colourChanger = 0;
-	//	for (int k = 0; k<feature.rightPoints.size(); k++)
-	//	{
-	//
-	//		circle(imgGray2,cv::Point(feature.rightPoints[k].x, feature.rightPoints[k].y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
-	//
-	//#if(DEBUG_MATCHES)
-	//		cout<<"Incorrect coord Left row,col : "<<feature.rightPoints[k].y<<", "<<feature.rightPoints[k].x<<endl;
-	//#endif
-	//		colourChanger = colourChanger+30;
-	//	}
-	//	colourChanger = 0;
-	//	for (int k = 0; k<feature.leftPoints.size(); k++)
-	//	{
-	//		circle(imgGray1,cv::Point(feature.leftPoints[k].x, feature.leftPoints[k].y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
-	//#if(DEBUG_MATCHES)
-	//		cout<<"Incorrect coord Right row,col : "<<feature.leftPoints[k].y<<", "<<feature.leftPoints[k].x<<endl;
-	//#endif
-	//		colourChanger = colourChanger+30;
-	//	}
-	for (int k = 0; k<matches.size(); k++)
-	{
-		for (int j=0;j<matches[k].size();j++)
-		{
-			int qi = matches[k][j].queryIdx;//Reference Point. Assumed to be for image left
-			int ti = matches[k][j].trainIdx;//Assumed to be image right
+					//Note: leftpoints correspond to keypoints - Image 1. rightpoints correspond to keypoints2 - Image 2.
+					int colourChanger = 0;
+					//	for (int k = 0; k<feature.rightPoints.size(); k++)
+					//	{
+					//
+					//		circle(imgGray2,cv::Point(feature.rightPoints[k].x, feature.rightPoints[k].y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
+					//
+					//#if(DEBUG_MATCHES)
+					//		cout<<"Incorrect coord Left row,col : "<<feature.rightPoints[k].y<<", "<<feature.rightPoints[k].x<<endl;
+					//#endif
+					//		colourChanger = colourChanger+30;
+					//	}
+					//	colourChanger = 0;
+					//	for (int k = 0; k<feature.leftPoints.size(); k++)
+					//	{
+					//		circle(imgGray1,cv::Point(feature.leftPoints[k].x, feature.leftPoints[k].y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
+					//#if(DEBUG_MATCHES)
+					//		cout<<"Incorrect coord Right row,col : "<<feature.leftPoints[k].y<<", "<<feature.leftPoints[k].x<<endl;
+					//#endif
+					//		colourChanger = colourChanger+30;
+					//	}
+					for (int k = 0; k<matches.size(); k++)
+					{
+						for (int j=0;j<matches[k].size();j++)
+						{
+							int qi = matches[k][j].queryIdx;//Reference Point. Assumed to be for image left
+							int ti = matches[k][j].trainIdx;//Assumed to be image right
 
-			//The points in the left image
-			int kp1x = (*(keypoints.begin()+qi)).pt.x;
-			int kp1y = (*(keypoints.begin()+qi)).pt.y;
+							//The points in the left image
+							int kp1x = (*(keypoints.begin()+qi)).pt.x;
+							int kp1y = (*(keypoints.begin()+qi)).pt.y;
 
-			//The points in the right image
-			int kp2x = (*(keypoints2.begin()+ti)).pt.x;
-			int kp2y = (*(keypoints2.begin()+ti)).pt.y;
+							//The points in the right image
+							int kp2x = (*(keypoints2.begin()+ti)).pt.x;
+							int kp2y = (*(keypoints2.begin()+ti)).pt.y;
 
-			circle(outimg,cv::Point(kp1x, kp1y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
-			circle(outimg,cv::Point(640+ kp2x, kp2y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
+							circle(outimg,cv::Point(kp1x, kp1y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
+							circle(outimg,cv::Point(640+ kp2x, kp2y), 5, cv::Scalar(colourChanger, 100, 255), 4, 8, 0);
 
 #if(DEBUG_MODE)
-			cout<<"Correct coord Left row,col : "<<kp1y<<", "<<kp1x<<endl;
-			cout<<"Correct coord Right row,col : "<<kp2y<<", "<<kp2x<<endl;
+							cout<<"Correct coord Left row,col : "<<kp1y<<", "<<kp1x<<endl;
+							cout<<"Correct coord Right row,col : "<<kp2y<<", "<<kp2x<<endl;
 #endif
-		}
-		colourChanger = colourChanger+30;
-	}
+						}
+						colourChanger = colourChanger+30;
+					}
 
 
 
-	cv::namedWindow("Matches");
-	cv::imshow("Matches", outimg);
-	//imgRGB1 is right. imgRGB2 is left
+					cv::namedWindow("Matches");
+					cv::imshow("Matches", outimg);
+					//imgRGB1 is right. imgRGB2 is left
 #if(DEBUG_MODE)
-	cv::imshow("keypoints", imgGray1);
-	cv::imshow("keypoints2", imgGray2);
+					cv::imshow("keypoints", imgGray1);
+					cv::imshow("keypoints2", imgGray2);
 #endif
 
-	cv::waitKey();
+					cv::waitKey();
 #endif
+				}//end of jj loop
+			}//end of ii loop
+		}//End of ss loop
+	}//End of the kk loop
 
 	return 0;
 }

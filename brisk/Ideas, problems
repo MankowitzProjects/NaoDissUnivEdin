@@ -108,12 +108,44 @@ In order to resolve this error, add the folders to search for these files in the
 3. Problem: It cannot find directories within the src files of the agast library
 Solution: Add the terms "../include/agast/" to the files "cvWrapper.h" and "xxx.h"
 
+Note: IncludePaths in the Makefile only includes libraries with .h extension. IncludeLibs includes libraries with the .so extension
+
+Compiles with nao.make.zbuild
+********************************************************************
+
+Fix problem of SimRobot:
+********************************************************************
+1. Problem: Cannot load library /home/daniel/Desktop/RoboCupCode/BhumanEdinferno/ehuman/Build/SimRobot/Linux/Develop/libRoboCup.so: (/home/daniel/Desktop/RoboCupCode/BhumanEdinferno/ehuman/Build/SimRobot/Linux/Develop/libRoboCup.so: undefined symbol: _ZTVN5agast16AgastDetector5_8E)
+
+The previous problem was fixed by adding: 
+matchrecursive("../../Src/Tools/ImageProcessing/brisk.cpp", "../../Src/Tools/ImageProcessing/DataAnalysis.cpp", "../../Src/Tools/ImageProcessing/FeatureExtraction.cpp", "../../Src/Tools/ImageProcessing/include/*.h"),
+matchrecursive("../../Src/Tools/ImageProcessing/agast/*.cc", "../../Src/Tools/ImageProcessing/agast/*.h"),
+
+to the SimRobot.make.zbuild file.
+Now we have to remove the above-mentioned error.
+
+Solution:
+To fix this problem, add:
+    matchrecursive("../../Src/Tools/ImageProcessing/brisk.cpp", "../../Src/Tools/ImageProcessing/DataAnalysis.cpp", "../../Src/Tools/ImageProcessing/FeatureExtraction.cpp", "../../Src/Tools/ImageProcessing/include/*.h", "../../Src/Tools/ImageProcessing/include/*.hpp"),
+    matchrecursive("../../Src/Tools/ImageProcessing/agast/src/*.cc", "../../Src/Tools/ImageProcessing/agast/include/agast/*.h"),  
+to the "files" section
+
+THEN add:
+
+    "/home/daniel/Desktop/OpenCV-2.2.0/include", to "includePaths"
+
+THEN add:
+"/home/daniel/Desktop/OpenCV-2.2.0/lib", to "libPaths"
+
+THEN add:
+"opencv_core", "opencv_contrib", "opencv_features2d",  "opencv_flann", "opencv_gpu", "opencv_highgui", "opencv_imgproc", "opencv_ml", "opencv_legacy", "opencv_objdetect" to libraries
 
 
+04/07/12
 
+1. Question: What is the difference between setting the number of octaves to 0 on BRISK and using BRISK with S-BRISK?
 
-
-
-
+Testing:
+To do the BRISK BRISK test with Hamming distance and thresholds, Hamming must be true.
 
 

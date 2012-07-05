@@ -92,7 +92,7 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 80;
+	int threshold = 46.25;
 	int hammingDistance = 100;//BRISK BRISK
 	double radius = 0.15;//BRISK SURF
 	std::string feat_descriptor = "BRISK";

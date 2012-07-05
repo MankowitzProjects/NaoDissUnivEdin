@@ -85,18 +85,41 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 int main(int argc, char ** argv) {
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-	//For BRISK BRISK, hammingDistance = 85, Threshold = 100
-	bool hamming=true;
+	bool hamming=false;
 	std::string feat_detector = "BRISK";
-	int threshold = 100;
-	int hammingDistance = 85;//BRISK BRISK
-	double radius = 0.20;//BRISK SURF
-	std::string feat_descriptor = "BRISK";
+	std::string feat_descriptor = "SURF";
+	double hammingDistance = 0.14;
+	//int threshold = 45;
+	int threshold = 33.75;
 
-	for(int kk=1;kk<=4;kk++)
+	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	int threshold = 30;//46.25;//46.25 KNN
+//	int threshold = 95;//Hamming
+//	int hammingDistance = 93.75;//Hamming
+
+	//For BRISK4 (4 octaves)
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	//int threshold = 51.25; //KNN
+//	int threshold = 88.75;//Hamming
+//	int hammingDistance = 116.25;//Hamming
+
+	//For 1D SURF
+
+
+
+	//For 2D SURF
+
+
+
+	for(int kk=1;kk<=2;kk++)
 	{
 
-		for (int ss = kk;ss<=kk;ss++)
+		for (int ss = 3;ss<=4;ss++)
 		{
 
 			//Create object for dataAnalysis
@@ -137,13 +160,21 @@ int main(int argc, char ** argv) {
 			//*************************************
 			time_t rawtime;
 			struct tm * timeinfo;
-			char filename [80];
+			//char filename [80];
 
 			time ( &rawtime );
 			timeinfo = localtime ( &rawtime );
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
-			strftime (filename,80,"../data/Matches/nonmatching_matching_Data_26062012_BRISK_100_BRISK_KNN.txt",timeinfo);
-			puts (filename);
+			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
+			//puts (filename);
+			string filename = "../data/Matches/nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_0250_33";
+			//		file.append(testThresholdString.c_str());
+			//		file.append("Directory_");
+			//		file.append(tempDir.c_str());
+			//		file.append("_");
+			//		file.append(stringRad.c_str());
+			filename.append(".txt");
+			cout<<filename<<endl;
 			//*************************************
 			//Make sure that there are the same number of images in each frame
 			if(jpegCounter>jpegCounter1)
@@ -230,7 +261,6 @@ int main(int argc, char ** argv) {
 
 					//MC: Generate a vector of keypoints
 					std::vector<cv::KeyPoint> keypoints, keypoints2;
-					int threshold;
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
 
 					// create the detector:
@@ -285,9 +315,15 @@ int main(int argc, char ** argv) {
 					//descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
 					descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 					else{
+//						if(descriptors2.rows>0)
+//						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+//						else
+//							matches.clear();
 						//Decreasing with the maxdistance value will drastically reduce the number of matches
-						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,radius);
-						//descriptorMatcher->knnMatch(descriptors2,descriptors,matches,3);
+						if(descriptors2.rows>0)
+						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+						else
+							matches.clear();
 					}
 
 					cv::Mat outimg;
@@ -296,7 +332,7 @@ int main(int argc, char ** argv) {
 					ofstream writeFile;
 
 					//Create the filename with the current time
-					writeFile.open(filename, ios::app);//ios::app
+					writeFile.open(filename.c_str(), ios::app);//ios::app
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifys);
 
@@ -335,9 +371,9 @@ int main(int argc, char ** argv) {
 #endif
 
 
-					threshold = atoi(argv[3]+5);
+					//threshold = atoi(argv[3]+5);
 					//Write all the information to a file
-					writeFile <<tempDir<<", "<<tempDir1<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
+					writeFile <<tempDir<<", "<<tempDir1<<", "<<threshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumInvalidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
 					//close the file
 					writeFile.close();
 

@@ -21,6 +21,47 @@ New problem:
 
 These are the libraries used for SimRobot:
 ***************************************************************************************
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/cv.so", "cv.so"},
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_core.so", "libopencv_core.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_core.so.2.2", "libopencv_core.so.2.2" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_core.so.2.2.0", "libopencv_core.so.2.2.0" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_features2d.so", "libopencv_features2d.so" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_features2d.so.2.2", "libopencv_features2d.so.2.2" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_features2d.so.2.2.0", "libopencv_features2d.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_gpu.so", "libopencv_gpu.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_gpu.so.2.2", "libopencv_gpu.so.2.2"}, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_gpu.so.2.2.0", "libopencv_gpu.so.2.2.0" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_highgui.so", "libopencv_highgui.so"}, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_highgui.so.2.2", "libopencv_highgui.so.2.2" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_highgui.so.2.2.0", "libopencv_highgui.so.2.2.0" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_imgproc.so", "libopencv_imgproc.so" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_imgproc.so.2.2", "libopencv_imgproc.so.2.2" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_imgproc.so.2.2.0", "libopencv_imgproc.so.2.2.0" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ml.so", "libopencv_ml.so" }, 
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ml.so.2.2", "libopencv_ml.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ml.so.2.2.0", "libopencv_ml.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_calib3d.so.2.2.0", "libopencv_calib3d.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_calib3d.so.2.2", "libopencv_calib3d.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_calib3d.so", "libopencv_calib3d.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_contrib.so", "libopencv_contrib.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_contrib.so.2.2", "libopencv_contrib.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_contrib.so.2.2.0", "libopencv_contrib.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_flann.so", "libopencv_flann.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_flann.so.2.2", "libopencv_flann.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_flann.so.2.2.0", "libopencv_flann.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_legacy.so", "libopencv_legacy.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_legacy.so.2.2", "libopencv_legacy.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_legacy.so.2.2.0", "libopencv_legacy.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_objdetect.so", "libopencv_objdetect.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_objdetect.so.2.2", "libopencv_objdetect.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_objdetect.so.2.2.0", "libopencv_objdetect.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ts.so", "libopencv_ts.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ts.so.2.2", "libopencv_ts.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_ts.so.2.2.0", "libopencv_ts.so.2.2.0" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_video.so", "libopencv_video.so" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_video.so.2.2", "libopencv_video.so.2.2" },
+      { "/home/daniel/Desktop/OpenCV-2.2.0/lib/libopencv_video.so.2.2.0", "libopencv_video.so.2.2.0" },
+
 
       { "../../libraries/cv.so", "cv.so"},
       { "../../libraries/libopencv_core.so", "libopencv_core.so" },
@@ -2919,6 +2960,23 @@ daniel@daniel:~/Desktop/RoboCupCode/BhumanEdinferno/ehuman/Make/Linux$
 *******************************************************************************
 *******************************************************************************
 *******************************************************************************
+
+02/07/12
+
+Shared-user library problem on the Nao:
+/media/userdata/Config/bhuman: error while loading shared libraries: libtbb.so.2: cannot open shared object file: No such file or directory
+Solution:
+copy the libaries from the /usr/lib, /lib/i386-gnu-linux, /usr/lib/i386-gnu-linux library files to the robot's /usr/lib folder.
+To find out which libraries the bhuman compilation requires, go to /media/userdata/Config and type "ldd bhuman"
+
+You need to add the relevant libraries. This will enable you to compile with bhuman. 
+
+It may ask for libstdc++.so.6 with GLIBCXX 14.0.... Just copy that from the /usr/lib/i386-gnu-linux folder and send that to the robot
+
+New problem:
+
+ "Error: " "Error: only found consistent providers for " "BikeEngineOutput, FallDownState, FilteredJointData, FilteredJointDataPrev, FilteredSensorData, GroundContactState, HeadJointRequest, JointRequest, KeyStates, MotionInfo, MotionRobotHealth, OdometryData, RobotModel, TorsoMatrix, BehaviorConfiguration, CameraCalibration, CameraSettings, ColorTable64, DamageConfiguration, FieldDimensions, Image, ImageInfo, ObstacleSettings, RobotDimensions, CameraInfo, CognitionFrameInfo, FrameInfo, RobotCameraMatrix, RobotCameraMatrixOther, RobotCameraMatrixPrev, RobotInfo, ArmContactModel, CameraMatrix, CameraMatrixOther, CameraMatrixPrev, GameInfo, ImageCoordinateSystem, OpponentTeamInfo, OwnTeamInfo, TeamMateData, BodyContour, GoalPercept, GroundTruthBallModel, GroundTruthRobotPose, RegionPercept, TeamMarkerSpots, BallSpots, LineSpots, RobotPercept, BallPercept, LinePercept, RobotHealth, BallModel, BallHypotheses" ".\nRequirements missing for providers for " "BehaviorControlOutput, BehaviorLEDRequest, CombinedWorldModel, FieldCoverage, FreePartOfOpponentGoalModel, GlobalFieldCoverage, HeadAngleRequest, HeadMotionRequest, ImageRequest, LEDRequest, MotionRequest, ObstacleModel, PotentialRobotPose, RobotPose, RobotPoseInfo, RobotsModel, SoundOutput, SoundRequest, USObstacleGrid, GroundTruthResult" .
+NaoQi is working
 
 
 

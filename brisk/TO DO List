@@ -67,7 +67,7 @@ TESTS
 2. Determine the repeatability (find definition) of the feature extractor under changing angles, scale, blur.
 3. Compare BRISK-BRISK, BRISK BRISK(NO SCALE SPACE), BRISK SURF, BRISK USURF, SIFT SIFT, 1D SURF etc
 4. Compute the mean distance between features over a number of images. E.g. take a number of keypoints from 20 images and compute their mean distances
-5. Compute the distance ratio between features that have are matches and features that are not matches
+5. Compute the distance ratio between features that are matches and features that are not matches
 
 
 ***************************
@@ -85,26 +85,85 @@ The matching properties are:
 
 image num left, image num right, queryIdx, trainIdx,  keypoint1 x, kp1y, angle size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance
 
+Writing invalid matches to a files
+
+image num left, image num right, kp1x, kp1y, angle, size, octave, response, kp2x, kp2y, angle, size, octave, neighbor num, distance 
 
 28/06/12
 
-1. make OpenCV, port it to the SDK
-2. Include the relevant files into the bhuman framework
+1. make OpenCV, port it to the SDK - DONE
+2. Include the relevant files into the bhuman framework - DONE
 3. Hope for the best :)
 
+03/07/12
+
+1. Include invalid matches using KNN routine and angle constraint routine - This should be written to files
+2. Need to determine the mean number of features that are found for the particular threshold
+
+TESTS
+***********************************
 
 
 
+3. Note that the reason the kNN criterion works is that two matches that are very close to
+one another can potentially be attributed to noise
+
+04/07/12
+
+Format for saving data
+
+ - For finding the optimal threshold
+
+threshold_detector_extractor_matcher(KNN or radius)_ddmmyyhhmm.txt
+
+ - For finding the matching statistics
+
+nonmatching_matching_data_detector_extractor_matcher_ddmmyyhhmm_threshold1_threshold2_...txt
+
+ - For single image statistics
+
+single_image_data_detector_extractor_matcher_ddmmyyhhmm_threhsold1_threshold2_...txt
 
 
+ROC Curve and Timing Tests
+******************************************************************
+1. Run S-BRISK KNN at an angle of 10. - DONE
+2. Run S-BRISK Hamming (on 10 images) at an angle of 10. - DONE
 
+3. Run BRISK4 KNN at an angle of 10. - DONE
+4. Run BRISK4 Hamming (on 10 images) at an angle of 10 - DONE
 
+5. Run SBRISK SURF2D KNN at an angle of 10. - DONE
+6. Run SBRISK SURF2D Hamming (on 10 images) at an angle of 10. - DONE
 
+7. Run SURF2D SURF2D KNN at an angle of 10.
+8. Run SURF2D SURF2D Hamming (on 10 images) at an angle of 10.
 
+9. Run BRISK4 SURF2D KNN at an angle of 10.
+10. Run BRISK4 SURF2D Hamming (on 10 images) at an angle of 10.
 
+11. Run SURF1D KNN at an angle of 10.
+12. Run SURF1D Hamming (on 10 images) at an angle of 10.
 
+*****************************************************************
 
+Single Image Tests
+*****************************************************************
+1. Compute the score for matches and the score for false matches (Don't fulfill KNN or angle criterion).
+2. Compute the average size of keypoint matches, angle, octave (Where applicable).
+3. Calculate the average image matching score for overlapping and non-overlapping images - DONE
 
+Issues:
+1. I need to test all the hamming tests on all of the images or rerun the KNN tests on 10 images
+1.1 The matching scores for KNN may be incorrect as one match is saved each time. This means KNN tests should be repeated
+2. I should compare whether averaging the mScores and then finding the threshold is better than finding the max thresholds
+and averaging
+3. I need to setup the implementation for the single image comparison tests. I need to find the distance between keypoints. Possibly
+could create a distance vector whose index corresponds to the keypoint - DONE
+
+05/07/12
+
+1. Determine how many image pairs are being compared for matches and non matches - DONE
 
 
 

@@ -49,7 +49,7 @@
 #define DEBUG_MODE 0
 #define SINGLE_IMAGE_TEST 1
 #define MULTIPLE_IMAGE_TEST 0
-#define DISPLAY 0
+#define DISPLAY 1
 
 template <class T>
 inline std::string to_string (const T& t)
@@ -80,14 +80,32 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 int main(int argc, char ** argv) {
 
-	//For BRISK SURF Using radius = 0.20, threshold = 70
-	//For BRISK BRISK, hammingDistance = 85, Threshold = 100
+	//For SBRISK SURF2D Using radius = 0.20, threshold = 70
+//	bool hamming=false;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "SURF";
+//	double hammingDistance = 0.05;
+//	int threshold = 20;
+
+	//For S-BRISK, hammingDistance = 85, Threshold = 100
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 20;
-	int hammingDistance = 20;//BRISK BRISK
-	double radius = 0.20;//BRISK SURF
 	std::string feat_descriptor = "BRISK";
+	int testThreshold = 20;
+	int hammingDistance = 40;//BRISK BRISK
+
+	//For BRISK (Multiple scales)
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	int testThreshold = 20;
+//	int hammingDistance = 40;//BRISK BRISK
+
+
+	//For 1D SURF
+
+
+
 
 	for (int ss=1;ss<=4; ss++)
 	{
@@ -116,7 +134,7 @@ int main(int argc, char ** argv) {
 		std::string name2;
 
 		//Initialise the test threshold
-		int testThreshold = 0;
+		//int testThreshold = 0;
 
 
 		//Set the radius
@@ -135,19 +153,22 @@ int main(int argc, char ** argv) {
 		string testThresholdString = to_string<int>(testThreshold);
 		time ( &rawtime );
 		timeinfo = localtime ( &rawtime );
-		string file = "../data/Thresholds/matchingData_threshold_26062012_BRISK_BRISK_KNN";
-		//		file.append(testThresholdString.c_str());
-		//		file.append("Directory_");
-		//		file.append(tempDir.c_str());
-		//		file.append("_");
-		//		file.append(stringRad.c_str());
+		//*****************************************
+		string file = "../data/Thresholds/threshold_SBRISK_SBRISK_Hamming_threshold_05072012_1825_AllImages";
+		//*****************************************
 		file.append(".txt");
 		cout<<file<<endl;
 		//*************************************
 
-//		for (int rr=1;rr<=20;rr++)//rr<20
-//		{
-			cout<<"Hamming Distance: "<<hammingDistance<<endl;
+
+		//*****************************************
+		int hammingDistance = 40;
+		//double hammingDistance = 0.1;
+		//*****************************************
+
+		for (int rr=1;rr<=20;rr++)//rr<20
+		{
+			cout<<"Hamming Distance: "<<hammingDistance<<", "<<rr<<endl;
 			//set the threshold
 			testThreshold = 20;
 
@@ -262,12 +283,15 @@ int main(int argc, char ** argv) {
 						else
 							descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
 						if(hamming)
-							descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-						//descriptorMatcher->radiusMatch(descriptors2,descriptors,matches,hammingDistance);
+						//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+						//PROBLEM: descriptors and descriptors2 were swapped around
+						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
 						else{
 							//Messing with the maxdistance value will drastically reduce the number of matches
-							descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,radius);
-							//descriptorMatcher->knnMatch(descriptors2,descriptors,matches,3);
+							if(descriptors2.rows>0)
+							descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+							else
+								matches.clear();
 						}
 						//For the above method, we could use KnnMatch. All values less than radius max distance are selected
 						//*****************************************************************
@@ -321,7 +345,7 @@ int main(int argc, char ** argv) {
 
 						//Write all the information to a file
 						//Swap hamming distance with radius
-						writeFile <<tempDir<<", "<<hammingDistance<<", "<<testThreshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
+						writeFile <<tempDir<<", "<<hammingDistance<<", "<<testThreshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumInvalidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
 
 						//close the file
 						writeFile.close();
@@ -364,7 +388,7 @@ int main(int argc, char ** argv) {
 						cv::imshow("Matches", outimg);
 						//cv::imshow("keypoints", imgRGB1);
 						//cv::imshow("keypoints2", imgRGB2);
-						//cv::waitKey();
+						cv::waitKey();
 #endif
 
 
@@ -377,9 +401,11 @@ int main(int argc, char ** argv) {
 			}//End of the tt threshold
 
 			//Increment the radius
+			//*****************************************
 			//radius = radius+ 0.01;//For BRISK_SURF
 			hammingDistance = hammingDistance + 5;//For BRISK BRISK
-		//}//End of rr loop for radius
+			//*****************************************
+		}//End of rr loop for radius
 
 	}//End of main ss loop
 	return 0;

@@ -125,7 +125,7 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 			threshold = 30;
 		detector = new cv::FastFeatureDetector(threshold,true);
 	}
-	else if("AGAS100T"== feat_detector){
+	else if("AGAST"== feat_detector){
 		if(threshold==0)
 			threshold = 30;
 		detector = new cv::BriskFeatureDetector(threshold,0);
@@ -133,8 +133,11 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 	else if("BRISK"== feat_detector){
 		//cout<<"Reached Here"<<endl;
 		//Used for the threshold testing
-		if(testFlag==2)
+		if(testFlag==1)
+			threshold = threshold;
+		else if(testFlag==2)
 			threshold = testThreshold;
+		//cout<<"Threshold ***********: "<<threshold<<endl;
 		if(threshold==0)
 			threshold = 30;
 		//The detector uses 0 layers. This removes the need to perform non-maximal suppression
@@ -347,6 +350,14 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 					cout<<"The right image coordinate to be erased row, col is: "<<keyRightR<<", "<<keyRightC<<endl;
 #endif
 
+
+					#if (FEATURE_DEBUG_MATCHES)
+					//This stores the coordinates of the invalid matches
+					leftPointsAngle.push_back(keypoints[i1]);
+					rightPointsAngle.push_back(keypoints2[i2]);
+					keypointDistanceAngle.push_back(matches[i][counter].distance);
+					#endif
+
 					//Erase the matches
 					//***************************************************
 					matches[i].erase(matches[i].begin()+counter);
@@ -363,11 +374,6 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 					//Increment the total number of invalid matches
 					totalNumInvalidMatches = totalNumInvalidMatches + 1;
 
-#if (FEATURE_DEBUG_MATCHES)
-					//This stores the coordinates of the invalid matches
-					rightPoints.push_back(keypoints2[i2].pt);
-					leftPoints.push_back(keypoints[i1].pt);
-#endif
 				}
 				else
 				{
@@ -390,13 +396,34 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 
 		}//End if KnnMatches Criteria
 		else{
-			//Remove matches if there are matches to be removed
+			//Remove matches if they do not satisfy the KNN criterion
 			if(matches[i].size()>0)
-				for(size_t j=0;j<=matches[i].size();j++){
-					matches[i].erase(matches[i].begin()+j);
-				}
+			{
+				//cout<<"Matches size: "<<matches[i].size()<<endl;
+				//This will work because we are looking at only the two nearest matches
+				for(size_t j=0;j<=matches[i].size();j++)
+				{
+#if (FEATURE_DEBUG_MATCHES)
+					//Add the invalid match to the respective vectors
+					leftPointsKNN.push_back(keypoints[matches[i].begin()->queryIdx]);
+					rightPointsKNN.push_back(keypoints2[matches[i].begin()->trainIdx]);
+					keypointDistanceKNN.push_back(matches[i].begin()->distance);
+					neighborIndexKNN.push_back(j);
 
-		}
+					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
+					cout<<"Matches size: "<<matches[i].size()<<endl;
+					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
+					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
+					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
+#endif
+					matches[i].erase(matches[i].begin());
+					totalNumInvalidMatches++;
+
+
+				}
+			}
+
+		}//End else KnnMatches Criteria
 
 		totalNumValidMatches = totalNumValidMatches + matches[i].size();
 		totalNumMatches = totalNumMatches + allMatches;
@@ -558,47 +585,47 @@ void FeatureExtraction::verifyMatchingOrder(const cv::Mat & image,cv::Mat descri
 double FeatureExtraction::calcEuclideanDistance(cv::Mat d1, cv::Mat d2)
 {
 
-////	template<class Distance>
-////	inline void BruteForceMatcher<Distance>::commonRadiusMatchImpl( BruteForceMatcher<Distance>& matcher,
-////	                             const Mat& queryDescriptors, vector<vector<DMatch> >& matches, float maxDistance,
-////	                             const vector<Mat>& masks, bool compactResult )
-////	{
-//	//BruteForceMatcher<Distance>& matcher;
-//	    typedef typename Distance::ValueType ValueType;
-//	    typedef typename Distance::ResultType DistanceType;
-//	for( int qIdx = 0; qIdx < queryDescriptors.rows; qIdx++ )
-//	    {
-//	        if( matcher.isMaskedOut( masks, qIdx ) )
-//	        {
-//	            if( !compactResult ) // push empty vector
-//	                matches.push_back( vector<DMatch>() );
-//	        }
-//	        else
-//	        {
-//	            matches.push_back( vector<DMatch>() );
-//	            vector<vector<DMatch> >::reverse_iterator curMatches = matches.rbegin();
-//	            for( size_t iIdx = 0; iIdx < imgCount; iIdx++ )
-//	            {
-//	                CV_Assert( DataType<ValueType>::type == matcher.trainDescCollection[iIdx].type() ||
-//	                           matcher.trainDescCollection[iIdx].empty() );
-//	                CV_Assert( queryDescriptors.cols == matcher.trainDescCollection[iIdx].cols ||
-//							   matcher.trainDescCollection[iIdx].empty() );
-//
-//	                const ValueType* d1 = (const ValueType*)(queryDescriptors.data + queryDescriptors.step*qIdx);
-//	                for( int tIdx = 0; tIdx < matcher.trainDescCollection[iIdx].rows; tIdx++ )
-//	                {
-//	                    if( masks.empty() || matcher.isPossibleMatch(masks[iIdx], qIdx, tIdx) )
-//	                    {
-//	                        const ValueType* d2 = (const ValueType*)(matcher.trainDescCollection[iIdx].data +
-//	                                                                 matcher.trainDescCollection[iIdx].step*tIdx);
-//	                        DistanceType d = matcher.distance(d1, d2, dimension);
-//	                        if( d < maxDistance )
-//	                            curMatches->push_back( DMatch( qIdx, tIdx, (int)iIdx, (float)d ) );
-//	                    }
-//	                }
-//	            }
-//	            std::sort( curMatches->begin(), curMatches->end() );
-//	        }
-//	    }
+	////	template<class Distance>
+	////	inline void BruteForceMatcher<Distance>::commonRadiusMatchImpl( BruteForceMatcher<Distance>& matcher,
+	////	                             const Mat& queryDescriptors, vector<vector<DMatch> >& matches, float maxDistance,
+	////	                             const vector<Mat>& masks, bool compactResult )
+	////	{
+	//	//BruteForceMatcher<Distance>& matcher;
+	//	    typedef typename Distance::ValueType ValueType;
+	//	    typedef typename Distance::ResultType DistanceType;
+	//	for( int qIdx = 0; qIdx < queryDescriptors.rows; qIdx++ )
+	//	    {
+	//	        if( matcher.isMaskedOut( masks, qIdx ) )
+	//	        {
+	//	            if( !compactResult ) // push empty vector
+	//	                matches.push_back( vector<DMatch>() );
+	//	        }
+	//	        else
+	//	        {
+	//	            matches.push_back( vector<DMatch>() );
+	//	            vector<vector<DMatch> >::reverse_iterator curMatches = matches.rbegin();
+	//	            for( size_t iIdx = 0; iIdx < imgCount; iIdx++ )
+	//	            {
+	//	                CV_Assert( DataType<ValueType>::type == matcher.trainDescCollection[iIdx].type() ||
+	//	                           matcher.trainDescCollection[iIdx].empty() );
+	//	                CV_Assert( queryDescriptors.cols == matcher.trainDescCollection[iIdx].cols ||
+	//							   matcher.trainDescCollection[iIdx].empty() );
+	//
+	//	                const ValueType* d1 = (const ValueType*)(queryDescriptors.data + queryDescriptors.step*qIdx);
+	//	                for( int tIdx = 0; tIdx < matcher.trainDescCollection[iIdx].rows; tIdx++ )
+	//	                {
+	//	                    if( masks.empty() || matcher.isPossibleMatch(masks[iIdx], qIdx, tIdx) )
+	//	                    {
+	//	                        const ValueType* d2 = (const ValueType*)(matcher.trainDescCollection[iIdx].data +
+	//	                                                                 matcher.trainDescCollection[iIdx].step*tIdx);
+	//	                        DistanceType d = matcher.distance(d1, d2, dimension);
+	//	                        if( d < maxDistance )
+	//	                            curMatches->push_back( DMatch( qIdx, tIdx, (int)iIdx, (float)d ) );
+	//	                    }
+	//	                }
+	//	            }
+	//	            std::sort( curMatches->begin(), curMatches->end() );
+	//	        }
+	//	    }
 	return 1;
 }

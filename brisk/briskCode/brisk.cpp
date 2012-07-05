@@ -396,17 +396,22 @@ void BriskDescriptorExtractor::computeImpl(const Mat& image,
 	unsigned int basicscale=0;
 	if(!scaleInvariance)
 		basicscale=std::max((int)(scales_/lb_scalerange*(log(1.45*basicSize_/(basicSize06))/log2)+0.5),0);
+
+	//Here all the scales are set
 	for(size_t k=0; k<ksize; k++){
 		unsigned int scale;
 		if(scaleInvariance){
+			//Determines the scale for the current keypoint
 			scale=std::max((int)(scales_/lb_scalerange*(log(keypoints[k].size/(basicSize06))/log2)+0.5),0);
-			// saturate
+			//If the scale of the current keypoint is greater than scales
 			if(scale>=scales_) scale = scales_-1;
 			kscales[k]=scale;
+			//cout<<"Scale: "<<scale<<endl;
 		}
 		else{
 			scale = basicscale;
 			kscales[k]=scale;
+			//cout<<"Basic Scale: "<<scale<<endl;
 		}
 		const int border = sizeList_[scale];
 		const int border_x=image.cols-border;
@@ -422,6 +427,8 @@ void BriskDescriptorExtractor::computeImpl(const Mat& image,
 			k--;
 		}
 	}
+
+//	cv::waitKey();
 
 	// first, calculate the integral image over the whole image:
 	// current integral image

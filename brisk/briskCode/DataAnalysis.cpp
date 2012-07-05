@@ -21,7 +21,7 @@ int DataAnalysis::getNumImagesInDirectory(string *dir)
 	struct dirent *dirp;
 	struct stat filestat;
 	int jpegCounter = 0;
-	bool terminal = false;
+	bool terminal = true;
 	string mgMatchLeft;
 	string mgMatchRight;
 	string ogMatchLeft;
