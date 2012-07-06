@@ -229,6 +229,39 @@ The MIS score contains another set of weighting parameters, $k_3$ and $k_4$, tha
 \end{minipage}
 \end{figure}
 
+\begin{table}
+\caption{The optimal thresholds for the 2-KNN feature extraction algorithms}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline 
+Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & Normal threshold & Consistent threshold\tabularnewline
+\hline 
+\hline 
+S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
+\hline 
+BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
+\hline 
+SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 35\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:knnStatistics}
+\end{table}
+
+\begin{table}
+\caption{The optimal thresholds for the Hamming/Euclidean distance feature extraction algorithms}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
+\hline 
+\hline 
+S-BRISK & S-BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 78.75 & 110 & 75 & 115\tabularnewline
+\hline 
+BRISK4 & BRISK4 & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 85 & 121.25 & 130 & 65\tabularnewline
+\hline 
+SBRISK & SURF2D & Euclidean & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:hammingStatistics}
+\end{table}
 
 \subsubsection{Matching Score}
 \label{sec:matchingScore}
@@ -278,6 +311,104 @@ It was found that the valid matched keypoints
 
 %A picture of the graph for each method containing the optimal parameters
 
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Method & Total Matches & Valid Matches & Invalid Matches & Best matches\tabularnewline
+\hline 
+\hline 
+SBRISK - 2KNN & 106.96 & 5.34 & 101.62 & 3.24\tabularnewline
+\hline 
+BRISK4 - 2KNN & 105.44 & 4.63 & 100.81 & 2.65\tabularnewline
+\hline 
+SBRISK-SURF2D - 2KNN & 132.62 & 7.13 & 125.48 & 4.72\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:keypointsMatchesKNN}
+\end{table}
+
+\begin{table}
+\begin{tabular}{|c|c|c|c|c|}
+\hline 
+Method & Total Matches & Valid Matches & Invalid Matches & Best matches\tabularnewline
+\hline 
+\hline 
+SBRISK - Hamming & 32.20 & 17.05 & 15.14 & 6.10\tabularnewline
+\hline 
+BRISK4 - Hamming & 30.68 & 18.70 & 11.98 & 5.21\tabularnewline
+\hline 
+SBRISK-SURF2D - Euclidean & 11.61 & 7.16 & 4.44 & 4.93\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:keypointsMatchesHamming}
+\end{table}
+
+\subsubsection{Overall Classification Performance}
+\label{sec:rocCurves}
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming.jpg}
+\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using Hamming distance for matching}
+\label{fig:compareHamming}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using 2-KNN for matching}
+\label{fig:compareKNN}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using 2-KNN for matching and consistent thresholds}
+\label{fig:compareKNNConsistent}
+\end{minipage}
+\end{figure}
+
+\begin{table}
+\caption{The performance statistics of 2-KNN feature extraction algorithms}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Method (2-KNN) & Threshold & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+\hline 
+\hline 
+SBRISK & Normal & 90.31 & 5.85 & 8.79 & 1.89 & 0.04 & 24.98 &  &  & \tabularnewline
+\hline 
+ & Consistent & 93.06 & 7.07 & 17.08 & 6.52 & 0.05 & 39.17 &  &  & \tabularnewline
+\hline 
+BRISK4 & Normal & 88.08 & 19.43 & 9.34 & 1.54 & 0.03 & 39.06 &  &  & \tabularnewline
+\hline 
+ & Consistent & 90.76 & 27.79 & 18.00 & 6.81 & 0.05 & 61.30 &  &  & \tabularnewline
+\hline 
+SBRISK - SURF2D & Normal & 93.53 & 6.07 & 17.99 & 0.54 & 0.03 & 33.26 &  &  & \tabularnewline
+\hline 
+ & Consistent & 93.79 & 7.00 & 32.86 & 1.45 & 0.06 & 49.78 &  &  & \tabularnewline
+\hline 
+\end{tabular}
+\label{tab:keypointsMatchesHamming}
+\end{table}
+
+\begin{table}
+\caption{The performance statistics of Hamming/Euclidean Distance feature extraction algorithms}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+Method & Threshold, distance & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+\hline 
+\hline 
+SBRISK & Normal & 82.24 & 5.15 & 4.62 & 0.33 & 0.01 & 18.63 &  &  & \tabularnewline
+\hline 
+BRISK4 & Normal & 74.36 & 14.55 & 4.42 & 0.26 & 0.01 & 27.87 &  &  & \tabularnewline
+\hline 
+SBRISK-SURF2D & Normal & 87.37 & 16.7 & 87.19 & 0.43 & 0.01 & 112.97 &  &  & \tabularnewline
+\hline 
+\end{tabular}
+\label{tab:hammingStatistics}
+\end{table}
+
+
+
+
+
 \subsubsection{SURF2D}
 \label{sec:2dsurfResults}
 %1. Picture of the ROC curve
@@ -290,161 +421,157 @@ It was found that the valid matched keypoints
 \label{sec:briskResults}
 %Find the optimal parameters:
 %1. threshold only + KNN
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & Average Score threshold\tabularnewline
-\hline 
-\hline 
-BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
+%\hline 
+%\hline 
+%BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_KNN.jpg}
-	\caption{The ROC Curve for BRISK4 KNN}
-	\label{fig:sbriskroc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_KNN.jpg}
+%	\caption{The ROC Curve for BRISK4 KNN}
+%	\label{fig:sbriskroc}
+%\end{figure}
 
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-88.08 & 19.43 & 9.34 & 1.54 & 0.03 & 39.06 &  &  & \tabularnewline
-\hline 
-90.76 & 27.79 & 18.00 & 6.81 & 0.05 & 61.30 &  &  & \tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%88.08 & 19.43 & 9.34 & 1.54 & 0.03 & 39.06 &  &  & \tabularnewline
+%\hline 
+%90.76 & 27.79 & 18.00 & 6.81 & 0.05 & 61.30 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 %2. threshold, hammingdistance + KNN
 %****************************************************************
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance\tabularnewline
-\hline 
-\hline 
-BRISK4 & BRISK4 & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 88.75 & 116.25\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
+%\hline 
+%\hline 
+%BRISK4 & BRISK4 & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 85 & 121.25 & 130 & 65\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 %1. Picture of the ROC curve
 %STATS:
 %a. The AUC
 %b. average time, extraction, deletion
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_Hamming.jpg}
-	\caption{The ROC Curve for BRISK4 Hamming}
-	\label{fig:sbriskroc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_Hamming.jpg}
+%	\caption{The ROC Curve for BRISK4 Hamming}
+%	\label{fig:sbriskroc}
+%\end{figure}
 
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-72.71 & 14.03 & 3.97 & 0.29 & 0.01 & 26.84 &  &  & \tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%74.36 & 14.55 & 4.42 & 0.26 & 0.01 & 27.87 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+%\end{table}
 
 
 \subsubsection{BRISK-SURF2D}
 \label{sec:brisk2dsurfResults}
 %1. Picture of the ROC curve
 
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & Average Score Threshold\tabularnewline
-\hline 
-\hline 
-SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 35\tabularnewline
-\hline 
-\end{tabular}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
+%\hline 
+%\hline 
+%SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 35\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
-\label{tab:sbrisk}
-\end{table}
-
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_KNN.jpg}
-	\caption{The ROC Curve for SBRISK SURF2D KNN}
-	\label{fig:sbriskroc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_KNN.jpg}
+%	\caption{The ROC Curve for SBRISK SURF2D KNN}
+%	\label{fig:sbriskroc}
+%\end{figure}
 
 
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-93.53 & 6.07 & 17.99 & 0.54 & 0.03 & 33.26 &  &  & \tabularnewline
-\hline 
-93.79 & 7.00 & 32.86 & 1.45 & 0.06 & 49.78 &  &  & \tabularnewline
-\hline 
-\end{tabular}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%93.53 & 6.07 & 17.99 & 0.54 & 0.03 & 33.26 &  &  & \tabularnewline
+%\hline 
+%93.79 & 7.00 & 32.86 & 1.45 & 0.06 & 49.78 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+%\end{table}
 %STATS:
 %a. The AUC
 %b. average time, extraction, deletion
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_Hamming.jpg}
-	\caption{The ROC Curve for SBRISK SURF2D Hamming}
-	\label{fig:sbriskroc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_Hamming.jpg}
+%	\caption{The ROC Curve for SBRISK SURF2D Hamming}
+%	\label{fig:sbriskroc}
+%\end{figure}
 
 
 %2. threshold, hammingdistance + KNN
 %****************************************************************
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance\tabularnewline
-\hline 
-\hline 
-SBRISK & SURF2D & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 33.75 & 0.14\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
+%\hline 
+%\hline 
+%SBRISK & SURF2D & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 
-
-
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-79.96 & 6.57 & 26.56 & 1.30 & 0.01 & 43.10 &  &  & \tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%87.37 & 16.7 & 87.19 & 0.43 & 0.01 & 112.97 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 
 %STATS:
@@ -456,78 +583,79 @@ SBRISK & SURF2D & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 33.75 & 0.14\tabularnewline
 \label{sec:sbriskResults}
 %Find the optimal parameters:
 %1. threshold only + KNN
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & Averaged Score Threshold\tabularnewline
-\hline 
-\hline 
-S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
+%\hline 
+%\hline 
+%S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 %1. Picture of the ROC curve
 %STATS:
 %a. The AUC
 %b. average time, extraction, deletion
 
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_KNN.jpg}
-	\caption{The ROC Curve for S-BRISK with KNN}
-	\label{fig:sbriskroc}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_KNN.jpg}
+%	\caption{The ROC Curve for S-BRISK with KNN}
+%	\label{fig:sbriskroc}
+%\end{figure}
 
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-90.31 & 5.85 & 8.79 & 1.89 & 0.04 & 24.98 &  &  & \tabularnewline
-\hline 
-93.06 & 7.07 & 17.08 & 6.52 & 0.05 & 39.17 &  &  & \tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%90.31 & 5.85 & 8.79 & 1.89 & 0.04 & 24.98 &  &  & \tabularnewline
+%\hline 
+%93.06 & 7.07 & 17.08 & 6.52 & 0.05 & 39.17 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
 
 %2. threshold, hammingdistance + KNN
 %****************************************************************
-\begin{table}
-\caption{Optimum Threshold}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance\tabularnewline
-\hline 
-\hline 
-S-BRISK & S-BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 95 & 93.75\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:sbrisk}
-\end{table}
+%\begin{table}
+%\caption{Optimum Threshold}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
+%\hline 
+%\hline 
+%S-BRISK & S-BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 78.75 & 110 & 75 & 115\tabularnewline
+%\hline 
+%\end{tabular}
+%\label{tab:sbrisk}
+%\end{table}
 
-\begin{figure}[h!]
-	\centering
-		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_Hamming.jpg}
-	\caption{The ROC Curve for S-BRISK using Hamming distance}
-	\label{fig:sbriskrocHamming}
-\end{figure}
+%\begin{figure}[h!]
+%	\centering
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_Hamming.jpg}
+%	\caption{The ROC Curve for S-BRISK using Hamming distance}
+%	\label{fig:sbriskrocHamming}
+%\end{figure}
 
 
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-\hline 
-\hline 
-84.83 & 5.16 & 4.45 & 0.36 & 0.01 & 18.46 &  &  & \tabularnewline
-\hline 
-\end{tabular}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+%\hline 
+%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
+%\hline 
+%\hline 
+%82.24 & 5.15 & 4.62 & 0.33 & 0.01 & 18.63 &  &  & \tabularnewline
+%\hline 
+%\end{tabular}
+
 
 
 

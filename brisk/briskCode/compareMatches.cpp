@@ -85,28 +85,28 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 int main(int argc, char ** argv) {
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-//	bool hamming=false;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "SURF";
-//	double hammingDistance = 0.14;
-//	double threshold = 30;//45
-//	double threshold = 33.75;
+	bool hamming=false;
+	std::string feat_detector = "BRISK";
+	std::string feat_descriptor = "SURF";
+	double hammingDistance = 0.28;
+	//double threshold = 30;//45
+	double threshold = 65;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-	bool hamming=true;
-	std::string feat_detector = "BRISK";
-	std::string feat_descriptor = "BRISK";
-	//double threshold = 30;//46.25;//46.25 KNN
-	double threshold = 78.75;//Hamming
-	double hammingDistance = 40.14;//Hamming
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	//double threshold = 30;//46.25;//46.25 KNN
+//	double threshold = 78.75;//Hamming
+//	double hammingDistance = 110;//Hamming
 
 	//For BRISK4 (4 octaves)
 //	bool hamming=true;
 //	std::string feat_detector = "BRISK";
 //	std::string feat_descriptor = "BRISK";
-//	double threshold = 30; //KNN 51.25
-//	double threshold = 88.75;//Hamming
-//	double hammingDistance = 116.25;//Hamming
+//	//double threshold = 30; //KNN 51.25
+//	double threshold = 85;//Hamming
+//	double hammingDistance = 121.25;//Hamming
 
 	//For 1D SURF
 
@@ -167,7 +167,7 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../../data/Matches/nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070521012_2318_78_40_mScoreFixed";
+			string filename = "../data/Matches/nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_2318_65_028_mScoreFixed";
 			//		file.append(testThresholdString.c_str());
 			//		file.append("Directory_");
 			//		file.append(tempDir.c_str());
@@ -315,15 +315,15 @@ int main(int argc, char ** argv) {
 					descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
 					//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 					else{
-						if(descriptors2.rows>0)
-						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-						else
-							matches.clear();
-						//Decreasing with the maxdistance value will drastically reduce the number of matches
 //						if(descriptors2.rows>0)
-//						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+//						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 //						else
 //							matches.clear();
+						//Decreasing with the maxdistance value will drastically reduce the number of matches
+						if(descriptors2.rows>0)
+						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+						else
+							matches.clear();
 					}
 
 					cv::Mat outimg;

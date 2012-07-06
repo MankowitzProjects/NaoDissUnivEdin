@@ -142,7 +142,7 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 			threshold = 30;
 		//The detector uses 0 layers. This removes the need to perform non-maximal suppression
 		//on multiple layers. Sub-pixel refinement is also not necessary
-		detector = new cv::BriskFeatureDetector(threshold,0);//Should be 4
+		detector = new cv::BriskFeatureDetector(threshold,4);//Should be 4
 	}
 	else if("SURF"== feat_detector){
 		if(threshold==0)
