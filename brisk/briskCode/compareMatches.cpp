@@ -84,49 +84,86 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 
 int main(int argc, char ** argv) {
+	//The angle used for matching validation
+	double angle = 10;
+	//The distance threshold
+	double distance = 200;
+
+	//Determine if the KNN validation criterion is necessary
+	bool usingKnnCriterion = false;
+
+	//The horizon line
+	int horizonLine = 300;
+
+	//Using the terminal
+	bool terminal = false;
+
+
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-	bool hamming=false;
-	std::string feat_detector = "BRISK";
-	std::string feat_descriptor = "SURF";
-	double hammingDistance = 0.28;
-	//double threshold = 30;//45
-	double threshold = 65;
+//			bool hamming=false;
+//			std::string feat_detector = "BRISK";
+//			std::string feat_descriptor = "SURF";
+//			double hammingDistance = 0.28;
+//			//double threshold = 30;//45
+//			double threshold = 65;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-//	bool hamming=true;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "BRISK";
-//	//double threshold = 30;//46.25;//46.25 KNN
-//	double threshold = 78.75;//Hamming
-//	double hammingDistance = 110;//Hamming
+		bool hamming=true;
+		std::string feat_detector = "BRISK";
+		std::string feat_descriptor = "BRISK";
+		double threshold = 77.5;//46.25;//46.25 KNN
+		//	double threshold = 78.75;//Hamming
+		double hammingDistance = 107.5;//Hamming
 
 	//For BRISK4 (4 octaves)
 //	bool hamming=true;
 //	std::string feat_detector = "BRISK";
 //	std::string feat_descriptor = "BRISK";
 //	//double threshold = 30; //KNN 51.25
-//	double threshold = 85;//Hamming
-//	double hammingDistance = 121.25;//Hamming
+//	double threshold = 75;//Hamming
+//	double hammingDistance = 121.5;//Hamming
 
-	//For 1D SURF
+	//Set the date and time
+	string myDate = "12072012";
+	string myTime = "1009";
 
+	//Set if you are matching or not matching
+	bool isMatching = false;
+	//Matching parameters
+	int k_start =0;
+	int k_end = 0;
+	int s_start = 0;
+	int s_end = 0;
 
+	int index = 0;
 
-	//For 2D SURF
-
-
-
-	for(int kk=1;kk<=2;kk++)
+	if(isMatching)
 	{
+		k_start = 1;
+		k_end = 4;
+	}
+	else
+	{
+		k_start = 1;
+		k_end = 2;
+		s_start = 3;
+		s_end = 4;
+	}
 
-		for (int ss = 3;ss<=4;ss++)
+
+	for(int kk=k_start;kk<=k_end;kk++)
+	{
+		if(isMatching)
+			s_start = s_end = kk;
+
+		for (int ss = s_start;ss<=s_end;ss++)
 		{
 
 			//Create object for dataAnalysis
 			DataAnalysis dataAnalysis;
 
 			//Create the Feature extraction object
-			FeatureExtraction feature;
+			FeatureExtraction feature(angle, distance, usingKnnCriterion);
 
 			//The directory where the files are stored
 
@@ -145,8 +182,8 @@ int main(int argc, char ** argv) {
 			double testThreshold = 0;
 
 			//Set the directory names and determine the number of images in each directory
-			int jpegCounter = dataAnalysis.getNumImagesInDirectory(&dir);
-			int jpegCounter1 = dataAnalysis.getNumImagesInDirectory(&dir1);
+			int jpegCounter = dataAnalysis.getNumImagesInDirectory(&dir, terminal);
+			int jpegCounter1 = dataAnalysis.getNumImagesInDirectory(&dir1, terminal);
 
 			std::cout<<"The number of images in the directory is: "<<jpegCounter<<endl;
 
@@ -167,33 +204,48 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../data/Matches/nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_2318_65_028_mScoreFixed";
-			//		file.append(testThresholdString.c_str());
-			//		file.append("Directory_");
-			//		file.append(tempDir.c_str());
-			//		file.append("_");
-			//		file.append(stringRad.c_str());
+			string filename = "../data/Matches/nonmatching_matching_Data__";
+			filename.append(feat_detector);
+			filename.append("_");
+			filename.append(feat_descriptor);
+			filename.append("_");
+			if(usingKnnCriterion)
+				filename.append("KNN_");
+			else
+				filename.append("Hamming_");
+			filename.append(myDate);
+			filename.append("_");
+			filename.append(myTime);
+			filename.append("_");
+			filename.append(to_string<double>(threshold));
+			filename.append("_");
+			filename.append(to_string<int>(hammingDistance));
+			filename.append("_max");
 			filename.append(".txt");
+
 			cout<<filename<<endl;
 			//*************************************
 			//Make sure that there are the same number of images in each frame (Not for non matches)
-//			if(jpegCounter>jpegCounter1)
-//				jpegCounter = jpegCounter1;
-//			else
-//				jpegCounter1 = jpegCounter;
-
+			if (isMatching)
+			{
+				if(jpegCounter>jpegCounter1)
+					jpegCounter = jpegCounter1;
+				else
+					jpegCounter1 = jpegCounter;
+			}
 			//Remember that for non-matches, we can compare 1,1;2,2;3,3...etc
 			//Determine matches without repetition
 			for (int ii = 1;ii<=jpegCounter;ii++)
 			{
+				if(isMatching)
+					index = ii;
+				else
+					index = jpegCounter1;
 
-				for (int jj = 1; jj<jpegCounter1;jj++)//jpegCounter1
+				for (int jj = 1; jj<index;jj++)//jpegCounter1
 				{
 					//Choose the images to compare
 					name1 = to_string<int>(ii);
-					//if(ii==jj)
-					//	continue;images
-
 					name2 = to_string<int>(jj);
 
 					cout<<"Image "<<ii<<", Image "<<jj<<endl;
@@ -202,84 +254,71 @@ int main(int argc, char ** argv) {
 					// names of the two images
 					std::string fname1;
 					std::string fname2;
-//					cv::Mat imgRGB1;
-//					cv::Mat imgRGB2;
-//					cv::Mat imgRGB3;
 
 					cv::Mat imgGray1Full;
 					cv::Mat imgGray2Full;
 					cv::Mat imgGray1;
 					cv::Mat imgGray2;
-					bool do_rot=false;
-					// standard file extensions
-					std::vector<std::string> fextensions;
-					fextensions.push_back(".bmp");
-					fextensions.push_back(".jpeg");
-					fextensions.push_back(".jpg");
-					fextensions.push_back(".jpe");
-					fextensions.push_back(".jp2");
-					fextensions.push_back(".png");
-					fextensions.push_back(".pgm");
-					fextensions.push_back(".ppm");
-					fextensions.push_back(".sr");
-					fextensions.push_back(".ras");
-					fextensions.push_back(".tiff");
-					fextensions.push_back(".tif");
 
-					//
-					//clock_t start = clock();
+					//Process the first image which would normally be stored on the robot
+					//****************************************************
+					while(imgGray1Full.empty()){
+						fname1 = dir+"/"+name1+".jpg";
+						imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+
+					}
+					if (imgGray1Full.empty())
+					{
+						std::cout<<"image(s)"<<fname1<<" not found." << std::endl;
+						return 2;
+					}
+
+					//Only take the image from the horizon line
+					imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
+					//****************************************************
+
 					timespec ts, te, matchings, matchinge, detectors, detectore, extractors, extractore, verifys, verifye;
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
 
-					// if no arguments are passed:
 					//Read in images
 					//*****************************************************************
-					int i=0;
-					int fextensions_size=fextensions.size();
-					while(imgGray1Full.empty()||imgGray2Full.empty()){
-						fname1 = dir+"/"+name1+".jpg";
+					while(imgGray2Full.empty()){
 						fname2 = dir1+"/"+name2+".jpg";
-						//imgRGB1 = cv::imread(fname1);
-						//imgRGB2 = cv::imread(fname2);
-						imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 						imgGray2Full = cv::imread(fname2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
-
-
-						i++;
-						if(i>=fextensions_size) break;
 					}
-					if (imgGray1Full.empty()||imgGray2Full.empty())
+					if (imgGray2Full.empty())
 					{
-						std::cout<<"image(s)"<<fname1<<", "<<fname2<<" not found." << std::endl;
+						std::cout<<"image(s)"<<fname2<<" not found." << std::endl;
 						return 2;
 					}
-					//*****************************************************************
+
 					//We only need the keypoints above the horizon
-					int horizonLine = 300;
-					imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
 					imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
+					//*****************************************************************
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
+					float imageProcessingTime = diff(ts,te).tv_nsec/1000000.0f;
+
+
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
 
 					//MC: Generate a vector of keypoints
 					std::vector<cv::KeyPoint> keypoints, keypoints2;
-					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
-
 					// create the detector:
 					//*****************************************************************
 					cv::Ptr<cv::FeatureDetector> detector;
 					//Note: Testflag==1 which means that the threshold will equal testThreshold
 					detector = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
 					//*****************************************************************
+					detector->detect(imgGray2,keypoints2);
 
+					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectore);
+					float detectionTime = diff(detectors,detectore).tv_nsec/1000000.0f;
 
-					// run the detector:
+					//The descriptor stored on the robot
 					//*****************************************************************
 					detector->detect(imgGray1,keypoints);
-					detector->detect(imgGray2,keypoints2);
 					//*****************************************************************
-					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectore);
-					double detectionTime = diff(detectors,detectore).tv_nsec/1000000;
-					//std::cout<<"Detection Time: "<<diff(detectors,detectore).tv_nsec/1000000<<" ms"<<endl;
-
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractors);
 					// now the extractor:
@@ -289,16 +328,15 @@ int main(int argc, char ** argv) {
 					std::vector<cv::DMatch> indices;
 					// first image. Computes the descrkeypoints2iptor for each of the keypoints.
 					//Outputs a 64 bit vector describing the keypoints.
-
 					descriptorExtractor->compute(imgGray2,keypoints2,descriptors2);
-					// and the second one
-					descriptorExtractor->compute(imgGray1,keypoints,descriptors);
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractore);
-					double extractionTime = diff(extractors,extractore).tv_nsec/1000000;
-					//std::cout<<"Extraction Time: "<<diff(extractors,extractore).tv_nsec/1000000<<" ms"<<endl;
-					//*****************************************************************
+					float extractionTime = diff(extractors,extractore).tv_nsec/1000000.0f;
 
+					//The descriptors stored on the robot
+					//*****************************************************************
+					descriptorExtractor->compute(imgGray1,keypoints,descriptors);
+					//*****************************************************************
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchings);
 					// matching
@@ -311,19 +349,27 @@ int main(int argc, char ** argv) {
 						descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
 					else
 						descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
-					if(hamming)
-					descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
-					//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-					else{
-//						if(descriptors2.rows>0)
-//						descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
-//						else
-//							matches.clear();
-						//Decreasing with the maxdistance value will drastically reduce the number of matches
-						if(descriptors2.rows>0)
-						descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+					if(hamming){
+						if(usingKnnCriterion)
+							descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 						else
-							matches.clear();
+							descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+					}
+					else{
+						if(usingKnnCriterion)
+						{
+							if(descriptors2.rows>0)
+								descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+							else
+								matches.clear();
+						}
+						else{
+							//Decreasing with the maxdistance value will drastically reduce the number of matches
+							if(descriptors2.rows>0)
+								descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+							else
+								matches.clear();
+						}
 					}
 
 					cv::Mat outimg;
@@ -338,20 +384,20 @@ int main(int argc, char ** argv) {
 
 					//Perform the matching verification
 					//*************************************************************************
-//					cout<<"The total number of keypoints in image 1 is: "<<keypoints.size()<<endl;
-//					cout<<"The total number of keypoints in image 2 is: "<<keypoints2.size()<<endl;
-//					cout<<"The total number of matches is: "<<matches.size()<<endl;
+					//					cout<<"The total number of keypoints in image 1 is: "<<keypoints.size()<<endl;
+					//					cout<<"The total number of keypoints in image 2 is: "<<keypoints2.size()<<endl;
+					//					cout<<"The total number of matches is: "<<matches.size()<<endl;
 					feature.performMatchingValidation(imgGray1,keypoints, keypoints2, matches, hamming);
 
 					//*************************************************************************
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifye);
-					double verifyTime = diff(verifys,verifye).tv_nsec/1000;
+					float verifyTime = diff(verifys,verifye).tv_nsec/1000000.0f;
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchinge);
-					double matchingTime = diff(matchings,matchinge).tv_nsec/1000;
+					float matchingTime = diff(matchings,matchinge).tv_nsec/1000000.0f;
 
-					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
-					double overallTime = diff(ts,te).tv_nsec/1000000;
+					float overallTime = imageProcessingTime + detectionTime + extractionTime + matchingTime + verifyTime;
+
 
 #if (DEBUG_MODE)
 					cout<<"****************************************"<<endl;
@@ -364,8 +410,8 @@ int main(int argc, char ** argv) {
 					std::cout<<"The times:"<<endl;
 					std::cout<<"Detection Time: "<<detectionTime<<" ms"<<endl;
 					std::cout<<"Extraction Time: "<<extractionTime<<" ms"<<endl;
-					std::cout<<"Matching Time: "<<matchingTime<<" us"<<endl;
-					std::cout<<"Verify Matches Time: "<<verifyTime<<" us"<<endl;
+					std::cout<<"Matching Time: "<<matchingTime<<" ms"<<endl;
+					std::cout<<"Verify Matches Time: "<<verifyTime<<" ms"<<endl;
 					std::cout<<"Overall Time: "<<overallTime<<" ms"<<endl;
 					cv::waitKey(1000);
 #endif

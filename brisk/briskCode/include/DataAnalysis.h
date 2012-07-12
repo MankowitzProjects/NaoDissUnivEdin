@@ -17,7 +17,7 @@ class DataAnalysis
     public:
         DataAnalysis();
         virtual ~DataAnalysis();
-        int getNumImagesInDirectory(string *dir);
+        int getNumImagesInDirectory(string *dir, bool terminal);
         void displayOutput(vector<cv::KeyPoint> keypoints, vector<cv::KeyPoint> keypoints2,float matchingScore, int i1, int i2);
         void writeToFile();
         void help(char**);

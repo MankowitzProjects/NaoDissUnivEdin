@@ -1,23 +1,29 @@
 %Determining whether or not matching scores are useful for classification
 clear all
 clc
+%Are we using BRISK or SURF based methods
+usingBrisk = 1;
+
+%For BRISK0 UBRISK
+load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'
+
 %For SBRISK
 %load 'nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222_98_78.mat'
 %load 'nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070421012_1922.mat'
 %%Latest
-load 'nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070521012_2318_78_110_mScoreFixed.mat'
-
+%load 'nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070521012_2318_78_110_mScoreFixed.mat'
+%load 'nonmatching_matching_Data__BRISK_BRISK_Hamming_12072012_1009_77.5_107_max.mat'
 
 %For BRISK4
 %load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_070421012_1341.mat'
 %load 'g_matching_Data__BRISK4__BRISK4_Hamming_070421012_1922_88.mat'%Latest
-load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_070521012_2318_85_12125_mScoreFixed.mat'
-
+%load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_070521012_2318_85_12125_mScoreFixed.mat'
+%load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_120521012_0055_80_120_max.mat'
 
 %SBRISK SURF2D
 %load 'nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_0250_33.mat'
-load 'nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_2318_65_028_mScoreFixed.mat'
-
+%load 'nonmatching_matching_Data__SBRISK__SURF2D_Hamming_070521012_2318_65_028_mScoreFixed.mat'
+%load 'nonmatching_matching_Data__BRISK_SURF_Hamming_12072012_1009_65_0_max.mat'
 global stats;
 
 %Separate the datasets
@@ -103,15 +109,21 @@ meanNonMatchesScore = mean(stats(5:8,1))
 counter = 1;
 %To generate values for the ROC Curve
 largestThreshold = ceil(max(stats(:,1)));
-step = 1;
-tpRateMatrix = zeros(1,largestThreshold/step);
-fpRateMatrix = zeros(1,largestThreshold/step);
+
+if usingBrisk
+stepValue = 0.01;
+else
+   stepValue = 1;
+end
+
+tpRateMatrix = zeros(1,largestThreshold/stepValue);
+fpRateMatrix = zeros(1,largestThreshold/stepValue);
 
 %for ii=1000:-1:0 %BRISK SURF
-for ii=largestThreshold:-step:0 %BRISK BRISK
+for ii=largestThreshold:-stepValue:0 %BRISK BRISK
 %for ii=1:-0.001:0
 
-classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
+%classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
 %classificationBoundary =meanNonMatchesScore*2;
 
 %Now to perform classification. We use the matching score
@@ -150,8 +162,8 @@ end
 plot(fpRateMatrix,tpRateMatrix)
 hold on
 %Plot the random curve
-xrand = [0:step:1];
-yrand = [0:step:1];
+xrand = [0:stepValue:1];
+yrand = [0:stepValue:1];
 plot(xrand, yrand, 'r--');
 xlabel('False Positive rate');
 ylabel('True positive rate');

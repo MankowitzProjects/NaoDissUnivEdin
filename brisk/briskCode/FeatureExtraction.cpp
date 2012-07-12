@@ -3,10 +3,14 @@
 #define PI 3.14159265
 #define FEATURE_DEBUG_MODE 0
 #define FEATURE_DEBUG_MATCHES 0
+#define SINGLE_IMAGE_COMPARISONS 0
 
-FeatureExtraction::FeatureExtraction()
+FeatureExtraction::FeatureExtraction(double angle, double distance, bool usingKnnCriterion)
 {
-	//ctor
+	//Set the angle and distance thresholds for validation
+	this->angleThreshold = angle;
+	this->distanceThreshold = distance;
+	this->usingKnnCriterion = usingKnnCriterion;
 }
 
 FeatureExtraction::~FeatureExtraction()
@@ -130,6 +134,21 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 			threshold = 30;
 		detector = new cv::BriskFeatureDetector(threshold,0);
 	}
+	else if ("BRISK4"==feat_detector)
+	{
+		//cout<<"Reached Here"<<endl;
+		//Used for the threshold testing
+		if(testFlag==1)
+			threshold = threshold;
+		else if(testFlag==2)
+			threshold = testThreshold;
+		//cout<<"Threshold ***********: "<<threshold<<endl;
+		if(threshold==0)
+			threshold = 30;
+		//The detector uses 0 layers. This removes the need to perform non-maximal suppression
+		//on multiple layers. Sub-pixel refinement is also not necessary
+		detector = new cv::BriskFeatureDetector(threshold,4);
+	}
 	else if("BRISK"== feat_detector){
 		//cout<<"Reached Here"<<endl;
 		//Used for the threshold testing
@@ -142,7 +161,7 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 			threshold = 30;
 		//The detector uses 0 layers. This removes the need to perform non-maximal suppression
 		//on multiple layers. Sub-pixel refinement is also not necessary
-		detector = new cv::BriskFeatureDetector(threshold,4);//Should be 4
+		detector = new cv::BriskFeatureDetector(threshold,0);
 	}
 	else if("SURF"== feat_detector){
 		if(threshold==0)
@@ -174,7 +193,7 @@ cv::Ptr<cv::FeatureDetector> FeatureExtraction::getDetector(int argc, string fea
 cv::Ptr<cv::DescriptorExtractor> FeatureExtraction::getExtractor(int argc, string feat_descriptor,bool hamming, cv::Ptr<cv::DescriptorExtractor> descriptorExtractor)
 {
 
-	if(feat_descriptor=="BRISK"){
+	if(feat_descriptor=="BRISK" ||feat_descriptor=="BRISK4" ){
 		descriptorExtractor = new cv::BriskDescriptorExtractor();
 	}
 	else if(feat_descriptor=="U-BRISK"){
@@ -255,7 +274,10 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		//Verify the Knn Neighbors matching criteria
 		if (matches[i].size()>0){
 
-			//verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
+		if(usingKnnCriterion)
+		verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
+		else
+			isKnnMatch=true;
 
 #if (FEATURE_DEBUG_MATCHES)
 			cout<<"The index is: "<<i<<endl;
@@ -272,8 +294,8 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		isTrueMatchFound = false;
 
 		//Check if the matches satisifies the Knn Criteria
-//		if(isKnnMatch)
-//		{
+		if(isKnnMatch || !(usingKnnCriterion))
+		{
 			//If it satisfies the Knn criteria, then check the angle and distance criteria
 			while(counter<matchSize)
 			{
@@ -330,6 +352,7 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 				//****************************************************
 				//If the match is incorrect, remove the invalid match
 				if (correctMatch==false)
+				//if(0)//Therefore always correct match
 				{
 #if (FEATURE_DEBUG_MATCHES)
 					cout<<"Keypoint Left to be erased row,col : "<<(*(keypoints.begin() + i1)).pt.y<<", "<<(*(keypoints.begin() + i1)).pt.x<<endl;
@@ -351,7 +374,7 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 #endif
 
 
-					#if (FEATURE_DEBUG_MATCHES)
+					#if (SINGLE_IMAGE_COMPARISONS)
 					//This stores the coordinates of the invalid matches
 					leftPointsAngle.push_back(keypoints[i1]);
 					rightPointsAngle.push_back(keypoints2[i2]);
@@ -394,36 +417,40 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 				imageMatchingScore = imageMatchingScore + matchingScore;
 			}
 
-//		}//End if KnnMatches Criteria
-//		else{
-//			//Remove matches if they do not satisfy the KNN criterion
-//			if(matches[i].size()>0)
-//			{
-//				//cout<<"Matches size: "<<matches[i].size()<<endl;
-//				//This will work because we are looking at only the two nearest matches
-//				for(size_t j=0;j<=matches[i].size();j++)
-//				{
-//#if (FEATURE_DEBUG_MATCHES)
-//					//Add the invalid match to the respective vectors
-//					leftPointsKNN.push_back(keypoints[matches[i].begin()->queryIdx]);
-//					rightPointsKNN.push_back(keypoints2[matches[i].begin()->trainIdx]);
-//					keypointDistanceKNN.push_back(matches[i].begin()->distance);
-//					neighborIndexKNN.push_back(j);
+		}//End if KnnMatches Criteria
+		else{
+			//Remove matches if they do not satisfy the KNN criterion
+			if(matches[i].size()>0)
+			{
+				//cout<<"Matches size: "<<matches[i].size()<<endl;
+				//This will work because we are looking at only the two nearest matches
+				for(size_t j=0;j<=matches[i].size();j++)
+				{
+
+#if (SINGLE_IMAGE_COMPARISONS)
+					//Add the invalid match to the respective vectors
+					leftPointsKNN.push_back(keypoints[matches[i].begin()->queryIdx]);
+					rightPointsKNN.push_back(keypoints2[matches[i].begin()->trainIdx]);
+					keypointDistanceKNN.push_back(matches[i].begin()->distance);
+					neighborIndexKNN.push_back(j);
+#endif
+//					cout<<"Match 1: "<<matches[i].begin()->distance<<endl;
+//					cout<<"Match 2: "<<(matches[i].begin()+1)->distance<<endl;
 //
 //					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
 //					cout<<"Matches size: "<<matches[i].size()<<endl;
 //					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
 //					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
 //					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
-//#endif
-//					matches[i].erase(matches[i].begin());
-//					totalNumInvalidMatches++;
-//
-//
-//				}
-//			}
-//
-//		}//End else KnnMatches Criteria
+
+					matches[i].erase(matches[i].begin());
+					totalNumInvalidMatches++;
+
+
+				}
+			}
+
+		}//End else KnnMatches Criteria
 
 		totalNumValidMatches = totalNumValidMatches + matches[i].size();
 		totalNumMatches = totalNumMatches + allMatches;
@@ -480,7 +507,7 @@ bool FeatureExtraction::verifyMatch(const cv::Mat & image,cv::KeyPoint &keypoint
 #endif
 
 	//If the angle is greater than a threshold, then invalid match
-	if((angle<-10 || angle > 10) || (xdistance>(640+200) || xdistance<(640-200)))
+	if((angle<-angleThreshold || angle > angleThreshold) || (xdistance>(image.cols+distanceThreshold) || xdistance<(image.cols-distanceThreshold)))
 	{
 		return false;
 	}
@@ -532,8 +559,9 @@ void FeatureExtraction::verifyMatchingOrder(const cv::Mat & image,cv::Mat descri
 		for (int jj = 0;jj<descriptors2.rows;jj++)
 		{
 			//Calculate the matching score between the current pair of feature vectors
-			double scoreij = calcEuclideanDistance(descriptors, descriptors2);
-
+			//PROBLEM with this method
+			//double scoreij = calcEuclideanDistance(descriptors, descriptors2);
+			double scoreij = 0;
 			if(Eij[ii-1][jj]>Eij[ii][jj-1] && Eij[ii-1][jj] > (Eij[ii-1][jj-1] + scoreij))
 			{
 				//The maximum is vertically below the current feature pairing
@@ -580,52 +608,4 @@ void FeatureExtraction::verifyMatchingOrder(const cv::Mat & image,cv::Mat descri
 
 
 
-}
-
-double FeatureExtraction::calcEuclideanDistance(cv::Mat d1, cv::Mat d2)
-{
-
-	////	template<class Distance>
-	////	inline void BruteForceMatcher<Distance>::commonRadiusMatchImpl( BruteForceMatcher<Distance>& matcher,
-	////	                             const Mat& queryDescriptors, vector<vector<DMatch> >& matches, float maxDistance,
-	////	                             const vector<Mat>& masks, bool compactResult )
-	////	{
-	//	//BruteForceMatcher<Distance>& matcher;
-	//	    typedef typename Distance::ValueType ValueType;
-	//	    typedef typename Distance::ResultType DistanceType;
-	//	for( int qIdx = 0; qIdx < queryDescriptors.rows; qIdx++ )
-	//	    {
-	//	        if( matcher.isMaskedOut( masks, qIdx ) )
-	//	        {
-	//	            if( !compactResult ) // push empty vector
-	//	                matches.push_back( vector<DMatch>() );
-	//	        }
-	//	        else
-	//	        {
-	//	            matches.push_back( vector<DMatch>() );
-	//	            vector<vector<DMatch> >::reverse_iterator curMatches = matches.rbegin();
-	//	            for( size_t iIdx = 0; iIdx < imgCount; iIdx++ )
-	//	            {
-	//	                CV_Assert( DataType<ValueType>::type == matcher.trainDescCollection[iIdx].type() ||
-	//	                           matcher.trainDescCollection[iIdx].empty() );
-	//	                CV_Assert( queryDescriptors.cols == matcher.trainDescCollection[iIdx].cols ||
-	//							   matcher.trainDescCollection[iIdx].empty() );
-	//
-	//	                const ValueType* d1 = (const ValueType*)(queryDescriptors.data + queryDescriptors.step*qIdx);
-	//	                for( int tIdx = 0; tIdx < matcher.trainDescCollection[iIdx].rows; tIdx++ )
-	//	                {
-	//	                    if( masks.empty() || matcher.isPossibleMatch(masks[iIdx], qIdx, tIdx) )
-	//	                    {
-	//	                        const ValueType* d2 = (const ValueType*)(matcher.trainDescCollection[iIdx].data +
-	//	                                                                 matcher.trainDescCollection[iIdx].step*tIdx);
-	//	                        DistanceType d = matcher.distance(d1, d2, dimension);
-	//	                        if( d < maxDistance )
-	//	                            curMatches->push_back( DMatch( qIdx, tIdx, (int)iIdx, (float)d ) );
-	//	                    }
-	//	                }
-	//	            }
-	//	            std::sort( curMatches->begin(), curMatches->end() );
-	//	        }
-	//	    }
-	return 1;
 }

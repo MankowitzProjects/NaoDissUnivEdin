@@ -1,4 +1,4 @@
-function [matchingScoreMatrix, meanTotalMatchesMatrix, meanBestMatchesMatrix, meanOverallTimeMatrix, meanScoreMatrix] = createDataMatrices(dataset, distance, maxNZM, dim, displayStats, plot, matchType)
+function [matchingScoreMatrix, meanTotalMatchesMatrix, meanBestMatchesMatrix, meanOverallTimeMatrix, meanScoreMatrix] = createDataMatrices(dataset, distance, maxNZM, dim, displayStats, plot, usingBrisk)
 global k3;
 global k4;
 global statsTable;
@@ -60,7 +60,7 @@ for distanceCounter=1:19
         normalisedSummedScore = summedScore/numberofPtsFound;
         statsTable(thresholdCounter,7) = normalisedSummedScore;
         %Create the function k_nzm normalised between [0.031,1]
-        h_NZM = abs(log10(numZeroMatches/(1.2*maxNZM) +0.1));
+        h_NZM = abs(log10(0.9*numZeroMatches/(maxNZM) +0.1));
         statsTable(thresholdCounter,8) = h_NZM;
         %Output the final mean score
         FinalScore  = k4*normalisedSummedScore + k3*h_NZM;
@@ -94,8 +94,12 @@ for distanceCounter=1:19
         
         threshold = threshold +5;
     end
-    distance = distance + 0.01 %BRISK SURF
-    %distance = distance+5; %BRISK BRISK
+    
+    if usingBrisk
+        distance = distance+5 %BRISK BRISK
+    else
+        distance = distance + 0.01 %BRISK SURF
+    end
 end
 
 if(plot)

@@ -149,21 +149,110 @@ ROC Curve and Timing Tests
 
 Single Image Tests
 *****************************************************************
-1. Compute the score for matches and the score for false matches (Don't fulfill KNN or angle criterion).
-2. Compute the average size of keypoint matches, angle, octave (Where applicable).
+1. Compute the score for matches and the score for false matches (Don't fulfill KNN or angle criterion). - DONE
+2. Compute the average size of keypoint matches, angle, octave (Where applicable). - DONE
 3. Calculate the average image matching score for overlapping and non-overlapping images - DONE
 
 Issues:
-1. I need to test all the hamming tests on all of the images or rerun the KNN tests on 10 images
-1.1 The matching scores for KNN may be incorrect as one match is saved each time. This means KNN tests should be repeated
+1. I need to test all the hamming tests on all of the images or rerun the KNN tests on 10 images - DONE
+1.1 The matching scores for KNN may be incorrect as one extra match is saved each time. This means KNN tests should be repeated - DONE
 2. I should compare whether averaging the mScores and then finding the threshold is better than finding the max thresholds
-and averaging
+and averaging - DONE
 3. I need to setup the implementation for the single image comparison tests. I need to find the distance between keypoints. Possibly
 could create a distance vector whose index corresponds to the keypoint - DONE
 
 05/07/12
 
 1. Determine how many image pairs are being compared for matches and non matches - DONE
+
+09/07/12
+
+1. The mean extraction time is the time it takes for a SINGLE image to extract features and
+compute the descriptors. - DONE
+
+Note:
+
+1. There is a bias in the mean time as more weight is being given to images that appear more
+frequently in the comparisons.
+Solution: To go through every combination of images (with repitition) and compute the mean time.
+This will cause each image to be extracted from an equal number of times.
+
+2. Accurate matching times will then be distorted. These times should only be computed from
+the combinations of images w/o repitition.
+
+3. The threshold times are biased for the mean extraction and detection times.
+
+4. We should only calculate the detection time for a single detector since we will be given
+a descriptor on the Nao. Similarly for the calculation of the descriptor. Only the matching time is
+important.
+
+
+10/07/12
+
+1. I must re-run all the tests on the new thresholds with the new times.
+2. I must test single image comparison tests on more methods.
+3. I must remember to incorporate U-BRISK into the testing procedure - DONE
+4. I must implemenet correct averaging of time - DONE
+5. Consider the minimax (The maximum, minimum value) (Could be a better score function)
+6. Consider doing a score of maximum weightings
+7. Determine if the points are metrics
+
+Writing
+1. I must document the methods used for angle constraints and KNN constraint
+e2. I must document my changes to 1D SURF and BRISK (SBRISK, UBRISK).
+3. Document the results
+
+Tests:
+***************************************************
+1. Run S-BRISK KNN at an angle of 10. - DONE
+2. Run S-BRISK Hamming at an angle of 10. 
+
+3. Run BRISK4 KNN at an angle of 10. - DONE
+4. Run BRISK4 Hamming at an angle of 10 
+
+5. Run SBRISK SURF2D KNN at an angle of 10. - DONE 
+6. Run SBRISK SURF2D Hamming at an angle of 10
+
+7. Run SURF2D SURF2D KNN at an angle of 10.
+8. Run SURF2D SURF2D Hamming at an angle of 10.
+
+9. Run BRISK4 SURF2D KNN at an angle of 10. 
+10. Run BRISK4 SURF2D Hamming at an angle of 10.
+
+11. Run SURF1D KNN at an angle of 10.
+12. Run SURF1D Hamming at an angle of 10.
+
+13. Run SBRISK - U-BRISK KNN at an angle of 10. - DONE
+14. Run SBRISK - U-BRISK Hamming at an angle of 10.
+
+Note:
+1. The Best Matching score is used to calculate the classification boundary because we can't compare Hamming and KNN.
+Hamming may have 5 different matches whereas KNN always has 2. Thus cannot compare general because then 2 methods are
+not comparable.
+
+11/07/12
+
+1. Determine how many keypoints on average for each method.
+2. Determine how many matches on average for each method.
+
+Match - Stores the qIDx, tIdx, ImgIdx and the distance between the two keypoints. 
+
+Match (1,1)
+
+The first match
+
+std::sort - sorts the elements in the rand (first, last) in ascending order
+
+rbegin - returns a reverse iterator to the last element in the vector container
+
+Therefore in matches, since matches is a vector of vectors, rbegin goes to the last element in the
+vector container. That is the latest vector of DMatches that has been added to Match
+
+Note: To record KNN features and angles, turn SINGLE_IMAGE_COMPARISONS on
+
+
+
+
 
 
 

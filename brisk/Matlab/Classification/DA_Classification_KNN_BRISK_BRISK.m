@@ -1,21 +1,37 @@
 %Determining whether or not matching scores are useful for classification
 clear all
 clc
+
+%The method being used
+usingBrisk = 1;
+
+%SBRISK UBRISK
+%load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
+load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
+
 %For SBRISK
 %load 'nonmatching_matching_Data__BRISK__BRISK_KNN_070321012_2310.mat'
 %load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_070521012_0220_30.mat'%mScore
 %load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_070521012_2057_4625_mScoreFixed.mat'
 %load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_070521012_2057_30_mScoreFixed_consistentThreshold.mat'
+%load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_30.mat'
+%load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_4625_max.mat'
 
 %For BRISK4
 %load 'nonmatching_matching_Data__BRISK__BRISK_KNN_070421012_1341_51.mat'
 %load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_070521012_2125_5125_mScoreFixed.mat'
 %load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_070521012_2215_30_mScoreFixed_consistentThreshold.mat'
+%load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_30.mat'
+%load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_51.25_max.mat'
+
 
 %For SBRISK SURF2D
 %load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_070521012_0220_45.mat'
 %load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_070521012_2239_45_mScoreFixed.mat'
-load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_070521012_2239_30_mScoreFixed_consistentThreshold.mat'
+%load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_070521012_2239_30_mScoreFixed_consistentThreshold.mat'
+%load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_30.mat'
+%load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_4375_max.mat'
+
 global stats;
 
 %Separate the datasets
@@ -101,12 +117,17 @@ meanNonMatchesScore = mean(stats(5:8,1))
 counter = 1;
 %To generate values for the ROC Curve
 largestThreshold = ceil(max(stats(:,1)));
-step = 0.01;
-tpRateMatrix = zeros(1,largestThreshold/step);
-fpRateMatrix = zeros(1,largestThreshold/step);
+
+if usingBrisk
+stepValue = 0.01;
+else
+    stepValue = 1;
+end
+tpRateMatrix = zeros(1,largestThreshold/stepValue);
+fpRateMatrix = zeros(1,largestThreshold/stepValue);
 
 %for ii=1000:-1:0 %BRISK SURF
-for ii=largestThreshold:-step:0 %BRISK BRISK
+for ii=largestThreshold:-stepValue:0 %BRISK BRISK
 %for ii=1:-0.001:0
 
 classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
@@ -145,21 +166,26 @@ counter  = counter+1;
 end
 
 %Plot the ROC Curve
-plot(fpRateMatrix,tpRateMatrix)
-hold on
-%Plot the random curve
-xrand = [0:step:1];
-yrand = [0:step:1];
-plot(xrand, yrand, 'r--');
-xlabel('False Positive rate');
-ylabel('True positive rate');
-title('ROC Curve');
+% plot(fpRateMatrix,tpRateMatrix)
+% hold on
+% %Plot the random curve
+% xrand = [0:stepValue:1];
+% yrand = [0:stepValue:1];
+% plot(xrand, yrand, 'r--');
+% xlabel('False Positive rate');
+% ylabel('True positive rate');
+% title('ROC Curve');
 
 AUC = trapz(fpRateMatrix, tpRateMatrix)*100
 
 %The average time for computing each match
-averageDetectionTime = mean(data(:,14))
-averageExtractionTime = mean(data(:,15))
+%This must be a weighted average as some images are computed more
+%frequently than others
+
+[detectionTimeMatrix, extractionTimeMatrix] = calculateMeanTimes(data);
+
+averageDetectionTime = sum(detectionTimeMatrix)
+averageExtractionTime = sum(extractionTimeMatrix)
 averageMatchingTime = mean(data(:,16))./1000
 averageVerificationTime = mean(data(:,17))./1000
 averageOverallTime = mean(data(:,18))
@@ -169,7 +195,7 @@ fpRate = mean(fpRateMatrix)*100
 %Compute the mean number of TP matches
 tpRate = mean(tpRateMatrix)*100
 
-
+statsMatrix = [AUC averageDetectionTime averageExtractionTime averageMatchingTime averageVerificationTime averageOverallTime]
 %writeFile <<tempDir<<", "<<tempDir1<<", "
 %<<name1<<", "<<name2<<", "<<keypoints.size()<<
 %", "<<keypoints2.size()<<", "<<imageMatchingScoreBest

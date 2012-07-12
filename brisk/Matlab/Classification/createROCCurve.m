@@ -1,5 +1,5 @@
 %Determining whether or not matching scores are useful for classification
-function [fpRateMatrix, tpRateMatrix] = createROCCurve(data, step)
+function [fpRateMatrix, tpRateMatrix, statsMatrix] = createROCCurve(data, step)
 global stats;
 
 %Separate the datasets
@@ -133,16 +133,20 @@ end
 AUC = trapz(fpRateMatrix, tpRateMatrix)*100
 
 %The average time for computing each match
-averageDetectionTime = mean(data(:,14))
-averageExtractionTime = mean(data(:,15))
+averageDetectionTime1 = mean(data(:,14))
+averageExtractionTime1 = mean(data(:,15))
+
+[averageDetectionTimeMatrix, averageExtractionTimeMatrix] = calculateMeanTimes(data);
+averageDetectionTime = sum(averageDetectionTimeMatrix);
+averageExtractionTime = sum(averageExtractionTimeMatrix);
 averageMatchingTime = mean(data(:,16))./1000
-averageVerificationTime = mean(data(:,17))./1000
+averageVerificationTime = mean(data(:,17))
 averageOverallTime = mean(data(:,18))
 
 %Compute the mean number of FP matches
 fpRate = mean(fpRateMatrix)*100
 
-
+statsMatrix = [AUC averageDetectionTime averageExtractionTime averageMatchingTime averageVerificationTime averageOverallTime];
 
 %writeFile <<tempDir<<", "<<tempDir1<<", "
 %<<name1<<", "<<name2<<", "<<keypoints.size()<<

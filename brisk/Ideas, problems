@@ -149,3 +149,91 @@ Testing:
 To do the BRISK BRISK test with Hamming distance and thresholds, Hamming must be true.
 
 
+11/07/12
+To do BRISK SURF tests hamming must be false
+
+
+
+12/07/12
+//**************************ANALYSIS**************************************************
+
+The factors in these thresholds are:
+1. Time(0.6)
+2. The number of valid matches/totalmatches (for its individual match) (0.4)
+3. The number of Zero matches (0.6)
+
+
+KNN -  Hamming/Euclidean distance
+1. Has lower thresholds  - Has higher thresholds . Has large hamming distance therefore accepts more matches
+2. Detects more keypoints due to low threshold - Detects less keypoints due to high threshold
+
+
+SBRISK - BRISK4
+
+1. Should detect more keypoints and does so compared to BRISK4 - Detects less keypoints
+
+
+
+UBRISK - 
+
+1. Detects less keypoints as it is set to a higher threshold. Since rotation invariance has been removed, 
+it has been given a higher threshold as it detects a sufficient amount of keypoints
+
+SBRISK - SURF2D
+
+
+Low Threshold
+
+1. More points are detected.
+2. The run-time is slower.
+3. Reduces the number of NZMs.
+4. Can increase the number of valid matches (will find weaker matches that may be valid)
+
+High Threshold
+1. Less points are detected. (Or can detect a sufficient amount of points at this value)
+2. faster
+3. Increases the number of NZMs
+4. Reduces the number of valid matches
+
+SBRISK - SBRISK
+1. detects 77 keypoints and has an adequate number of matches at a threshold of 46.25. (These matches may not be very good
+since they are only detected along a single scale). This could result in a large number of zero matches. It has 20% which implies that
+it should have a relatively large threshold. 
+
+2. Is very fast, so can operate at a lower threshold. This will ensure that it can detect more valid keypoints and less non zero matches
+
+3. There may be a large amount of invalid matches due to the weak detection criteria, but there may also be weak
+matches that are indeed valid that are found as well at a lower threshold.
+
+
+BRISK4
+1. It should have less keypoints (or have a lower threshold than the rest to ensure that keypoints are selected). 
+2. It does have a much larger detection time, more than double the others which results in the higher threshold. This is because
+time has been given the most weight in the optimisation routine.
+
+
+BRISK0 SURF2D
+
+1. Operates at the lowest threshold (meaning it detects more keypoints than the others.) 
+2. It has a much larger extraction time as it needs to match using euclidean distance which takes alot longer than the hamming criteria.
+3. Detects the largest number of valid matches but its ration of valid matches/total matches is low
+
+BRISK0 UBRISK
+1. Operates at the highest threshold. This is probably because it is the fastest of all the methods. Thus it can add more
+weight to detecting more valid matches and therefore less non zero matches.
+2. 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

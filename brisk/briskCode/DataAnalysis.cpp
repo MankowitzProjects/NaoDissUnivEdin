@@ -10,7 +10,7 @@ DataAnalysis::~DataAnalysis()
 	//dtor
 }
 
-int DataAnalysis::getNumImagesInDirectory(string *dir)
+int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 {
 	//Read in the number of images from a directory
 	//************************************
@@ -21,7 +21,7 @@ int DataAnalysis::getNumImagesInDirectory(string *dir)
 	struct dirent *dirp;
 	struct stat filestat;
 	int jpegCounter = 0;
-	bool terminal = false;
+
 	string mgMatchLeft;
 	string mgMatchRight;
 	string ogMatchLeft;

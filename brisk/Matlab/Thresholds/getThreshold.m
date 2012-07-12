@@ -1,4 +1,4 @@
-function [finalDistance, finalThreshold, rowMax, colMax] = getThreshold(mScore, threshold, distance)
+function [finalDistance, finalThreshold, rowMax, colMax] = getThreshold(mScore, threshold, distance, usingBrisk)
 
 %Determine if there are Nan's already in the matrix
 nanMat = isnan(mScore);
@@ -18,6 +18,10 @@ maxScore = max(max(mScore));
 %Output the min:
 finalScore = mScore(rowMax, colMax);
 %The radius and threshold to use are:
-%finalDistance = (distance-5) + 5*rowMax; %BRISK BRISK
-finalDistance = (distance-0.01) + 0.01*rowMax; %BRISK SURF
+if usingBrisk
+    finalDistance = (distance-5) + 5*rowMax; %BRISK BRISK
+else
+    finalDistance = (distance-0.01) + 0.01*rowMax; %BRISK SURF
+end
+
 finalThreshold = (threshold - 5) + 5*colMax;

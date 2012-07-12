@@ -12,7 +12,7 @@
 class FeatureExtraction
 {
     public:
-        FeatureExtraction();
+        FeatureExtraction( double angle, double distance, bool usingKnnCriterion);
         virtual ~FeatureExtraction();
         //Functions for gathering data
         cv::Ptr<cv::FeatureDetector> getDetector(int argc, char** argv, cv::Ptr<cv::FeatureDetector> detector, int threshold, int testThreshold, int testFlag);
@@ -28,7 +28,6 @@ class FeatureExtraction
         bool verifyMatch(const cv::Mat &image, cv::KeyPoint &keypoint1, cv::KeyPoint &keypoint2);
         void verifyKNNMatches(std::vector<cv::DMatch>  &matches);
         void verifyMatchingOrder(const cv::Mat & image,cv::Mat descriptors, cv::Mat descriptors2, std::vector<std::vector<cv::DMatch> > &matches);
-        double calcEuclideanDistance(cv::Mat d1, cv::Mat d2);
 
         //The matching variables
         float imageMatchingScore;
@@ -55,6 +54,13 @@ class FeatureExtraction
         float distanceRatio;
         //KNN variables
         bool isKnnMatch;
+
+        //The validation thresholds
+        double angleThreshold;
+        double distanceThreshold;
+
+        //The KNN criterion
+        bool usingKnnCriterion;
 
 
 

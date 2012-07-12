@@ -85,6 +85,16 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 
 //Main function
 int main(int argc, char ** argv) {
+	//The angle used for matching validation
+	double angle = 10;
+	//The distance threshold
+	double distance = 200;
+
+	//Determine if the KNN validation criterion is necessary
+	bool usingKnnCriterion = false;
+
+	//Declare the horizon line above which the image is processed
+	int horizonLine = 200;
 
 
 	//Set the arguments
@@ -92,13 +102,16 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 46.25;
+	int threshold = 46.25;//46.25
 	int hammingDistance = 100;//BRISK BRISK
-	double radius = 0.15;//BRISK SURF
+	double radius = 0.50;//BRISK SURF
 	std::string feat_descriptor = "BRISK";
 
+	//For changing the threshold
+	int testThreshold = 10;
+
 	//Create the Feature extraction object
-	FeatureExtraction feature;
+	FeatureExtraction feature(angle, distance, usingKnnCriterion);
 
 	//Create data analysis object
 	DataAnalysis dataAnalysis;
@@ -109,122 +122,125 @@ int main(int argc, char ** argv) {
 	cv::Ptr<cv::DescriptorExtractor> descriptorExtractor;
 	descriptorExtractor = feature.getExtractor(argc, feat_descriptor, hamming, descriptorExtractor);
 	//*****************************************************************
+
+	//Start by creating the stored image
+	//****************************************************************************************
+	//Find the directory where the image is stored
+	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+
+	//The second directory
+	//std::string dir = "../images/Pics2StraightView/";
+	//std::string dir1 = "../images/Pics2StraightView";//PicsOG/Matching_Images_OG_Left
+
+
+	//Names of the two image files
+	std::string name1 = "9";
+	std::string name2 = "8";
+
+	//Get the first gray image
+	cv::Mat imgGray1Full;
+	cv::Mat imgGray1;
+
+	//Initialise the filename variable of the first image
+	std::string fname1;
+
+	//Get the image from the directory
+	while(imgGray1Full.empty())
+	{
+		fname1 = dir+"/"+name1+".jpg";
+		imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+	}
+	if (imgGray1Full.empty())
+	{
+		std::cout<<"image(s)"<<fname1<<" not found." << std::endl;
+		return 2;
+	}
+
+	//Declare the horizon variable and only get the keypoints above the horizon
+	imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
+
+	//Generate a set of keypoints
+	std::vector<cv::KeyPoint> keypoints;
+
+	cv::Ptr<cv::FeatureDetector> detector;
+	detector = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
+	//Run the detector
+	detector->detect(imgGray1,keypoints);
+
+	//Initialise the descriptors
+	cv::Mat descriptors;
+
+	//Create the descriptors
+	// and the first one
+	descriptorExtractor->compute(imgGray1,keypoints,descriptors);
+
+
+	//***********************************************************************************************
+	//***********************************************************************************************
+	//***********************************************************************************************
+
 	timespec ts, te, matchings, matchinge, detectors, detectore, extractors, extractore, verifys, verifye;
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);
 
-	//The directory where the files are stored
-	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
-	//Names of the two image files
-	std::string name1 = "12";
-	std::string name2 = "2";
-
-	//For changing the threshold
-	int testThreshold = 10;
-
-	//Choose the images to compare
-	//    name1 = to_string<int>(ii);
-	//    if(ii==jj)
-	//    continue;
-	//
-	//    name2 = to_string<int>(jj);
-
-	cout<<"Image in directory 1: "<<name1<<", Image in directory 2: "<<name2<<endl;
-
-
+	//Now extract the keypoints from the test image
+	//***********************************************************************
 	// names of the two images
-	std::string fname1;
 	std::string fname2;
-		cv::Mat imgRGB1;
-		cv::Mat imgRGB2;
-	//	cv::Mat imgRGB3;
-	cv::Mat imgGray1Full;
+
 	cv::Mat imgGray2Full;
-	cv::Mat imgGray1;
 	cv::Mat imgGray2;
 
-	bool do_rot=false;
-	// standard file extensions
-	std::vector<std::string> fextensions;
-	fextensions.push_back(".jpeg");
-	fextensions.push_back(".jpg");
-
-
-
-
-	// if no arguments are passed:
 	//Read in images
 	//*****************************************************************
-	int i=0;
-	int fextensions_size=fextensions.size();
-	while(imgGray1Full.empty()||imgGray2Full.empty()){
-		fname1 = dir+"/"+name1+".jpg";
-		fname2 = dir1+"/"+name2+".jpg";
-		//imgRGB1 = cv::imread(fname1);
-		//imgRGB2 = cv::imread(fname2);
-		imgGray1Full = cv::imread(fname1.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
-		imgGray2Full = cv::imread(fname2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
-		i++;
-		if(i>=fextensions_size) break;
+	while(imgGray2Full.empty()){
+		fname2 = dir1+"/"+name2+".jpg";
+		imgGray2Full = cv::imread(fname2.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 	}
-	if (imgGray1Full.empty()||imgGray2Full.empty())
+	if (imgGray2Full.empty())
 	{
-		std::cout<<"image(s)"<<fname1<<", "<<fname2<<" not found." << std::endl;
+		std::cout<<"image(s)"<<fname2<<" not found." << std::endl;
 		return 2;
 	}
 	//*****************************************************************
+
 	//We only need the keypoints above the horizon
-	int horizonLine = 200;
-	imgGray1 = imgGray1Full(cv::Rect(0, 0, imgGray1Full.cols, horizonLine));
 	imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
 
-
-	// convert to grayscale
-	//*****************************************************************
-	//	imgGray1;
-	//	cv::cvtColor(imgRGB1, imgGray1, CV_BGR2GRAY);
-	//	imgGray2;
-	//	if(!do_rot){
-	//		cv::cvtColor(imgRGB2, imgGray2, CV_BGR2GRAY);
-	//	}
-	//*****************************************************************
-
-
-	//MC: Generate a vector of keypoints
-	std::vector<cv::KeyPoint> keypoints, keypoints2;
+	//cout<<"Image in directory 1: "<<name1<<", Image in directory 2: "<<name2<<endl;
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectors);
+	//MC: Generate a vector of keypoints
+	std::vector<cv::KeyPoint> keypoints2;
+
 	// create the detector:
 	//*****************************************************************
-	cv::Ptr<cv::FeatureDetector> detector;
-	detector = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
+	cv::Ptr<cv::FeatureDetector> detector1;
+	detector1 = feature.getDetector(argc, feat_detector, detector, threshold, testThreshold,1);
 	//*****************************************************************
 
 	// run the detector:
 	//*****************************************************************
-	detector->detect(imgGray1,keypoints);
-	detector->detect(imgGray2,keypoints2);
+	detector1->detect(imgGray2,keypoints2);
 	//*****************************************************************
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &detectore);
-	double detectionTime = diff(detectors,detectore).tv_nsec/1000000;
+	float detectionTime = diff(detectors,detectore).tv_nsec/1000000.0f;
 
 
 	//*****************************************************************
 	//*****************************************************************
-	// get the descriptors
-	cv::Mat descriptors, descriptors2;
-	std::vector<cv::DMatch> indices;
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractors);
+	// get the descriptors
+	cv::Mat descriptors2;
+	std::vector<cv::DMatch> indices;
 	// second image. Computes the descriptor for each of the keypoints.
 	//Outputs a 64 bit vector describing the keypoints.
 	descriptorExtractor->compute(imgGray2,keypoints2,descriptors2);
-	// and the first one
-	descriptorExtractor->compute(imgGray1,keypoints,descriptors);
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &extractore);
-	double extractionTime = diff(extractors,extractore).tv_nsec/1000000;
+	float extractionTime = diff(extractors,extractore).tv_nsec/1000000.0f;
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchings);
 
@@ -238,33 +254,41 @@ int main(int argc, char ** argv) {
 		descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
 
 	if(hamming){
-		descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
-		cout<<descriptors.type()<<", "<<descriptors.rows<<", "<<descriptors.cols<<endl;
-		cout<<descriptors2.type()<<", "<<descriptors2.rows<<", "<<descriptors2.cols<<endl;
-		cout<<CV_32FC1<<endl;
 		//The first parameter is the query descriptor. The second parameter is the train descriptor
-		//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+		if (usingKnnCriterion)
+		{
+			if (descriptors2.rows>0)
+				descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+			else
+				matches.clear();
+		}
+		else
+		{
+			if (descriptors2.rows>0)
+				descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);
+			else
+				matches.clear();
+		}
+
 	}else{
-		//Messing with the maxdistance value will drastically reduce the number of matches
-		descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);//radiusMatch radius
-		cout<<descriptors.type()<<", "<<descriptors.rows<<", "<<descriptors.cols<<endl;
-		cout<<descriptors2.type()<<", "<<descriptors2.rows<<", "<<descriptors2.cols<<endl;
-		cout<<CV_32FC1<<endl;
-		//descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+		if (usingKnnCriterion)
+		{
+			if (descriptors2.rows>0)
+				descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
+			else
+				matches.clear();
+		}
+		else
+		{
+			if (descriptors2.rows>0)
+				descriptorMatcher->radiusMatch(descriptors,descriptors2,matches,hammingDistance);//radiusMatch radius
+			else
+				matches.clear();
+		}
+
 
 	}
-
-	//For the above method, we could use KnnMatch. All values less than 0.21 max distance are selected
-
 	//*****************************************************************
-	//Image created for drawing
-	cv::Mat outimg;
-
-	//Write the data to a file
-	//    ofstream writeFile;
-	//
-	//    std::string filename = "../../data/implementation/matchingData.txt";
-	//    writeFile.open(filename.c_str(), ios::app);//ios::app
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifys);
 
@@ -273,13 +297,13 @@ int main(int argc, char ** argv) {
 	feature.performMatchingValidation(imgGray1,keypoints, keypoints2, matches, hamming);
 	//*************************************************************************
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifye);
-	double verifyTime = diff(verifys,verifye).tv_nsec/1000;
+	float verifyTime = diff(verifys,verifye).tv_nsec/1000000.0f;
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &matchinge);
-	double matchingTime = diff(matchings,matchinge).tv_nsec/1000;
+	float matchingTime = diff(matchings,matchinge).tv_nsec/1000000.0f;
 
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &te);
-	double overallTime = diff(ts,te).tv_nsec/1000000;
+	float overallTime = diff(ts,te).tv_nsec/1000000.0f;
 
 
 #if (DEBUG_MODE)
@@ -294,11 +318,11 @@ int main(int argc, char ** argv) {
 	std::cout<<"The times:"<<endl;
 	std::cout<<"Detection Time: "<<detectionTime<<" ms"<<endl;
 	std::cout<<"Extraction Time: "<<extractionTime<<" ms"<<endl;
-	std::cout<<"Matching Time: "<<matchingTime<<" us"<<endl;
-	std::cout<<"Verify Matches Time: "<<verifyTime<<" us"<<endl;
+	std::cout<<"Matching Time: "<<matchingTime<<" ms"<<endl;
+	std::cout<<"Verify Matches Time: "<<verifyTime<<" ms"<<endl;
 	std::cout<<"Overall Time: "<<overallTime<<" ms"<<endl;
 #endif
-	threshold = atoi(argv[3]+5);
+
 	//    writeFile <<threshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<imageMatchingScoreBest<<", "<<imageMatchingScore<<","<<totalNumMatches<<", "<<totalNumBestMatches<<"\n";
 	//    //close the file
 	//    writeFile.close();
@@ -306,12 +330,13 @@ int main(int argc, char ** argv) {
 	cout<<"The total number of keypoints in image 1 is: "<<keypoints.size()<<endl;
 	cout<<"The total number of keypoints in image 2 is: "<<keypoints2.size()<<endl;
 #endif
-
+	//Image created for drawing
+	cv::Mat outimg;
 
 #if (DISPLAY)
 	drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
 			cv::Scalar(0,255,0), cv::Scalar(0,0,255),
-			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
+			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
 	//NOT_DRAW_SINGLE_POINTS
 
 	//Note: leftpoints correspond to keypoints - Image 1. rightpoints correspond to keypoints2 - Image 2.
@@ -372,6 +397,8 @@ int main(int argc, char ** argv) {
 #endif
 
 	cv::waitKey();
+
+	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 #endif
 
 	return 0;

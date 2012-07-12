@@ -1,6 +1,4 @@
 function [matchingScoreMatrix, meanTotalMatchesMatrix, meanBestMatchesMatrix, meanOverallTimeMatrix, meanScoreMatrix] = createDataMatricesKNN(dataset, maxNZM, dim, displayStats, plot)
-global k1;
-global k2;
 global k3;
 global k4;
 global statsTable;
@@ -60,8 +58,8 @@ threshold = 20;
     %Normalise the summedScore
     normalisedSummedScore = summedScore/numberofPtsFound;
     statsTable(thresholdCounter,6) = normalisedSummedScore; 
-    %Create the function k_nzm normalised between [0.031,1]
-    h_NZM = abs(log10(numZeroMatches/(1.2*maxNZM) +0.1));
+    %Create the function k_nzm normalised between [0,1]
+    h_NZM = abs(log10(0.9*numZeroMatches/(maxNZM) +0.1));
     statsTable(thresholdCounter,7) = h_NZM;
     %Output the final mean score
     FinalScore  = k4*normalisedSummedScore + k3*h_NZM;

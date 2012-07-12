@@ -2,17 +2,32 @@
 %**************************************************
 clear all
 clc
+
+%SBRISK - UBRISK
+%load 'threshold_SBRISK_UBRISK_KNN_threshold_09072012_0935_NewTimes.mat'
+%load 'threshold_SBRISK_UBRISK_KNN_threshold_10072012_1652.mat'
+
+
 %SBRISK
 %load '/thresholds/threshold_BRISK_BRISK_KNN_03072012_2202.mat'
 %load 'threshold_SBRISK_SBRISK_KNN_threshold_05072012_1829_FixedMatchScore.mat'
+%load 'threshold_SBRISK_SBRISK_KNN_threshold_09072012_0935_NewTimes.mat'
+%load 'threshold_SBRISK_SBRISK_KNN_threshold_10072012_1636.mat'
 
 %BRISK4
 %load '/thresholds/threshold_BRISK4_BRISK4_KNN_threshold_04072012_1041.mat'
-load 'threshold_BRISK4_BRISK4_KNN_threshold_05072012_1857_FixedMatchScore.mat'
+%load 'threshold_BRISK4_BRISK4_KNN_threshold_05072012_1857_FixedMatchScore.mat'
+%load 'threshold_BRISK4_BRISK4_KNN_threshold_10072012_1745.mat'
+
 
 %SBRISK SURF2D
 %load '/thresholds/threshold_SBRISK_SURF2D_KNN_threshold_04072012_1502.mat'
 %load 'threshold_SBRISK_SURF2D_KNN_threshold_05072012_1933_FixedMatchScore.mat'
+%load 'threshold_SBRISK_SURF2D_KNN_threshold_10072012_1748.mat'
+
+
+%1D SURF
+%load '../../../openSurf/Matlab/threshold_SURF1D_thresholds_09072012_2034.mat'
 
 %Initialise the weights used for scoring
 global k1;
@@ -72,10 +87,10 @@ dataset4Processed =  calculateScoreKNN(dataset4, maxTime4, maxNVM4);
 [maxNZM1, maxNZM2, maxNZM3, maxNZM4] = calcMaxZeroMatchesKNN(dataset1, dataset2, dataset3, dataset4);
 
 %Generate the statistics for the current dataset
-[msm, mtmm, mbmm, motm, mScore] = createDataMatricesKNN(dataset1Processed,maxNZM1, 19,0 , 1);
-[msm2, mtmm2, mbmm2, motm2, mScore2] = createDataMatricesKNN(dataset2Processed, maxNZM2, 19,0 , 1);
-[msm3, mtmm3, mbmm3, motm3, mScore3] = createDataMatricesKNN(dataset3Processed, maxNZM3, 19,0 , 1);
-[msm4, mtmm4, mbmm4, motm4, mScore4] = createDataMatricesKNN(dataset4Processed, maxNZM4, 19,0 , 1);
+[msm, mtmm, mbmm, motm, mScore] = createDataMatricesKNN(dataset1Processed,maxNZM1, 19,0 , 0);
+[msm2, mtmm2, mbmm2, motm2, mScore2] = createDataMatricesKNN(dataset2Processed, maxNZM2, 19,0 , 0);
+[msm3, mtmm3, mbmm3, motm3, mScore3] = createDataMatricesKNN(dataset3Processed, maxNZM3, 19,0 , 0);
+[msm4, mtmm4, mbmm4, motm4, mScore4] = createDataMatricesKNN(dataset4Processed, maxNZM4, 19,0 , 0);
 
 
 %Calculate the final scores for each dataset

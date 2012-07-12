@@ -18,9 +18,22 @@
 #include "responselayer.h"
 #include "fasthessian.h"
 
-
+#define HESSIAN_DEBUG 0
 
 using namespace std;
+
+inline timespec diffHessian(timespec start, timespec end)
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
+}
 
 //-------------------------------------------------------
 
@@ -99,8 +112,16 @@ void FastHessian::getIpoints()
 	// Clear the vector of exisiting ipts
 	ipts.clear();
 
+	timespec rs, re, hs, he, is, ie;
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &rs);
+
 	// Build the response map
 	buildResponseMap();
+
+	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &re);
+	float responseTime = diffHessian(rs,re).tv_nsec/1000;
+
+	//cout<<"Build response map time: "<<responseTime<<" us"<<endl;
 
 	// Get the response layers
 	ResponseLayer *b, *m, *t;
@@ -129,12 +150,16 @@ void FastHessian::getIpoints()
 		//      }
 		//    }
 		//For 1D SURF. We only check the extremum along the first row of columns
+#if (HESSIAN_DEBUG)
 		cout<<"The value of t is: "<<t->width<<endl;
+		cout<<"The value of m is: "<<m->width<<endl;
+#endif
+
 		for (int c = 0; c < t->width; ++c)
 		{
 			if(isExtremum(1, c, t, m, b))
 			{
-				cout<<"Reached Extremum"<<endl;
+				//cout<<"Reached Extremum"<<endl;
 				interpolateExtremum(1, c, t, m, b);
 			}
 		}
@@ -167,7 +192,13 @@ void FastHessian::buildResponseMap()
 	int h = 1;
 	//int h = (i_height / init_sample);
 	int s = (init_sample);
+#if (HESSIAN_DEBUG)
+	cout<<"Init sample: "<<init_sample<<endl;
+	cout<<"i-width: "<<i_width<<endl;
+	cout<<"width: "<<w<<endl;
 
+	cout<<"Octaves: "<<octaves<<endl;
+#endif
 	// Calculate approximated determinant of hessian values
 	if (octaves >= 1)
 	{
@@ -218,7 +249,7 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 	int b = (rl->filter - 1) / 2;             // border for this filter
 	int l = rl->filter / 3;                   // lobe for this filter (filter size / 3)
 	int w = rl->filter;                       // filter size
-	float inverse_area = 1.f/(w*w);           // normalisation factor
+	float inverse_area = 1.f/w;//(w*w);           // normalisation factor
 	float Dxx, Dyy, Dxy;
 
 	for(int r, c, ar = 0, index = 0; ar < 1; ++ar)//ar < rl->height
@@ -240,7 +271,13 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 //            						+ BoxIntegral(img, r + 1, c - l, l, l)
 //            						- BoxIntegral(img, r - l, c - l, l, l)
 //            						- BoxIntegral(img, r + 1, c + 1, l, l);
-
+#if (HESSIAN_DEBUG)
+			cout<<"Row: "<<r<<endl;
+			cout<<"Column: "<<c<<endl;
+			cout<<"Border: "<<b<<endl;
+			cout<<"Lobe: "<<l<<endl;
+			cout<<"Filter size: "<<w<<endl;
+#endif
 			Dxx = BoxIntegral(img, r, c - b, 0, w)
 			        						  - BoxIntegral(img, r, c - l / 2, 0, l)*3;
 			Dyy = BoxIntegral(img, r, c - l + 1, 0, 2*l - 1)
@@ -255,9 +292,13 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 			Dyy *= inverse_area;
 			Dxy *= inverse_area;
 
+			//MC: This is the point where the responses are BUILT
+			//********************************************************
 			// Get the determinant of hessian response & laplacian sign
-			responses[index] = (Dxx * Dyy - 0.81f * Dxy * Dxy);
+			responses[index] = (Dxx * Dyy - 0.81f * Dxy * Dxy); //0.81
+//			responses[index] = (Dxx);
 			laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);
+//			laplacian[index] = (Dxx >= 0 ? 1 : 0);
 
 #ifdef RL_DEBUG
 			// create list of the image coords for each response
@@ -275,8 +316,16 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 int FastHessian::isExtremum(int r, int c, ResponseLayer *t, ResponseLayer *m, ResponseLayer *b)
 {
 	// bounds check
-	int layerBorder = (t->filter + 1) / (2 * t->step);
-	if (c <= layerBorder || c >= t->width - layerBorder)//r <= layerBorder || r >= t->height - layerBorder ||
+	//int layerBorder = (t->filter + 1) / (2 * t->step);
+	int layerBorderm = (m->filter + 1) / (2 * m->step);
+#if (HESSIAN_DEBUG)
+//cout<<"Layer border: "<<layerBorder<<endl;
+//cout<<"t width: "<<t->width<<endl;
+cout<<"m width: "<<m->width<<endl;
+cout<<"m Layer border: "<<layerBorderm<<endl;
+#endif
+
+	if (c <= layerBorderm || c >= m->width - layerBorderm)//c >= m->width - layerBorder || r <= layerBorder || r >= t->height - layerBorder ||
 	{
 		//cout<<"Bad Result"<<endl;
 		return 0;
@@ -284,15 +333,21 @@ int FastHessian::isExtremum(int r, int c, ResponseLayer *t, ResponseLayer *m, Re
 
 	// check the candidate point in the middle layer is above thresh
 	//MC: This checks if the point is an extrema
-	float candidate = m->getResponse(r, c, t);
+	//float candidate = m->getResponse(r, c, t);
+	float candidate = m->getResponse(r,c);//Without the top layer
 
+
+#if (HESSIAN_DEBUG)
 	cout<<"Candidate value: "<<candidate<<endl;
+	//cout<<"Response: "<<test<<endl;
+#endif
+
 	if (candidate < thresh)
 	{
 		//cout<<"Below Threshold"<<endl;
 		return 0;
 	}
-	//This section is not necessary as we want to find as many interest points as possible
+	//MC: This section is not necessary as we want to find as many interest points as possible
 	//	for (int rr = -1; rr <=1; ++rr)
 	//	{
 	//		for (int cc = -1; cc <=1; ++cc)
@@ -332,9 +387,10 @@ void FastHessian::interpolateExtremum(int r, int c, ResponseLayer *t, ResponseLa
 	ipt.x = static_cast<float>((c) * t->step);
 	ipt.y = static_cast<float>(1);
 	ipt.scale = static_cast<float>((0.1333f) * (m->filter));
-	ipt.laplacian = static_cast<int>(m->getLaplacian(r,c,t));
+	//ipt.laplacian = static_cast<int>(m->getLaplacian(r,c,t));
+	ipt.laplacian = static_cast<int>(m->getLaplacian(r,c));//Without the top layer
 	ipts.push_back(ipt);
-	cout<<"Added interest point at position (x,y)"<<ipt.x<<", "<<ipt.y<<endl;
+	//cout<<"Added interest point at position (x,y)"<<ipt.x<<", "<<ipt.y<<endl;
 	//}
 
 	//	Ipoint ipt;

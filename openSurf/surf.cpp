@@ -161,6 +161,8 @@ void Surf::getDescriptor(bool bUpright)
 
 	Ipoint *ipt = &ipts[index];
 	scale = ipt->scale;
+
+	//Interest point coordinates
 	x = fRound(ipt->x);
 	y = fRound(ipt->y);
 	desc = ipt->descriptor;
@@ -189,6 +191,7 @@ void Surf::getDescriptor(bool bUpright)
 	//while(i < 12)
 	//{
 	//Column index
+	//By setting j to minus 8, we are placing
 	j = -8;
 	//i = i-4;
 
@@ -196,7 +199,8 @@ void Surf::getDescriptor(bool bUpright)
 	cx += 1.f;
 	cy = -0.5f;
 	//Indicates when all column regions have been traversed for a particular row
-	while(j < 12)
+
+	while(j < 7)//12 creates 4 sub-regions, 7 creates 3 sub-regions
 	{
 		dx=dy=mdx=mdy=0.f;
 		//Update the Gaussian center to indicate that we have moved to a new column
@@ -215,6 +219,8 @@ void Surf::getDescriptor(bool bUpright)
 		//the scale and angle theta.
 		//xs = fRound(x + ( -jx*scale*si + ix*scale*co));//Note that the minus is for -sin(theta)
 		//ys = fRound(y + ( jx*scale*co + ix*scale*si));
+
+		//Convert the current x value to the correct scale and orientation
 		xs = fRound(x + jx*scale);
 		ys=1;
 
@@ -230,6 +236,7 @@ void Surf::getDescriptor(bool bUpright)
 			//          sample_y = fRound(y + ( l*scale*co + k*scale*si));
 
 			//MC: 1D SURF implementation
+			//Choose 25 uniform samples from each region
 			sample_x = fRound(x + l*scale);
 			sample_y = 1;
 
@@ -242,12 +249,19 @@ void Surf::getDescriptor(bool bUpright)
 			//Get the gaussian weighted x and y responses on rotated axis
 			//rrx = gauss_s1*(-rx*si + ry*co);
 			//rry = gauss_s1*(rx*co + ry*si);
-			rrx = gauss_s1*(rx);
 
-			dx += rrx;
+			//MC: was 1D SURF but now i decided to remove it
+			//rrx = gauss_s1*(rx);
+
+			//dx += rrx;
 			//dy += rry;
-			mdx += fabs(rrx);
+
+			//MC: 1D SURF
+			dx +=rx;
+			//mdx += fabs(rrx);
 			//mdy += fabs(rry);
+			//MC: 1D SURF
+			mdx +=fabs(rx);
 
 		}
 		// }
@@ -276,7 +290,7 @@ void Surf::getDescriptor(bool bUpright)
 
 	//Convert to Unit Vector
 	len = sqrt(len);
-	for(int i = 0; i < 8; ++i)//64
+	for(int i = 0; i < 6; ++i)//64
 		desc[i] /= len;
 
 }
