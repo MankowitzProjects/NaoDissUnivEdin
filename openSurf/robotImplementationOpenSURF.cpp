@@ -86,7 +86,7 @@ int main(int argc, char ** argv) {
 	std::string name2 = "24";
 
 	//Threshold
-	float threshold = 0.005f;
+	float threshold = 0.1f;
 
 	//Choose the images to compare
 	//    name1 = to_string<int>(ii);

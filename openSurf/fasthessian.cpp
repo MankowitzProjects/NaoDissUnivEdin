@@ -279,9 +279,9 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 			cout<<"Filter size: "<<w<<endl;
 #endif
 			Dxx = BoxIntegral(img, r, c - b, 0, w)
-			        						  - BoxIntegral(img, r, c - l / 2, 0, l)*3;
+			        						  - BoxIntegral(img, r, c - l / 2, 0, l);//3
 			Dyy = BoxIntegral(img, r, c - l + 1, 0, 2*l - 1)
-			        						  - BoxIntegral(img, r, c - l + 1, 0, 2*l - 1)*3;
+			        						  - BoxIntegral(img, r, c - l + 1, 0, 2*l - 1);//3
 			Dxy = + BoxIntegral(img, r, c + 1, 0, l)
 			            						+ BoxIntegral(img, r, c - l, 0, l)
 			            						- BoxIntegral(img, r, c - l, 0, l)
@@ -295,7 +295,7 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 			//MC: This is the point where the responses are BUILT
 			//********************************************************
 			// Get the determinant of hessian response & laplacian sign
-			responses[index] = (Dxx * Dyy - 0.81f * Dxy * Dxy); //0.81
+			responses[index] = (Dxx);// * Dyy);// - 0.81f * Dxy * Dxy); //0.81
 //			responses[index] = (Dxx);
 			laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);
 //			laplacian[index] = (Dxx >= 0 ? 1 : 0);

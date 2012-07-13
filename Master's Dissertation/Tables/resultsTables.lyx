@@ -5283,7 +5283,7 @@ Method (2-KNN)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Threshold
+Parameter
 \end_layout
 
 \end_inset
@@ -6700,7 +6700,7 @@ Method
 \begin_inset Text
 
 \begin_layout Plain Layout
-Threshold, distance
+Parameters
 \end_layout
 
 \end_inset

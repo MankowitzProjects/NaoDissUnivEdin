@@ -195,6 +195,16 @@ High Threshold
 3. Increases the number of NZMs
 4. Reduces the number of valid matches
 
+Higher hamming distance
+1. More matches are accepted. Therefore weaker matches are utilised.
+2. Decreases the number of zero matches
+
+Lower hamming distance
+1. Less matches are accepted. Less are therefore validated.
+2. Decreases the number of zero matches
+
+KNN
+****************************************
 SBRISK - SBRISK
 1. detects 77 keypoints and has an adequate number of matches at a threshold of 46.25. (These matches may not be very good
 since they are only detected along a single scale). This could result in a large number of zero matches. It has 20% which implies that
@@ -221,9 +231,9 @@ BRISK0 SURF2D
 BRISK0 UBRISK
 1. Operates at the highest threshold. This is probably because it is the fastest of all the methods. Thus it can add more
 weight to detecting more valid matches and therefore less non zero matches.
-2. 
 
 
+*******************************************
  
 
 

@@ -1,7 +1,7 @@
 %Find the number of zero matches
 clear all
 clc
-knn =1;
+knn =-1;
 knnThreshold =0 ;
 
 if knn==1
@@ -62,7 +62,7 @@ load 'nonmatching_matching_Data__BRISK_SURF_Hamming_12072012_1009_65_0_max.mat'
 
 end
 
-if knnThreshold
+if knnThreshold==1
     %SBRISK - UBRISK
 %load 'threshold_SBRISK_UBRISK_KNN_threshold_09072012_0935_NewTimes.mat'
 load 'threshold_SBRISK_UBRISK_KNN_threshold_10072012_1652.mat'
@@ -90,7 +90,7 @@ load 'threshold_SBRISK_SURF2D_KNN_threshold_10072012_1748.mat'
 [sb_2d_mean_zero_matches] = calculateMeanZeroMatches(data,1)
 
     
-else
+elseif knnThreshold==0
     
     %U-BRISK
 load 'threshold_SBRISK_UBRISK_Hamming_threshold_12072012_0055.mat'

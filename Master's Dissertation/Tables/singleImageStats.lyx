@@ -171,7 +171,10 @@ Method
 \begin_inset Text
 
 \begin_layout Plain Layout
-Mean Angle
+\begin_inset Formula $\bar{d\alpha}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -180,7 +183,10 @@ Mean Angle
 \begin_inset Text
 
 \begin_layout Plain Layout
-Angle Std
+\begin_inset Formula $\bar{d\alpha}$
+\end_inset
+
+Std
 \end_layout
 
 \end_inset
@@ -189,7 +195,10 @@ Angle Std
 \begin_inset Text
 
 \begin_layout Plain Layout
-Response
+\begin_inset Formula $\bar{dR}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -198,7 +207,10 @@ Response
 \begin_inset Text
 
 \begin_layout Plain Layout
-Response Std
+\begin_inset Formula $\bar{dR}$
+\end_inset
+
+Std
 \end_layout
 
 \end_inset
@@ -207,7 +219,10 @@ Response Std
 \begin_inset Text
 
 \begin_layout Plain Layout
-Size
+\begin_inset Formula $\bar{dS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -216,7 +231,10 @@ Size
 \begin_inset Text
 
 \begin_layout Plain Layout
-Size Std
+\begin_inset Formula $\bar{dS}$
+\end_inset
+
+Std
 \end_layout
 
 \end_inset

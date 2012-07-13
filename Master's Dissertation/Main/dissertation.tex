@@ -24,6 +24,7 @@ This is the abstract
 
 \section{General Feature Extraction Techniques}
 \label{sec:genFeatureExtract}
+Throughout this paper, detector refers to the module of the feature extraction algorithm that is used to detect the interest points. Descriptor will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point.\\
 
 \subsection{2DSURF}
 \label{sec:2dsurf}
@@ -50,7 +51,7 @@ Hessian = \left[ \begin{array}{cc} \frac{\partial I}{\partial x^2} & \frac{\part
 \label{eqn:hessian}
 \end{equation}
 
-The Hessian matrix is computed in order to identify local maxima and minima in the image. This is achieved by first computing the determinant, also know as the discriminant, of the Hessian matrix. The determinant of the Hessian is shown in \eqnref{eqn:determinant}. If the determinant of the Hessian is negative then a local extrumum has not been identified. If the determinant is positive then a local extremum has been identified \cite{Evans2009}. \\
+The Hessian matrix is computed in order to identify local maxima and minima in the image. This is achieved by first computing the determinant, also know as the discriminant, of the Hessian matrix. The determinant of the Hessian is shown in \eqnref{eqn:determinant}. If the determinant of the Hessian is negative then a local extremum has not been identified. If the determinant is positive then a local extremum has been identified \cite{Evans2009}. \\
 
 \begin{equation}
 det\mid H \mid = \frac{\partial I}{\partial x^2} \frac{\partial I}{\partial y^2} - (\frac{\partial I}{\partial x \partial y})^2
@@ -83,7 +84,7 @@ The determinant of the Hessian at a point $\textbf{x} = (x,y)$ in the image $I$ 
 
 The different scales collectively define the scale space. The scale space can be seen as a function that is used to find extrema across a set of pre-defined scales. A set of scales is important as interest points need to be found across a number of scales in order to verify that the point is indeed an interest point. It also ensures that the point can be detected at different scales (I.e. points of view).\\
 
-In the SIFT method \cite{Lowe2004}, in order to construct the scale space, an image is convolved with a Gaussian kernel. The image is then sub-sampled and reconvolved with the same kernel to create a new scale. In the SURF method, as mentioned previously, the box filter size can be increased at no computational cost due the use of integral images. Thus it makes sense to construct the scale space by convolving the image with the box filters, but instead of sub-sampling the image, the box filters can be increased in size and convolved with the same image at very little computational cost. This creates a very efficient `inverted' scale space pyramid as shown in \figref{fig:scaleSpace}. The higher the position in the pyramid, the larger the scale and vice versa. \\
+In the SIFT method \cite{Lowe2004}, in order to construct the scale space, an image is convolved with a Gaussian kernel. The image is then sub-sampled and re-convolved with the same kernel to create a new scale. In the SURF method, as mentioned previously, the box filter size can be increased at no computational cost due the use of integral images. Thus it makes sense to construct the scale space by convolving the image with the box filters, but instead of sub-sampling the image, the box filters can be increased in size and convolved with the same image at very little computational cost. This creates a very efficient `inverted' scale space pyramid as shown in \figref{fig:scaleSpace}. The higher the position in the pyramid, the larger the scale and vice versa. \\
 
 The scale space is divided into octaves. An octave consists of a set of blob response maps each resulting from a convolution of the image with a box filter of a specific size. The blob response map corresponding to the lowest level (I.e. smallest scale) of the scale space is constructed using a $9 \times 9$ box filter. This corresponds to a scale value of $1.2$. As the size of the filters used for convolution increase, so too does the scale. During the convolution procedure, the filter is centered on each $(x,y)$ location in the image and each lobe in the filter has a specific width represented by $l_0$. In order to increase the size of the filter (I.e. move up a level in scale space), the filter lobe width, $l_0$, is increased by $2$ pixels. This ensures that the center pixel is still found in the center of the filter. Thus, the first filter is $9 \times 9$ and the next successive filter is $15 \times 15$. \\
 
@@ -96,12 +97,12 @@ If the pixel is not suppressed, then its image space and scale space locations a
 %The interpolation procedure TO DO Maybe...
 
 \subsubsection{Descriptor}
-\label{2dsurfdescribe}
+\label{sec:2dsurfdescribe}
 The SURF descriptor is a $64$ length vector that contains information about the intensity content of the neighborhood surrounding the interest point. In developing the descriptor, a number of important steps need to be implemented. The first step is creating a reproducable orientation for the interest point \cite{Bay2008}. If the interest point was detected at a scale, $\sigma$, then Haar Wavelets of size $4\sigma$ are used to calculate Haar Wavelet Responses (HWRs) for all pixels within a circular radius of $6\sigma$ from the detected interest point.  Haar Wavelets are simple filters that are used in SURF to calculate gradients in the $x$ and $y$ directions respectively. Examples of these wavelets are shown in \figref{fig:haar}. Once the HWRs have been calculated, they are then weighted by a Gaussian whose mean is centered on the interest point. This means that the pixels found further away from the interest point have a smaller influence on the reproducible interest point orientation.\\
 
 In order to find the reproducible orientation, a circular segment of width $\frac{\pi}{3}$ is rotated around the interest point and the HWRs in the $x$ and $y$ directions, within this circular segment, are calculated to yield a vector for that particular circular segment as shown in \figref{fig:circularSegment}. The longest vector resulting from the rotation of this circular segment around the interest point is assigned to the interest point as the reproducible orientation.\\
 
-Once the orientation of the interest point has been determined, a square window of size $20\sigma$ is centered around the interest point and is oriented in the direction of the reproducible orientation of that interest point. This square region is then split into $16$ sub-regions of equal size. In each sub-region, HRWs in the $x$ and $y$ directions are then computed for $5 \times 5$ regularly spaced sample points. It is important to note that the $x$ and $y$ directions are relative to the reproducible orientation axes as shown in \figref{fig:reproducibleAxes}. The HRWs for these $25$ sample points are then summed together to yield the descriptor for the subregion as shown in \eqnref{eqn:descriptorSub}. Since there are $16$ of these sub-regions, a $64$ length descriptor is created.\\
+Once the orientation of the interest point has been determined, a square window of size $20\sigma$ is centered around the interest point and is oriented in the direction of the reproducible orientation of that interest point. This square region is then split into $16$ sub-regions of equal size. In each sub-region, HWRs in the $x$ and $y$ directions are then computed for $5 \times 5$ regularly spaced sample points. It is important to note that the $x$ and $y$ directions are relative to the reproducible orientation axes as shown in \figref{fig:reproducibleAxes}. The HWRs for these $25$ sample points are then summed together to yield the descriptor for the subregion as shown in \eqnref{eqn:descriptorSub}. Since there are $16$ of these sub-regions, a $64$ length descriptor is created.\\
 
 \begin{equation}
 descriptor_{sub} = [\Sigma d_x, \Sigma d_y,  \Sigma \mid d_x \mid , \Sigma \mid d_y \mid] 
@@ -112,7 +113,7 @@ descriptor_{sub} = [\Sigma d_x, \Sigma d_y,  \Sigma \mid d_x \mid , \Sigma \mid 
 
 \subsection{BRISK}
 \label{sec:brisk}
-A new method has been developed that, in a variety of domains yields performance that betters SURF by an order of magnitude. This method is called Binary Robust Invariant Scalable Keypoints (BRISK) \cite{Leutenegger2011}. This method utilises a technique called Adapative and Generic Corner Detection Based on the Accelerated Segment Test (AGAST) in order to compute a score for a pixel in location $(x,y)$ in image $I$ \cite{Mair2010}. AGAST is largely base on the Features from Accelerated Segment Test (FAST) \cite{Rosten2006} method but incorporates some improvements such as adaptive tree switching which will be briefly discussed. Using this score, interest points are defined. A binary feature descriptor of length $512$ is then generated for each keypoint as a result of some simple brightness comparison tests. Keypoints are then matched in different images by computing the Hamming distance between the feature descriptors. \\
+A new method has been developed that, in a variety of domains yields performance that betters SURF by an order of magnitude. This method is called Binary Robust Invariant Scalable Keypoints (BRISK) \cite{Leutenegger2011}. This method utilises a technique called Adapative and Generic Corner Detection Based on the Accelerated Segment Test (AGAST) in order to compute a score for a pixel in location $(x,y)$ in image $I$ \cite{Mair2010}. AGAST is largely base on the Features from Accelerated Segment Test (FAST) \cite{Rosten2006} method but incorporates some improvements such as adaptive tree switching which will be briefly discussed. Using this score, interest points are defined. A binary feature descriptor of length $512$ is then generated for each interest point as a result of some simple brightness comparison tests. Interest points are then matched in different images by computing the Hamming distance between the feature descriptors. \\
 
 \subsubsection{FAST Score}
 \label{sec:fastScore}
@@ -126,7 +127,7 @@ V = max(\sum_{x \epsilon S_{bright}} \mid I_{p \rightarrow x} - I_p \mid - t, \s
 \label{eqn:fastScore}
 \end{equation}
 
-It is important to consider the order in which the points on the circle surrounding the potential interest point are evaluated, for computational efficiency. One method is to evaluate pixels $1, 5, 9 $ and $13$ corresponding to the compass directions \cite{Rosten2006}. At least three of these pixels need to be brighter or darker than the central pixel $p$ plus the chosen threshold in order for the central pixel to be evaluated further. If this is not the case, then the pixel $p$ is discarded as it cannot have $9$ contiguous pixels as mentioned previously and is therefore not an interest point. If at least three of the above-mentioned pixels fulfill the criteria, then the Accelerated Segment Test (AST) is applied to the circle of pixels in order to determine whether or not the central pixel is indeed an interest point. There are a different ways of applying the AST in order to determine whether or not a point is an interest point. Both FAST and AGAST use decision trees to search the circle of pixels in a specific order so as to maximise the efficiency with which each potential interest point is evaluated. The techniques differ in terms of the order in which the $16$ circle pixels are evaluated. In addition, AGAST has an adaptive tree switching technique which enables the method to switch to different decision trees that are optimised for a particular area of an image. This has an effect on computational efficiency and how well the methods generalise to different domains.   \\
+It is important to consider the order in which the points on the circle surrounding the potential interest point are evaluated, for computational efficiency. One method is to evaluate pixels $1, 5, 9 $ and $13$ corresponding to the compass directions \cite{Rosten2006}. At least three of these pixels need to be brighter or darker than the central pixel $p$ plus the chosen threshold in order for the central pixel to be evaluated further. If this is not the case, then the pixel $p$ is discarded as it cannot have $9$ contiguous pixels as mentioned previously and is therefore not an interest point. If at least three of the above-mentioned pixels fulfil the criteria, then the Accelerated Segment Test (AST) is applied to the circle of pixels in order to determine whether or not the central pixel is indeed an interest point. There are a different ways of applying the AST in order to determine whether or not a point is an interest point. Both FAST and AGAST use decision trees to search the circle of pixels in a specific order so as to maximise the efficiency with which each potential interest point is evaluated. The techniques differ in terms of the order in which the $16$ circle pixels are evaluated. In addition, AGAST has an adaptive tree switching technique which enables the method to switch to different decision trees that are optimised for a particular area of an image. This has an effect on computational efficiency and how well the methods generalise to different domains.   \\
 
 FAST performs the AST by first learning a \textit{ternary} tree which has possible pixel states of \textit{brighter}, \textit{darker} or \textit{similar}. In building the tree, at each step, all remaining pixels are asked the question whether or not they are \textit{brighter} or \textit{darker} than the central pixel. The pixel with the highest information gain is chosen as the next branch in the tree. Each pixel can have one of four possible states, namely unknown (u), darker(d), brighter(b) or similar(s). Since $16$ pixels are being evaluated in the circle surrounding the central pixel and each of these pixels have four possible states, there are a total of $4^{16}$ possible configurations. \\
 
@@ -136,17 +137,17 @@ AGAST performs a more efficient and generic AST than that of FAST. One improveme
 \label{briskDetect}
 BRISK's scale space has a different structure to that of SURF. In this case, the scale space consist of \textit{n} octaves \textit{$c_i$} and \textit{n} intra-octaves \textit{$d_i$} \cite{Leutenegger2011}. The typical number of octaves chosen for BRISK is $n=4$. The intra-octaves are placed between the octaves. A typical ordering would be $c_0, d_0, c_1, d_1, c_2...$. In order to create the octaves, the image is progressively half-sampled by a factor of two. The first octave corresponding to the original image is called $c_0$ and the first intra-octave $d_0$ is generated by down-sampling the original image by a factor of $1.5$. Thereafter, the image is half-sampled by a factor of two. This creates an image pyramid where the lowest layer is the original image and the higher layers are down-sampled versions of the original image.\\
 
-In BRISK, the FAST score $s$ is computed for each pixel $p$, for each octave and intra-octave respectively \cite{Leutenegger2011}. The same threshold $t$ is used throughout. A non-maximal suppresion is then performed on each pixel in every octave and intra-octave respectively. In order to determine whether or not the pixel is indeed an interest point, the pixel $p$ firstly needs to be a maxima (in terms of its FAST score) compared to its $8$ adjacent neighbors in image space. The pixel's FAST score is then compared to the layer above and layer below in the image pyramid. Its FAST score has to be a maxima relative to these values as well. In the case of the original image $c_0$, no layer below this layer exists. To account for this problem, only the layer above $c_0$ is compared.\\
+In BRISK, the FAST score $s$ is computed for each pixel $p$, for each octave and intra-octave respectively \cite{Leutenegger2011}. The same threshold $t$ is used throughout. A non-maximal suppression is then performed on each pixel in every octave and intra-octave respectively. In order to determine whether or not the pixel is indeed an interest point, the pixel $p$ firstly needs to be a maxima (in terms of its FAST score) compared to its $8$ adjacent neighbors in image space. The pixel's FAST score is then compared to the layer above and layer below in the image pyramid. Its FAST score has to be a maxima relative to these values as well. In the case of the original image $c_0$, no layer below this layer exists. To account for this problem, only the layer above $c_0$ is compared.\\
 
-Once a pixel with a maximum score has been detected, a sub-pixel refinement is applied to the maximum by fitting a 2D quadratic function in the least squares sense to a $3 \times 3$ score patch surrounding the detected maximum \cite{Leutenegger2011}. A sub-pixel refinement is also applied to $3 \times 3$ patches in the layers directly above and below the detected maximum in order generate three local maxima. This procedure is followed by a continuous scale refinement in order to determine the true scale of the detected interest point. A 1D parabola is fitted to these three local maxima along the scale axis as shown in \figref{fig:1dparabola} and the maximum of this parabola determines the true score and scale of the detected corner. Once the scale has been found, the image coordinates need to be reinterpolated to account for the true scale as the scale may not necessarily lie directly on an octave or intra-octave respectively. This creates a scale invariant keypoint.\\
+Once a pixel with a maximum score has been detected, a sub-pixel refinement is applied to the maximum by fitting a 2D quadratic function in the least squares sense to a $3 \times 3$ score patch surrounding the detected maximum \cite{Leutenegger2011}. A sub-pixel refinement is also applied to $3 \times 3$ patches in the layers directly above and below the detected maximum in order generate three local maxima. This procedure is followed by a continuous scale refinement in order to determine the true scale of the detected interest point. A 1D parabola is fitted to these three local maxima along the scale axis as shown in \figref{fig:1dparabola} and the maximum of this parabola determines the true score and scale of the detected corner. Once the scale has been found, the image coordinates need to be re-interpolated to account for the true scale as the scale may not necessarily lie directly on an octave or intra-octave respectively. This creates a scale invariant interest point.\\
 
-This procedure is performed on all detected maxima and this produces a set of interest points with sub-pixel refined image locations as well as true scale values. The descriptors for these keypoints are subsequently determined.
+This procedure is performed on all detected maxima and this produces a set of interest points with sub-pixel refined image locations as well as true scale values. The descriptors for these interest points are subsequently determined.
 
 \subsubsection{Descriptor}
 \label{sec:briskDescribe}
 One of the important aspects of the BRISK descriptor is that it uses a pre-determined pattern to sample the neighborhood surrounding each detected interest point $k$. Equally spaced samples, $p_i$ are chosen which are placed on concentric circles centered on the interest point. This is shown in \figref{fig:samplingPattern}. Aliasing can occur and in order to prevent this problem, Gaussian smoothing is applied to each sampled point on the concentric circles with standard deviation $\sigma_i$ proportional to the difference between the sampled points on the circle. \\
 
-The next step is to position and scale the pattern according to the keypoint that has been detected. The first step in the procedure is to calculate the gradient between each of the points $(p_i, p_j)$ in the pattern. This gradient is calculated as shown in \eqnref{eqn:gradient}.\\
+The next step is to position and scale the pattern according to the interest points that has been detected. The first step in the procedure is to calculate the gradient between each of the points $(p_i, p_j)$ in the pattern. This gradient is calculated as shown in \eqnref{eqn:gradient}.\\
 
 \begin{equation}
 m(p_i, p_j) = (p_j - p_i) \frac{I(p_j, \sigma_j) - I(p_i, \sigma_i)}{||p_j - p_i||^2}
@@ -169,7 +170,7 @@ The overall pattern direction for the interest point is determined by computing 
 \label{eqn:longGradients}
 \end{equation}
 
-This gradient is then used to find the angle with which to rotate the sampling pattern around the keypoint in order to achive rotation invariance. The angle is computed as shown in \eqnref{eqn:angle}. \\
+This gradient is then used to find the angle with which to rotate the sampling pattern around the interest point in order to achive rotation invariance. The angle is computed as shown in \eqnref{eqn:angle}. \\
 
 \begin{equation}
 \alpha = atan(\frac{m_y}{m_x})
@@ -188,6 +189,82 @@ d_k = \left\{ \begin{array}{rl}
 
 This produces the rotation and scale invariant descriptor vector.\\ 
 
+\section{Robocup Feature Extraction Techniques}
+\label{sec:realtimeFeatureExtraction}
+
+\subsection{BRISK0 - UBRISK}
+\label{sec:brisk0}
+In order to make the BRISK algorithm suitable for the Robocup domain, some slight modifications had to be made to the original algorithm. These changes include combining a detector defined as BRISK0, which is a slight variation of the original BRISK implementation, with a variety of extractors which will be described below. These feature extraction algorithms are applied to a gray-scale image and matching is performed using Hamming distance as described in \secref{sec:matching}.\\
+
+\subsubsection{Image Processing}
+\label{sec:imageProcessingBrisk}
+In the Robocup scenario, when observing features, the robot's head will be tilted upwards at the maximum possible angle in order to observe features that are on or near the ceiling. This is because in a real Robocup environment, dynamic objects such as humans will generate volatile features. These feature are not necessarily repeatable and will potentially hinder the robot's localisation ability.\\
+
+In order to improve the chances of generating non-volatile features, only the section of the image above the robot's horizon line is evaluated. This will effectively remove the dynamic background clutter that is found below the horizon line. In addition to the advantage of generating potentially non-volatile features, evaluating only a sub-section of the image results in a significant increase in computational performance. \\ 
+
+\subsubsection{Detector}
+\label{sec:BRISK0Detect}
+The BRISK detector typically detects features by progressively half-sampling an image and in doing so creates a scale-space pyramid as defined in \secref{sec:brisk}. Creating this pyramid is computationally expensive but generates robust scale-invariant interest points.\\
+
+The scale-space pyramid is not needed for this application and thus interest points are only detected along a single scale. This is achieved by setting the number of octaves to $0$ on the BRISK detector, effectively creating BRISK0. This causes the scale-space pyramid to be `flattened' to a single layer which is utilised to detect interest points. The effect of this is that FAST scores are only computed for a single layer and thus a non-maximal suppression is only performed on this layer in scale space. This results in a significant increase in computational performance. \\
+
+%In addition to this, more features will be detected as the constraint required for detecting an interest point has been relaxed. This is also useful since regions around the ceiling do not usually have a large amount of variation and thus the amount of interest points detected will be relatively limited.\\
+
+A 2D sub-pixel refinement is still applied to the interest points on the single layer resulting in an increased accuracy in interest point image coordinates.\\
+
+Since only a single octave is utilised and interest points are therefore only detected on a single scale, the 1D parabola that is fitted along the scale-space axis \cite{Leutenegger2011} is also discarded. The disadvantage of this approach is that the local maxima FAST scores are not as accurate as in the original implementation but the increase in accuracy is not crucial in this application as good performance is still obtained as shown in \secref{sec:overallPerformance}. Furthermore, the increase in computational performance is crucial in developing a method that is practically implementable on the robot. This generates a bank of interest points and the descriptors are then computed.\\
+
+\subsubsection{Descriptor}
+\label{sec:BRISK0Describe}
+In order to determine the best feature extraction algorithm to be utilised on the robot, a variety of BRISK and SURF descriptors have been combined with the BRISK0 detector. The descriptors include BRISK0, U-BRISK and 2D SURF descriptors respectively.\\
+
+The BRISK0 descriptor complements the BRISK0 detector as assigns the same scale to all of the interest points. This is because interest points are detected on only a single scale as mentioned previously. The rest of the BRISK algorithm is computed according to the original BRISK implementation resulting in a rotation invariant descriptor of length $512$ bits\cite{Leutenegger2011}.\\
+
+The SURF 2D descriptor is also combined with the BRISK0 detector. This creates a descriptor vector of length $64$ as implemented in 2D SURF \cite{Bay}. No modifications have been made to the SURF descriptor resulting in the same output as 2D SURF.\\ 
+
+The U-BRISK descriptor contains a slight modification to the original BRISK descriptor. The rotation of the sampling pattern, which was described in \secref{sec:briskDescribe}, has been discarded. This removes the rotation invariant property of the BRISK feature extraction algorithm, but provides a significant increase in computational performance. The brightness comparison tests used to create the descriptor vector are therefore performed on interest points with a sampling pattern that remains in a standard orientation. The combination of BRISK0 and U-BRISK produces the best overall performance for the Robocup scenario as detailed in \secref{sec:overallPerformance}. \\
+
+\subsection{1DSURF}
+\label{sec:1dsurf}
+Another technique that can be utilised for the Robocup is the 1D SURF feature extraction algorithm that has been previously implemented \cite{Anderson} for use in the Robocup. This algorithm extracts features from a single row of pixels in an image $A$. These features are then matched with features extracted from a row of pixels generated from an image $B$ being compared to image $A$. This technique is many orders of magnitude faster than the traditional 2D SURF implementation and is potentially suitable for use in the Robocup \cite{Anderson}.\\
+
+In order to utilise the feature extraction algorithm, it had to be implemented according to the design detailed in \cite{Anderson}. The OpenSURF implementation, which is freely available online \cite{opensurf} has been utilised in order to implement this algorithm.\\
+
+The main task is transforming 2D SURF into its 1D SURF implementation. This requires changes to both the detector and extractor and will be explained in the sections to follow.\\
+
+\subsubsection{Image Processing}
+\label{sec:imageProcessing}
+The first main step in implementing the 1D SURF algorithm is to extract a single row of gray-scale pixels from the image. This is achieved by sampling every fourth pixel intensity value along the robot's horizon line in order to speed up processing time \cite{Anderson}. 
+In addition to this, each sampled pixel intensity value is summed with a vertical band of $30$ pixels as shown in \figref{fig:rows}. This is performed instead of taking the mean primarily since it is faster to compute. This procedure therefore ultimately generates a row of summed pixel intensities. It is from this row of intensities that features will be extracted and matched.\\
+
+\subsubsection{Detector}
+\label{sec:1dsurfDetect}
+The 1D SURF detector has a number of differences from that of its 2D equivalent. The first major difference is the construction of the integral image. The integral image as stated in \secref{sec:integralImages}, allows for fast computation of rectangular areas in an image. Since the image is now 1D, the integral image is only computed along the single row of pixels.\\ 
+
+The next step is calculating the blob response for each point $(x,1)$ along the single row of pixels. In the 2D case, this is typically achieved by performing a 2D convolution, convolving a second order Gaussian derivative with the image at the point $\textbf{x} = (x,y)$. The Gaussian is approximated as a box filter and, combined with the integral image, results in a very efficient computation. In the 1D case, the convolution can only be computed along the single dimensional row of pixels. Thus the box filters have been effectively reduced to 1D box filters and the $xy$ directional box filter \textbf{can be neglected}. The determinant of the Hessian can thus be reduced to \eqnref{eqn:reducedHessian}.\\
+
+\begin{equation}
+det(Hessian) = D_{xx}D_{yy}
+\label{eqn:reducedHessian}
+\end{equation} 
+
+The number of octaves chosen for 1D SURF is $4$ and the number of scales per octave is $3$. Once a blob response map has been generated, interest points can be subsequently computed for each octave and each scale within the respective octave. Typically, in order to identify local maxima, each pixel in 3D scale space is compared to its $3 \times 3 \times 3$ surrounding neighbors and a non-maximal suppression is performed \cite{Evans2009}. However, in the case of 1D SURF, this constraint is relaxed and the pixel is only compared to its neighbors in the single scale space dimensional as shown in \figref{fig:singleScale} \cite{Anderson}. The result is that more features will be detected. However, these features will not have as strong responses as the features detected in 2D SURF.\\
+
+Once this has been achieved, the interest points are usually interpolated in both scale and image space to sub-pixel accuracy \cite{Evans2009}. However, sub-pixel accuracy is not necessary for the Robocup domain and has thus been discarded in the 1D implementation \cite{Anderson}. This procedure ultimately detects a set of interest points along a single row of pixels based on the blob response map. The next step involves computing the descriptors.\\  
+
+\subsubsection{Descriptor}
+\label{sec:1dsurfDescribe}
+Typically, the 2D SURF descriptor is constructed in two stages. The first stage involves assigning an orientation to the descriptor and has been described in \secref{sec:2dsurfdescribe}. This step has been discarded since the feature points are assigned with reference to the horizon line and therefore do not require an orientation.\\
+
+In 2D SURF, the second stage involves constructing a square region around the interest point and sub-dividing the region into $16$ equally-sized sub-regions as detailed in \secref{sec:2dsurfdescribe}. For each sub-region, HWRs in both the $x$ and $y$ directions are calculated for $25$ regularly spaced sample points. These responses are summed together to produce $4$ descriptor values for the sub-region corresponding to \eqnref{eqn:descriptorSub}. Therefore, in total a descriptor vector of length $64$ is created.\\
+
+In the case of 1D SURF, it is only possible to utilise $4$ of the $16$ sub-regions along the $x$ direction as shown in \figref{fig:subregions4} due to the reduction in dimensionality of the image. In addition, HWRs can only be calculated along the $x$ direction which allows for the $y$ direction Haar Wavelets to be discarded. The current implementation of 1D SURF further reduces the number of sub-regions to $3$ while still achieving good performance \cite{Anderson}. This will ultimately produce a $6$ dimensional descriptor vector rather than the $64$ dimensional descriptor vector as shown in \eqnref{eqn:descriptor1d}. Each of the $3$ sub-regions will produce a descriptor pair of $[\sum dx_i, \sum |dx_i|]$ where $dx_i$ refers to the HWR from the $i^{th}$ sub-region in the $x$ direction. \\
+
+\begin{equation}
+descriptor = [ \sum dx_1, \sum |dx_1|,\sum dx_2, \sum |dx_2|,\sum dx_3, \sum |dx_3|] 
+\label{eqn:descriptor1d}
+\end{equation}
+
 \section{Feature Matching}
 \label{sec:matching}
 
@@ -198,7 +275,7 @@ This produces the rotation and scale invariant descriptor vector.\\
 \label{sec:hamming}
 The Hamming distance criterion is used for matching feature vectors from the BRISK algorithm \cite{Leutenegger2011}. Since the feature vectors, as mentioned in \secref{sec:briskDescribe}, are vectors of $512$ bits in length, matching of two vectors is performed by determining how different the first vector is from the other.\\
 
-Given two feature vectors from two separate images, the number of differing corresponding bits in each of the feature vectors are determined. If the number of different bits are below a certain threshold, referred to as the `Hamming Distance', then keypoints in the two images are a match. Otherwise, if there are two many differing bits, then the keypoints are not a match.\\
+Given two feature vectors from two separate images, the number of differing corresponding bits in each of the feature vectors are determined. If the number of different bits are below a certain threshold, referred to as the `Hamming Distance', then interest points in the two images are a match. Otherwise, if there are two many differing bits, then the interest points are not a match.\\
 
 This is a very efficient algorithm and has been effectively performed in BRIEF \cite{Calonder}. It consists of $512$ XOR operations between corresponding bits followed by a bit count. This is a very efficient computation to perform on modern day architectures \cite{Leutenegger2011}. \\ 
 
@@ -213,9 +290,9 @@ In addition to this, in order to speed up matching, the sign of the Laplacian, w
 
 \subsubsection{K-Nearest Neighbors Criterion}
 \label{sec:knnMatching}
-A constraint has been previously utilised to reject invalid matches. This constraint is called the KNN Ratio and is computed between the closest and second closest match for a particular keypoint \cite{Lowe2004}. This is performed for every detected keypoint in the image being evaluated. It has been assumed that each keypoint has only a single, unique corresponding match between a pair of images. Based on this assumption, the first KNN match should be the true matching keypoint in the corresponding image, whereas the second KNN match should belong to a different object in the image and hence is an invalid match.\\
+A constraint has been previously utilised to reject invalid matches. This constraint is called the KNN Ratio and is computed between the closest and second closest match for a particular interest point \cite{Lowe2004}. This is performed for every detected interest point in the image being evaluated. It has been assumed that each interest point has only a single, unique corresponding match between a pair of images. Based on this assumption, the first KNN match should be the true matching interest point in the corresponding image, whereas the second KNN match should belong to a different object in the image and hence is an invalid match.\\
 
-Therefore, for a valid match between keypoints, the closest match should be significantly closer than the second closest match (which is the closest incorrect match) from the keypoint that is being evaluated \cite{Lowe2004}. This means that a valid match should generally have a lower KNN ratio than an invalid match. An invalid match will probably have a number of matches within a similar distance of one another due to the high dimensionality of the feature space \cite{Lowe2004}. The feature space, as mentioned previously is of dimensionality $64$ for 2D SURF and $512$ for BRISK-based techniques.\\
+Therefore, for a valid match between interest points, the closest match should be significantly closer than the second closest match (which is the closest incorrect match) from the interest points that is being evaluated \cite{Lowe2004}. This means that a valid match should generally have a lower KNN ratio than an invalid match. An invalid match will probably have a number of matches within a similar distance of one another due to the high dimensionality of the feature space \cite{Lowe2004}. The feature space, as mentioned previously is of dimensionality $64$ for 2D SURF and $512$ for BRISK-based techniques.\\
 
 Based on the results in \secref{sec:knnMatchingConstraint}, all matches with a threshold above $0.7$ are rejected as invalid matches whereas all matches with a threshold below this value are accepted as valid matches.\\
 
@@ -224,41 +301,7 @@ Based on the results in \secref{sec:knnMatchingConstraint}, all matches with a t
 \subsubsection{Angle and Distance Constraints}
 \label{sec:angleDistanceConstraints}
 
-\section{Robocup Feature Extraction Techniques}
-\label{sec:realtimeFeatureExtraction}
 
-\subsection{S-BRISK}
-\label{sec:sbrisk}
-
-\subsubsection{Detector}
-\label{sec:sbriskDetect}
-
-\subsubsection{Descriptor}
-\label{sec:sbriskDescribe}
-
-\subsubsection{Matching}
-\label{sec:sbriskMatching}
-
-\subsection{1DSURF}
-\label{sec:1dsurf}
-
-\subsubsection{Detector}
-\label{sec:1dsurfDetect}
-
-\subsubsection{Descriptor}
-\label{sec:1dsurfDescribe}
-
-\subsection{S-BRISK-2DSURF}
-\label{sec:brisk2dsurf}
-
-\subsubsection{Detector}
-\label{sec:brisk2dsurfDetect}
-
-\subsubsection{Descriptor}
-\label{sec:brisk2dsurfDescribe}
-
-\subsubsection{Matching}
-\label{sec:1dsurfMatching}
 
 \section{Localisation Algorithm}
 \label{sec:localisation}
@@ -269,9 +312,9 @@ Based on the results in \secref{sec:knnMatchingConstraint}, all matches with a t
 
 \section{Experiments and Results}
 \label{sec:experimentsResults}
-The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are SBRISK, BRISK4, SBRISK-UBRISK, SBRISK-2D SURF and 1D SURF respectively. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, hamming distance and euclidean distance respectively. 2-Nearest Neighbors has been implemented on all of the feature extraction algorithms. All BRISK descriptors can also use hamming distance to perform matching whereas SURF descriptors rely on the euclidean distance to perform matching. All of the feature extractor algorithms are therefore compared based on their detection performance and descriptor generation as well as the matching technique that has been utilised for the particular experiment.\\
+The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are BRISK0, BRISK, BRISK0-UBRISK, BRISK0-2D SURF and 1D SURF respectively. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, hamming distance and euclidean distance respectively. 2-Nearest Neighbors has been implemented on all of the feature extraction algorithms. All BRISK descriptors can also use hamming distance to perform matching whereas SURF descriptors rely on the euclidean distance to perform matching. All of the feature extractor algorithms are therefore compared based on their detection performance and descriptor generation as well as the matching technique that has been utilised for the particular experiment.\\
 
-Parameters $p$ in this section correspond to the various thresholds required for detecting keypoints. The parameters used for each method are shown in \tabref{tab:parameters}.\\
+Parameters $p$ in this section correspond to the various thresholds required for detecting interest points. The parameters used for each method are shown in \tabref{tab:parameters}.\\
 
 \begin{table}
 \caption{The parameters evaluated for each feature extraction algorithm}
@@ -281,23 +324,23 @@ Method & Parameter 1 & Parameter 2\tabularnewline
 \hline 
  & \multicolumn{2}{c}{2-Nearest Neighbors Matching}\tabularnewline
 \hline 
-BRISK0 & keypoint detection threshold & N/A\tabularnewline
+BRISK0 & minimum interest point detection threshold & N/A\tabularnewline
 \hline 
-BRISK4 & keypoint detection threshold & N/A\tabularnewline
+BRISK & minimum interest point detection threshold & N/A\tabularnewline
 \hline 
-BRISK0 SURF2D & keypoint detection threshold & N/A\tabularnewline
+BRISK0 SURF2D & minimum interest point detection threshold & N/A\tabularnewline
 \hline 
-BRISK0 - UBRISK & keypoint detection threshold & N/A\tabularnewline
+BRISK0 - UBRISK & minimum interest point detection threshold & N/A\tabularnewline
 \hline 
  & \multicolumn{2}{c}{Hamming/Euclidean Distance Matching}\tabularnewline
 \hline 
-BRISK0 & keypoint detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK0 & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
 \hline 
-BRISK4 & keypoint detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
 \hline 
-BRISK0 SURF2D & keypoint detection threshold & Maximum Accepted Euclidean distance\tabularnewline
+BRISK0 SURF2D & minimum interest point detection threshold & Maximum Accepted Euclidean distance\tabularnewline
 \hline 
-BRISK0 - UBRISK & keypoint detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK0 - UBRISK & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:parameters}
@@ -348,7 +391,7 @@ Dataset A & Dataset B & Images in A & Images in B & Compared Image Pairs\tabular
 
 \subsection{Feature Extraction Performance}
 \label{sec:featureExtraction}
-Before the feature extraction and matching algorithm can be implemented on the robot, the optimal feature extraction algorithm needs to be determined. In order to find the best algorithm, all of the feature extraction techniques need to be tested on the image datasets in order to find out which technique is the most conisistent and accurate in disambiguating between different sides of the goal. \\
+Before the feature extraction and matching algorithm can be implemented on the robot, the optimal feature extraction algorithm needs to be determined. In order to find the best algorithm, all of the feature extraction techniques need to be tested on the image datasets in order to find out which technique is the most consistent and accurate in disambiguating between different sides of the goal. \\
 
 In order to find the optimal feature extraction and matching algorithm, the overlapping image pairs are initially used to determine the optimal parameters for each of the feature extraction algorithms. Once the optimal parameters have been found, both the non-overlapping image pairs and the overlapping image pairs are used to determine the matching performance of the respective feature extraction algorithm. The algorithm with the best performance will be implemented on the Nao robot.\\
 
@@ -357,7 +400,7 @@ In order to find the optimal feature extraction and matching algorithm, the over
 %Describes how to find the optimal hamming distance, euclidean distance, and response thresholds for each method
 The procedure used to determine the optimal parameters for each of the feature extraction algorithms will now be detailed. The parameters can be thresholds, hamming distances or euclidean distances as discussed in \secref{sec:matching}. Four datasets containing in total $108$ overlapping images were used to determine the optimum feature extraction parameters. All possible combinations of overlapping images were matched in datasets  one to four, without repitition, for various detection parameter values. A procedure has been developed in order to calculate the optimum detection parameters used to provide the best feature extraction and matching performance.\\
 %The equation containing the optimal parameters
-In order to find the optimal detection parameters, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. This matching score represents how good a match is between a pair of images, $i_1, i_2$ in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of detection parameters, $p$. For example, if the detector used is SBRISK, then the $SIS_{(i_1, i_2), d}^{SBRISK, \textbf{p}}$ presents the matching score for the pair of images $i_1, i_2$ for a specific detection threshold $p$ in a particular dataset $d$. \\
+In order to find the optimal detection parameters, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. This matching score represents how good a match is between a pair of images, $i_1, i_2$ in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of detection parameters, $p$. For example, if the detector used is BRISK0, then the $SIS_{(i_1, i_2), d}^{BRISK0, \textbf{p}}$ presents the matching score for the pair of images $i_1, i_2$ for a specific detection threshold $p$ in a particular dataset $d$. \\
 
 \begin{eqnarray}
 SIS_{(i_1, i_2), d}^{FE, \textbf{p}} &=& \frac{k_1 f(t_{i_1,i_2}) + k_2 g_(\textit{NVM}_{i_1,i_2})}{k_1 + k_2} \\
@@ -410,7 +453,7 @@ p^* = mean( max(p_{d_1}), max(p_{d_2}), max(p_{d_3}) ...) \quad d = 1,2...m
 
 However, this methodology does not necessarily produce the best feature extraction performance. The second technique does not initially take the maximum \textit{MIS} score but first averages all corresponding \textit{MIS} scores across all datasets. A corresponding \textit{MIS} score is defined as a score that has been generated from the same parameter values but in a different dataset. Once all \textit{MIS} scores have been average across all datasets, the maximum \textit{MIS} score is then determined. This has the advantage of finding the most consistent score across all datasets rather than finding the maximum separately for each dataset.\\
 
-The first technique will be referred to as the Maximum Parameter Setting (MPS). The second technique will be referred to as the Consistent Parameter Setting (CPS). Graphs shown in \figref{fig:sbriskknnOptimal} to \figref{fig:sbrisksurfknnOptimal} have been generated for the CPS and the maximum score and corresponding parameter value(s) is indicated by the red line. This has been performed for all three matching techniques, namely 2-NN, hamming distance and euclidean distance respectively.\\
+The first technique will be referred to as the Maximum Parameter Setting (MPS). The second technique will be referred to as the Consistent Parameter Setting (CPS). Graphs shown in \figref{fig:BRISK0knnOptimal} to \figref{fig:BRISK0surfknnOptimal} have been generated for the CPS and the maximum score and corresponding parameter value(s) is indicated by the red line. This has been performed for all three matching techniques, namely 2-NN, hamming distance and euclidean distance respectively.\\
 
 %Could possibly add in the addition of averaging the mScore matrices and then finding the maximum value. The advantage of this is to find the most consistent radius and threshold.  
 
@@ -419,32 +462,32 @@ The first technique will be referred to as the Maximum Parameter Setting (MPS). 
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SBRISK_KNN.jpg}
 \caption{The optimal parameters for S-BRISK with KNN}
-\label{fig:sbriskknnOptimal}
+\label{fig:BRISK0knnOptimal}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SBRISK_hamming.jpg}
 \caption{The optimal parameters for S-BRISK with Hamming Distance}
-\label{fig:sbriskhammingOptimal}
+\label{fig:BRISK0hammingOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_BRISK4_BRISK4_KNN.jpg}
-\caption{The optimal parameters for BRISK4 with KNN Distance}
-\label{fig:brisk4knnOptimal}
+\caption{The optimal parameters for BRISK with KNN Distance}
+\label{fig:BRISKknnOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_BRISK4_BRISK4_Hamming.jpg}
-\caption{The optimal parameters for BRISK4 with Hamming Distance}
-\label{fig:brisk4hammingOptimal}
+\caption{The optimal parameters for BRISK with Hamming Distance}
+\label{fig:BRISKhammingOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SURF2D_KNN.jpg}
-\caption{The optimal parameters for SBRISK SURF2D with KNN}
-\label{fig:sbrisksurfknnOptimal}
+\caption{The optimal parameters for BRISK0 SURF2D with KNN}
+\label{fig:BRISK0surfknnOptimal}
 \end{minipage}
 \end{figure}
 
-After performing the experiments a set of optimal parameters were generated. The parameter settings are shown in \tabref{tab:knnStatistics} and \tabref{tab:hammingStatistics} respectively. \textbf{TO ANALYSE}\\
+After performing the experiments a set of optimal parameters were generated. The parameter settings are shown in \tabref{tab:knnStatistics} and \tabref{tab:hammingStatistics} respectively. For the KNN tests, only the Minimum Interest Point Detection Threshold (MIPDT) parameter was varied in the range $20 \rightarrow 115$ in increments of $5$. For the hamming/euclidean distance tests, both the MIPDT and the maximum hamming/euclidean distance threshold parameters were varied. The MIPDT was varied in the same range as the KNN tests. The hamming distance is varied from $40 \rightarrow 135$ in increments of $5$ whereas the euclidean distance is varied from $0.1 \rightarrow 0.28$ in increments of $0.1$. \\
 
 
 
@@ -457,11 +500,11 @@ Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & Normal threshold & Consiste
 \hline 
 S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
 \hline 
-BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
+BRISK & BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
 \hline 
-SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 43.75 & 30\tabularnewline
+BRISK0 & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 43.75 & 30\tabularnewline
 \hline 
-SBRISK & UBRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 55 & 35\tabularnewline
+BRISK0 & UBRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 55 & 35\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:knnStatistics}
@@ -476,11 +519,11 @@ Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & thresholdM & distanceM & th
 \hline 
 S-BRISK & S-BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 77.5 & 107.5 & 75 & 115\tabularnewline
 \hline 
-BRISK4 & BRISK4 & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 80 & 120 & 65 & 130\tabularnewline
+BRISK & BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 80 & 120 & 65 & 130\tabularnewline
 \hline 
-SBRISK & SURF2D & Euclidean & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
+BRISK0 & SURF2D & Euclidean & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
 \hline 
-SBRISK & UBRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 75 & 121.25 & 75 & 130\tabularnewline
+BRISK0 & UBRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 75 & 121.25 & 75 & 130\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:hammingStatistics}
@@ -488,7 +531,7 @@ SBRISK & UBRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 75 & 121.25 & 75 & 130\tabul
 
 \subsubsection{Matching Score}
 \label{sec:matchingScore}
-As mentioned in \secref{sec:matching}, in the case of 2D SURF, keypoint pairs can be matched based on the euclidean distance between the feature vectors representing the keypoints. Similarly, in the case of BRISK, keypoints can be matched based on the hamming distance between the feature vectors. In both cases, taking the inverse distance can produce a matching score as shown in \eqnref{eqn:inverseDistance}. The smaller the distance between feature vectors, the more similar the keypoints become resulting in a high matching score and vice versa. In order to determine whether or not this score is a good metric for classifying whether images match or not, a number of tests were performed.
+As mentioned in \secref{sec:matching}, in the case of 2D SURF, interest point pairs can be matched based on the euclidean distance between the feature vectors representing the interest points. Similarly, in the case of BRISK, interest points can be matched based on the hamming distance between the feature vectors. In both cases, taking the inverse distance can produce a matching score as shown in \eqnref{eqn:inverseDistance}. The smaller the distance between feature vectors, the more similar the interest points become resulting in a high matching score and vice versa. In order to determine whether or not this score is a good metric for classifying whether images match or not, a number of tests were performed.
 
 \begin{equation}
 Score = \frac{1}{distance}
@@ -497,7 +540,7 @@ Score = \frac{1}{distance}
 
 Utilising the images from the datasets in \tabref{table:overlap}, matching scores were computed for pairs of overlapping images and pairs of non-overlapping images respectively. It was expected that the matching score for the overlapping images would be larger than that of the non-overlapping images. \\
 
-The feature extraction algorithms were utilised on all possible combinations of overlapping and non-overlapping image pairs respectively from each of the datasets. The algorithms include SBRISK, BRISK4, SBRISK-SURF2D and SBRISK- UBRISK. The matching criteria utilised was either K-Nearest Neighbors (KNN), Euclidean distance or Hamming distance depending on the method. The mean matching scores for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. \\
+The feature extraction algorithms were utilised on all possible combinations of overlapping and non-overlapping image pairs respectively from each of the datasets. The algorithms include BRISK0, BRISK, BRISK0-SURF2D and BRISK0- UBRISK. The matching criteria utilised was either K-Nearest Neighbors (KNN), Euclidean distance or Hamming distance depending on the method. The mean matching scores for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. \\
 
 As can be seen in the table, matching scores for overlapping images are at least an order of magnitude larger than matching scores for non-overlapping images. This indicates that \eqnref{eqn:inverseDistance} can be utilised as a means to classify whether or not a match has occured between a pair of images. This score has been used to determine the overall performance of the feature extraction algorithms detailed in \secref{sec:overallPerformance}.\\
 
@@ -509,21 +552,21 @@ Method & Overlapping Score & Non-overlapping Score\tabularnewline
 \hline 
  & \multicolumn{2}{c}{2-KNN}\tabularnewline
 \hline 
-SBRISK & 0.213 & 0.002\tabularnewline
+BRISK0 & 0.213 & 0.002\tabularnewline
 \hline 
-BRISK4 & 0.167 & 0.002\tabularnewline
+BRISK & 0.167 & 0.002\tabularnewline
 \hline 
-SBRISK- SURF2D & 66.62 & 3.52\tabularnewline
+BRISK0- SURF2D & 66.62 & 3.52\tabularnewline
 \hline 
 UBRISK & 0.177 & 0.001\tabularnewline
 \hline 
  & \multicolumn{2}{c}{Hamming/Euclidean Distance}\tabularnewline
 \hline 
-SBRISK & 0.22 & 0.02\tabularnewline
+BRISK0 & 0.22 & 0.02\tabularnewline
 \hline 
-BRISK4 & 0.21 & 0.01\tabularnewline
+BRISK & 0.21 & 0.01\tabularnewline
 \hline 
-SBRISK- SURF2D & 50.16 & 3.15\tabularnewline
+BRISK0- SURF2D & 50.16 & 3.15\tabularnewline
 \hline 
 UBRISK & 0.20 & 0.01\tabularnewline
 \hline 
@@ -533,9 +576,23 @@ UBRISK & 0.20 & 0.01\tabularnewline
 
 \subsubsection{KNN Matching Constraint}
 \label{sec:knnMatchingConstraint}
-In order to verify the KNN matching constraint and determine the optimum threhsold, a number of tests were developed and implemented on the four main feature extraction techniques, namely SBRISK, BRISK4, UBRISK and SBRISK-2D SURF. In order to generate invalid matches, images with no overlap were compared and any matches found during the comparison were flagged as invalid matches. This was performed on $2808$ non-overlapping image pairs. To generate the valid matches, $108$ identical images were compared and all matches found between these images were flagged as valid matches. In both cases, 2-KNN matching was performed generating two matches for every keypoint. The ratio of the first and second KNN neighbor was then computed for both valid and invalid matches and the mean ratio was subsequently generated. The results are shown in \tabref{tab:knnCriterion} for each of the four methods. As can be seen in the table, invalid matches have a mean ratio which is over $0.9$. Valid matches have a ratio which is approximately zero. This illustrates a significant difference between the first and second KNN for valid and invalid matches. Based on this data, all matches whose KNN ratio is below $0.7$ are considered valid matches whereas all matches above $0.7$ are considered to be invalid matches. This value has been chosen in order to ensure that the majority of KNN invalid matches are rejected. Since the largest standard deviation is $8.8\%$ of the total KNN ratio value, a value well below $0.9$ has been selected. \\
+In order to verify the KNN matching constraint and determine the optimum threhsold, a number of tests were developed and implemented on the four main feature extraction techniques, namely BRISK0, BRISK, UBRISK and BRISK0-2D SURF. In order to generate invalid matches, images with no overlap were compared, and any matches found during the comparison were flagged as invalid matches. This was performed on $2808$ non-overlapping image pairs. To generate the valid matches, $108$ identical images were compared and all matches found between these images were flagged as valid matches. In both cases, 2-KNN matching was performed generating two matches for every interest point. The ratio of the first and second KNN neighbor was then computed for both valid and invalid matches and the mean ratio was subsequently generated. The results are shown in \tabref{tab:knnCriterion} for each of the four methods. As can be seen in the table, invalid matches have a mean ratio which is over $0.9$. Valid matches have a ratio which is approximately zero. This illustrates a significant difference between the first and second KNN for valid and invalid matches. Based on this data, all matches whose KNN ratio is below $0.7$ are considered valid matches whereas all matches above $0.7$ are considered to be invalid matches. This value has been chosen in order to ensure that the majority of KNN invalid matches are rejected. Since the largest standard deviation is $8.8\%$ of the total KNN ratio value, a value well below $0.9$ has been selected. Graphs of the KNN ratio for both the BRISK0 - U-BRISK method and BRISK0-SBRISK method are shown in \figref{fig:b0ubknnratio} and \figref{fig:b0knnratio} respectively. \\
 
-In addition to this, the mean distance between the first and second KNN for each method have been computed. It has been found that there is a significant difference between the distances for valid and invalid matches respectively. The mean distance could also be used as a global threshold but this is not generic and some feature descriptors may be more discriminatory than others \cite{Lowe2004}. This is evident in the case of SBRISK-2D SURF as the standard deviation is $68\%$ of the total value indicating a huge amount of fluctuation about the mean. Thus the KNN ratio is a more useful constraint in this scenario.\\
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/KNNRatio_SBRISK_UBRISK_20_60.jpg}
+\caption{The KNN ratio for non-overlapping and overlapping images respectively using the BRISK0 - UBRISK method}
+\label{fig:b0ubknnratio}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/KNNRatio_SBRISK_SURF2D_20_60.jpg}
+\caption{The KNN ratio for non-overlapping and overlapping images respectively using the BRISK0 method}
+\label{fig:b0knnratio}
+\end{minipage}
+\end{figure}
+
+In addition to this, the mean distance between the first and second KNN for each method have been computed. It has been found that there is a significant difference between the distances for valid and invalid matches respectively. The mean distance could also be used as a global threshold but this is not generic and some feature descriptors may be more discriminatory than others \cite{Lowe2004}. This is evident in the case of BRISK0-2D SURF as the standard deviation is $68\%$ of the total value indicating a huge amount of fluctuation about the mean. Thus the KNN ratio is a more useful constraint in this scenario.\\
 
 \begin{table}
 \caption{The KNN Ratios}
@@ -544,19 +601,19 @@ In addition to this, the mean distance between the first and second KNN for each
 Method & Match Type & Mean KNN Ratio & Std Deviation & Mean Distance between KNN neighbors & Std Deviation\tabularnewline
 \hline 
 \hline 
-SBRISK & Invalid Matches & 0.94 & 0.06 & 7.45 & 7.58\tabularnewline
+BRISK0 & Invalid Matches & 0.94 & 0.06 & 7.45 & 7.58\tabularnewline
 \hline 
  & Valid Matches & 0 & 0 & 97.66 & 37.97\tabularnewline
 \hline 
-BRISK4 & Invalid Matches & 0.93 & 0.06 & 7.93 & 7.91\tabularnewline
+BRISK & Invalid Matches & 0.93 & 0.06 & 7.93 & 7.91\tabularnewline
 \hline 
  & Valid Matches & 0 & 0 & 86.47 & 42.78\tabularnewline
 \hline 
-SBRISK - UBRISK & Invalid Matches & 0.94 & 0.05 & 7.78 & 7.58\tabularnewline
+BRISK0 - UBRISK & Invalid Matches & 0.94 & 0.05 & 7.78 & 7.58\tabularnewline
 \hline 
  & Valid Matches & 0 & 0 & 100.70 & 40.21\tabularnewline
 \hline 
-SBRISK SURF2D & Invalid Matches & 0.90 & 0.08 & 0.03 & 0.03\tabularnewline
+BRISK0 SURF2D & Invalid Matches & 0.90 & 0.08 & 0.03 & 0.03\tabularnewline
 \hline 
  & Valid Matches & 0.0004 & 0.0008 & 0.25 & 0.18\tabularnewline
 \hline 
@@ -569,54 +626,75 @@ SURF 1D & Invalid Matches &  &  &  & \tabularnewline
 \end{table}
 
 
-\subsubsection{Keypoint Matching Properties}
-\label{sec:keypointMatching}
-It is also important to determine whether or not keypoints corresponding to a valid match have different properties compared to keypoints corresponding to an invalid match. This could be useful in generating new constraints that can effectively remove invalid matches. Three criteria were analysed, namely the angle, size and response of each matched keypoint. In order to generate the useful statistics for this experiment, the angle, size and response of each of the keypoints in image $1$ are subtracted from the angle, size and response of the corresponding matched keypoints in image $2$. All of these differences are then summed together for all the matched keypoints each pair of images. The mean is subsequently computed. \\
 
-The angle and response differences as well as the standard deviation for each of these differences are calculated using $40$ overlapping image pairs from all four datasets.\\
+
+\subsubsection{Interest Point Matching Properties}
+\label{sec:keypointMatching}
+It is also important to determine whether or not interest points corresponding to a valid match have different properties compared to interest points corresponding to an invalid match. This could be useful in generating new constraints that can effectively remove invalid matches. Three criteria were analysed, namely the angle $\alpha_i$, size $S_i$ and response $R_i$ of each pair of matched interest points. The subscript $i|i={1,2}$ refers to the image number of the interest point being evaluated.\\
+
+In order to generate useful statistics for this experiment, the angle, size and response of each of the interest points in image $1$ are subtracted from the angle, size and response of the corresponding matched interest points in image $2$. All of these differences are then summed together for all the matched interest points in each pair of images. The mean is subsequently computed. This results in the mean differences $\bar{d\alpha}, \bar{dS}$ and $\bar{dR}$ as shown in \eqnref{eqn:properties} respectively. The angle, response and size mean differences as well as the standard deviation for each of these differences are calculated using $40$ overlapping image pairs from all four datasets.\\ \\
+
+\begin{eqnarray}
+\bar{d\alpha} &=& \frac{\sum_{j=1}^N (\alpha_1^j - \alpha_2^j)}{N}\\
+\bar{dS} &=& \frac{\sum_{j=1}^N (S_1^j - S_2^j)}{N}\\
+\bar{dR} &=& \frac{\sum_{j=1}^N (R_1^j - R_2^j)}{N}
+\end{eqnarray}
+
 %The mean distance between 
 In order to determine whether or not matches in images are valid, the two matching constraints discussed in \secref{sec:validation} have been utilised, namely, the angle and distance constraint and the the KNN ratio constraint. Utilising these constraints, overlapping image pairs were compared using the four feature extraction algorithms. The optimal \textit{maximum} parameter values from \tabref{tab:knnStatistics} have been used to perform these experiements. \\
 
-The keypoints corresponding to valid and invalid matches in each of the images respectively were tabulated. Invalid matches due to the angle and distance constraints are tabulated separately from the invalid matches due to the KNN ratio constraint. The mean angle, response and size differences from the image pairs as well as the corresponding standard deviations are shown in \tabref{tab:keypointProperties}.\\
+The interest points corresponding to valid and invalid matches in each of the images respectively were tabulated. Invalid matches due to the angle and distance constraints are tabulated separately from the invalid matches due to the KNN ratio constraint. The mean angle, response and size differences from the image pairs as well as the corresponding standard deviations are shown in \tabref{tab:keypointProperties}.\\
 
-One of the more significant observations is the mean response difference. Valid matches from overlapping image pairs in all of the feature extraction algorithms have a mean response that is 
+It is important to note that BRISK0 - U-BRISK and BRISK0 - 2D SURF do not output interest point angles. Thus these methods cannot be compared using the angle criterion. In addition to this, since BRISK0 only detects interest points in a single scale space, the size of the detected interest point scale remains the same. Therefore, this criterion is not used as a means of comparison for all of the BRISK0-based methods.\\
+
+One of the more significant observations is the mean response difference $\bar{dR}$. The difference $dR$ is much smaller for valid matches compared to invalid matches over all four methods. This seems to indicate that the response of valid interest points is generally very similar.\\
+
+In addition to this, BRISK0 and BRISK exhibit a large difference in interest point angles $\bar{d\alpha}$ for invalid matches and a much smaller difference for valid matches. \\
+
+Finally, difference in detected scales $\bar{dS}$ has been found to be much smaller for valid matches than for invalid matches. As mentioned previously, this statistic is only valid for BRISK based detectors (BRISK0 is not included among these detectors).\\
+
+Therefore, it may be possible to utilise these properties in order to further detect and remove invalid matches in images. This is a recommendation for further work on this topic.\\
 
 %The keypoints in image A were subtracted from the keypoints in image B.
 
 \begin{table}
+
+
 \caption{The properties of valid and invalid interest point matches}
+
+
 \begin{tabular}{|c|c|c|c|c|c|r@{\extracolsep{0pt}.}l|}
 \hline 
 Property & \multicolumn{7}{c}{Invalid Matches due to Angle Constraint}\tabularnewline
 \hline 
 \hline 
-Method & Mean Angle & Angle Std & Response & Response Std & Size & \multicolumn{2}{c|}{Size Std}\tabularnewline
+Method & $\bar{d\alpha}$ & $\bar{d\alpha}$Std & $\bar{dR}$ & $\bar{dR}$Std & $\bar{dS}$ & \multicolumn{2}{c|}{$\bar{dS}$Std}\tabularnewline
 \hline 
-SBRISK & 20.28 & 6.680 & 0.5400 & 1.070 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 & 20.28 & 6.680 & 0.5400 & 1.070 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
-BRISK4 & 6.98 & 1.47 & 6.31 & 2.88 & 0.300 & 2&54\tabularnewline
+BRISK & 6.98 & 1.47 & 6.31 & 2.88 & 0.300 & 2&54\tabularnewline
 \hline 
-SBRISK - SURF2D & 0 & 0 & 0.4300 & 0.8900 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 - SURF2D & 0 & 0 & 0.4300 & 0.8900 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
 UBRISK & 0 & 0 & 0.13 & 2.060 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
  & \multicolumn{7}{c}{Invalid Matches due to KNN Ratio Constraint}\tabularnewline
 \hline 
-SBRISK & 4.280 & 0.8700 & 6.810 & 1.980 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 & 4.280 & 0.8700 & 6.810 & 1.980 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
-BRISK4 & 3.24 & 4.84 & 2.43 & 1.03 & 3.02 & 4&58\tabularnewline
+BRISK & 3.24 & 4.84 & 2.43 & 1.03 & 3.02 & 4&58\tabularnewline
 \hline 
-SBRISK - SURF2D & 0 & 0 & 2.370 & 1.700 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 - SURF2D & 0 & 0 & 2.370 & 1.700 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
 UBRISK & 0 & 0 & 4.610 & 1.710 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
  & \multicolumn{7}{c}{Valid Matches}\tabularnewline
 \hline 
-SBRISK & 0.6600 & 0.5200 & 0.08000 & 0.1000 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 & 0.6600 & 0.5200 & 0.08000 & 0.1000 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
-BRISK4 & 1.20 & 0.310 & -0.860 & 0.0500 & -0.0900 & 0&410\tabularnewline
+BRISK & 1.20 & 0.310 & -0.860 & 0.0500 & -0.0900 & 0&410\tabularnewline
 \hline 
-SBRISK - SURF2D & 0 & 0 & 0.2900 & 0.2700 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
+BRISK0 - SURF2D & 0 & 0 & 0.2900 & 0.2700 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
 UBRISK & 0 & 0 & -0.11 & -0.44 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 \hline 
@@ -641,27 +719,27 @@ UBRISK & 0 & 0 & -0.11 & -0.44 & 0 & \multicolumn{2}{c|}{0}\tabularnewline
 Method & \multicolumn{4}{c}{Overlapping images}\tabularnewline
 \hline 
 \hline 
- & Total Matches & Valid Matches & Invalid Matches & Mean Num Keypoints\tabularnewline
+ & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
 \hline 
-SBRISK - 2KNN & 175.560 & 15.42 & 160.14 & 77.43000\tabularnewline
+BRISK0 - 2KNN & 175.560 & 15.42 & 160.14 & 77.43000\tabularnewline
 \hline 
-BRISK4 - 2KNN & 175.6300 & 13.23000 & 162.4100 & 73.70000\tabularnewline
+BRISK - 2KNN & 175.6300 & 13.23000 & 162.4100 & 73.70000\tabularnewline
 \hline 
-SBRISK-SURF2D - 2KNN & 218.8800 & 19.01000 & 199.8600 & 97.88000\tabularnewline
+BRISK0-SURF2D - 2KNN & 218.8800 & 19.01000 & 199.8600 & 97.88000\tabularnewline
 \hline 
-SBRISK - UBRISK & 135.7600 & 16.14000 & 119.6200 & 59.38000\tabularnewline
+BRISK0 - UBRISK & 135.7600 & 16.14000 & 119.6200 & 59.38000\tabularnewline
 \hline 
  & \multicolumn{4}{c}{Non-overlapping images}\tabularnewline
 \hline 
  &  &  &  & \tabularnewline
 \hline 
-SBRISK - 2KNN & 72.260 & 0.25000 & 72.010 & 77.430\tabularnewline
+BRISK0 - 2KNN & 72.260 & 0.25000 & 72.010 & 77.430\tabularnewline
 \hline 
-BRISK4 - 2KNN & 69.930 & 0.28000 & 69.640 & 73.700\tabularnewline
+BRISK - 2KNN & 69.930 & 0.28000 & 69.640 & 73.700\tabularnewline
 \hline 
-SBRISK-SURF2D - 2KNN & 98.700 & 1.3900 & 97.310 & 97.880\tabularnewline
+BRISK0-SURF2D - 2KNN & 98.700 & 1.3900 & 97.310 & 97.880\tabularnewline
 \hline 
-SBRISK - UBRISK & 54.560 & 0.22000 & 54.340 & 59.380\tabularnewline
+BRISK0 - UBRISK & 54.560 & 0.22000 & 54.340 & 59.380\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:keypointsMatchesKNN}
@@ -670,57 +748,48 @@ SBRISK - UBRISK & 54.560 & 0.22000 & 54.340 & 59.380\tabularnewline
 \begin{table}
 \begin{tabular}{|c|c|c|c|c|}
 \hline 
-Method & Total Matches & Valid Matches & Invalid Matches & Mean Num Keypoints\tabularnewline
+Method & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Point\tabularnewline
 \hline 
 \hline 
  & \multicolumn{4}{c}{Overlapping images}\tabularnewline
 \hline 
-SBRISK - Hamming & 70.770 & 39.980 & 30.790 & 32.420\tabularnewline
+BRISK0 - Hamming & 70.770 & 39.980 & 30.790 & 32.420\tabularnewline
 \hline 
-BRISK4 - Hamming & 91.380 & 57.510 & 33.870 & 31.560\tabularnewline
+BRISK - Hamming & 91.380 & 57.510 & 33.870 & 31.560\tabularnewline
 \hline 
-SBRISK-SURF2D - Euclidean & 19.530 & 12.050 & 7.4800 & 51.940\tabularnewline
+BRISK0-SURF2D - Euclidean & 19.530 & 12.050 & 7.4800 & 51.940\tabularnewline
 \hline 
-SBRISK - UBRISK & 40.120 & 26.930 & 13.190 & 33.530\tabularnewline
+BRISK0 - UBRISK & 40.120 & 26.930 & 13.190 & 33.530\tabularnewline
 \hline 
  & \multicolumn{4}{c}{Non-overlapping images}\tabularnewline
 \hline 
-SBRISK - Hamming & 11.150 & 4.9600 & 6.1900 & 32.420\tabularnewline
+BRISK0 - Hamming & 11.150 & 4.9600 & 6.1900 & 32.420\tabularnewline
 \hline 
-BRISK4 - Hamming & 5.6300 & 2.3900 & 3.2500 & 31.560\tabularnewline
+BRISK - Hamming & 5.6300 & 2.3900 & 3.2500 & 31.560\tabularnewline
 \hline 
-SBRISK-SURF2D - Euclidean & 2.6800 & 0.90000 & 1.7800 & 51.940\tabularnewline
+BRISK0-SURF2D - Euclidean & 2.6800 & 0.90000 & 1.7800 & 51.940\tabularnewline
 \hline 
-SBRISK - UBRISK & 3.9700 & 1.8500 & 2.1200 & 33.530\tabularnewline
+BRISK0 - UBRISK & 3.9700 & 1.8500 & 2.1200 & 33.530\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:keypointsMatchesHamming}
 \end{table}
 
-\begin{figure}[h!]
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming.jpg}
-\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using Hamming distance for matching}
-\label{fig:compareHamming}
-\end{minipage}
-\hspace{0.5cm}
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using 2-KNN for matching}
-\label{fig:compareKNN}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves for SBRISK, BRISK4 and SBRISK-SURF2D using 2-KNN for matching and consistent thresholds}
-\label{fig:compareKNNConsistent}
-\end{minipage}
-\end{figure}
+In order to determine the detector with the best overall performance, the following test procedure was performed. The optimal thresholds (both maximum and consistent) for both the KNN and hamming/euclidean distance based feature extraction algorithms were used as the parameter settings for these algorithms. Each algorithm was then run on a set of $1421$ overlapping image pairs and $2808$ non-overlapping image pairs. The average times corresponding to each section of the algorithm were recorded and the results are shown in \tabref{tab: overallknn} and \tabref{tab:overallhammingeuclidean} respectively. The detection time is defined as the amount of time required to detect all of the interest points in a single detector module. The extraction time is the time taken to compute the descriptors of the detected interest points for a single descriptor module. The matching time is the time taken to match the interest points for a single pair of images. The verification time is the time taken to detect and remove invalid invalid interest points. Finally the overall time is the summation of these times as well as the time to process and extract the image from the robot. \\
+
+As can be seen in the tables, the algorithm producing the marginally best matching performance using KNN matching is BRISK0 - 2D SURF with an Area Under the ROC Curve (AUC) of $93.799\%$. However, this algorithm comes at a high computational cost as it is computing the euclidean distance between $64$ dimensional feature descriptors for every detected interest point match.\\
+
+In terms of speed, the best performing KNN feature extraction algorithm is BRISK0 - U-BRISK with an average overall time of $11 ms$. This is expected since a number of constraints have been relaxed, as mentioned in \secref{sec:brisk0}, in order to speed up computation to satisfy the computational requirements of the Nao robot.\\
+
+The algorithm with the best general performance is BRISK0 - U-BRISK using the hamming distance feature matching technique. This algorithm performs the entire routine in $9.43 ms$ which is significantly faster than the other tested methods. In addition, the matching performance is $90.38\%$ which is acceptable performance for this application.\\
 
 \begin{table}
+\centering
 \caption{The performance statistics of 2-KNN feature extraction algorithms}
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-KNN)} & Threshold & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
+\textbf{Method (2-KNN)} & Parameter & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
 SBRISK & Maximum & 90.429 & 3.4840 & 6.0540 & 0.002 & 0.029 & 15.271\tabularnewline
@@ -740,14 +809,17 @@ SBRISK - SURF2D & Consistent & 93.799 & 4.2050 & 20.799 & 0.001 & 0.067 & 30.628
 SBRISK - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 0.004 & 0.042 & 15.709\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:keypointsMatchesHamming}
+
+\label{tab:overallknn}
 \end{table}
 
 \begin{table}
+\centering
 \caption{The performance statistics of Hamming/Euclidean Distance feature extraction algorithms}
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-Method & Threshold, distance & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
+Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
 SBRISK & Maximum & 82.908 & 3.080 & 3.218 & 0 & 0.01600 & 10.717\tabularnewline
@@ -759,9 +831,33 @@ SBRISK-SURF2D & Maximum & 86.347 & 3.231 & 7.299 & 0 & 0.009000 & 14.865\tabular
 SBRISK-UBRISK & Maximum & 90.378 & 3.097 & 1.953 & 0 & 0.01000 & 9.431\tabularnewline
 \hline 
 \end{tabular}
-
-\label{tab:hammingStatistics}
+\label{tab:overallhammingeuclidean}
 \end{table}
+
+The ROC curves generated have been generated for each of the four methods. These curves have been generated by utilising the overlapping and non-overlapping images respectively. Overlapping images generate the True Positive (TP) matches. This is performed by varying the matching score threshold in a range from the maximum matching score in the dataset to $0$.  All overlapping image pairs with a larger matching score than the threshold are classified as a match and all overlapping image pairs below the matching score are classified as a non-match. The False Positives (FP) are generated from the non-overlapping image pairs. Again, the matching score threshold is varied and all non-overlapping image pairs above the threshold are defined as a match and vice versa. If a non-overlapping image is defined as a match, then it is a FP.The ROC curves for the four methods are shown in \figref{fig:compareHamming} to \figref{fig:compareKNNConsistent} respectively.
+
+\figref{fig:compareHamming} shows the ROC curves for the four methods using Hamming/Euclidean distance matching and using the MPS defined in \secref{sec:optimalParameters}.\figref{fig:compareKNN} shows the ROC curves for 2-KNN and using the MPS. Finally, \figref{fig:compareKNNConsistent} shows the 2-KNN matching ROC curves using the CPS.
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching}
+\label{fig:compareHamming}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using 2-KNN for matching and maximum thresholds}
+\label{fig:compareKNN}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using 2-KNN for matching and consistent thresholds}
+\label{fig:compareKNNConsistent}
+\end{minipage}
+\end{figure}
+
+
 
 
 
@@ -786,16 +882,16 @@ SBRISK-UBRISK & Maximum & 90.378 & 3.097 & 1.953 & 0 & 0.01000 & 9.431\tabularne
 %Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
 %\hline 
 %\hline 
-%BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
+%BRISK & BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
 %\hline 
 %\end{tabular}
-%\label{tab:sbrisk}
+%\label{tab:BRISK0}
 %\end{table}
 
 %\begin{figure}[h!]
 %	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_KNN.jpg}
-%	\caption{The ROC Curve for BRISK4 KNN}
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK_BRISK_KNN.jpg}
+%	\caption{The ROC Curve for BRISK KNN}
 %	\label{fig:sbriskroc}
 %\end{figure}
 
@@ -823,7 +919,7 @@ SBRISK-UBRISK & Maximum & 90.378 & 3.097 & 1.953 & 0 & 0.01000 & 9.431\tabularne
 %Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
 %\hline 
 %\hline 
-%BRISK4 & BRISK4 & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 85 & 121.25 & 130 & 65\tabularnewline
+%BRISK & BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 85 & 121.25 & 130 & 65\tabularnewline
 %\hline 
 %\end{tabular}
 %\label{tab:sbrisk}
@@ -835,8 +931,8 @@ SBRISK-UBRISK & Maximum & 90.378 & 3.097 & 1.953 & 0 & 0.01000 & 9.431\tabularne
 %b. average time, extraction, deletion
 %\begin{figure}[h!]
 %	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK4_BRISK4_Hamming.jpg}
-%	\caption{The ROC Curve for BRISK4 Hamming}
+%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK_BRISK_Hamming.jpg}
+%	\caption{The ROC Curve for BRISK Hamming}
 %	\label{fig:sbriskroc}
 %\end{figure}
 

@@ -5,3 +5,33 @@ To Discuss with Ram:
 1. Using BRISK instead of 1D SURF or as an alternative - Discuss performance criterion
 2. Cannot perform ordering. (Matching features according to an ordering constraint is time consuming)
 3. The localisation technique that is used for reweighting the particles
+
+
+12/07/12
+
+1. Show the optimisation criterion for determining the optimal thresholds
+2. Present the results regarding the feature extraction algorithms
+3. The KNN Ratio - do i need to justify through experiment the angle, distance, k1, k2 etc... (Any ideas?)
+4. I don't think I can specifically compare threshold values for the various methods. I can explain why each of the 
+methods have the threshold that they do.
+
+The difference between Hamming and KNN criterion
+1. Hamming is faster as less keypoints are detected on average whereas for KNN, you are guaranteed to have 
+double the amount of keypoints
+2. BRISK4 is generally longer due to the detection time
+3. BRISK0 SURF2D is generally longer due to the extraction time.
+4. Consistent matching scores are better since these matching scores are generally at lower thresholds which
+means weaker keypoints are detected. 
+5. Based on the AUC, hamming is not as good as KNN. This may be because the thresholds are higher and therefore there is a higher
+percentage of Zero matches.
+
+EXPLANATION (2 parameters)
+************************************************
+A high threshold will ultimately decrease the number of keypoints and therefore increase the speed.
+A large radius will ultimately increase the number of valid matches and decrease the number of zero matches. 
+Therefore, this could explain the values shown on these graphs.
+
+EXPLANATION (1 parameter)
+************************************************
+A high threshold by itself will only decrease the number of matches, increase the time and increase the number of zero matches.
+Therefore lower thresholds will reduce speed by increase the number of valid matches.

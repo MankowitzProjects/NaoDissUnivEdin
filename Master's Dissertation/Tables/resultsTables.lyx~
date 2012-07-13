@@ -4876,7 +4876,7 @@ Parameter 2
 \begin_inset Text
 
 \begin_layout Plain Layout
-2-Nearest Neighbors
+2-Nearest Neighbors Matching
 \end_layout
 
 \end_inset
@@ -5021,7 +5021,7 @@ N/A
 \begin_inset Text
 
 \begin_layout Plain Layout
-Hamming/Euclidean Distance
+Hamming/Euclidean Distance Matching
 \end_layout
 
 \end_inset
@@ -6700,7 +6700,7 @@ Method
 \begin_inset Text
 
 \begin_layout Plain Layout
-Threshold, distance
+Parameters
 \end_layout
 
 \end_inset
