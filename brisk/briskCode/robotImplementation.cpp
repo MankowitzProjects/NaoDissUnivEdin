@@ -46,7 +46,7 @@
 #include <string>
 #include <sstream>
 
-#define DEBUG_MODE 0
+#define DEBUG_MODE 1
 #define DEBUG_TIMES 1
 #define DEBUG_MATCHES 1
 #define OUTPUT 0
@@ -91,7 +91,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = false;
+	bool usingKnnCriterion = true;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 200;
@@ -100,12 +100,12 @@ int main(int argc, char ** argv) {
 	//Set the arguments
 	//std::string feat_dMetector = "SURF";
 	//int threshold = 1000;
-	bool hamming=true;
+	bool hamming=false;
 	std::string feat_detector = "BRISK";
-	int threshold = 46.25;//46.25
+	int threshold = 47.5;//46.25
 	int hammingDistance = 100;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
-	std::string feat_descriptor = "BRISK";
+	std::string feat_descriptor = "SURF";
 
 	//For changing the threshold
 	int testThreshold = 10;
@@ -130,13 +130,13 @@ int main(int argc, char ** argv) {
 	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//The second directory
-	//std::string dir = "../images/Pics2StraightView/";
-	//std::string dir1 = "../images/Pics2StraightView";//PicsOG/Matching_Images_OG_Left
+	dir = "../images/Dataset2_Overlapping_1";
+	dir1 = "../images/Dataset2_Overlapping_1";
 
 
 	//Names of the two image files
-	std::string name1 = "9";
-	std::string name2 = "8";
+	std::string name1 = "30";
+	std::string name2 = "22";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;

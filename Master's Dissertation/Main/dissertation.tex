@@ -281,9 +281,14 @@ This is a very efficient algorithm and has been effectively performed in BRIEF \
 
 \subsection{Euclidean Distance}
 \label{sec:euclidean}
-The SURF descriptors use the Euclidean distance between interest point descriptors to determine if there is a match between interest points or not \cite{Lowe2004}. A match occurs if the nearest neighboring interest point in a training image is within a specified euclidean distance from the interest point in the query image.\\
+The SURF descriptors use the Euclidean distance between interest point descriptors to determine if there is a match between interest points or not \cite{Lowe2004}. A match occurs if the nearest neighboring interest point in image $A$ is within a specified euclidean distance from the interest point in the image $B$.\\
 
 In addition to this, in order to speed up matching, the sign of the Laplacian, which is the trace of the Hessian matrix is used to determine whether ot not each blob response in the respective images are of a similar contrast \cite{Bay2008}. The sign of the Laplacian determines whether the interest point in question is a dark blob on a light background or a light blob on a dark background. This enables interest points of different contrasts to be rejected as matches without having to compute the euclidean distance between the points.\\
+
+
+\subsection{Edit-Distance Constraint}
+\label{sec:editDistance}
+
 
 \subsection{Matching Validation}
 \label{sec:validation}
@@ -300,6 +305,11 @@ Based on the results in \secref{sec:knnMatchingConstraint}, all matches with a t
 
 \subsubsection{Angle and Distance Constraints}
 \label{sec:angleDistanceConstraints}
+Two new matching constraints have been developed in order to determine whether or not a match between two interest points in corresponding images are valid, namely, the angle and distance constraints respectively. A pair of interest points have to fulfil both of these constraints in order to be considered a valid match. In order to verify that the match fulfils these constraints, the pair of images that are being evaluated are placed side by side one another as shown in \figref{fig:imagesSide}. After placing the images next to one another, a line join
+
+\subsubsection{RANSAC Constraint}
+\label{sec:ransacConstraint}
+
 
 
 
@@ -792,23 +802,24 @@ The algorithm with the best general performance is BRISK0 - U-BRISK using the ha
 \textbf{Method (2-KNN)} & Parameter & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-SBRISK & Maximum & 90.429 & 3.4840 & 6.0540 & 0.002 & 0.029 & 15.271\tabularnewline
+SBRISK & Maximum & 90.429 & 3.4840 & 6.0540 & 1.7070 & 0.029000 & 15.271\tabularnewline
 \hline 
-BRISK4 & Maximum & 88.084 & 10.882 & 5.8820 & 0.002 & 0.029 & 22.422\tabularnewline
+BRISK4 & Maximum & 88.084 & 10.882 & 5.8820 & 1.5710 & 0.029000 & 22.422\tabularnewline
 \hline 
-SBRISK - SURF2D & Maximum & 93.586 & 3.6230 & 12.016 & 0.001 & 0.039 & 20.304\tabularnewline
+SBRISK - SURF2D & Maximum & 93.586 & 3.6230 & 12.016 & 0.57800 & 0.039000 & 20.304\tabularnewline
 \hline 
-SBRISK - U-BRISK & Maximum & 87.830 & 3.3320 & 2.5950 & 0.001 & 0.024 & 11.005\tabularnewline
+SBRISK - U-BRISK & Maximum & 87.830 & 3.3320 & 2.5950 & 1.0580 & 0.024000 & 11.005\tabularnewline
 \hline 
-SBRISK & Consistent & 93.064 & 4.1300 & 11.108 & 0.006 & 0.053 & 25.810\tabularnewline
+SBRISK & Consistent & 93.064 & 4.1300 & 11.108 & 6.4990 & 0.053000 & 25.810\tabularnewline
 \hline 
-BRISK4 & Consistent & 90.768 & 15.842 & 10.970 & 0.007 & 0.057 & 37.662\tabularnewline
+BRISK4 & Consistent & 90.768 & 15.842 & 10.970 & 6.7440 & 0.057000 & 37.662\tabularnewline
 \hline 
-SBRISK - SURF2D & Consistent & 93.799 & 4.2050 & 20.799 & 0.001 & 0.067 & 30.628\tabularnewline
+SBRISK - SURF2D & Consistent & 93.799 & 4.2050 & 20.799 & 1.4910 & 0.067000 & 30.628\tabularnewline
 \hline 
-SBRISK - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 0.004 & 0.042 & 15.709\tabularnewline
+SBRISK - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\tabularnewline
 \hline 
 \end{tabular}
+
 
 \label{tab:overallknn}
 \end{table}
@@ -822,13 +833,21 @@ SBRISK - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 0.004 & 0.042 & 15.70
 Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-SBRISK & Maximum & 82.908 & 3.080 & 3.218 & 0 & 0.01600 & 10.717\tabularnewline
+SBRISK & Maximum & 82.908 & 3.0800 & 3.2180 & 0.35200 & 0.016000 & 10.717\tabularnewline
 \hline 
-BRISK4 & Maximum & 76.616 & 8.492 & 3.355 & 0 & 0.01600 & 16.259\tabularnewline
+BRISK4 & Maximum & 76.616 & 8.4920 & 3.3550 & 0.32200 & 0.016000 & 16.259\tabularnewline
 \hline 
-SBRISK-SURF2D & Maximum & 86.347 & 3.231 & 7.299 & 0 & 0.009000 & 14.865\tabularnewline
+SBRISK-SURF2D & Maximum & 86.347 & 3.2310 & 7.2990 & 0.26500 & 0.0090000 & 14.865\tabularnewline
 \hline 
-SBRISK-UBRISK & Maximum & 90.378 & 3.097 & 1.953 & 0 & 0.01000 & 9.431\tabularnewline
+SBRISK-UBRISK & Maximum & 90.378 & 3.0970 & 1.9530 & 0.36000 & 0.010000 & 9.4310\tabularnewline
+\hline 
+SBRISK & Consistent & 83.177 & 3.1130 & 3.3270 & 0.38300 & 0.021000 & 10.860\tabularnewline
+\hline 
+BRISK4 & Consistent & 80.778 & 9.5310 & 4.3610 & 0.67600 & 0.041000 & 18.694\tabularnewline
+\hline 
+SBRISK-SURF2D & Consistent & 86.818 & 3.2910 & 8.3150 & 0.31200 & 0.011000 & 15.969\tabularnewline
+\hline 
+SBRISK-UBRISK & Consistent & 89.922 & 3.1140 & 1.9970 & 0.36700 & 0.012000 & 9.5030\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:overallhammingeuclidean}
@@ -845,6 +864,11 @@ The ROC curves generated have been generated for each of the four methods. These
 \label{fig:compareHamming}
 \end{minipage}
 \hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds}
+\label{fig:compareKNNConsistent}
+\end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/ROC_General_KNN.jpg}
 \caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using 2-KNN for matching and maximum thresholds}
@@ -865,265 +889,94 @@ The ROC curves generated have been generated for each of the four methods. These
 
 \subsubsection{SURF2D}
 \label{sec:2dsurfResults}
-%1. Picture of the ROC curve
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
-%c. Performance under lighting, scale, rotation and image blur
+
 
 \subsubsection{BRISK}
 \label{sec:briskResults}
-%Find the optimal parameters:
-%1. threshold only + KNN
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
-%\hline 
-%\hline 
-%BRISK & BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:BRISK0}
-%\end{table}
-
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK_BRISK_KNN.jpg}
-%	\caption{The ROC Curve for BRISK KNN}
-%	\label{fig:sbriskroc}
-%\end{figure}
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%88.08 & 19.43 & 9.34 & 1.54 & 0.03 & 39.06 &  &  & \tabularnewline
-%\hline 
-%90.76 & 27.79 & 18.00 & 6.81 & 0.05 & 61.30 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-%2. threshold, hammingdistance + KNN
-%****************************************************************
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
-%\hline 
-%\hline 
-%BRISK & BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 85 & 121.25 & 130 & 65\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-%1. Picture of the ROC curve
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_BRISK_BRISK_Hamming.jpg}
-%	\caption{The ROC Curve for BRISK Hamming}
-%	\label{fig:sbriskroc}
-%\end{figure}
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%74.36 & 14.55 & 4.42 & 0.26 & 0.01 & 27.87 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-%\end{table}
 
 
 \subsubsection{BRISK-SURF2D}
 \label{sec:brisk2dsurfResults}
-%1. Picture of the ROC curve
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
-%\hline 
-%\hline 
-%SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 35\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_KNN.jpg}
-%	\caption{The ROC Curve for SBRISK SURF2D KNN}
-%	\label{fig:sbriskroc}
-%\end{figure}
-
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%93.53 & 6.07 & 17.99 & 0.54 & 0.03 & 33.26 &  &  & \tabularnewline
-%\hline 
-%93.79 & 7.00 & 32.86 & 1.45 & 0.06 & 49.78 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-%\end{table}
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SURF2D_Hamming.jpg}
-%	\caption{The ROC Curve for SBRISK SURF2D Hamming}
-%	\label{fig:sbriskroc}
-%\end{figure}
-
-
-%2. threshold, hammingdistance + KNN
-%****************************************************************
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
-%\hline 
-%\hline 
-%SBRISK & SURF2D & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%87.37 & 16.7 & 87.19 & 0.43 & 0.01 & 112.97 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
 
 
 \subsubsection{S-BRISK}
 \label{sec:sbriskResults}
-%Find the optimal parameters:
-%1. threshold only + KNN
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & thresholdC\tabularnewline
-%\hline 
-%\hline 
-%S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-%1. Picture of the ROC curve
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
-
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_KNN.jpg}
-%	\caption{The ROC Curve for S-BRISK with KNN}
-%	\label{fig:sbriskroc}
-%\end{figure}
-
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%90.31 & 5.85 & 8.79 & 1.89 & 0.04 & 24.98 &  &  & \tabularnewline
-%\hline 
-%93.06 & 7.07 & 17.08 & 6.52 & 0.05 & 39.17 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
 
 
-%2. threshold, hammingdistance + KNN
-%****************************************************************
-%\begin{table}
-%\caption{Optimum Threshold}
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & threshold & distance & thresholdC & distanceC\tabularnewline
-%\hline 
-%\hline 
-%S-BRISK & S-BRISK & Hamming & 0.6 & 0.4 & 0.4 & 0.6 & 78.75 & 110 & 75 & 115\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:sbrisk}
-%\end{table}
-
-%\begin{figure}[h!]
-%	\centering
-%		\includegraphics[width=0.6\textwidth]{../Drawings/ROC_SBRISK_SBRISK_Hamming.jpg}
-%	\caption{The ROC Curve for S-BRISK using Hamming distance}
-%	\label{fig:sbriskrocHamming}
-%\end{figure}
-
-
-%\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-%\hline 
-%\% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms) & OP & \% TP & \% FP\tabularnewline
-%\hline 
-%\hline 
-%82.24 & 5.15 & 4.62 & 0.33 & 0.01 & 18.63 &  &  & \tabularnewline
-%\hline 
-%\end{tabular}
-
-
-
-
-%1. Picture of the ROC curve
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
 
 \subsubsection{1DSURF}
 \label{sec:1dsurfResults}
-%1. Picture of the ROC curve
-%STATS:
-%a. The AUC
-%b. average time, extraction, deletion
+
+
+
+
+
+\subsection{Additional Dataset Performance}
+\label{sec:additionalDataset}
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching on the additional dataset}
+\label{fig:compareHamming}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds on the additional dataset}
+\label{fig:compareKNNConsistent}
+\end{minipage}
+\end{figure}
+
+\begin{table}
+\caption{The optimum thresholds for dataset 2}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+\hline 
+Detector & Extractor & Matcher & k1 & k2 & k3 & k4 & Maximum threshold & Consistent threshold\tabularnewline
+\hline 
+\hline 
+S-BRISK & S-BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 40\tabularnewline
+\hline 
+BRISK4 & BRISK4 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 47.5 & 40\tabularnewline
+\hline 
+SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 40\tabularnewline
+\hline 
+SBRISK & UBRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 60 & 75\tabularnewline
+\hline 
+\end{tabular}
+\label{sec:dataset2OptimalThresholds}
+\end{table}
+
+
+\begin{table}
+\caption{The Area under the ROC Curve and timing Performance for Dataset 2}
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
+\hline 
+\hline 
+SBRISK & Maximum & 97.620 & 3.7490 & 8.5850 & 6.0800 & 0.068000 & 22.886\tabularnewline
+\hline 
+BRISK4 & Maximum & 97.007 & 12.962 & 8.1350 & 6.7360 & 0.079000 & 32.360\tabularnewline
+\hline 
+SBRISK-SURF2D & Maximum & 94.159 & 3.7370 & 16.314 & 1.3550 & 0.080000 & 25.877\tabularnewline
+\hline 
+SBRISK-UBRISK & Maximum & 94.829 & 3.3670 & 2.7900 & 2.5030 & 0.047000 & 13.101\tabularnewline
+\hline 
+SBRISK & Consistent & 98.037 & 3.9530 & 10.340 & 8.8060 & 0.079000 & 27.529\tabularnewline
+\hline 
+BRISK4 & Consistent & 97.405 & 14.808 & 10.549 & 11.176 & 0.098000 & 41.062\tabularnewline
+\hline 
+SBRISK-SURF2D & Consistent & 95.243 & 3.9500 & 19.883 & 1.8850 & 0.093000 & 30.224\tabularnewline
+\hline 
+SBRISK-UBRISK & Consistent & 95.125 & 3.1180 & 2.0650 & 1.0060 & 0.031000 & 10.609\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:dataset2Stats}
+\end{table}
+
+
 
 
 \subsection{Localisation Performance}

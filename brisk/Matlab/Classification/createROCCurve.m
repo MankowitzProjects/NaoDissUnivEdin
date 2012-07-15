@@ -1,5 +1,5 @@
 %Determining whether or not matching scores are useful for classification
-function [fpRateMatrix, tpRateMatrix, statsMatrix] = createROCCurve(data, step)
+function [fpRateMatrix, tpRateMatrix, statsMatrix] = createROCCurve(data, step, datasetA)
 global stats;
 
 %Separate the datasets
@@ -15,20 +15,13 @@ global stats;
 [row23nm,col23nm] = find(data(:,1)==2 & data(:,2)==3);
 [row24nm,col24nm] = find(data(:,1)==2 & data(:,2)==4);
 
+%2 additional overlapping datasets
+[row5,col5] = find(data(:,1)==5 & data(:,2)==5);
+[row6,col6] = find(data(:,1)==6 & data(:,2)==6);
 
-% [row5,col5] = find(data(:,1)==5 & data(:,2)==5);
-% [row5nm,col5nm] = find(data(:,1)==5 & data(:,2)==1);
-% 
-% [row6,col6] = find(data(:,1)==6 & data(:,2)==6);
-% [row6nm,col6nm] = find(data(:,1)==6 & data(:,2)==1);
-% 
-% [row7,col7] = find(data(:,1)==7 & data(:,2)==7);
-% [row7nm,col7nm] = find(data(:,1)==7 & data(:,2)==1);
-% 
-% [row8,col8] = find(data(:,1)==8 & data(:,2)==8);
-% [row8nm,col8nm] = find(data(:,1)==8 & data(:,2)==1);
+%1 additional overlapping dataset
+[row56nm,col56nm] = find(data(:,1)==5 & data(:,2)==6);
 
-%rows = [row1, row2, row3,  row4, row13nm, row23nm, row14nm, row24nm];
 
 %We have filtered the datasets by directory
 dataset1 = data(row1,:);
@@ -42,44 +35,43 @@ dataset23nm = data(row23nm,:);
 dataset14nm = data(row14nm,:);
 dataset24nm = data(row24nm,:);
 
-% dataset5 = data(row5,:);
-% dataset5nm = data(row5nm,:);
-% dataset6 = data(row6,:);
-% dataset6nm = data(row6nm,:);
-% dataset7 = data(row7,:);
-% dataset7nm = data(row7nm,:);
-% dataset8 = data(row8,:);
-% dataset8nm = data(row8nm,:);
+%Dataset 2
+dataset5 = data(row5,:);
+dataset6 = data(row6,:);
 
-%testing
+%Dataset 2
+dataset56nm = data(row56nm,:);
 
-%Generate the statistics for each matching dataset
-generateClassificationStats(dataset1,1);
-generateClassificationStats(dataset2,2);
-generateClassificationStats(dataset3,3);
-generateClassificationStats(dataset4,4);
 
-%Generate stats for each non-matching dataset
-generateClassificationStats(dataset13nm,5);
-generateClassificationStats(dataset23nm,6);
-generateClassificationStats(dataset14nm,7);
-generateClassificationStats(dataset24nm,8);
-
-%[rowt, colt] = find(dataset14nm(:,7)>0);
-%dataset14nm(rowt,7)
-%[a,b] = find(dataset14nm(:,7)==155.8340)
-
-% generateClassificationStats(dataset5, dataset5nm,5);
-% generateClassificationStats(dataset6, dataset6nm,6);
-% generateClassificationStats(dataset7, dataset7nm,7);
-% generateClassificationStats(dataset8, dataset8nm,8);
-
-%Find the mean of each directory for a specific scene/camera
-%Directory 1 to 4 is for the new Nao camera
-%Directory 5 to 8 is for the old Nao camera
-meanMatchesScore = mean(stats(1:4,1))
-meanNonMatchesScore = mean(stats(5:8,1))
-
+if datasetA
+    %Generate the statistics for each matching dataset
+    generateClassificationStats(dataset1,1);
+    generateClassificationStats(dataset2,2);
+    generateClassificationStats(dataset3,3);
+    generateClassificationStats(dataset4,4);
+    
+    %Generate stats for each non-matching dataset
+    generateClassificationStats(dataset13nm,5);
+    generateClassificationStats(dataset23nm,6);
+    generateClassificationStats(dataset14nm,7);
+    generateClassificationStats(dataset24nm,8);
+    
+    %Find the mean of each directory for a specific scene/camera
+    %Directory 1 to 4 is for the new Nao camera
+    %Directory 5 to 8 is for the old Nao camera
+    meanMatchesScore = mean(stats(1:4,1))
+    meanNonMatchesScore = mean(stats(5:8,1))
+    
+else
+    %Overlapping dataset
+    generateClassificationStats(dataset5,1);
+    generateClassificationStats(dataset6,2);
+    %Non-overlapping dataset
+    generateClassificationStats(dataset56nm,3);
+    
+    meanMatchesScore = mean(stats(1:2,1))
+    meanNonMatchesScore = mean(stats(3,1))
+end
 
 %Counter
 counter = 1;
@@ -91,41 +83,45 @@ fpRateMatrix = zeros(1,largestThreshold/step);
 
 %for ii=1000:-1:0 %BRISK SURF
 for ii=largestThreshold:-step:0 %BRISK BRISK
-%for ii=1:-0.001:0
-
-classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
-%classificationBoundary =meanNonMatchesScore*2;
-
-%Now to perform classification. We use the matching score
-%defined as the inverse hamming distance between 2 vectors
-%for BRISK or the inverse euclidean distance for SURF
-data(:,19) = data(:,8)>=ii; 
-
-% dataset1nm(:,16) = dataset1nm(:,7)>0; 
-% dataset2(:,16) = dataset2(:,7)>0; 
-% dataset2nm(:,16) = dataset2nm(:,7)>0; 
-% dataset3(:,16) = dataset3(:,7)>0; 
-% dataset3nm(:,16) = dataset3nm(:,7)>0; 
-% dataset4(:,16) = dataset4(:,7)>0; 
-% dataset4nm(:,16) = dataset4nm(:,7)>0;
-
-%Find the number of matches for matching pairs
-[matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
-[matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm);
-
-%The overall mean matching stat is:
-meanMatchesStat = mean(matchingStats);
-meanNonMatchesStat = mean(matchingStats1);
-
-%True positive rate
-TPRate = meanMatchesStat;
-%False Positive rate
-FPRate = meanNonMatchesStat;
-
-%Store the values to plot on the ROC Curve
-tpRateMatrix(1,counter) = TPRate;
-fpRateMatrix(1,counter) = FPRate;
-counter  = counter+1;
+    %for ii=1:-0.001:0
+    
+    classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
+    %classificationBoundary =meanNonMatchesScore*2;
+    
+    %Now to perform classification. We use the matching score
+    %defined as the inverse hamming distance between 2 vectors
+    %for BRISK or the inverse euclidean distance for SURF
+    data(:,19) = data(:,8)>=ii;
+    
+    % dataset1nm(:,16) = dataset1nm(:,7)>0;
+    % dataset2(:,16) = dataset2(:,7)>0;
+    % dataset2nm(:,16) = dataset2nm(:,7)>0;
+    % dataset3(:,16) = dataset3(:,7)>0;
+    % dataset3nm(:,16) = dataset3nm(:,7)>0;
+    % dataset4(:,16) = dataset4(:,7)>0;
+    % dataset4nm(:,16) = dataset4nm(:,7)>0;
+    
+    %Find the number of matches for matching pairs
+    if datasetA
+        [matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
+        [matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm);
+    else
+        [matchingStats] = calculateMatchingStats(data, row5,row6);
+        [matchingStats1] = calculateMatchingStats(data, row56nm);
+    end
+    %The overall mean matching stat is:
+    meanMatchesStat = mean(matchingStats);
+    meanNonMatchesStat = mean(matchingStats1);
+    
+    %True positive rate
+    TPRate = meanMatchesStat;
+    %False Positive rate
+    FPRate = meanNonMatchesStat;
+    
+    %Store the values to plot on the ROC Curve
+    tpRateMatrix(1,counter) = TPRate;
+    fpRateMatrix(1,counter) = FPRate;
+    counter  = counter+1;
 end
 
 
@@ -139,7 +135,7 @@ averageExtractionTime1 = mean(data(:,15))
 [averageDetectionTimeMatrix, averageExtractionTimeMatrix] = calculateMeanTimes(data);
 averageDetectionTime = sum(averageDetectionTimeMatrix);
 averageExtractionTime = sum(averageExtractionTimeMatrix);
-averageMatchingTime = mean(data(:,16))./1000
+averageMatchingTime = mean(data(:,16))
 averageVerificationTime = mean(data(:,17))
 averageOverallTime = mean(data(:,18))
 
@@ -147,13 +143,5 @@ averageOverallTime = mean(data(:,18))
 fpRate = mean(fpRateMatrix)*100
 
 statsMatrix = [AUC averageDetectionTime averageExtractionTime averageMatchingTime averageVerificationTime averageOverallTime];
-
-%writeFile <<tempDir<<", "<<tempDir1<<", "
-%<<name1<<", "<<name2<<", "<<keypoints.size()<<
-%", "<<keypoints2.size()<<", "<<imageMatchingScoreBest
-%<<", "<<imageMatchingScore<<","<<totalNumMatches<<
-%", "<<totalNumValidMatches<<", "<<totalNumBestMatches
-%<<", "<<detectionTime<<", "<<extractionTime<<", "
-%<<matchingTime<<", "<<overallTime<<"\n";
 
 

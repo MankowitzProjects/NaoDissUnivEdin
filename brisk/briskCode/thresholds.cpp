@@ -111,7 +111,7 @@ int main(int argc, char ** argv) {
 	//For BRISK (Multiple scales)
 		bool hamming=true;
 		std::string feat_detector = "BRISK";
-		std::string feat_descriptor = "U-BRISK";
+		std::string feat_descriptor = "BRISK";
 		int testThreshold = 20;
 		int hammingDistance = 40;//BRISK BRISK
 

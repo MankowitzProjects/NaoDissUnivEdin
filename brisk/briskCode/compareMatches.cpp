@@ -90,7 +90,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = false;
+	bool usingKnnCriterion = true;
 
 	//The horizon line
 	int horizonLine = 300;
@@ -100,32 +100,32 @@ int main(int argc, char ** argv) {
 
 
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-//			bool hamming=false;
-//			std::string feat_detector = "BRISK";
-//			std::string feat_descriptor = "SURF";
-//			double hammingDistance = 0.28;
-//			//double threshold = 30;//45
-//			double threshold = 65;
+//	bool hamming=false;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "SURF";
+//	double hammingDistance = 0.28;
+//	//double threshold = 30;//45
+//	double threshold = 40;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-		bool hamming=true;
-		std::string feat_detector = "BRISK";
-		std::string feat_descriptor = "BRISK";
-		double threshold = 77.5;//46.25;//46.25 KNN
-		//	double threshold = 78.75;//Hamming
-		double hammingDistance = 107.5;//Hamming
+//			bool hamming=true;
+//			std::string feat_detector = "BRISK";
+//			std::string feat_descriptor = "U-BRISK";
+//			double threshold = 75;//46.25;//46.25 KNN
+//			//	double threshold = 78.75;//Hamming
+//			double hammingDistance = 130;//Hamming
 
 	//For BRISK4 (4 octaves)
-//	bool hamming=true;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "BRISK";
-//	//double threshold = 30; //KNN 51.25
-//	double threshold = 75;//Hamming
-//	double hammingDistance = 121.5;//Hamming
+		bool hamming=true;
+		std::string feat_detector = "BRISK4";
+		std::string feat_descriptor = "BRISK4";
+		//double threshold = 30; //KNN 51.25
+		double threshold = 40;//Hamming
+		double hammingDistance = 121.5;//Hamming
 
 	//Set the date and time
-	string myDate = "12072012";
-	string myTime = "1009";
+	string myDate = "14072012";
+	string myTime = "1639";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
@@ -137,17 +137,40 @@ int main(int argc, char ** argv) {
 
 	int index = 0;
 
+	//NB *************************************
+	//CHOOSE THE DATASET TO USE
+	//dataset =1 for dataset A, 2 for dataset B
+	int dataset=2;
+
 	if(isMatching)
 	{
-		k_start = 1;
-		k_end = 4;
+		if (dataset==1)
+		{
+			k_start = 1;
+			k_end = 4;
+		}
+		else
+		{
+			k_start = 5;
+			k_end = 6;
+		}
 	}
 	else
 	{
-		k_start = 1;
-		k_end = 2;
-		s_start = 3;
-		s_end = 4;
+		if (dataset==1)
+		{
+			k_start = 1;
+			k_end = 2;
+			s_start = 3;
+			s_end = 4;
+		}
+		else
+		{
+			k_start = 5;
+			k_end = 5;
+			s_start = 6;
+			s_end = 6;
+		}
 	}
 
 
@@ -204,7 +227,11 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../data/Matches/nonmatching_matching_Data__";
+			string filename = "../data2/Matches/";
+			if (dataset==1)
+			filename.append("nonmatching_matching_Data__");
+			else
+				filename.append("dataset2_nonmatching_matching_Data__");
 			filename.append(feat_detector);
 			filename.append("_");
 			filename.append(feat_descriptor);
@@ -219,8 +246,10 @@ int main(int argc, char ** argv) {
 			filename.append("_");
 			filename.append(to_string<double>(threshold));
 			filename.append("_");
+			if (!usingKnnCriterion)
 			filename.append(to_string<int>(hammingDistance));
-			filename.append("_max");
+
+			filename.append("_consistent");
 			filename.append(".txt");
 
 			cout<<filename<<endl;
@@ -432,7 +461,7 @@ int main(int argc, char ** argv) {
 					cv::imshow("Matches", outimg);
 					//cv::imshow("keypoints", imgRGB1);
 					//cv::imshow("keypoints2", imgRGB2);
-					cv::waitKey(1000);
+					cv::waitKey();
 #endif
 
 				}//End of inner for loop (jj)

@@ -35,3 +35,19 @@ EXPLANATION (1 parameter)
 ************************************************
 A high threshold by itself will only decrease the number of matches, increase the time and increase the number of zero matches.
 Therefore lower thresholds will reduce speed by increase the number of valid matches.
+
+
+
+To Do for RAM:
+
+1. Test on a new dataset - DONE for KNN with good results. (2 separate sets of overlapping images and 1 set of non-overlapping images)
+2. Implement the 1D SURF algorithms
+3. Get my algorithm to work on the robot
+
+
+
+
+
+
+
+

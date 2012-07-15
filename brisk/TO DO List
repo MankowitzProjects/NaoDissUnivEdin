@@ -250,6 +250,13 @@ vector container. That is the latest vector of DMatches that has been added to M
 
 Note: To record KNN features and angles, turn SINGLE_IMAGE_COMPARISONS on
 
+14/07/12
+
+1. Get KNN and hamming distance results on the new dataset
+2. Get hamming distance comparisons on new dataset
+3. Add pictures
+4. Add angle constraints description and KNN description
+
 
 
 

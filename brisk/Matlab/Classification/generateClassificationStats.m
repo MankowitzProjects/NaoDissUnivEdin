@@ -4,6 +4,8 @@ global stats;
 
 
 %Now determine the average matching score for matching set
+
+
 meanBestMatchingScore1 = mean(dataset1(:,8));
 meanGeneralMatchingScore1 = mean(dataset1(:,9));
 

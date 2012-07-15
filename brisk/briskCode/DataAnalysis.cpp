@@ -27,12 +27,18 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	string ogMatchLeft;
 	string ogMatchRight;
 
+	string dataset2_1;
+	string dataset2_2;
+
 	//There are four directories where files can be found
 	if (terminal){
 		mgMatchLeft = "../../images/PicsMG/Matching_Pics_Left_Overlapping";
 		mgMatchRight = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
 		ogMatchLeft = "../../images/PicsOG/Matching_Pics_Left_Overlapping";
 		ogMatchRight = "../../images/PicsOG/Matching_Pics_Right_Overlapping";
+		dataset2_1 = "../../images/Dataset2_Overlapping_1";
+		dataset2_2 = "../../images/Dataset2_Overlapping_2";
+
 	}
 	else
 	{
@@ -40,6 +46,8 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		mgMatchRight = "../images/PicsMG/Matching_Pics_Right_Overlapping";
 		ogMatchLeft = "../images/PicsOG/Matching_Pics_Left_Overlapping";
 		ogMatchRight = "../images/PicsOG/Matching_Pics_Right_Overlapping";
+		dataset2_1 = "../images/Dataset2_Overlapping_1";
+		dataset2_2 = "../images/Dataset2_Overlapping_2";
 	}
 
 
@@ -66,10 +74,10 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		*dir = ogMatchRight;
 		break;
 	case 5:
-		*dir = mgMatchLeftOld;
+		*dir = dataset2_1;
 		break;
 	case 6:
-		*dir = mgMatchRightOld;
+		*dir = dataset2_2;
 		break;
 	case 7:
 		*dir = ogMatchLeftOld;
