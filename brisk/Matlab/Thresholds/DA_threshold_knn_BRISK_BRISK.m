@@ -31,7 +31,7 @@ clc
 
 %Datasets 5-6
 %UBRISK
-%load 'dataset2_threshold_BRISK_U-BRISK_KNN__threshold_14072012_1018.mat'
+load 'dataset2_threshold_BRISK_U-BRISK_KNN__threshold_14072012_1018.mat'
 %load 'dataset2_threshold_BRISK_U-BRISK_KNN__threshold_14072012_1534.mat'
 
 %BRISK0

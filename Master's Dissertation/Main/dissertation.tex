@@ -422,7 +422,33 @@ BRISK0 - UBRISK & minimum interest point detection threshold & Maximum Accepted 
 
 \subsection{Datasets and Setup}
 \label{sec:datasets}
-The setup for the feature extraction experiments is as follows. Four image datasets were generated. These images were taken from the Nao's camera at different angles and scales in order to ensure realistic images similar to those taken in a robocup soccer game. The first dataset is of the area to the left of the player's goal. The second dataset is to the right of the player's goal. The third and fourth datasets are to the left and right of the opponents goal respectively.\\
+The setup for the feature extraction experiments is as follows. Four image datasets were generated. These images were taken from the Nao's camera at different angles and scales in order to ensure realistic images similar to those taken in a robocup soccer game. The first dataset is of the area to the left of the player's goal. The second dataset is to the right of the player's goal. The third and fourth datasets are to the left and right of the opponents goal respectively. Typical images from each of these datasets are shown in \figref{fig:dataset1} to \figref{fig:dataset4} respectively.\\
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/mgLeft.jpg}
+\caption{Dataset one showing an image to the left of the player's goal}
+\label{fig:dataset1}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/mgRight.jpg}
+\caption{Dataset two showing an image to the right of the player's goal}
+\label{fig:dataset2}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/ogLeft.jpg}
+\caption{Dataset three showing an image to the left of the opponent's goal}
+\label{fig:dataset3}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/ogRight.jpg}
+\caption{Dataset four showing an image to the right of the opponent's goal}
+\label{fig:dataset4}
+\end{minipage}
+\end{figure}
 
 Feature detection, extraction and matching routines were performed on pairs of images to determine whether the images match or not. Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. Pairs of images, with no overlap, taken from different datasets are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the soccer field were compared. Thus dataset one and two were compared with datasets three and four respectively as shown in \tabref{table:overlap}. \\
 
@@ -532,7 +558,7 @@ The first technique will be referred to as the Maximum Parameter Setting (MPS). 
 %Could possibly add in the addition of averaging the mScore matrices and then finding the maximum value. The advantage of this is to find the most consistent radius and threshold.  
 
 %The optimal parameter graphs
-\begin{figure}[h!]
+\begin{figure}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SBRISK_KNN.jpg}
 \caption{The optimal parameters for S-BRISK with KNN}
@@ -977,20 +1003,24 @@ The ROC curves generated have been generated for each of the four methods. These
 
 \subsection{Additional Dataset Performance}
 \label{sec:additionalDataset}
+In order to verify the performance of the feature extraction algorithms, an additional two datasets have been created from a random office environment. In total $25$ overlapping images from one side of the office correspond to one dataset and a further $25$ overlapping images from another view of the office correspond to a second dataset. Typical images from each viewpoint are shown in \figref{fig:dataset5} and \figref{fig:dataset6} respectively.\\
+
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching on the additional dataset}
-\label{fig:compareHamming}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset5.jpg}
+\caption{The first dataset showing a typical image from one side of the random office environment}
+\label{fig:dataset5}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds on the additional dataset}
-\label{fig:compareKNNConsistent}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset6.jpg}
+\caption{The second dataset showing a typical image from one side of the random office environment}
+\label{fig:dataset6}
 \end{minipage}
 \end{figure}
+
+In total $600$ overlapping pairs of images and $600$ non-overlapping pairs of images were generated respectively. Utilising this data, the optimal thresholds for each of the four feature extraction algorithms were calculated using the optimal detection parameters algorithm detailed in \secref{sec:optimalParameters}. This generated the MTS and CPS parameter values and these are displayed in \tabref{tab:dataset2OptimalThresholds}.\\
 
 \begin{table}
 \caption{The optimum thresholds for dataset 2}
@@ -1008,8 +1038,33 @@ SBRISK & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 40\tabularnewline
 SBRISK & UBRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 60 & 75\tabularnewline
 \hline 
 \end{tabular}
-\label{sec:dataset2OptimalThresholds}
+\label{tab:dataset2OptimalThresholds}
 \end{table}
+
+Utilising the optimal parameters, the feature extraction algorithms were tested on each of the overlapping and non-overlapping image pairs. ROC curves were then generated and are displayed in \figref{fig:compareKnnAdditional} and \figref{fig:compareKnnConsistentAdditional} respectively. \figref{fig:compareKnnAdditional} shows the ROC curves that were generated when using the MPS setting. \figref{fig:compareKnnConsistentAdditional} has been generated using the CPS setting. As can be seen in the figures, the ROC curves exhibit good matching performance for each of the algorithms. The statistics quantifying the performance are shown in \tabref{tab:rocTimingAdditional}. As can be seen in the table, BRISK0 has the best AUV value of $98.037\%$. However, timing is also a big concern and thus the best overall feature extraction algorithm is again the BRISK0 - U-BRISK combination. It performs a match between two images in the fastest time of $13 ms$ in the worst case, and has performance comparable to BRISK0.\\
+
+The performance of the feature extraction algorithms on this dataset is better than on the previous dataset. This may be due to the fact that the new datasets have areas of high contrast between neighboring pixels, such as the window area shown in \figref{fig:dataset5}. Since the BRISK and SURF-based techniques rely on salient differences between neighboring pixel intensities in order to detect interest points, these types of images may create better discrimination for the feature extraction algorithms. This would result in more salient interest points which ultimately enhances matching performance.\\
+
+%The images are also taken in a setting of higher contrast.
+
+
+
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching on the additional dataset}
+\label{fig:compareKnnAdditional}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds on the additional dataset}
+\label{fig:compareKNNConsistentAdditional}
+\end{minipage}
+\end{figure}
+
+
 
 
 \begin{table}
@@ -1037,7 +1092,7 @@ SBRISK-SURF2D & Consistent & 95.243 & 3.9500 & 19.883 & 1.8850 & 0.093000 & 30.2
 SBRISK-UBRISK & Consistent & 95.125 & 3.1180 & 2.0650 & 1.0060 & 0.031000 & 10.609\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:dataset2Stats}
+\label{tab:rocTimingAdditional}
 \end{table}
 
 
