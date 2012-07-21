@@ -2,11 +2,9 @@
 clear all
 clc
 
-%The method being used
-usingBrisk = 1;
+load 'runswiftROC.mat'
 
-%Choose the dataset to use
-datasetA = 0;
+
 
 %SBRISK UBRISK
 %load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
@@ -35,6 +33,11 @@ datasetA = 0;
 %load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_30.mat'
 %load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_4375_max.mat'
 
+
+%1D SURF
+%load 'nonmatching_matching_SURF1D_18072012_1151.mat'
+load 'nonmatching_matching_SURF1D_19072012_1151.mat'
+
 %----------------------------------------------------------------
 %Datasets 5-6
 %UBRISK
@@ -47,14 +50,24 @@ datasetA = 0;
 
 %BRISK4
 %load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_14072012_1140_50__consistent.mat'
-load 'dataset2_dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_14072012_1639_47.5__max.mat'
+%load 'dataset2_dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_14072012_1639_47.5__max.mat'
 
 
 %BRISK0 SURF2D
 %load 'dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_14072012_1140_47.5__consistent.mat'
 %load 'dataset2_dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_14072012_1639_45__max.mat'
 
+%1D SURF
+%load 'dataset2_nonmatching_matching_SURF1D_18072012_1151.mat'
+load 'dataset2_nonmatching_matching_SURF1D_19072012_1151.mat'
+
 global stats;
+
+%The method being used
+usingBrisk = 0;
+
+%Choose the dataset to use
+datasetA = 0;
 
 %Separate the datasets
 
@@ -114,8 +127,8 @@ if datasetA
     %Find the mean of each directory for a specific scene/camera
     %Directory 1 to 4 is for the new Nao camera
     %Directory 5 to 8 is for the old Nao camera
-    meanMatchesScore = mean(stats(1:4,1))
-    meanNonMatchesScore = mean(stats(5:8,1))
+    meanMatchesScore = mean(stats(1:4,4))
+    meanNonMatchesScore = mean(stats(5:8,4))
     
 else
     %Overlapping dataset
@@ -131,7 +144,7 @@ end
 %Counter
 counter = 1;
 %To generate values for the ROC Curve
-largestThreshold = ceil(max(stats(:,1)));
+largestThreshold = ceil(max(stats(:,4)));%4
 
 if usingBrisk
     stepValue = 0.01;
@@ -141,6 +154,22 @@ end
 tpRateMatrix = zeros(1,largestThreshold/stepValue);
 fpRateMatrix = zeros(1,largestThreshold/stepValue);
 
+
+%Sort all of the datasets in descending order
+
+sortedData  =sortrows(data,-8);
+
+thresholdArray = [];
+
+for jj=1:size(sortedData,1)
+   
+    if mod(jj,20)==1
+     thresholdArray = [thresholdArray sortedData(jj,8)];   
+    end
+    
+end
+
+thresholdArray'
 
 for ii=largestThreshold:-stepValue:0 
     
@@ -175,6 +204,10 @@ for ii=largestThreshold:-stepValue:0
     counter  = counter+1;
 end
 
+%Plot with their classification algorithm
+
+% thresholdCompare = [thresholdArray', curve(:,3)]
+
 %Plot the ROC Curve
 plot(fpRateMatrix,tpRateMatrix)
 hold on
@@ -206,6 +239,8 @@ fpRate = mean(fpRateMatrix)*100
 tpRate = mean(tpRateMatrix)*100
 
 statsMatrix = [AUC averageDetectionTime averageExtractionTime averageMatchingTime averageVerificationTime averageOverallTime]
+
+statsMatrix = Roundoff(statsMatrix,3);
 %writeFile <<tempDir<<", "<<tempDir1<<", "
 %<<name1<<", "<<name2<<", "<<keypoints.size()<<
 %", "<<keypoints2.size()<<", "<<imageMatchingScoreBest

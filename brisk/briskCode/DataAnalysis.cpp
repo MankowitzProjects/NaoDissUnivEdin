@@ -32,22 +32,72 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 
 	//There are four directories where files can be found
 	if (terminal){
+		//The original dataset
 		mgMatchLeft = "../../images/PicsMG/Matching_Pics_Left_Overlapping";
 		mgMatchRight = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
 		ogMatchLeft = "../../images/PicsOG/Matching_Pics_Left_Overlapping";
 		ogMatchRight = "../../images/PicsOG/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
+		mgLeftMatchLeft = "../../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
+		mgLeftMatchRight = "../../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+		ogLeftMatchLeft = "../../images/Pics1OGLeftLightOff/Matching_Pics_Left_Overlapping";
+		ogLeftMatchRight = "../../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - RIGHT LIGHT OFF (MAIN LIGHT OFF)
+		mgRightMatchLeft = "../../images/Pics2MGRightLightOff/Matching_Pics_Left_Overlapping";
+		mgRightMatchRight = "../../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
+		ogRightMatchLeft = "../../images/Pics2OGRightLightOff/Matching_Pics_Left_Overlapping";
+		ogRightMatchRight = "../../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - BOTH LIGHTS OFF (MAIN LIGHT ON)
+		mgBothMatchLeft = "../../images/Pics3MGBothLightsOff/Matching_Pics_Left_Overlapping";
+		mgBothMatchRight = "../../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
+		ogBothMatchLeft = "../../images/Pics3OGBothLightsOff/Matching_Pics_Left_Overlapping";
+		ogBothMatchRight = "../../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
+
+		//The first additional dataset
 		dataset2_1 = "../../images/Dataset2_Overlapping_1";
 		dataset2_2 = "../../images/Dataset2_Overlapping_2";
+		//The second additional dataset
+		dataset3_1 = "../../images/Dataset3_Overlapping_1";
+		dataset3_2 = "../../images/Dataset3_Overlapping_2";
+
 
 	}
 	else
 	{
+
+		//The original dataset
 		mgMatchLeft = "../images/PicsMG/Matching_Pics_Left_Overlapping";
 		mgMatchRight = "../images/PicsMG/Matching_Pics_Right_Overlapping";
 		ogMatchLeft = "../images/PicsOG/Matching_Pics_Left_Overlapping";
 		ogMatchRight = "../images/PicsOG/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
+		mgLeftMatchLeft = "../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
+		mgLeftMatchRight = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+		ogLeftMatchLeft = "../images/Pics1OGLeftLightOff/Matching_Pics_Left_Overlapping";
+		ogLeftMatchRight = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - RIGHT LIGHT OFF (MAIN LIGHT OFF)
+		mgRightMatchLeft = "../images/Pics2MGRightLightOff/Matching_Pics_Left_Overlapping";
+		mgRightMatchRight = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
+		ogRightMatchLeft = "../images/Pics2OGRightLightOff/Matching_Pics_Left_Overlapping";
+		ogRightMatchRight = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";
+
+		//The original dataset with lighting variation - BOTH LIGHTS OFF (MAIN LIGHT ON)
+		mgBothMatchLeft = "../images/Pics3MGBothLightsOff/Matching_Pics_Left_Overlapping";
+		mgBothMatchRight = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
+		ogBothMatchLeft = "../images/Pics3OGBothLightsOff/Matching_Pics_Left_Overlapping";
+		ogBothMatchRight = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
+
+		//The first additional dataset
 		dataset2_1 = "../images/Dataset2_Overlapping_1";
 		dataset2_2 = "../images/Dataset2_Overlapping_2";
+		//The second additional dataset
+		dataset3_1 = "../images/Dataset3_Overlapping_1";
+		dataset3_2 = "../images/Dataset3_Overlapping_2";
 	}
 
 
@@ -59,6 +109,15 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 
 	//std::cout << "dir to get files of: " << flush;
 	//getline( cin, *dir);  // gets everything the user ENTERs
+	//DATASETS****************************
+	//ORIGINAL DATASET: 1-4
+	//DATASET LEFT LIGHT OFF: 5-8
+	//DATASET RIGHT LIGHT OFF: 9-12
+	//DATASET BOTH LIGHTS OFF: 13-16
+
+	//ADDITIONAL DATASET 1: 17-18
+	//ADDITIONAL DATASET 2: 19-20
+
 	int value = atoi((*dir).c_str());
 	switch(value){
 	case 1:
@@ -74,16 +133,52 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		*dir = ogMatchRight;
 		break;
 	case 5:
-		*dir = dataset2_1;
+		*dir = mgLeftMatchLeft;
 		break;
 	case 6:
-		*dir = dataset2_2;
+		*dir = mgLeftMatchRight;
 		break;
 	case 7:
-		*dir = ogMatchLeftOld;
+		*dir = ogLeftMatchLeft;
 		break;
 	case 8:
-		*dir = ogMatchRightOld;
+		*dir = ogLeftMatchRight;
+		break;
+	case 9:
+		*dir = mgRightMatchLeft;
+		break;
+	case 10:
+		*dir = mgRightMatchRight;
+		break;
+	case 11:
+		*dir = ogRightMatchLeft;
+		break;
+	case 12:
+		*dir = ogRightMatchRight;
+		break;
+	case 13:
+		*dir = mgBothMatchLeft;
+		break;
+	case 14:
+		*dir = mgBothMatchRight;
+		break;
+	case 15:
+		*dir = ogBothMatchLeft;
+		break;
+	case 16:
+		*dir = ogBothMatchRight;
+		break;
+	case 17:
+		*dir = dataset2_1;
+		break;
+	case 18:
+		*dir = dataset2_2;
+		break;
+	case 19:
+		*dir = dataset3_1;
+		break;
+	case 20:
+		*dir = dataset3_2;
 		break;
 	default:
 		std::cout<<"Nothing found"<<endl;

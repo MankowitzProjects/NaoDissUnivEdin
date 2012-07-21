@@ -352,7 +352,6 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 				//****************************************************
 				//If the match is incorrect, remove the invalid match
 				if (correctMatch==false)
-				//if(0)//Therefore always correct match
 				{
 #if (FEATURE_DEBUG_MATCHES)
 					cout<<"Keypoint Left to be erased row,col : "<<(*(keypoints.begin() + i1)).pt.y<<", "<<(*(keypoints.begin() + i1)).pt.x<<endl;

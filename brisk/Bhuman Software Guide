@@ -115,6 +115,27 @@ To create an image to flash the robot
 5. DO NOT select factory settings (Unless you did it without and the robot didnt work)
 6. Copy the image to the flash
 
+16/07/12
+
+******************ADDING A MODULE***********************************************
+1. When a representation has been created, it must be determined which provider provides the representation in
+\Config\Location\Modules.cfg file. This is found in sub-folders Default and Penalty in Config folder
+2. When a module is created, it MUST be added to the file CognitionModules.cfg or MotionModules.cfg
+
+3. When debugging, always use the graph layout in the Nao to verify that the modules and representation connections are correct
+
+
+Core Dumps: If there is a segmentation fault, a core dump can be implemented to try and find the problem.
+Remember to compile in Debug mode by adding the debug flag -G and removing optimisation flags -0(1,2,3)
+
+Problem: It is possible that memory may be pre-allocated to other modules and not to my new module
+
+Debug IDs: These are found in MessageIDs in /Src/Tools/MessageQueue
+
+
+
+
+
 
 
 

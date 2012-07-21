@@ -46,7 +46,7 @@
 #include <string>
 #include <sstream>
 
-#define DEBUG_MODE 1
+#define DEBUG_MODE 0
 #define DEBUG_TIMES 1
 #define DEBUG_MATCHES 1
 #define OUTPUT 0
@@ -94,18 +94,18 @@ int main(int argc, char ** argv) {
 	bool usingKnnCriterion = true;
 
 	//Declare the horizon line above which the image is processed
-	int horizonLine = 200;
+	int horizonLine = 300;
 
 
 	//Set the arguments
 	//std::string feat_dMetector = "SURF";
 	//int threshold = 1000;
-	bool hamming=false;
+	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	int threshold = 47.5;//46.25
-	int hammingDistance = 100;//BRISK BRISK
+	double threshold = 60;//46.25
+	int hammingDistance = 55;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
-	std::string feat_descriptor = "SURF";
+	std::string feat_descriptor = "U-BRISK";
 
 	//For changing the threshold
 	int testThreshold = 10;
@@ -130,13 +130,13 @@ int main(int argc, char ** argv) {
 	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//The second directory
-	dir = "../images/Dataset2_Overlapping_1";
-	dir1 = "../images/Dataset2_Overlapping_1";
+//	std::string dir = "../images/Dataset2_Overlapping_1";
+//	std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 
 	//Names of the two image files
-	std::string name1 = "30";
-	std::string name2 = "22";
+	std::string name1 = "11";
+	std::string name2 = "12";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -273,6 +273,9 @@ int main(int argc, char ** argv) {
 	}else{
 		if (usingKnnCriterion)
 		{
+			cout<<"The number of left descriptors: "<<descriptors2.rows<<endl;
+			cout<<"The number of right descriptors: "<<descriptors2.rows<<endl;
+
 			if (descriptors2.rows>0)
 				descriptorMatcher->knnMatch(descriptors,descriptors2,matches,2);
 			else
@@ -336,7 +339,7 @@ int main(int argc, char ** argv) {
 #if (DISPLAY)
 	drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
 			cv::Scalar(0,255,0), cv::Scalar(0,0,255),
-			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS );
+			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
 	//NOT_DRAW_SINGLE_POINTS
 
 	//Note: leftpoints correspond to keypoints - Image 1. rightpoints correspond to keypoints2 - Image 2.
@@ -397,7 +400,8 @@ int main(int argc, char ** argv) {
 #endif
 
 	cv::waitKey();
-
+	cv::imwrite("../images/matching.jpg",outimg);
+	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 #endif
 

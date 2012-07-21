@@ -252,13 +252,24 @@ Note: To record KNN features and angles, turn SINGLE_IMAGE_COMPARISONS on
 
 14/07/12
 
-1. Get KNN and hamming distance results on the new dataset
-2. Get hamming distance comparisons on new dataset
-3. Add pictures
+1. Get KNN and hamming distance results on the new dataset - DONE for KNN
+2. Get hamming distance comparisons on new dataset 
+3. Add pictures - partly
 4. Add angle constraints description and KNN description
 
+15/07/12
+
+Nao to do:
+1. Get code to compile.
+2. make sure I understand STREAM
+3. Understand DEBUG
 
 
+18/07/12
+
+*********************POSSIBLE TESTS******************************
+1. Put occlusions in front of the photos to represent humans during robocup
+2. Take pictures with my phone or camera and compare them with the robot pics.
 
 
 

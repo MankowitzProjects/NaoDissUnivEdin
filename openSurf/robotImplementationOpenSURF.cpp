@@ -79,14 +79,14 @@ int main(int argc, char ** argv) {
 
 
 	//The directory where the files are stored TESTING
-	std::string dir = "../brisk/images/PicsOG/Matching_Pics_Right_Overlapping";
+	std::string dir = "../brisk/images/PicsMG/Matching_Pics_Right_Overlapping";
 	std::string dir1 = "../brisk/images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 	//Names of the two image files
-	std::string name1 = "1";
+	std::string name1 = "4";
 	std::string name2 = "24";
 
 	//Threshold
-	float threshold = 0.1f;
+	float threshold = 325.125f;
 
 	//Choose the images to compare
 	//    name1 = to_string<int>(ii);

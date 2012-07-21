@@ -90,7 +90,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = true;
+	bool usingKnnCriterion = false;
 
 	//The horizon line
 	int horizonLine = 300;
@@ -108,20 +108,20 @@ int main(int argc, char ** argv) {
 //	double threshold = 40;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-//			bool hamming=true;
-//			std::string feat_detector = "BRISK";
-//			std::string feat_descriptor = "U-BRISK";
-//			double threshold = 75;//46.25;//46.25 KNN
-//			//	double threshold = 78.75;//Hamming
-//			double hammingDistance = 130;//Hamming
+			bool hamming=true;
+			std::string feat_detector = "BRISK";
+			std::string feat_descriptor = "U-BRISK";
+			double threshold = 60;//46.25;//46.25 KNN
+			//	double threshold = 78.75;//Hamming
+			double hammingDistance = 130;//Hamming
 
 	//For BRISK4 (4 octaves)
-		bool hamming=true;
-		std::string feat_detector = "BRISK4";
-		std::string feat_descriptor = "BRISK4";
-		//double threshold = 30; //KNN 51.25
-		double threshold = 40;//Hamming
-		double hammingDistance = 121.5;//Hamming
+//		bool hamming=true;
+//		std::string feat_detector = "BRISK4";
+//		std::string feat_descriptor = "BRISK4";
+//		//double threshold = 30; //KNN 51.25
+//		double threshold = 40;//Hamming
+//		double hammingDistance = 121.5;//Hamming
 
 	//Set the date and time
 	string myDate = "14072012";

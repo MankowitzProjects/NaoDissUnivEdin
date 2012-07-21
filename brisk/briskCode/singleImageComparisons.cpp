@@ -435,8 +435,9 @@ int main(int argc, char ** argv) {
 					//*****************************************************************
 					std::vector<std::vector<cv::DMatch> > matches;
 					cv::Ptr<cv::DescriptorMatcher> descriptorMatcher;
-					if(hamming)
-						descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
+					if(hamming){
+						//descriptorMatcher = new cv::BruteForceMatcher<cv::HammingSse>();
+					}
 					else
 						descriptorMatcher = new cv::BruteForceMatcher<cv::L2<float> >();
 					if(hamming)

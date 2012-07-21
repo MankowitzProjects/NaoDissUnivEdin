@@ -235,12 +235,52 @@ weight to detecting more valid matches and therefore less non zero matches.
 
 *******************************************
  
+15/07/12
+
+1. Problem: ../../Src/Tools/Streams/InOut.h:536:56: error: no match for ‘operator>>’ in ‘((EnumHelpers::In2&)in) >> t’
+Possible cause: I am trying to stream a keypoint, but I may have to create a OutStream and InStream specifically for a 
+keypoint which is a problem
+Possible Solution: Rather use an integer and don't use the perceptions for storing keypoints. Or add a method to stream 
+keypoints in the STREAM class
 
 
+2. No changes are made to the Nao. A project is created and then when compiling to the SimRobot, the project doesn't work.
+Problem: sigSEGV - means an invalid memory reference or Segmentation Fault
+
+If I don't have an eclipse project open, then I don't get 
+
+3. Problem: "Error: " "Error: only found consistent providers for " "BikeEngineOutput, FallDownState, FilteredJointData, 
+FilteredJointDataPrev, FilteredSensorData, GroundContactState, HeadJointRequest, JointRequest, KeyStates, MotionInfo, 
+MotionRobotHealth, OdometryData, RobotModel, TorsoMatrix, BehaviorConfiguration, CameraCalibration, CameraSettings, 
+ColorTable64, DamageConfiguration, FieldDimensions, Image, ImageInfo, ObstacleSettings, RobotDimensions, CameraInfo, 
+CognitionFrameInfo, FrameInfo, RobotCameraMatrix, RobotCameraMatrixOther, RobotCameraMatrixPrev, RobotInfo, 
+ArmContactModel, CameraMatrix, CameraMatrixOther, CameraMatrixPrev, GameInfo, ImageCoordinateSystem, OpponentTeamInfo, 
+OwnTeamInfo, TeamMateData, BodyContour, GoalPercept, GroundTruthBallModel, GroundTruthRobotPose, RegionPercept, 
+TeamMarkerSpots, BallSpots, LineSpots, RobotPercept, BallPercept, LinePercept, RobotHealth, BallModel, 
+BallHypotheses" ".\n
+Requirements missing for providers for " "BehaviorControlOutput, BehaviorLEDRequest, 
+CombinedWorldModel, FieldCoverage, FreePartOfOpponentGoalModel, GlobalFieldCoverage, HeadAngleRequest, 
+HeadMotionRequest, ImageRequest, LEDRequest, MotionRequest, ObstacleModel, PotentialRobotPose, 
+RobotPose, RobotPoseInfo, RobotsModel, SoundOutput, SoundRequest, USObstacleGrid, GroundTruthResult" .
+NaoQi is working
+^CCaught signal 2
+
+Observations: In SelfLocator.h, the include for NaturalLandmarkPerceptBrisk is causing the problem and the REQUIRES for this percept
+
+Solution: When a module is created, it MUST be added to the file CognitionModules.cfg or MotionModules.cfg
+STREAM is required if you are reading from files to initialise data variables and to STREAM representations (NB***)
+
+Note:
+The Config folder stores all of the Nao configuration files (.cfg) that are read in from STREAM
 
 
+17/07/12
 
+1. Problem: sigSEGV fault 
 
+Solution: was caused by the NaturalLandmarkSensorModel which was included in 
+
+ - Add the representation and its provider to modules.cfg in Default and Penalty
 
 
 

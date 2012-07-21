@@ -3,7 +3,7 @@ clear all
 clc
 knn =1;
 
-datasetA = 0;
+datasetA = 1;
 
 if knn==1
 
@@ -68,6 +68,14 @@ end
 
 [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix] = createROCCurve(data, 0.01, datasetA);
 
+%1D SURF
+if datasetA
+load 'nonmatching_matching_SURF1D_19072012_1151.mat' 
+else
+load 'dataset2_nonmatching_matching_SURF1D_19072012_1151.mat'    
+end
+
+[fpSURF1D, tpSURF1D, s1d_statsMatrix] = createROCCurve(data, 0.01, datasetA);
 
 else
     
@@ -95,13 +103,17 @@ load 'nonmatching_matching_Data__BRISK_SURF_Hamming_12072012_1009_65_0_max.mat'
 
 [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix] = createROCCurve(data, 0.01);
 
+%1D SURF
+load 'dataset2_nonmatching_matching_SURF1D_19072012_1151.mat'    
+
+[fpSURF1D, tpSURF1D, s1d_statsMatrix] = createROCCurve(data, 0.01, datasetA);
 
 
 
 end
 
 %Plot the ROC Curve
-plot(fpSBRISK,tpSBRISK, 'ro-', fpBRISK4,tpBRISK4, 'bs-', fpSBRISKSURF2D,tpSBRISKSURF2D, 'g-', fpUBRISK, tpUBRISK, 'k*-')
+plot(fpSBRISK,tpSBRISK, 'ro-', fpBRISK4,tpBRISK4, 'bs-', fpSBRISKSURF2D,tpSBRISKSURF2D, 'g-', fpUBRISK, tpUBRISK, 'k*-', fpSURF1D, tpSURF1D, 'm-')
 hold on
 %Plot the random curve
 xrand = [0:0.01:1];
@@ -110,11 +122,12 @@ plot(xrand, yrand, 'r--');
 xlabel('False Positive rate');
 ylabel('True positive rate');
 title('ROC Curve using KNN Consistent');
-hleg1 = legend('SBRISK','BRISK4', 'SBRISK-SURF2D', 'SBRISK-UBRISK');
+hleg1 = legend('SBRISK','BRISK4', 'SBRISK-SURF2D', 'SBRISK-UBRISK', 'SURF1D');
 set(hleg1,'Location','SouthEast')
 
 overallStatsMatrix = [sb_statsMatrix;
                       b4_statsMatrix;
                       sb_2d_statsMatrix;
-                      ub_statsMatrix];
+                      ub_statsMatrix;
+                      s1d_statsMatrix];
 overallStatsMatrix = Roundoff(overallStatsMatrix,3)

@@ -279,26 +279,26 @@ void FastHessian::buildResponseLayer(ResponseLayer *rl)
 			cout<<"Filter size: "<<w<<endl;
 #endif
 			Dxx = BoxIntegral(img, r, c - b, 0, w)
-			        						  - BoxIntegral(img, r, c - l / 2, 0, l);//3
-			Dyy = BoxIntegral(img, r, c - l + 1, 0, 2*l - 1)
-			        						  - BoxIntegral(img, r, c - l + 1, 0, 2*l - 1);//3
-			Dxy = + BoxIntegral(img, r, c + 1, 0, l)
-			            						+ BoxIntegral(img, r, c - l, 0, l)
-			            						- BoxIntegral(img, r, c - l, 0, l)
-			            						- BoxIntegral(img, r, c + 1, 0, l);
+			        						  - BoxIntegral(img, r, c - l / 2, 0, l)*3;//3
+//			Dyy = BoxIntegral(img, r, c - l + 1, 0, 2*l - 1)
+//			        						  - BoxIntegral(img, r, c - l + 1, 0, 2*l - 1);//3
+//			Dxy = + BoxIntegral(img, r, c + 1, 0, l)
+//			            						+ BoxIntegral(img, r, c - l, 0, l)
+//			            						- BoxIntegral(img, r, c - l, 0, l)
+//			            						- BoxIntegral(img, r, c + 1, 0, l);
 
 			// Normalise the filter responses with respect to their size
 			Dxx *= inverse_area;
-			Dyy *= inverse_area;
-			Dxy *= inverse_area;
+//			Dyy *= inverse_area;
+//			Dxy *= inverse_area;
 
 			//MC: This is the point where the responses are BUILT
 			//********************************************************
 			// Get the determinant of hessian response & laplacian sign
-			responses[index] = (Dxx);// * Dyy);// - 0.81f * Dxy * Dxy); //0.81
+			responses[index] = (Dxx*Dxx);// * Dyy);// - 0.81f * Dxy * Dxy); //0.81
 //			responses[index] = (Dxx);
-			laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);
-//			laplacian[index] = (Dxx >= 0 ? 1 : 0);
+//			laplacian[index] = (Dxx + Dyy >= 0 ? 1 : 0);
+			laplacian[index] = (Dxx >= 0 ? 1 : 0);
 
 #ifdef RL_DEBUG
 			// create list of the image coords for each response
@@ -362,8 +362,10 @@ cout<<"m Layer border: "<<layerBorderm<<endl;
 	//				return 0;
 	//		}
 	//	}
-
+//	if (m->getResponse(c-1, t)  >= candidate) return 0;
+//	if (m->getResponse(c+1, t)  >= candidate) return 0;
 	return 1;
+
 }
 
 //-------------------------------------------------------
