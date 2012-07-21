@@ -27,8 +27,26 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	string ogMatchLeft;
 	string ogMatchRight;
 
+	string mgLeftMatchLeft;
+	string mgLeftMatchRight;
+	string ogLeftMatchLeft;
+	string ogLeftMatchRight;
+
+	string mgRightMatchLeft;
+	string mgRightMatchRight;
+	string ogRightMatchLeft;
+	string ogRightMatchRight;
+
+	string mgBothMatchLeft;
+	string mgBothMatchRight;
+	string ogBothMatchLeft;
+	string ogBothMatchRight;
+
 	string dataset2_1;
 	string dataset2_2;
+
+	string dataset3_1;
+	string dataset3_2;
 
 	//There are four directories where files can be found
 	if (terminal){

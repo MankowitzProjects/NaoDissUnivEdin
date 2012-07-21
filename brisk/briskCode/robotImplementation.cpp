@@ -126,13 +126,30 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
-	//The second directory
-//	std::string dir = "../images/Dataset2_Overlapping_1";
-//	std::string dir1 = "../images/Dataset2_Overlapping_1";
+	//Original Dataset Left light off
+//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
+
+	//Original dataset Right light off
+//	std::string dir = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+
+
+	//Original dataset both lights off
+	std::string dir = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
+	std::string dir1 = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+
+	//Dataset 2
+	//	std::string dir = "../images/Dataset2_Overlapping_1";
+	//	std::string dir1 = "../images/Dataset2_Overlapping_1";
+
+	//Dataset 3
+//	std::string dir = "../images/Dataset3_Overlapping_1";
+//	std::string dir1 = "../images/Dataset3_Overlapping_2";
 
 	//Names of the two image files
 	std::string name1 = "11";
