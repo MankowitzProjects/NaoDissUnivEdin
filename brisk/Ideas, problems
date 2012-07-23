@@ -298,6 +298,9 @@ may pass the KNN test and the angle/distance constraint.
  - It is possible that images with similar contrasts will also match better. Since the lighting is different on each
 background, there will be more matches in pictures of similar lighting, even if the matches are not correct.
 
+ - There is large difference between the matching score of matching and non-matching images. This creates very good performance. 
+ This implies that there is a large amount of discrimination in the images.
+
 Why can I not use the KNN ratio on radius Match tests?
 
  - The radius match finds all the points that are within a certain radius of the keypoint. Therefore if there is only one 

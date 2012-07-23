@@ -796,7 +796,7 @@ Non-overlapping Score
 \begin_inset Text
 
 \begin_layout Plain Layout
-2-KNN
+2-NN
 \end_layout
 
 \end_inset
@@ -953,7 +953,7 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-Hamming/Euclidean Distance
+Radius Matching
 \end_layout
 
 \end_inset
@@ -4905,7 +4905,7 @@ BRISK0
 \begin_inset Text
 
 \begin_layout Plain Layout
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -4934,7 +4934,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -4963,7 +4963,7 @@ BRISK0 SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -4992,7 +4992,7 @@ BRISK0 - UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -5021,7 +5021,7 @@ N/A
 \begin_inset Text
 
 \begin_layout Plain Layout
-Hamming/Euclidean Distance Matching
+Radius Matching
 \end_layout
 
 \end_inset
@@ -5062,19 +5062,7 @@ BRISK0
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -5083,7 +5071,7 @@ keypoint detection threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum Accepted Hamming distance
+MAHD
 \end_layout
 
 \end_inset
@@ -5115,19 +5103,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -5136,7 +5112,7 @@ keypoint detection threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum Accepted Hamming distance
+MAHD
 \end_layout
 
 \end_inset
@@ -5168,19 +5144,7 @@ BRISK0 SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -5189,7 +5153,7 @@ keypoint detection threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum Accepted Euclidean distance
+MAED
 \end_layout
 
 \end_inset
@@ -5221,19 +5185,7 @@ BRISK0 - UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-keypoint detection threshold
+MIPDT
 \end_layout
 
 \end_inset
@@ -5242,7 +5194,7 @@ keypoint detection threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum Accepted Hamming distance
+MAHD
 \end_layout
 
 \end_inset
@@ -5429,7 +5381,7 @@ SBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -5587,7 +5539,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -5745,7 +5697,7 @@ SBRISK - SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -5895,7 +5847,7 @@ SBRISK - U-BRISK
 \begin_layout Plain Layout
 
 \series bold
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -5993,7 +5945,7 @@ SBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -6151,7 +6103,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -6309,7 +6261,7 @@ SBRISK - SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -6467,7 +6419,7 @@ SBRISK - U-BRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -8324,7 +8276,10 @@ k4
 \uwave off
 \noun off
 \color none
-Maximum threshold
+\begin_inset Formula $MIPDT_{MPS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -8333,19 +8288,10 @@ Maximum threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $MIPDT_{CPS}$
+\end_inset
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-Consistent threshold
+
 \end_layout
 
 \end_inset
@@ -8410,7 +8356,7 @@ S-BRISK
 \uwave off
 \noun off
 \color none
-KNN=2
+2-NN
 \end_layout
 
 \end_inset
@@ -8601,7 +8547,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-KNN=2
+2-NN
 \end_layout
 
 \end_inset
@@ -8792,7 +8738,7 @@ SURF2D
 \uwave off
 \noun off
 \color none
-KNN=2
+2-NN
 \end_layout
 
 \end_inset
@@ -8947,7 +8893,19 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-KNN=2
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2-NN
 \end_layout
 
 \end_inset
@@ -9241,7 +9199,10 @@ k4
 \uwave off
 \noun off
 \color none
-thresholdM
+\begin_inset Formula $MIPDT_{MPS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9262,7 +9223,10 @@ thresholdM
 \uwave off
 \noun off
 \color none
-distanceM
+\begin_inset Formula $MAHD_{MPS}/MAED_{MPS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9283,7 +9247,10 @@ distanceM
 \uwave off
 \noun off
 \color none
-thresholdC
+\begin_inset Formula $MIPDT_{CPS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9304,7 +9271,10 @@ thresholdC
 \uwave off
 \noun off
 \color none
-distanceC
+\begin_inset Formula $MAHD_{CPS}/MAED_{CPS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9369,7 +9339,7 @@ S-BRISK
 \uwave off
 \noun off
 \color none
-Hamming
+Radius
 \end_layout
 
 \end_inset
@@ -9578,7 +9548,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-Hamming
+Radius
 \end_layout
 
 \end_inset
@@ -9811,7 +9781,7 @@ SURF2D
 \uwave off
 \noun off
 \color none
-Euclidean
+Radius
 \end_layout
 
 \end_inset
@@ -10020,7 +9990,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-Hamming
+Radius
 \end_layout
 
 \end_inset
@@ -16062,17 +16032,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 SBRISK-UBRISK
 \end_layout
 
@@ -16083,17 +16043,7 @@ SBRISK-UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 MPS
 \end_layout
 
@@ -16104,17 +16054,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 97.430
 \end_layout
 
@@ -16125,17 +16065,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 3.7010
 \end_layout
 
@@ -16146,17 +16076,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 3.8040
 \end_layout
 
@@ -16167,17 +16087,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 9.8490
 \end_layout
 
@@ -16188,17 +16098,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 0.10900
 \end_layout
 
@@ -16209,17 +16109,7 @@ MPS
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 21.885
 \end_layout
 

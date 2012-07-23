@@ -73,7 +73,7 @@
 \begin_inset Text
 
 \begin_layout Plain Layout
-Method
+Method (2-NN)
 \end_layout
 
 \end_inset
@@ -204,7 +204,7 @@ Invalid Matches
 \uwave off
 \noun off
 \color none
-Mean Num Keypoints
+Mean Num Interest Points
 \end_layout
 
 \end_inset
@@ -227,7 +227,7 @@ Mean Num Keypoints
 \uwave off
 \noun off
 \color none
-SBRISK - 2KNN
+SBRISK 
 \end_layout
 
 \end_inset
@@ -322,7 +322,7 @@ SBRISK - 2KNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-BRISK4 - 2KNN
+BRISK4
 \end_layout
 
 \end_inset
@@ -417,7 +417,7 @@ BRISK4 - 2KNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-SURF2D - 2KNN
+SBRISK-SURF2D 
 \end_layout
 
 \end_inset
@@ -713,7 +713,7 @@ Non-overlapping images
 \uwave off
 \noun off
 \color none
-SBRISK - 2KNN
+SBRISK 
 \end_layout
 
 \end_inset
@@ -820,7 +820,7 @@ SBRISK - 2KNN
 \uwave off
 \noun off
 \color none
-BRISK4 - 2KNN
+BRISK4 
 \end_layout
 
 \end_inset
@@ -927,7 +927,7 @@ BRISK4 - 2KNN
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D - 2KNN
+SBRISK-SURF2D
 \end_layout
 
 \end_inset
@@ -1157,7 +1157,7 @@ SBRISK - UBRISK
 \uwave off
 \noun off
 \color none
-Method
+Method (Radius Matching)
 \end_layout
 
 \end_inset
@@ -1311,7 +1311,7 @@ Overlapping images
 \uwave off
 \noun off
 \color none
-SBRISK - Hamming
+SBRISK 
 \end_layout
 
 \end_inset
@@ -1418,7 +1418,7 @@ SBRISK - Hamming
 \uwave off
 \noun off
 \color none
-BRISK4 - Hamming
+BRISK4 
 \end_layout
 
 \end_inset
@@ -1525,7 +1525,7 @@ BRISK4 - Hamming
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D - Euclidean
+SBRISK-SURF2D
 \end_layout
 
 \end_inset
@@ -1786,7 +1786,7 @@ Non-overlapping images
 \uwave off
 \noun off
 \color none
-SBRISK - Hamming
+SBRISK
 \end_layout
 
 \end_inset
@@ -1893,7 +1893,7 @@ SBRISK - Hamming
 \uwave off
 \noun off
 \color none
-BRISK4 - Hamming
+BRISK4
 \end_layout
 
 \end_inset
@@ -2000,7 +2000,7 @@ BRISK4 - Hamming
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D - Euclidean
+SBRISK-SURF2D
 \end_layout
 
 \end_inset

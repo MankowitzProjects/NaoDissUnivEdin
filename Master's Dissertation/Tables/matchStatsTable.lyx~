@@ -73,7 +73,7 @@
 \begin_inset Text
 
 \begin_layout Plain Layout
-Method
+Method (2-NN)
 \end_layout
 
 \end_inset
@@ -204,7 +204,7 @@ Invalid Matches
 \uwave off
 \noun off
 \color none
-Mean Num Keypoints
+Mean Num Interest Points
 \end_layout
 
 \end_inset
@@ -227,7 +227,7 @@ Mean Num Keypoints
 \uwave off
 \noun off
 \color none
-SBRISK - 2KNN
+SBRISK 
 \end_layout
 
 \end_inset
@@ -322,7 +322,7 @@ SBRISK - 2KNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-BRISK4 - 2KNN
+BRISK4
 \end_layout
 
 \end_inset
@@ -417,7 +417,7 @@ BRISK4 - 2KNN
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-SURF2D - 2KNN
+SBRISK-SURF2D 
 \end_layout
 
 \end_inset
@@ -713,7 +713,7 @@ Non-overlapping images
 \uwave off
 \noun off
 \color none
-SBRISK - 2KNN
+SBRISK 
 \end_layout
 
 \end_inset
@@ -820,7 +820,7 @@ SBRISK - 2KNN
 \uwave off
 \noun off
 \color none
-BRISK4 - 2KNN
+BRISK4 
 \end_layout
 
 \end_inset
@@ -927,7 +927,7 @@ BRISK4 - 2KNN
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D - 2KNN
+SBRISK-SURF2D
 \end_layout
 
 \end_inset
@@ -2206,9 +2206,8 @@ SBRISK - UBRISK
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="4">
+<lyxtabular version="3" rows="5" columns="3">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -2227,15 +2226,6 @@ Method
 
 \begin_layout Plain Layout
 Mean NZMs 2-NN - thresholdM
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Mean NZMs 2-NN - thresholdC
 \end_layout
 
 \end_inset
@@ -2288,28 +2278,7 @@ SBRISK
 \uwave off
 \noun off
 \color none
-20.8200000000000
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-7.1800
+20.82
 \end_layout
 
 \end_inset
@@ -2330,7 +2299,7 @@ SBRISK
 \uwave off
 \noun off
 \color none
-20.9400000000000
+20.94
 \end_layout
 
 \end_inset
@@ -2374,28 +2343,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-31.5700000000000
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-10.060
+31.57
 \end_layout
 
 \end_inset
@@ -2416,7 +2364,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-31.1400000000000
+31.14
 \end_layout
 
 \end_inset
@@ -2460,28 +2408,7 @@ SBRISK-SURF2D
 \uwave off
 \noun off
 \color none
-9.11000000000000
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-1.2700
+9.110
 \end_layout
 
 \end_inset
@@ -2502,7 +2429,7 @@ SBRISK-SURF2D
 \uwave off
 \noun off
 \color none
-37.3400000000000
+37.34
 \end_layout
 
 \end_inset
@@ -2546,28 +2473,7 @@ SBRISK - UBRISK
 \uwave off
 \noun off
 \color none
-19.3000000000000
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-10.060
+19.30
 \end_layout
 
 \end_inset
@@ -2588,7 +2494,7 @@ SBRISK - UBRISK
 \uwave off
 \noun off
 \color none
-27.4300000000000
+27.43
 \end_layout
 
 \end_inset
