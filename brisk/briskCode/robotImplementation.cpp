@@ -91,7 +91,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = true;
+	bool usingKnnCriterion = false;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
@@ -102,8 +102,8 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 60;//46.25
-	int hammingDistance = 55;//BRISK BRISK
+	double threshold = 75;//46.25
+	int hammingDistance = 121.25;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
 	std::string feat_descriptor = "U-BRISK";
 
@@ -140,19 +140,19 @@ int main(int argc, char ** argv) {
 
 
 	//Original dataset both lights off
-	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
-	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
 	//	std::string dir = "../images/Dataset2_Overlapping_1";
 	//	std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
-//	std::string dir = "../images/Dataset3_Overlapping_1";
-//	std::string dir1 = "../images/Dataset3_Overlapping_2";
+	std::string dir = "../images/Dataset3_Overlapping_1";
+	std::string dir1 = "../images/Dataset3_Overlapping_1";
 
 	//Names of the two image files
-	std::string name1 = "10";
+	std::string name1 = "4";
 	std::string name2 = "11";
 
 	//Get the first gray image
