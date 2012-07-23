@@ -272,8 +272,55 @@ Nao to do:
 2. Take pictures with my phone or camera and compare them with the robot pics.
 
 
+22/07/12
 
+************************TESTS************************************
+1. Large Hall Dataset
 
+Classification
 
+KNN Values (Max/Consistent)
+
+BRISK0 - DONE
+SURF2D - DONE
+BRISK4 - DONE
+BRISK0-U-BRISK - DONE
+SURF 1D - DONE
+
+Hamming/Euclidean
+
+BRISK0 - DONE
+SURF2D - DONE
+BRISK4 - DONE
+BRISK0-U-BRISK - DONE
+SURF 1D - DONE
+
+2. Office
+
+Classification
+
+KNN (max and consistent) 
+
+BRISK0 - DONE
+SURF2D - DONE
+BRISK4 - DONE
+BRISK0-U-BRISK - DONE
+SURF 1D - DONE
+
+Hamming/Euclidean
+
+BRISK0 - DONE
+SURF2D - DONE
+BRISK4 - DONE
+BRISK0-U-BRISK - DONE
+SURF 1D - DONE
+
+3. Overall Performance
+
+SURF1D KNN - DONE
+
+SURF 1D Hamming - DONE
+
+4. Fix up the mean number of keypoints
 
 

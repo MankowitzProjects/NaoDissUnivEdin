@@ -59,7 +59,7 @@ load 'nonmatching_matching_SURF1D_19072012_1151.mat'
 
 %1D SURF
 %load 'dataset2_nonmatching_matching_SURF1D_18072012_1151.mat'
-load 'dataset2_nonmatching_matching_SURF1D_19072012_1151.mat'
+%load 'dataset2_nonmatching_matching_SURF1D_19072012_1151.mat'
 
 global stats;
 

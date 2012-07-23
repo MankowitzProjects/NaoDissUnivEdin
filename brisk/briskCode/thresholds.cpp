@@ -94,34 +94,38 @@ int main(int argc, char ** argv) {
 	//Using the terminal
 	bool terminal = true;
 
+	//Set the date and time
+	string myDate = "22072012";
+	string myTime = "1938";
+
 	//For SBRISK SURF2D Using radius = 0.20, threshold = 70
-//		bool hamming=false;
-//		std::string feat_detector = "BRISK";
-//		std::string feat_descriptor = "SURF";
-//		double hammingDistance = 0.1;
-		//int threshold = 20;
+	//		bool hamming=false;
+	//		std::string feat_detector = "BRISK";
+	//		std::string feat_descriptor = "SURF";
+	//		double hammingDistance = 0.1;
+	//int threshold = 20;
 
 	//For S-BRISK, hammingDistance = 85, Threshold = 100
-//	bool hamming=true;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "U-BRISK";
-//	int testThreshold = 20;
-//	int hammingDistance = 40;//BRISK BRISK
-
-	//For BRISK (Multiple scales)
 		bool hamming=true;
 		std::string feat_detector = "BRISK";
-		std::string feat_descriptor = "BRISK";
+		std::string feat_descriptor = "U-BRISK";
 		int testThreshold = 20;
 		int hammingDistance = 40;//BRISK BRISK
+
+	//For BRISK (Multiple scales)
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	int testThreshold = 20;
+//	int hammingDistance = 40;//BRISK BRISK
 
 
 	//For 1D SURF
 
 
 
-
-	for (int ss=1;ss<=4; ss++)
+	//For dataset of Type A: ss = 1-->16; For Dataset of type b ss=17-->20
+	for (int ss=17;ss<=18; ss++)
 	{
 		//Create object for dataAnalysis
 		DataAnalysis dataAnalysis;
@@ -164,10 +168,24 @@ int main(int argc, char ** argv) {
 		time ( &rawtime );
 		timeinfo = localtime ( &rawtime );
 		//*****************************************
-		string file = "../../data/Thresholds/threshold_SBRISK_UBRISK_Hamming_threshold_12072012_0055";
-		//*****************************************
+		string file = "../../data2/Thresholds/threshold_";
+		file.append(feat_detector);
+		file.append("_");
+		file.append(feat_descriptor);
+		file.append("_");
+		if(usingKnnCriterion)
+			file.append("KNN_");
+		else
+			file.append("Hamming_");
+		file.append("_threshold_");
+		file.append(myDate);
+		file.append("_");
+		file.append(myTime);
 		file.append(".txt");
+
 		cout<<file<<endl;
+		//*****************************************
+
 		//*************************************
 		//Set Hamming Distance
 		//double hammingDistance = 0.1;

@@ -283,7 +283,29 @@ Solution: was caused by the NaturalLandmarkSensorModel which was included in
  - Add the representation and its provider to modules.cfg in Default and Penalty
 
 
+22/07/12
+
+Why am I getting such good performance on the datasets?
+
+ - There is alot of variation in the images which means a large number of interest points will be detected.
+
+ - In dataset3, there is not alot of variation in scale which may account for the improvement in performance.
+The same may be the case for dataset 2 
+
+ - It is possible that since KNN makes sure that every keypoint has at least two matches, then some keypoints by chance
+may pass the KNN test and the angle/distance constraint. 
+
+ - It is possible that images with similar contrasts will also match better. Since the lighting is different on each
+background, there will be more matches in pictures of similar lighting, even if the matches are not correct.
+
+Why can I not use the KNN ratio on radius Match tests?
+
+ - The radius match finds all the points that are within a certain radius of the keypoint. Therefore if there is only one 
+keypoint, then you dont have the 2-NN. This is a problem for the KNN test.
 
 
+Why is U-BRISK slower in KNN and faster in Hamming distance?
 
+ - In KNN, U-BRISK is forced to have two matches per keypoint. This means that if there are a large number of
+keypoints, then the matching time will be really large
 

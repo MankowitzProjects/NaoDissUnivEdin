@@ -46,6 +46,7 @@
 #include <string>
 #include <sstream>
 #include <ctime>
+#include "config_file.h"
 
 
 
@@ -100,35 +101,37 @@ int main(int argc, char ** argv) {
 
 
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-//	bool hamming=false;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "SURF";
-//	double hammingDistance = 0.28;
-//	//double threshold = 30;//45
-//	double threshold = 40;
+		bool hamming=false;
+		std::string feat_detector = "BRISK";
+		std::string feat_descriptor = "SURF";
+		double hammingDistance = 0.28;
+		//double threshold = 30;//45
+		double threshold = 60;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-			bool hamming=true;
-			std::string feat_detector = "BRISK";
-			std::string feat_descriptor = "U-BRISK";
-			double threshold = 60;//46.25;//46.25 KNN
-			//	double threshold = 78.75;//Hamming
-			double hammingDistance = 130;//Hamming
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	double threshold = 75;//46.25;//46.25 KNN
+//	//	double threshold = 78.75;//Hamming
+//	double hammingDistance = 115;//Hamming
 
 	//For BRISK4 (4 octaves)
-//		bool hamming=true;
-//		std::string feat_detector = "BRISK4";
-//		std::string feat_descriptor = "BRISK4";
-//		//double threshold = 30; //KNN 51.25
-//		double threshold = 40;//Hamming
-//		double hammingDistance = 121.5;//Hamming
+//			bool hamming=true;
+//			std::string feat_detector = "BRISK4";
+//			std::string feat_descriptor = "BRISK4";
+//			//double threshold = 30; //KNN 51.25
+//			double threshold = 65;//Hamming
+//			double hammingDistance = 130;//Hamming
 
 	//Set the date and time
-	string myDate = "14072012";
-	string myTime = "1639";
+	string myDate = "22072012";
+	string myTime = "2151";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
+	//Determine whether the MPS or CPS threshold is being used
+	bool isMax  =  false;
 	//Matching parameters
 	int k_start =0;
 	int k_end = 0;
@@ -139,45 +142,104 @@ int main(int argc, char ** argv) {
 
 	//NB *************************************
 	//CHOOSE THE DATASET TO USE
-	//dataset =1 for dataset A, 2 for dataset B
+	//dataset =1 for dataset A (comprised of sets in multiples of 4), 2 for dataset B (comprised of sets in multiples of 2)
+	//dataset = 3 for varying illumination
 	int dataset=2;
+	//Counters used to ensure standard output for processing in Matlab
+	int tempDirCounterkk = 0;
+	int tempDirCounterss = 0;
+
+	//The dataset index step
+	int step = 12;//4 for left lighting, 8 for right lighting, 12 for both lights off
+
 
 	if(isMatching)
 	{
-		if (dataset==1)
+
+		if (dataset==1)//The original dataset
 		{
-			k_start = 1;
-			k_end = 4;
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 1;
+
+			k_start = 13;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 16;//Left dataset: 8; Right Dataset 12; Both Dataset: 16
 		}
-		else
+		else if (dataset==2)//Additional datasets
 		{
-			k_start = 5;
-			k_end = 6;
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 5;
+			tempDirCounterss = 5;
+
+			k_start = 19; //Dataset 2: 17; Dataset 3: 19
+			k_end = 20; //Dataset 2: 18; Dataset 3: 20
 		}
+		else if (dataset==3) //Varying lighting
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 1;
+
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 4;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+		}
+
 	}
 	else
 	{
 		if (dataset==1)
 		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 3;
+
+			k_start = 13;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 14;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+			s_start = 15;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
+			s_end = 16;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+		}
+		else if (dataset==2)
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 5;
+			tempDirCounterss = 6;
+
+			k_start = 19; //Dataset 2: 17; Dataset 3: 19
+			k_end = 19; //Dataset 2: 17; Dataset 3: 19
+			s_start = 20; //Dataset 2: 18; Dataset 3: 20
+			s_end = 20; //Dataset 2: 18; Dataset 3: 20
+		}
+		else if(dataset==3) //Varying lighting
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 3;
+
 			k_start = 1;
 			k_end = 2;
-			s_start = 3;
-			s_end = 4;
-		}
-		else
-		{
-			k_start = 5;
-			k_end = 5;
-			s_start = 6;
-			s_end = 6;
+			s_start =15;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
+			s_end =16;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+
 		}
 	}
 
-
+	//Begin the matching procedure
 	for(int kk=k_start;kk<=k_end;kk++)
 	{
-		if(isMatching)
+		if(isMatching && dataset!=3){
 			s_start = s_end = kk;
+		}
+		else if(isMatching && dataset==3){ //This is for the varying illumination datasets
+			//Comparing datasets
+			s_start = s_end = kk+step;
+			//The counter must be reset for formatting purposes in Matlab
+			tempDirCounterss = kk;
+		}
+		else if (dataset ==1)
+		{
+			//The counter must be reset for formatting purposes in Matlab
+			tempDirCounterss = 3;//kk for matching; another number for non-matching
+		}
 
 		for (int ss = s_start;ss<=s_end;ss++)
 		{
@@ -194,8 +256,8 @@ int main(int argc, char ** argv) {
 			dir = to_string<int>(kk);
 			dir1 = to_string<int>(ss);
 
-			std::string tempDir = to_string<int>(kk);
-			std::string tempDir1 = to_string<int>(ss);
+			std::string tempDir = to_string<int>(tempDirCounterkk);
+			std::string tempDir1 =to_string<int>(tempDirCounterss);
 
 			//Names of the two image files
 			std::string name1;
@@ -227,11 +289,13 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../data2/Matches/";
+			string filename = "../data3/Matches/";
 			if (dataset==1)
-			filename.append("nonmatching_matching_Data__");
-			else
-				filename.append("dataset2_nonmatching_matching_Data__");
+				filename.append("nonmatching_matching_Data__");
+			else if (dataset==2)
+				filename.append("dataset3_nonmatching_matching_Data__");//Or dataset3
+			else if (dataset==3)
+				filename.append("dataLighting_both_lights_off_nonmatching_matching_Data__");
 			filename.append(feat_detector);
 			filename.append("_");
 			filename.append(feat_descriptor);
@@ -247,9 +311,11 @@ int main(int argc, char ** argv) {
 			filename.append(to_string<double>(threshold));
 			filename.append("_");
 			if (!usingKnnCriterion)
-			filename.append(to_string<int>(hammingDistance));
-
-			filename.append("_consistent");
+				filename.append(to_string<int>(hammingDistance));
+			if (isMax)
+			filename.append("_max");
+			else
+				filename.append("_consistent");
 			filename.append(".txt");
 
 			cout<<filename<<endl;
@@ -448,7 +514,7 @@ int main(int argc, char ** argv) {
 
 					//threshold = atoi(argv[3]+5);
 					//Write all the information to a file
-					writeFile <<tempDir<<", "<<tempDir1<<", "<<threshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumInvalidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
+					writeFile <<tempDirCounterkk<<", "<<tempDirCounterss<<", "<<threshold<<", "<<name1<<", "<<name2<<", "<<keypoints.size()<<", "<<keypoints2.size()<<", "<<feature.imageMatchingScoreBest<<", "<<feature.imageMatchingScore<<","<<feature.totalNumMatches<<", "<<feature.totalNumValidMatches<<", "<<feature.totalNumInvalidMatches<<", "<<feature.totalNumBestMatches<<", "<<detectionTime<<", "<<extractionTime<<", "<<matchingTime<<", "<<verifyTime<<", "<<overallTime<<"\n";
 					//close the file
 					writeFile.close();
 
@@ -466,7 +532,9 @@ int main(int argc, char ** argv) {
 
 				}//End of inner for loop (jj)
 			}//end of outer for loop (ii)
+			tempDirCounterss++;
 		}//End of ss loop
+		tempDirCounterkk++;
 	}//end of kk loop
 
 	return 0;

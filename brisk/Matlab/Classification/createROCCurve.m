@@ -1,5 +1,5 @@
 %Determining whether or not matching scores are useful for classification
-function [fpRateMatrix, tpRateMatrix, statsMatrix] = createROCCurve(data, step, datasetA)
+function [fpRateMatrix, tpRateMatrix, statsMatrix, thresholdsMatrix] = createROCCurve(data, step, datasetType, usingBriskorSURF)
 global stats;
 
 %Separate the datasets
@@ -19,7 +19,7 @@ global stats;
 [row5,col5] = find(data(:,1)==5 & data(:,2)==5);
 [row6,col6] = find(data(:,1)==6 & data(:,2)==6);
 
-%1 additional overlapping dataset
+%1 additional non-overlapping dataset
 [row56nm,col56nm] = find(data(:,1)==5 & data(:,2)==6);
 
 
@@ -43,7 +43,7 @@ dataset6 = data(row6,:);
 dataset56nm = data(row56nm,:);
 
 
-if datasetA
+if datasetType ==1 || datasetType ==3
     %Generate the statistics for each matching dataset
     generateClassificationStats(dataset1,1);
     generateClassificationStats(dataset2,2);
@@ -62,7 +62,7 @@ if datasetA
     meanMatchesScore = mean(stats(1:4,1))
     meanNonMatchesScore = mean(stats(5:8,1))
     
-else
+elseif datasetType==2 || datasetType==21
     %Overlapping dataset
     generateClassificationStats(dataset5,1);
     generateClassificationStats(dataset6,2);
@@ -73,39 +73,46 @@ else
     meanNonMatchesScore = mean(stats(3,1))
 end
 
+if usingBriskorSURF
+    stepValue = 0.01;
+else
+    stepValue = 1;
+end
+
+%Set the interval 
+interval =1;
+
 %Counter
 counter = 1;
 %To generate values for the ROC Curve
-largestThreshold = ceil(max(stats(:,1)));
+largestThreshold = ceil(max(stats(:,4)));
 
-tpRateMatrix = zeros(1,largestThreshold/step);
-fpRateMatrix = zeros(1,largestThreshold/step);
+tpRateMatrix = zeros(1,largestThreshold/stepValue);
+fpRateMatrix = zeros(1,largestThreshold/stepValue);
 
-%for ii=1000:-1:0 %BRISK SURF
-for ii=largestThreshold:-step:0 %BRISK BRISK
-    %for ii=1:-0.001:0
-    
+%Create a matrix to store the thresholds at each point
+thresholdsMatrix = [];
+thresholdCounter = 1;
+
+for ii=largestThreshold:-stepValue:0
+
     classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
     %classificationBoundary =meanNonMatchesScore*2;
+    
+    if (counter == 300)
+      counter;  
+    end
     
     %Now to perform classification. We use the matching score
     %defined as the inverse hamming distance between 2 vectors
     %for BRISK or the inverse euclidean distance for SURF
     data(:,19) = data(:,8)>=ii;
     
-    % dataset1nm(:,16) = dataset1nm(:,7)>0;
-    % dataset2(:,16) = dataset2(:,7)>0;
-    % dataset2nm(:,16) = dataset2nm(:,7)>0;
-    % dataset3(:,16) = dataset3(:,7)>0;
-    % dataset3nm(:,16) = dataset3nm(:,7)>0;
-    % dataset4(:,16) = dataset4(:,7)>0;
-    % dataset4nm(:,16) = dataset4nm(:,7)>0;
-    
     %Find the number of matches for matching pairs
-    if datasetA
+    if datasetType == 1 || datasetType ==3
         [matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
         [matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm);
-    else
+    elseif datasetType==2 || datasetType==21
         [matchingStats] = calculateMatchingStats(data, row5,row6);
         [matchingStats1] = calculateMatchingStats(data, row56nm);
     end
@@ -117,6 +124,11 @@ for ii=largestThreshold:-step:0 %BRISK BRISK
     TPRate = meanMatchesStat;
     %False Positive rate
     FPRate = meanNonMatchesStat;
+    
+    %Update the vector with the TP and FP rate respectively
+    thresholdsMatrix(counter,1) = ii;
+    thresholdsMatrix(counter,2) = FPRate;
+    thresholdsMatrix(counter,3) = TPRate;
     
     %Store the values to plot on the ROC Curve
     tpRateMatrix(1,counter) = TPRate;
@@ -133,8 +145,8 @@ averageDetectionTime1 = mean(data(:,14))
 averageExtractionTime1 = mean(data(:,15))
 
 [averageDetectionTimeMatrix, averageExtractionTimeMatrix] = calculateMeanTimes(data);
-averageDetectionTime = sum(averageDetectionTimeMatrix);
-averageExtractionTime = sum(averageExtractionTimeMatrix);
+averageDetectionTime = sum(averageDetectionTimeMatrix)
+averageExtractionTime = sum(averageExtractionTimeMatrix)
 averageMatchingTime = mean(data(:,16))
 averageVerificationTime = mean(data(:,17))
 averageOverallTime = mean(data(:,18))

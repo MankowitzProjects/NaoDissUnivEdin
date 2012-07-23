@@ -79,8 +79,6 @@ datasetA =0;
 [row4,col4] = find(data(:,1)==4);
 [row5,col5] = find(data(:,1)==5);
 [row6,col6] = find(data(:,1)==6);
-%  [row7,col7] = find(data(:,1)==7);
-%  [row8,col8] = find(data(:,1)==8);
 
 %We have filtered the datasets by directory
 dataset1 = data(row1,:);
@@ -90,8 +88,6 @@ dataset4 = data(row4,:);
 dataset5 = data(row5,:);
 dataset6 = data(row6,:);
 
-%  dataset7 = data(row7,:);
-%  dataset8 = data(row8,:);
 
 %Find the maximum time for calculating the score
 [maxTime1,maxTime2, maxTime3, maxTime4, maxTime5, maxTime6]  = calcMaxTime(dataset1, dataset2, dataset3, dataset4, dataset5, dataset6);

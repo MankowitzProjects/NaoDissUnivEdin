@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 {
 
 	//Determine whether or not you should show the matches and print the ROC curve
-	bool visible = true;
+	bool visible = false;
 	bool printROC = false;
 	if (argc == 2){
 		string arg(argv[1]);
@@ -231,8 +231,17 @@ int main(int argc, char *argv[])
 
 
 	//*****************MATCHING*********************************
-	//Choose the dataset
-	int dataset = 0;
+	//The number of images in each dataset
+	int jpegCounter = 0;
+	int jpegCounter1 = 0;
+
+	//Use the terminal or not
+	bool terminal = false;
+
+	//Set the date and time
+	string myDate = "22072012";
+	string myTime = "2151";
+
 	//Set if you are matching or not matching
 	bool isMatching = false;
 	//Matching parameters
@@ -241,46 +250,91 @@ int main(int argc, char *argv[])
 	int s_start = 0;
 	int s_end = 0;
 
-	//The number of images in each dataset
-	int jpegCounter = 0;
-	int jpegCounter1 = 0;
-
 	int index = 0;
 
-	//Use the terminal or not
-	bool terminal = false;
+	//NB *************************************
+	//CHOOSE THE DATASET TO USE
+	//dataset =1 for dataset A (comprised of sets in multiples of 4), 2 for dataset B (comprised of sets in multiples of 2)
+	//dataset = 3 for varying illumination
+	int dataset=2;
+	//Counters used to ensure standard output for processing in Matlab
+	int tempDirCounterkk = 0;
+	int tempDirCounterss = 0;
+
+	//The dataset index step
+	int step = 12;//4 for left lighting, 8 for right lighting, 12 for both lights off
+
 
 	if(isMatching)
 	{
-		if (dataset==1)
+
+		if (dataset==1)//The original dataset
 		{
-			k_start = 1;
-			k_end = 4;
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 1;
+
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 4;//Left dataset: 8; Right Dataset 12; Both Dataset: 16
 		}
-		else
+		else if (dataset==2)//Additional datasets
 		{
-			k_start = 5;
-			k_end = 6;
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 5;
+			tempDirCounterss = 5;
+
+			k_start = 19; //Dataset 2: 17; Dataset 3: 19
+			k_end = 20; //Dataset 2: 18; Dataset 3: 20
 		}
+		else if (dataset==3) //Varying lighting
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 1;
+
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 4;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+		}
+
 	}
-	else //if you are not matching
+	else
 	{
 		if (dataset==1)
 		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 3;
+
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 2;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+			s_start = 3;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
+			s_end = 4;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+		}
+		else if (dataset==2)
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 5;
+			tempDirCounterss = 6;
+
+			k_start = 19; //Dataset 2: 17; Dataset 3: 19
+			k_end = 19; //Dataset 2: 17; Dataset 3: 19
+			s_start = 20; //Dataset 2: 18; Dataset 3: 20
+			s_end = 20; //Dataset 2: 18; Dataset 3: 20
+		}
+		else if(dataset==3) //Varying lighting
+		{
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 3;
+
 			k_start = 1;
 			k_end = 2;
-			s_start = 3;
-			s_end = 4;
-		}
-		else
-		{
-			k_start = 5;
-			k_end = 5;
-			s_start = 6;
-			s_end = 6;
+			s_start =15;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
+			s_end =16;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+
 		}
 	}
-	cout<<"Test Images size: "<<test_images.size()<<endl;
+
 
 	//Create object for dataAnalysis
 	DataAnalysis dataAnalysis;
@@ -290,8 +344,20 @@ int main(int argc, char *argv[])
 	//Set the various directories for matching and non-matching respectively
 	for(int kk=k_start;kk<=k_end;kk++)
 	{
-		if(isMatching)
+		if(isMatching && dataset!=3){
 			s_start = s_end = kk;
+		}
+		else if(isMatching && dataset==3){ //This is for the varying illumination datasets
+			//Comparing datasets
+			s_start = s_end = kk+step;
+			//The counter must be reset for formatting purposes in Matlab
+			tempDirCounterss = kk;
+		}
+		else if (dataset ==1)
+		{
+			//The counter must be reset for formatting purposes in Matlab
+			tempDirCounterss = 3;//kk for matching; another number for non-matching
+		}
 
 		for (int ss = s_start;ss<=s_end;ss++)
 		{
@@ -306,8 +372,8 @@ int main(int argc, char *argv[])
 			string name1;
 			string name2;
 
-			string tempDir = to_string<int>(kk);
-			string tempDir1 = to_string<int>(ss);
+			std::string tempDir = to_string<int>(tempDirCounterkk);
+			std::string tempDir1 =to_string<int>(tempDirCounterss);
 
 			//Set the directory names and determine the number of images in each directory
 			jpegCounter = dataAnalysis.getNumImagesInDirectory(&dir, terminal);
@@ -316,19 +382,33 @@ int main(int argc, char *argv[])
 			cout<<"The number of images in the directory 1,2 is: "<<jpegCounter<<", "<<jpegCounter1<<endl;
 
 			//The file to store the matching data
-			string file = "data/Matches/nonmatching_matching_SURF1D_19072012_1151";
-			//*****************************************
-			file.append(".txt");
-			cout<<file<<endl;
+			string filename = "data/Matches/";
+			if (dataset==1)
+				filename.append("nonmatching_matching_Data__");
+			else if (dataset==2)
+				filename.append("dataset3_nonmatching_matching_Data__");//Or dataset3
+			else if (dataset==3)
+				filename.append("dataLighting_both_lights_off_nonmatching_matching_Data__");
+			filename.append("SURF1D");
+			filename.append("_Euclidean_");
+			filename.append(myDate);
+			filename.append("_");
+			filename.append(myTime);
+			filename.append("_");
+			filename.append(to_string<double>(THRES));
+			filename.append("_");
+			filename.append("_given");
+			filename.append(".txt");
+			cout<<filename<<endl;
 
 			//Make sure that there are the same number of images in each frame (Not for non matches)
-//			if (isMatching)
-//			{
-//				if(jpegCounter>jpegCounter1)
-//					jpegCounter = jpegCounter1;
-//				else
-//					jpegCounter1 = jpegCounter;
-//			}
+			//			if (isMatching)
+			//			{
+			//				if(jpegCounter>jpegCounter1)
+			//					jpegCounter = jpegCounter1;
+			//				else
+			//					jpegCounter1 = jpegCounter;
+			//			}
 			//Remember that for non-matches, we can compare 1,1;2,2;3,3...etc
 			//Determine matches without repetition
 			for (int ii = 1;ii<=jpegCounter;ii++)
@@ -343,7 +423,7 @@ int main(int argc, char *argv[])
 					//if(isMatching && (ii==jj)) continue;
 
 
-					cout<<"Image "<<ii<<", image "<<jj<<"\t";
+					cout<<"Image "<<ii<<", image "<<jj<<endl;
 
 					//The Processing the first image
 					name1 = to_string<int>(ii);
@@ -374,14 +454,10 @@ int main(int argc, char *argv[])
 					float result =0;
 					IplImage* display;
 
-					if (ss>=6){
-						int test = 0;
-					}
-
 					//Calculate the matches
 					result = visualStaticMatch(image1, image2, visible, display);
 
-					cout<<result<<endl;
+					//cout<<result<<endl;
 
 					clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &timee);
 					Ipoint::overallTime = Ipoint::diffSurf(times, timee).tv_nsec/1000000.0f;
@@ -394,7 +470,7 @@ int main(int argc, char *argv[])
 					}
 					//Write the data to a file
 					ofstream writeFile;
-					writeFile.open(file.c_str(), ios::app);
+					writeFile.open(filename.c_str(), ios::app);
 #if (DEBUG_TIMES)
 					cout<<"Total Matches: "<<Ipoint::totalNumMatches<<endl;
 					cout<<"Num valid matches: "<<Ipoint::numValidMatches<<endl;
@@ -417,8 +493,9 @@ int main(int argc, char *argv[])
 					cvReleaseImage(&(image2.img));
 				}//End of jj
 			}//end of ii
-
+			tempDirCounterss++;
 		}//End of ss
+		tempDirCounterkk++;
 	}//End of kk
 
 	if(visible) cvDestroyWindow("1D SURF");

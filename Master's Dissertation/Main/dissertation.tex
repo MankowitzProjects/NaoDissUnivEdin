@@ -395,7 +395,7 @@ Two new matching constraints have been developed in order to determine whether o
 \label{sec:experimentsResults}
 The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are BRISK0, BRISK, BRISK0-UBRISK, BRISK0-2D SURF and 1D SURF respectively. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, hamming distance and euclidean distance respectively. 2-Nearest Neighbors has been implemented on all of the feature extraction algorithms. All BRISK descriptors can also use hamming distance to perform matching whereas SURF descriptors rely on the euclidean distance to perform matching. All of the feature extractor algorithms are therefore compared based on their detection performance and descriptor generation as well as the matching technique that has been utilised for the particular experiment.\\
 
-Parameters $p$ in this section correspond to the various thresholds required for detecting interest points. The parameters used for each method are shown in \tabref{tab:parameters}.\\
+Parameters $p$ in this section correspond to the various thresholds required for detecting interest points and determining matches. The parameters used for each method are shown in \tabref{tab:parameters}. The Minimum Interest Point Detection Threshold (MIPDT) is the threshold above which a pixel is detected as an interest point. The Maximum Accepted Hamming Distance (MAHD) is the maximum number of bits that can differ when comparing two feature descriptors, below which the descriptors are to be considered a match. The Maximum Accepted Euclidean Distance (MAED) is the maximum euclidean distance below which two feature descriptors are considered to be a match.\\
 
 \begin{table}
 \caption{The parameters evaluated for each feature extraction algorithm}
@@ -405,59 +405,62 @@ Method & Parameter 1 & Parameter 2\tabularnewline
 \hline 
  & \multicolumn{2}{c}{2-Nearest Neighbors Matching}\tabularnewline
 \hline 
-BRISK0 & minimum interest point detection threshold & N/A\tabularnewline
+BRISK0 & MIPDT & N/A\tabularnewline
 \hline 
-BRISK & minimum interest point detection threshold & N/A\tabularnewline
+BRISK & MIPDT & N/A\tabularnewline
 \hline 
-BRISK0 SURF2D & minimum interest point detection threshold & N/A\tabularnewline
+BRISK0 SURF2D & MIPDT & N/A\tabularnewline
 \hline 
-BRISK0 - UBRISK & minimum interest point detection threshold & N/A\tabularnewline
+BRISK0 - UBRISK & MIPDT & N/A\tabularnewline
 \hline 
  & \multicolumn{2}{c}{Hamming/Euclidean Distance Matching}\tabularnewline
 \hline 
-BRISK0 & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK0 & MIPDT & MAHD\tabularnewline
 \hline 
-BRISK & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK & MIPDT & MAHD\tabularnewline
 \hline 
-BRISK0 SURF2D & minimum interest point detection threshold & Maximum Accepted Euclidean distance\tabularnewline
+BRISK0 SURF2D & MIPDT & MAED\tabularnewline
 \hline 
-BRISK0 - UBRISK & minimum interest point detection threshold & Maximum Accepted Hamming distance\tabularnewline
+BRISK0 - UBRISK & MIPDT & MAHD\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:parameters}
 \end{table}
 
-\subsection{Datasets and Setup}
+\subsection{Main Robocup Datasets and Setup}
 \label{sec:datasets}
-The setup for the feature extraction experiments is as follows. Four image datasets were generated. These images were taken from the Nao's camera at different angles and scales in order to ensure realistic images similar to those taken in a robocup soccer game. The first dataset is of the area to the left of the player's goal. The second dataset is to the right of the player's goal. The third and fourth datasets are to the left and right of the opponents goal respectively. Typical images from each of these datasets are shown in \figref{fig:dataset1} to \figref{fig:dataset4} respectively.\\
+The setup for the feature extraction experiments is as follows. Four image datasets were generated. These images were taken from the Nao's camera at different angles and scales in order to ensure realistic images similar to those taken in a Robocup soccer game. All images were focused on the regions behind the goalposts. The first set of goalposts will be referred to as the Player's Goal (PG). The second set of goalposts will be referred to as the Opponents Goal (OG). \\
+
+
+The first dataset is of the area to the left of the player's goal (\textit{PG Left}). The second dataset is to the right of the player's goal (\textit{PG Right}). The third dataset is to the left of the opponent's goal (\textit{OG Left}). The fourth dataset is to the right of the opponents goal (\textit{OG Right}). The abbreviations, shown in braces, will be used to refer to these datasets for the remainder of this report. Typical images from each of these datasets are shown in \figref{fig:dataset1} to \figref{fig:dataset4} respectively.\\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/datasetImages/mgLeft.jpg}
-\caption{Dataset one showing an image to the left of the player's goal}
+\caption{Dataset one showing an image from \textit{PG Left}}
 \label{fig:dataset1}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/datasetImages/mgRight.jpg}
-\caption{Dataset two showing an image to the right of the player's goal}
+\caption{Dataset two showing an image from \textit{PG Right}}
 \label{fig:dataset2}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/datasetImages/ogLeft.jpg}
-\caption{Dataset three showing an image to the left of the opponent's goal}
+\caption{Dataset three showing an image from \textit{OG Left}}
 \label{fig:dataset3}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.5]{../Drawings/datasetImages/ogRight.jpg}
-\caption{Dataset four showing an image to the right of the opponent's goal}
+\caption{Dataset four showing an image from \textit{OG Right}}
 \label{fig:dataset4}
 \end{minipage}
 \end{figure}
 
-Feature detection, extraction and matching routines were performed on pairs of images to determine whether the images match or not. Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. Pairs of images, with no overlap, taken from different datasets are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the soccer field were compared. Thus dataset one and two were compared with datasets three and four respectively as shown in \tabref{table:overlap}. \\
+Feature detection, extraction and matching routines were performed on pairs of images to determine whether the images match or not. Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. Pairs of images, with no overlap, taken from different datasets are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the soccer field were compared. Thus datasets \textit{PG Left} and \textit{PG Right} were compared with datasets \textit{OG Left} and \textit{OG Right} respectively as shown in \tabref{table:overlap}. \\
 
 In total, $108$ overlapping images were used to generate $1421$ overlapping image pairs. A further $108$ non-overlapping images were used to generate $2808$ non-overlapping image pairs. This data has been utilised to generate the results in the sections to follow. \\ 
 
@@ -505,9 +508,9 @@ In order to find the optimal feature extraction and matching algorithm, the over
 \subsubsection{Finding the Optimal Detection Parameters}
 \label{sec:optimalParameters}
 %Describes how to find the optimal hamming distance, euclidean distance, and response thresholds for each method
-The procedure used to determine the optimal parameters for each of the feature extraction algorithms will now be detailed. The parameters can be thresholds, hamming distances or euclidean distances as discussed in \secref{sec:matching}. Four datasets containing in total $108$ overlapping images were used to determine the optimum feature extraction parameters. All possible combinations of overlapping images were matched in datasets  one to four, without repitition, for various detection parameter values. A procedure has been developed in order to calculate the optimum detection parameters used to provide the best feature extraction and matching performance.\\
+The procedure used to determine the optimal parameters for each of the feature extraction algorithms will now be detailed. The parameters can be thresholds, hamming distances or euclidean distances as discussed in \secref{sec:matching}. Four datasets, presented in \secref{sec:datasets}, containing in total $108$ overlapping images were used to determine the optimum feature extraction parameters. All possible combinations of overlapping images were matched in datasets  one to four, without repetition, for various parameter values. A procedure has been developed in order to calculate the optimum parameters used to provide the best feature extraction and matching performance.\\
 %The equation containing the optimal parameters
-In order to find the optimal detection parameters, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. This matching score represents how good a match is between a pair of images, $i_1, i_2$ in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of detection parameters, $p$. For example, if the detector used is BRISK0, then the $SIS_{(i_1, i_2), d}^{BRISK0, \textbf{p}}$ presents the matching score for the pair of images $i_1, i_2$ for a specific detection threshold $p$ in a particular dataset $d$. \\
+In order to find the optimal parameters, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. This matching score represents how good a match is between a pair of images, $i_1, i_2$ in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of parameters, $p$. For example, if the detector used is BRISK0, then the $SIS_{(i_1, i_2), d}^{BRISK0, \textbf{p}}$ presents the matching score for the pair of images $i_1, i_2$ for a specific detection threshold $p$ in a particular dataset $d$. \\
 
 \begin{eqnarray}
 SIS_{(i_1, i_2), d}^{FE, \textbf{p}} &=& \frac{k_1 f(t_{i_1,i_2}) + k_2 g_(\textit{NVM}_{i_1,i_2})}{k_1 + k_2} \\
@@ -540,7 +543,7 @@ MIS_{p, d}^{FE} = \frac{k_3 \frac{\sum_{i_1, i_2=1 , i_1 \neq i_2}^{N} \textit{S
 
 As mentioned above, the MIS score is computed for a particular set of parameter values $p$ using a specific feature extraction algorithm $FE$ in  a particular dataset $d$. \\
 
-The first term in the equation is the computation of the mean of all SIS scores for a particular set of detection parameter values. A function has been introduced to account for the Number of Zero Matches (\textit{NZM}) for a particular set of detection parameter values. A \textit{NZM} is defined as a pair of images containing no valid matches. The function $h(NZM)$, defined in \eqnref{eqn:nzm}, determines the number of \textit{NZMs} in a particular dataset $d$, for a particular set of parameter values $p$ using feature extraction algorithm $FE$. This equation has the same form as equation \eqnref{eqn:time} and therefore behaves in the same way. However, in this case the denominator $\textit{NZM}_{max}^{FE}$ represents the maximum number of NZMs found for a particular threshold in particular dataset using a particular feature extraction algorithm. This function therefore penalises parameter settings that result in a large number of \textit{NZM}s since \textit{NZM}s should not be present in a dataset of overlapping images. \\
+The first term in the equation is the computation of the mean of all SIS scores for a particular set of parameter values. A function has been introduced to account for the Number of Zero Matches (\textit{NZM}) for a particular set of parameter values. A \textit{NZM} is defined as a pair of images containing no valid matches. The function $h(NZM)$, defined in \eqnref{eqn:nzm}, determines the number of \textit{NZMs} in a particular dataset $d$, for a particular set of parameter values $p$ using feature extraction algorithm $FE$. This equation has the same form as equation \eqnref{eqn:time} and therefore behaves in the same way. However, in this case the denominator $\textit{NZM}_{max}^{FE}$ represents the maximum number of NZMs found for a particular threshold in particular dataset using a particular feature extraction algorithm. This function therefore penalises parameter settings that result in a large number of \textit{NZM}s since \textit{NZM}s should not be present in a dataset of overlapping images. \\
 
 \begin{equation}
 h(\textit{NZM})_{p, d}^{FE} = \mid log_{10}(\frac{0.9\textit{NZM}_{p}^{FE}}{\textit{NZM}_{max}^{FE}} + 0.1) \mid \quad h(\textit{NZM}_{p}^{FE})\epsilon [0, 1]
@@ -549,7 +552,7 @@ h(\textit{NZM})_{p, d}^{FE} = \mid log_{10}(\frac{0.9\textit{NZM}_{p}^{FE}}{\tex
 
 The MIS score contains another set of weighting parameters, $k_3$ and $k_4$, that can again be used to control the influence of each term in the function. These weights add up to one.\\
 
-\eqnref{eqn:mims} therefore provides an overall score of how well images are matched for a specific setting of detection parameter values $p$ in dataset $d$ using feature extraction algorithm $FE$. \\
+\eqnref{eqn:mims} therefore provides an overall score of how well images are matched for a specific setting of parameter values $p$ in dataset $d$ using feature extraction algorithm $FE$. \\
 
 There is more than one dataset and thus the optimal parameter values need to take all of the respective datasets into account. In order to determine the best set of parameters for each feature extraction algorithm, $FE$, over all datasets, two procedures were implemented. The first involved finding the maximum $\textit{MIS}_{(p, d)}^{FE}$ score for each dataset, $d$, for a particular algorithm and the parameter values, $p$, that generated the corresponding \textit{MIS} score. These parameters are then averaged across all of the datasets as shown in \eqnref{eqn:average}, and the resulting parameter values are set as the optimal parameters, $p^*$ for the feature extraction algorithm.\\
 
@@ -567,32 +570,53 @@ The first technique will be referred to as the Maximum Parameter Setting (MPS). 
 %The optimal parameter graphs
 \begin{figure}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SBRISK_KNN.jpg}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SBRISK_KNN.jpg}
 \caption{The optimal parameters for BRISK0 with KNN}
 \label{fig:BRISK0knnOptimal}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SBRISK_hamming.jpg}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SBRISK_hamming.jpg}
 \caption{The optimal parameters for BRISK0 with Hamming Distance}
 \label{fig:BRISK0hammingOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/OptimalParameters_BRISK4_BRISK4_KNN.jpg}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_BRISK4_BRISK4_KNN.jpg}
 \caption{The optimal parameters for BRISK with KNN Distance}
 \label{fig:BRISKknnOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/OptimalParameters_BRISK4_BRISK4_Hamming.jpg}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_BRISK4_BRISK4_Hamming.jpg}
 \caption{The optimal parameters for BRISK with Hamming Distance}
 \label{fig:BRISKhammingOptimal}
 \end{minipage}
+\end{figure}
+
+\begin{figure}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/OptimalParameters_SBRISK_SURF2D_KNN.jpg}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SURF2D_KNN.jpg}
 \caption{The optimal parameters for BRISK0 SURF2D with KNN}
 \label{fig:BRISK0surfknnOptimal}
 \end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SURF2D_Hamming.jpg}
+\caption{The optimal parameters for BRISK0 SURF2D with Hamming Distance}
+\label{fig:BRISK0surfHammingOptimal}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_UBRISK_KNN.jpg}
+\caption{The optimal parameters for BRISK0 - U-BRISK with KNN Distance}
+\label{fig:BRISK0UBRISKknnOptimal}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_UBRISK_Hamming.jpg}
+\caption{The optimal parameters for BRISK0 - U-BRISK with Hamming Distance}
+\label{fig:BRISK0UBRISKHammingOptimal}
+\end{minipage}
 \end{figure}
+
+
 
 After performing the experiments a set of optimal parameters were generated. The parameter settings are shown in \tabref{tab:knnStatistics} and \tabref{tab:hammingStatistics} respectively. For the KNN tests, only the Minimum Interest Point Detection Threshold (MIPDT) parameter was varied in the range $20 \rightarrow 115$ in increments of $5$. For the hamming/euclidean distance tests, both the MIPDT and the maximum hamming/euclidean distance threshold parameters were varied. The MIPDT was varied in the same range as the KNN tests. The hamming distance is varied from $40 \rightarrow 135$ in increments of $5$ whereas the euclidean distance is varied from $0.1 \rightarrow 0.28$ in increments of $0.1$. \\
 
@@ -883,7 +907,7 @@ BRISK0 - UBRISK & 3.9700 & 1.8500 & 2.1200 & 33.530\tabularnewline
 \label{tab:keypointsMatchesHamming}
 \end{table}
 
-In order to determine the detector with the best overall performance, the following test procedure was performed. The optimal thresholds (both maximum and consistent) for both the KNN and hamming/euclidean distance based feature extraction algorithms were used as the parameter settings for these algorithms. Each algorithm was then run on a set of $1421$ overlapping image pairs and $2808$ non-overlapping image pairs. The average times corresponding to each section of the algorithm were recorded and the results are shown in \tabref{tab:overallknn} and \tabref{tab:overallhammingeuclidean} respectively. The detection time is defined as the amount of time required to detect all of the interest points in a single detector module. The extraction time is the time taken to compute the descriptors of the detected interest points for a single descriptor module. The matching time is the time taken to match the interest points for a single pair of images. The verification time is the time taken to detect and remove invalid invalid interest points. Finally the overall time is the summation of these times as well as the time to process and extract the image from the robot. \\
+In order to determine the detector with the best overall performance, the following test procedure was performed. The optimal thresholds (both MPS and CPS) for both the KNN and hamming/euclidean distance based feature extraction algorithms were used as the parameter settings for these algorithms. Each algorithm was then run on a set of $1421$ overlapping image pairs and $2808$ non-overlapping image pairs. The average times corresponding to each section of the algorithm were recorded and the results are shown in \tabref{tab:overallknn} and \tabref{tab:overallhammingeuclidean} respectively. The detection time is defined as the amount of time required to detect all of the interest points in a single detector module. The extraction time is the time taken to compute the descriptors of the detected interest points for a single descriptor module. The matching time is the time taken to match the interest points for a single pair of images. The verification time is the time taken to detect and remove invalid invalid interest points. Finally the overall time is the summation of these times as well as the time to process and extract the image from the robot. \\
 
 As can be seen in the tables, the algorithm producing the marginally best matching performance using KNN matching is BRISK0 - 2D SURF with an Area Under the ROC Curve (AUC) of $93.799\%$. However, this algorithm comes at a high computational cost as it is computing the euclidean distance between $64$ dimensional feature descriptors for every detected interest point match.\\
 
@@ -900,21 +924,23 @@ The algorithm with the best general performance is BRISK0 - U-BRISK using the ha
 \textbf{Method (2-KNN)} & Parameter & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-BRISK0 & Maximum & 90.429 & 3.4840 & 6.0540 & 1.7070 & 0.029000 & 15.271\tabularnewline
+SBRISK & Maximum & 90.429 & 3.4840 & 6.0540 & 1.7070 & 0.029000 & 15.271\tabularnewline
 \hline 
-BRISK & Maximum & 88.084 & 10.882 & 5.8820 & 1.5710 & 0.029000 & 22.422\tabularnewline
+BRISK4 & Maximum & 88.084 & 10.882 & 5.8820 & 1.5710 & 0.029000 & 22.422\tabularnewline
 \hline 
-BRISK0 - SURF2D & Maximum & 93.586 & 3.6230 & 12.016 & 0.57800 & 0.039000 & 20.304\tabularnewline
+SBRISK - SURF2D & Maximum & 93.586 & 3.6230 & 12.016 & 0.57800 & 0.039000 & 20.304\tabularnewline
 \hline 
-BRISK0 - U-BRISK & Maximum & 87.830 & 3.3320 & 2.5950 & 1.0580 & 0.024000 & 11.005\tabularnewline
+\textbf{SBRISK - U-BRISK} & \textbf{Maximum} & \textbf{87.830} & \textbf{3.3320} & \textbf{2.5950} & \textbf{1.0580} & \textbf{0.024000} & \textbf{11.005}\tabularnewline
 \hline 
-BRISK0 & Consistent & 93.064 & 4.1300 & 11.108 & 6.4990 & 0.053000 & 25.810\tabularnewline
+SBRISK & Consistent & 93.064 & 4.1300 & 11.108 & 6.4990 & 0.053000 & 25.810\tabularnewline
 \hline 
-BRISK & Consistent & 90.768 & 15.842 & 10.970 & 6.7440 & 0.057000 & 37.662\tabularnewline
+BRISK4 & Consistent & 90.768 & 15.842 & 10.970 & 6.7440 & 0.057000 & 37.662\tabularnewline
 \hline 
-BRISK0 - SURF2D & Consistent & 93.799 & 4.2050 & 20.799 & 1.4910 & 0.067000 & 30.628\tabularnewline
+SBRISK - SURF2D & Consistent & 93.799 & 4.2050 & 20.799 & 1.4910 & 0.067000 & 30.628\tabularnewline
 \hline 
-BRISK0 - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\tabularnewline
+SBRISK - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{69.208} & \textbf{0.27000} & \textbf{0.13400} & \textbf{0.24400} & \textbf{0.028000} & \textbf{13.185}\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:overallknn}
@@ -929,21 +955,23 @@ BRISK0 - U-BRISK & Consistent & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 1
 Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-BRISK0 & Maximum & 82.908 & 3.0800 & 3.2180 & 0.35200 & 0.016000 & 10.717\tabularnewline
+SBRISK & Maximum & 82.908 & 3.0800 & 3.2180 & 0.35200 & 0.016000 & 10.717\tabularnewline
 \hline 
-BRISK & Maximum & 76.616 & 8.4920 & 3.3550 & 0.32200 & 0.016000 & 16.259\tabularnewline
+BRISK4 & Maximum & 76.616 & 8.4920 & 3.3550 & 0.32200 & 0.016000 & 16.259\tabularnewline
 \hline 
-BRISK0-SURF2D & Maximum & 86.347 & 3.2310 & 7.2990 & 0.26500 & 0.0090000 & 14.865\tabularnewline
+SBRISK-SURF2D & Maximum & 86.347 & 3.2310 & 7.2990 & 0.26500 & 0.0090000 & 14.865\tabularnewline
 \hline 
-BRISK0-UBRISK & Maximum & 90.378 & 3.0970 & 1.9530 & 0.36000 & 0.010000 & 9.4310\tabularnewline
+\textbf{SBRISK-UBRISK} & \textbf{Maximum} & \textbf{90.378} & \textbf{3.0970} & \textbf{1.9530} & \textbf{0.36000} & \textbf{0.010000} & \textbf{9.4310}\tabularnewline
 \hline 
-BRISK0 & Consistent & 83.177 & 3.1130 & 3.3270 & 0.38300 & 0.021000 & 10.860\tabularnewline
+SBRISK & Consistent & 83.177 & 3.1130 & 3.3270 & 0.38300 & 0.021000 & 10.860\tabularnewline
 \hline 
-BRISK & Consistent & 80.778 & 9.5310 & 4.3610 & 0.67600 & 0.041000 & 18.694\tabularnewline
+BRISK4 & Consistent & 80.778 & 9.5310 & 4.3610 & 0.67600 & 0.041000 & 18.694\tabularnewline
 \hline 
-BRISK0-SURF2D & Consistent & 86.818 & 3.2910 & 8.3150 & 0.31200 & 0.011000 & 15.969\tabularnewline
+SBRISK-SURF2D & Consistent & 86.818 & 3.2910 & 8.3150 & 0.31200 & 0.011000 & 15.969\tabularnewline
 \hline 
-BRISK0-UBRISK & Consistent & 89.922 & 3.1140 & 1.9970 & 0.36700 & 0.012000 & 9.5030\tabularnewline
+SBRISK-UBRISK & Consistent & 89.922 & 3.1140 & 1.9970 & 0.36700 & 0.012000 & 9.5030\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{69.208} & \textbf{0.27000} & \textbf{0.13400} & \textbf{0.24400} & \textbf{0.028000} & \textbf{13.185}\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:overallhammingeuclidean}
@@ -955,61 +983,62 @@ The ROC curves generated have been generated for each of the four methods. These
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching}
+\includegraphics[scale=0.4]{../Drawings/ROC_General_Hamming.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using Hamming distance for matching}
 \label{fig:compareHamming}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_Hamming_Consistent.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds}
+\includegraphics[scale=0.4]{../Drawings/ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using Hamming distance for matching and consistent thresholds}
 \label{fig:compareKNNConsistent}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using 2-KNN for matching and maximum thresholds}
+\includegraphics[scale=0.4]{../Drawings/ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using 2-KNN for matching and maximum thresholds}
 \label{fig:compareKNN}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using 2-KNN for matching and consistent thresholds}
+\includegraphics[scale=0.4]{../Drawings/ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using 2-KNN for matching and consistent thresholds}
 \label{fig:compareKNNConsistent}
 \end{minipage}
 \end{figure}
 
 
-
-
-
-
-
-\subsubsection{SURF2D}
-\label{sec:2dsurfResults}
-
-
-\subsubsection{BRISK}
+\subsubsection{BRISK0}
 \label{sec:briskResults}
 
+\subsubsection{BRISK}
+\label{sec:brisk2dsurfResults}
 
-\subsubsection{BRISK-SURF2D}
+\subsubsection{BRISK0-SURF2D}
 \label{sec:brisk2dsurfResults}
 
 
-\subsubsection{BRISK0}
+\subsubsection{BRISK0 - U-BRISK}
 \label{sec:BRISK0Results}
-
 
 
 \subsubsection{1DSURF}
 \label{sec:1dsurfResults}
 
+Therefore, based on the above data, the BRISK0- U-BRISK algorithm seems to produce the best performance and should therefore be implemented on the robot. Since it can perform image processing and feature extraction in approximately $11 ms$, it should be possible to use this method in real-time on the robot to perform the matching routine and ultimately help the robot disambiguate its position on the field.\\
 
+\subsection{Matching Score Boundary}
+\label{sec:matchingScoreBoundary}
+In order to effectively utilise this method on the robot, a matching score boundary (MSB) needs to be determined. When matching two images, if the matching score is above the MSB, then the images are matched. If the matching score is below the MSB then the images are not matched. \\
 
+The MSB needs to be defined such that no False Positives (FP) will be generated when matching two non-overlapping images. In order to implement this constraint, a threshold has been chosen on the ROC curve that produces the maximum amount of True Positive (TP) matches whilst still producing no FPs. Using the original Robocup dataset, a MSB of $0.13$ has been chosen which produces a TP rate of $0.38$ and a FP rate of $0$. This means that approximately $1$ out of every $2.5$ overlapping images will be classified as a TP. This is acceptable performance since the Nao's camera takes $30$ frames per second according to Aldebaran's documentation and therefore the robot will process a large number of frames in a short period of time enabling it to ultimately match two images if they are indeed a match.\\
 
 
 \subsection{Additional Dataset Performance}
 \label{sec:additionalDataset}
-In order to verify the performance of the feature extraction algorithms, an additional two datasets have been created from a random office environment. In total $25$ overlapping images from one side of the office correspond to one dataset and a further $25$ overlapping images from another view of the office correspond to a second dataset. Typical images from each viewpoint are shown in \figref{fig:dataset5} and \figref{fig:dataset6} respectively.\\
+
+\subsubsection{Office Environment}
+\label{sec:office}
+
+In order to verify the performance of the feature extraction algorithms, two datasets have been created from a random office environment. In total $25$ overlapping images from one side of the office correspond to one dataset and a further $25$ overlapping images from another view of the office correspond to a second dataset. These images have been taken at different scales and angles. Typical images from each viewpoint are shown in \figref{fig:dataset5} and \figref{fig:dataset6} respectively.\\
 
 
 \begin{figure}[h!]
@@ -1026,26 +1055,7 @@ In order to verify the performance of the feature extraction algorithms, an addi
 \end{minipage}
 \end{figure}
 
-In total $600$ overlapping pairs of images and $600$ non-overlapping pairs of images were generated respectively. Utilising this data, the optimal thresholds for each of the four feature extraction algorithms were calculated using the optimal detection parameters algorithm detailed in \secref{sec:optimalParameters}. This generated the MTS and CPS parameter values and these are displayed in \tabref{tab:dataset2OptimalThresholds}.\\
-
-\begin{table}
-\caption{The optimum thresholds for dataset 2}
-\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
-\hline 
-Detector & Descriptor & Matcher & k1 & k2 & k3 & k4 & Maximum threshold & Consistent threshold\tabularnewline
-\hline 
-\hline 
-BRISK0 & BRISK0 & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 40\tabularnewline
-\hline 
-BRISK & BRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 47.5 & 40\tabularnewline
-\hline 
-BRISK0 & SURF2D & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 45 & 40\tabularnewline
-\hline 
-BRISK0 & UBRISK & KNN=2 & 0.6 & 0.4 & 0.4 & 0.6 & 60 & 75\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:dataset2OptimalThresholds}
-\end{table}
+In total $600$ overlapping pairs of images and $600$ non-overlapping pairs of images were generated respectively. Utilising this data, the optimal thresholds for each of the four feature extraction algorithms were calculated using the optimal parameters algorithm detailed in \secref{sec:optimalParameters}. This generated the MTS and CPS parameter values and these are displayed in \tabref{tab:dataset2OptimalThresholds}.\\
 
 Utilising the optimal parameters, the feature extraction algorithms were tested on each of the overlapping and non-overlapping image pairs. ROC curves were then generated and are displayed in \figref{fig:compareKnnAdditional} and \figref{fig:compareKnnConsistentAdditional} respectively. \figref{fig:compareKnnAdditional} shows the ROC curves that were generated when using the MPS setting. \figref{fig:compareKnnConsistentAdditional} has been generated using the CPS setting. As can be seen in the figures, the ROC curves exhibit good matching performance for each of the algorithms. The statistics quantifying the performance are shown in \tabref{tab:rocTimingAdditional}. As can be seen in the table, BRISK0 has the best AUV value of $98.037\%$. However, timing is also a big concern and thus the best overall feature extraction algorithm is again the BRISK0 - U-BRISK combination. It performs a match between two images in the fastest time of $13 ms$ in the worst case, and has performance comparable to BRISK0.\\
 
@@ -1058,51 +1068,353 @@ The performance of the feature extraction algorithms on this dataset is better t
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching on the additional dataset}
-\label{fig:compareKnnAdditional}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves in the office environment using the MPS thresholds}
+\label{fig:compareKnnOffice}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves for BRISK0, BRISK and BRISK0-SURF2D using Hamming distance for matching and consistent thresholds on the additional dataset}
-\label{fig:compareKnnConsistentAdditional}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves in the office environment using the CPS thresholds}
+\label{fig:compareKnnConsistentOffice}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming.jpg}
+\caption{A comparison of the ROC curves in the office environment using the MPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingOffice}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves in the office environment using the CPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingConsistentOffice}
 \end{minipage}
 \end{figure}
 
 
 
-
 \begin{table}
-\caption{The Area under the ROC Curve and timing Performance for Dataset 2}
+\caption{The AUC and performance statistics for the office environment using
+2-NN}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
 \hline 
 \hline 
-BRISK0 & Maximum & 97.620 & 3.7490 & 8.5850 & 6.0800 & 0.068000 & 22.886\tabularnewline
+SBRISK & MPS & 97.441 & 3.6950 & 8.1660 & 5.5120 & 0.065000 & 21.838\tabularnewline
 \hline 
-BRISK & Maximum & 97.007 & 12.962 & 8.1350 & 6.7360 & 0.079000 & 32.360\tabularnewline
+BRISK4 & MPS & 96.933 & 12.096 & 7.1060 & 5.2520 & 0.072000 & 28.970\tabularnewline
 \hline 
-BRISK0-SURF2D & Maximum & 94.159 & 3.7370 & 16.314 & 1.3550 & 0.080000 & 25.877\tabularnewline
+SBRISK-SURF2D & MPS & 94.795 & 3.7930 & 17.157 & 1.4970 & 0.083000 & 26.936\tabularnewline
 \hline 
-BRISK0-UBRISK & Maximum & 94.829 & 3.3670 & 2.7900 & 2.5030 & 0.047000 & 13.101\tabularnewline
+\textbf{SBRISK-UBRISK} & MPS & \textbf{95.134} & \textbf{3.4690} & \textbf{3.1120} & \textbf{3.2450} & \textbf{0.052000} & \textbf{14.245}\tabularnewline
 \hline 
-BRISK0 & Consistent & 98.037 & 3.9530 & 10.340 & 8.8060 & 0.079000 & 27.529\tabularnewline
+SBRISK & CPS & 98.457 & 4.4990 & 14.911 & 17.984 & 0.11200 & 41.889\tabularnewline
 \hline 
-BRISK & Consistent & 97.405 & 14.808 & 10.549 & 11.176 & 0.098000 & 41.062\tabularnewline
+BRISK4 & CPS & 98.282 & 18.546 & 15.856 & 24.097 & 0.13700 & 63.065\tabularnewline
 \hline 
-BRISK0-SURF2D & Consistent & 95.243 & 3.9500 & 19.883 & 1.8850 & 0.093000 & 30.224\tabularnewline
+SBRISK-SURF2D & CPS & 96.210 & 4.5200 & 28.129 & 3.6000 & 0.13100 & 40.822\tabularnewline
 \hline 
-BRISK0-UBRISK & Consistent & 95.125 & 3.1180 & 2.0650 & 1.0060 & 0.031000 & 10.609\tabularnewline
+SBRISK-UBRISK & CPS & 95.182 & 4.1490 & 5.2980 & 11.723 & 0.090000 & 25.666\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.27700} & \textbf{0.19700} & \textbf{0.48300} & \textbf{0.043000} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:rocTimingAdditional}
+\end{table}
+
+\begin{table}
+
+
+\caption{The AUC and performance statistics for the office environment using
+Hamming/Euclidean distance}
+
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
+\hline 
+\hline 
+SBRISK & MPS & 94.846 & 3.0940 & 3.4610 & 0.80800 & 0.011000 & 11.710\tabularnewline
+\hline 
+BRISK4 & MPS & 96.226 & 8.6260 & 3.2650 & 0.84700 & 0.012000 & 17.198\tabularnewline
+\hline 
+SBRISK-SURF2D & MPS & 96.054 & 3.2550 & 8.4950 & 0.48900 & 0.019000 & 16.626\tabularnewline
+\hline 
+\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{96.149} & \textbf{3.1250} & \textbf{2.0570} & \textbf{0.88300} & \textbf{0.014000} & \textbf{10.453}\tabularnewline
+\hline 
+SBRISK & CPS & 94.697 & 3.1180 & 3.5900 & 0.88900 & 0.014000 & 11.948\tabularnewline
+\hline 
+BRISK4 & CPS & 96.274 & 9.9970 & 4.6630 & 2.0820 & 0.023000 & 21.164\tabularnewline
+\hline 
+SBRISK-SURF2D & CPS & 96.084 & 3.3660 & 10.196 & 0.65600 & 0.022000 & 18.577\tabularnewline
+\hline 
+\textbf{SBRISK-UBRISK} & \textbf{CPS} & \textbf{96.277} & \textbf{3.1200} & \textbf{2.0600} & \textbf{0.87500} & \textbf{0.017000} & \textbf{10.409}\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.27700} & \textbf{0.19700} & \textbf{0.48300} & \textbf{0.043000} & \textbf{14.144}\tabularnewline
+\hline 
+\end{tabular}
 \end{table}
 
 
 
+\subsubsection{A Large Hall}
+\label{sec:largeHall}
+
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset3_1.jpg}
+\caption{A typical image from the first large hall dataset}
+\label{fig:largeHall1}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset3_2.jpg}
+\caption{A typical image from the second large hall dataset}
+\label{fig:largeHall2}
+\end{minipage}
+\end{figure}
+
+
+\begin{figure}[h!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the MPS thresholds}
+\label{fig:compareKnnOffice3}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the CPS thresholds}
+\label{fig:compareKnnConsistentOffice3}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the MPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingOffice3}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the CPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingConsistentOffice3}
+\end{minipage}
+\end{figure}
+
+\begin{table}
+
+\footnotesize
+\caption{The AUC and performance statistics for the large hall environment
+using 2-NN}
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
+\hline 
+\hline 
+SBRISK & MPS & 99.263 & 4.0270 & 10.752 & 18.175 & 0.14700 & 37.513\tabularnewline
+\hline 
+BRISK4 & MPS & 96.444 & 15.664 & 9.6910 & 13.698 & 0.12600 & 43.645\tabularnewline
+\hline 
+SBRISK-SURF2D & MPS & 95.697 & 4.2080 & 22.242 & 4.2410 & 0.18800 & 35.389\tabularnewline
+\hline 
+\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{97.430} & \textbf{3.7010} & \textbf{3.8040} & \textbf{9.8490} & \textbf{0.10900} & \textbf{21.885}\tabularnewline
+\hline 
+SBRISK & CPS & 98.798 & 5.4120 & 22.181 & 81.944 & 0.30600 & 114.365\tabularnewline
+\hline 
+BRISK4 & CPS & 98.703 & 28.349 & 23.880 & 83.456 & 0.29800 & 140.463\tabularnewline
+\hline 
+SBRISK-SURF2D & CPS & 97.024 & 5.4430 & 42.449 & 14.060 & 0.34900 & 66.809\tabularnewline
+\hline 
+\textbf{SBRISK-UBRISK} & \textbf{CPS} & 96.186 & 4.7870 & 7.2480 & 46.827 & 0.23200 & 63.541\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.27300} & \textbf{0.16100} & \textbf{0.35100} & \textbf{0.044000} & \textbf{14.032}\tabularnewline
+\hline 
+\end{tabular}
+
+\end{table}
+
+
+\begin{table}
+\caption{The AUC and performance statistics for the large hall environment
+using Hamming/Euclidean distance}
+\footnotesize
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
+\hline 
+\hline 
+SBRISK & MPS & 96.739 & 3.2330 & 4.5650 & 2.3210 & 0.021000 & 14.642\tabularnewline
+\hline 
+BRISK4 & MPS & 95.516 & 10.115 & 3.9520 & 1.3410 & 0.017000 & 19.893\tabularnewline
+\hline 
+SBRISK-SURF2D & MPS & 98.803 & 3.4360 & 11.197 & 1.2600 & 0.039000 & 20.345\tabularnewline
+\hline 
+\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{93.150} & \textbf{3.2490} & \textbf{2.5160} & \textbf{2.6140} & \textbf{0.026000} & \textbf{12.824}\tabularnewline
+\hline 
+SBRISK & CPS & 96.070 & 3.2680 & 4.7620 & 2.6180 & 0.028000 & 15.091\tabularnewline
+\hline 
+BRISK4 & CPS & 98.269 & 12.123 & 6.1390 & 4.3590 & 0.045000 & 27.164\tabularnewline
+\hline 
+SBRISK-SURF2D & CPS & 98.786 & 3.6030 & 13.475 & 1.7170 & 0.051000 & 23.414\tabularnewline
+\hline 
+SBRISK-UBRISK & CPS & 92.964 & 3.3030 & 2.5810 & 2.6180 & 0.030000 & 13.503\tabularnewline
+\hline 
+\textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.27300} & \textbf{0.16100} & \textbf{0.35100} & \textbf{0.044000} & \textbf{14.032}\tabularnewline
+\hline 
+\end{tabular}
+
+\end{table}
+
+
+\subsection{Lighting Variation}
+\label{sec:lighting}
+An important consideration that has to be taken into account is how well the feature extraction algorithm performs under conditions of varying illumination. This is important because Robocup venues change every year and the illumination may not be uniform. In order to determine how well BRISK0-U-BRISK performs in these conditions, three scenarios were created with varying lighting conditions. All of these scenarios were created in the Robocup test environment, detailed in \secref{sec:datasets}.\\ 
+
+For each scenario $i$ four image datasets were generated as in \secref{sec:datasets}. These include  two datasets of images behind the player's goal namely, \textit{$PG Left_{i}$} and \textit{$PG Right_i$} as well as two datasets behind the opponent's goal, namely \textit{$OG Left_i$} and \textit{$OG Right_i$} respectively. Each image dataset contains $15$ images. All of the images in each dataset were taken at the same scale since only the performance under varying illumination is being tested in this experiment.\\ 
+
+The lighting setup in the Robocup test environment is as follows. The environment contains a main set of lights that are responsible for providing the general lighting in the room. In addition to these lights are a set of two fluorescent lights that lie adjacent to one another on the ceiling. Each fluorescent light stretches the length room and is responsible for adding additional lighting to the scene. \\
+
+Scenario $1$ involves switching off only a single fluorescent light located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{(fig:leftogright} respectively. Scenario $2$ involves turning off only a single fluorescent light located on the ceiling as well as the main set of lights. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both fluorescent lights, leaving only the main lighting in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. \\
+
+Each of the datasets from the three scenarios have been matched with the original corresponding Robocup datasets detailed in \secref{sec:dataset}. This means that, for example, \textit{$PG Left_1$} from scenario $1$ will be matched to \textit{PG Left} and so on. These datasets are being compared in order to determine whether or not the BRISK0 - U-BRISK algorithm is robust to variations in illumination. The datasets have been matched as shown in \tabref{tab:datasetLighting} to produce $1260$ pairs of overlapping images and $4536$ pairs of non-overlapping images under varying lighting conditions.\\
+
+
+\begin{figure}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/leftLight/1.jpg}
+\caption{The area behind the player's goal to the left}
+\label{fig:leftmgleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/leftLight/2.jpg}
+\caption{The area behind the player's goal to the right}
+\label{fig:leftmgright}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/leftLight/3.jpg}
+\caption{The area behind the opponent's goal to the left}
+\label{fig:leftogleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/leftLight/4.jpg}
+\caption{The area behind the opponents goal to the right}
+\label{fig:leftogright}
+\end{minipage}
+\caption{Typical images from the first illumination scenario where only a single light is turned off}
+\end{figure}
+
+
+
+\begin{figure}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/rightLight/1.jpg}
+\caption{The area behind the player's goal to the left}
+\label{fig:rightmgleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/rightLight/2.jpg}
+\caption{The area behind the player's goal to the right}
+\label{fig:rightmgright}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/rightLight/3.jpg}
+\caption{The area behind the opponent's goal to the left}
+\label{fig:rightogleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/rightLight/4.jpg}
+\caption{The area behind the opponents goal to the right}
+\label{fig:rightogright}
+\end{minipage}
+\caption{Typical images from the second illumination scenario where a single fluorescent light as well as the main lighting is turned off.}
+\end{figure}
+
+
+
+\begin{figure}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/bothLights/1.jpg}
+\caption{The area behind the player's goal to the left}
+\label{fig:bothmgleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/bothLights/2.jpg}
+\caption{The area behind the player's goal to the right}
+\label{fig:bothmgright}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/bothLights/3.jpg}
+\caption{The area behind the opponent's goal to the left}
+\label{fig:bothogleft}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.3]{../Drawings/lighting/bothLights/4.jpg}
+\caption{The area behind the opponents goal to the right}
+\label{fig:bothogright}
+\end{minipage}
+\caption{Typical images from the third illumination scenario where a both fluorescent lights are turned off.}
+\end{figure}
+\begin{table}
+\caption{The datasets that have been compared under varying lighting conditions
+to the original Robocup datasets}
+
+
+\begin{tabular}{|c|c|c|c|}
+\hline 
+\textbf{Dataset} & \textbf{Scenario Dataset} & \textbf{Overlapping Image Pairs} & \textbf{Non-overlapping Image pairs}\tabularnewline
+\hline 
+\hline 
+ &  &  & \tabularnewline
+\hline 
+\textbf{Original Dataset} & Scenario 1 (Left fluorescent Light Off) & 420 & 1512\tabularnewline
+\hline 
+\textbf{Original Dataset} & Scenario 2 (Right fluorescent light and Main Lights off) & 420 & 1512\tabularnewline
+\hline 
+\textbf{Original Dataset} & Scenario 3 (Both fluorescent Lights off) & 420 & 1512\tabularnewline
+\hline 
+ &  & 1260 & 4536\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:datasetLighting}
+\end{table}
+
+ROC curves have been generated for each scenario and are shown in \figref{fig:rocLighting}. The ROC curve with the poorest performance is generated from the third scenario. This scenario corresponds to the lowest illumination since both the fluorescent lights are turned off. It is therefore expected that this scenario would produce the worst performance relative to the other two. The marginally best performing datasets are from scenario two where a fluorescent light and the main lights are turned off. \\
+
+The statistics corresponding to the ROC curves are tabulated in \tabref{tab:lightingStats}. It should be noted that AUC values of over $90\%$ have been recorded indicating a high level of matching performance. \\
+
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.5\textwidth]{../Drawings/lighting/ROC_Lighting.jpg}
+    \caption{The ROC curve showing the performance of the BRISK0 - U-BRISK algorithm under varying lighting conditions}
+    \label{fig:rocLighting}
+\end{figure}
+
+\begin{table}
+\caption{The statistics for the matching performance under varying lighting conditions}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+Scenario & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall Time (ms)\tabularnewline
+\hline 
+\hline 
+1 & 95.315 & 2.9820 & 1.7030 & 0.23200 & 0.0080000 & 8.7850\tabularnewline
+\hline 
+2 & 96.957 & 2.9530 & 1.7110 & 0.22900 & 0.0070000 & 8.7640\tabularnewline
+\hline 
+3 & 93.217 & 3.0400 & 1.9480 & 0.28300 & 0.0080000 & 9.3090\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:lightingStats}
+\end{table}
 
 \subsection{Localisation Performance}
 \label{sec:localisationPerformance}

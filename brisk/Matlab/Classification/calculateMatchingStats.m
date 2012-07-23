@@ -6,17 +6,17 @@ matchingStats = [];
 numMatched = sum(data(row1,19));
 totalNumPoints = size(row1,1);
 
-if nargin ==5
+if nargin ==5 %For datasetType==1
     %Sum all the matches that were classified as 1
     %divided by the total number of matches
     matchingStats(1,1) = sum(data(row1,19))/size(row1,1);
     matchingStats(2,1) = sum(data(row2,19))/size(row2,1);
     matchingStats(3,1) = sum(data(row3,19))/size(row3,1);
     matchingStats(4,1) = sum(data(row4,19))/size(row4,1);
-elseif nargin==3
+elseif nargin==3 %For datasetType ==2 (Overlapping matches)
     matchingStats(1,1) = sum(data(row1,19))/size(row1,1);
     matchingStats(2,1) = sum(data(row2,19))/size(row2,1);
     
-elseif nargin ==2
+elseif nargin ==2 %For datasetType ==2 (Non-Overlapping matches)
     matchingStats(1,1) = sum(data(row1,19))/size(row1,1);
 end
