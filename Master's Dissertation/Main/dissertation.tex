@@ -22,6 +22,53 @@ This is the abstract
 \subsection{Background}
 \label{sec:background}
 
+\subsubsection{Robocup Setup and Rules}
+\label{sec:robocupRules}
+Robocup is a robot football competition that was setup in 1997 in order to advance research in Artificial Intelligence (AI) and Robotics \cite{Robocup}. The original goal of the Robocup competition was to field a team of robots that would be able to defeat the human football world champions by the year $2050$.\\
+
+There are a number of different leagues in which different types of robots compete. The Humanoid Nao robot, which is the robot that will be used for this project, currently competes in the Standard Platform League \cite{StandardPlatform}.\\
+
+The general setup of a Robocup game of football in the Standard Platform League is shown in \figref{fig:naofield}. There are four robots per team which include one goalkeeper and three outfield players \cite{Rules}. The aim of the game is to score more goals than the opponent using a Mylec orange street hockey ball by kicking the ball into the opponent's goal.\\
+
+%Identify common methods applied in the field and voids in literature
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.8\textwidth]{../Drawings/robocup/NaoField.pdf}
+    \caption{The standard setup for a game of football before kick-off \cite{Rules}}
+    \label{fig:naofield}
+\end{figure}
+
+The robots can communicate with one another using a wireless network access point but are limited to a bandwidth of $500 Kbps$. Robots can commit fouls on one another and, for certain fouls, a robot is subject to a \textit{Standard Removal Penalty} \cite{Rules}. In this scenario, the robot is removed from the field for $30$ seconds, facing away from the field of play. It is then placed on the halfway line or the nearest possible alternative if there are obstacles such as robots currently situated on the halfway line. Robots can also be placed on their respective side of the field facing the opposition. The robot then has to localise itself after which it can continue to participate in the game.\\
+
+\subsubsection{Nao Specifications}
+\label{sec:naoSpecs}
+The Nao robot to be used for the project will use the latest Nao head, Head $4.0$, that has been designed by Aldebaran Robotics \cite{NaoHead}. The specifications for the new Nao head are shown in \figref{fig:nao1} and \figref{fig:nao2} respectively. The head contains two cameras that are placed vertically above one another. These cameras provide a $640 \times 480$ resolution and operate at $30$ frames per second (fps). These cameras operate in the \textit{YUV422} colour space.\\
+
+It is important to note that the Vertical field of view has been increased for each of the cameras respectively to $47.64^\circ$ which may make it possible to detect features on the ceiling above the Robocup field. In addition to this wider field of view, the robot has a yaw range of $-119.5^\circ$ to $119.5^\circ$ and a pitch range of $-38.5^\circ$ to $29.5^\circ$ as shown in \figref{fig:yawPitch}. This will aid the robot to detect features well above the Robocup field.\\ 
+
+ \begin{figure}[ht!]
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{../Drawings/naoHead/naoHead.jpg}
+    \caption{A side view of the new Nao head \cite{NaoHead}} 
+    \label{fig:nao1}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{../Drawings/naoHead/naoHead1.jpg}
+    \caption{A top view of the new Nao head \cite{NaoHead}} 
+    \label{fig:nao2}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/naoHead/headyawpitch.png}
+    \caption{The yaw and pitch of the Nao head \cite{NaoHead}} 
+    \label{fig:yawPitch}
+\end{minipage}
+\end{figure}
+
+
+
 \section{General Feature Extraction Techniques}
 \label{sec:genFeatureExtract}
 Throughout this paper, detector refers to the module of the feature extraction algorithm that is used to detect the interest points. Descriptor will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point.\\
@@ -409,10 +456,93 @@ Two new matching constraints have been developed in order to determine whether o
 
 \section{Localisation Algorithm}
 \label{sec:localisation}
+The Nao robot is able to perform localisation as it is initially given a map of the Robocup soccer field. It typically uses features such as the goalposts, line segments and corners in order to localise itself on the field \cite{Bhuman}. There are a number of different localisation algorithms that have been previously implemented on the Nao to achieve localisation. The localisation algorithm utilised for this project is the \textit{Augmented} Monte Carlo Particle Filter \cite{Laue}.
 
-\subsection{Code Structure}
+\subsection{Augmented Monte Carlo Particle Filter}
+\label{sec:amcpf}
+The Augmented Monte Carlo Particle Filter (AMCPF) is simply an extension of the Monte Carlo Particle Filter (MCPF). The MCPF represents the belief or probability of the robot being in a certain position $x_t$ by $bel_{x_t}$ \cite{Thrun2002}. 
+
+
+This project utilises a Monte Carlo Localisation (MCL) algorithm that has been implemented on the Nao \cite{Bhuman}. A specialised version of MCL has been utilised, called \textit{Augmented} Monte Carlo Localisation \cite{Laue}. This variation of MCL has the advantage of enabling the robot to overcome the \textit{kidnapping} problem, which occurs when the robot faces a \textit{Standard Removal Penalty}. This is achieved using random particle injection which occurs based on the ratio of the short and long-term measurement likelihoods as mentioned previously.\\
+
+\subsection{Localisation using Natural Visual Features}
+\label{sec:localisationNaturalVisualFeatures}
+The first step in localising the robot occurs prior to the start of the game. The robot will initially capture a set of images behind each of the goal posts. The interest points will be detected using the relevant feature extraction algorithm and descriptors for these interest points will be computed and stored by the robot for the remainder of the game. It is assumed that these features are persistent throughout the game. However, this is the initial implementation and the features can be updated during the course of the game as a future improvement.\\
+
+When a penalty occurs and a robot is removed from the field, it has to relocalise itself on re-entering the field. As mentioned previously, the robot is placed on the half-way line, the nearest spot from the half-way line or on its respective side of the field facing the opposition once the penalty period has ended. At this point, the robot receives a list of visual features that are present on the field. These include the goal posts, line segments, line crossings (intersections between line segments) and the center circle \cite{Bhuman}. These are illustrated in \figref{fig:features}.\\
+
+Using these visual features, the robot knows that it is in one of two locations after processing these features in the AMCL algorithm. These scenarios are illustrated in \figref{fig:location}. If the robot enters the field and sees a goal post to its right, then its possible positions are represented by the red crosses. If the goal posts are to its left, then its positions are represented by the black crosses. At this point the robot needs to disambiguate between these choices of position.\\
+
+\begin{figure}[ht!]
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{../Drawings/localisation/goalSetup.jpg}
+    \caption{The visual features available on the football field} 
+    \label{fig:features}
+\end{minipage}
+\begin{minipage}[b]{0.5\linewidth}
+  \centering
+    \includegraphics[width=0.6\textwidth]{../Drawings/localisation/possibleLocations.jpg}
+    \caption{The possible locations where a robot might be on re-entering the field} 
+    \label{fig:location}
+\end{minipage}
+\end{figure}
+
+%Disambiguation step
+%Discuss when it comes onto the field.
+Once the robot has determined that it is in one of two locations on the field, it will then disambiguate its location using the persistent natural visual features that it identified at the start of the game detailed in \secref{sec:initialise}. At this point, the AMCL algorithm should have a set of particles with large weights in one of two potential locations. An example of this is shown in \figref{fig:before}. These images are screenshots captured in real-time using the SimRobot Simulator that has been designed by the Bhuman Robocup team \cite{Bhuman}.\\
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.8\textwidth]{../Drawings/localisation/beforeDisambiguate.jpg}
+    \caption{Two possible positions are surrounded by particles with large weights.}
+    \label{fig:before}
+\end{figure}
+
+The robot then compares its database of natural visual features computed prior to the start of the game, with the natural visual features that it identifies on re-entering the pitch. This situation is depicted in \figref{fig:featureMatching}. Here the robot identified features \textit{F1,F2,F3} above its goal and features \textit{F4,F5,F6} above the opponents goal prior to the start of the game. On re-entering the pitch, the robot compares the detected features from its current image of a goal with the features in its stored database of features. If it is able to match the new features that it sees with the stored features in its database, depicted by the red circles in the figure, then it will be able to determine its location relative to the field as well as its team's and opponent's goal posts respectively.\\
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.8\textwidth]{../Drawings/localisation/featureMatching.jpg}
+    \caption{Matching features to disambiguate position}
+    \label{fig:featureMatching}
+\end{figure}
+
+The formal algorithmic procedure for disambiguation will be performed as follows. On re-entering the pitch, the robot will look to its left (arbitrarily chosen) and will identify features above the goal post using \textbf{\cite{Anderson}'s 1D SURF} implementation. The robot will then perform feature matching using nearest neighbors with ordering and scaling constraints as defined in \cite{Anderson}. Once the robot can associate a set of features with a particular goal post, it will be able to disambiguate its position on the field. The robot will disambiguate its position on the field by re-weighting the particles in the AMCL algorithm such that they represent the robots new posterior belief. Using \figref{fig:before} as the reference example, if the robot realises from the the natural landmarks that it is in the top right side of the pitch, the corresponding particles will be assigned larger weights resulting in the robot obtaining an estimate of its position. The resulting estimate is depicted in \figref{fig:after}. This reweighting of the particles is a proposed addition to the \textit{Augmented} AMCL algorithm and is depicted in red in \figref{fig:mclProposed}.\\
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.8\textwidth]{../Drawings/localisation/afterDisambiguate.jpg}
+    \caption{The robot's estimated position after disambiguation}
+    \label{fig:after}
+\end{figure}
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=0.8\textwidth]{../Drawings/localisation/MCLAugmented.jpg}
+    \caption{The proposed implementation of the method in the Monte Carlo Algorithm \cite{Thrun2002}}
+    \label{fig:mclProposed}
+\end{figure}
+
+
+%Discuss how the robot performs the localisation procedure.
+%Briefly mention the fact that the robot relocalises itself using a re-weighting routine
+
+\subsection{Re-weighting Particles and Importance Sampling}
+\label{sec:reweighting}
+%This is where the orientation algorithm is placed
+An algorithm has been developed in order to effectively re-weight the particles.
+
+\subsection{Bhuman Code Structure}
 \label{sec:codeStructure}
-%Discuss how the code has been setup for the experiments
+%Discuss the basics of the bhuman code structure
+%Include a basic diagram of modules, representations etc
+
+\subsection{Natural Landmark Code Structure}
+\label{sec:naturalLandmarkCode}
+%Discuss how the Natural landmark detection has been placed into the bhuman code structure
+%include a diagram from the simRobot interface
+
 
 \section{Experiments and Results}
 \label{sec:experimentsResults}
