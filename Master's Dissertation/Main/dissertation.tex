@@ -305,10 +305,10 @@ In addition to this, each sampled pixel intensity value is summed with a vertica
 \label{sec:1dsurfDetect}
 The 1D SURF detector has a number of differences from that of its 2D equivalent. The first major difference is the construction of the integral image. The integral image as stated in \secref{sec:integralImages}, allows for fast computation of rectangular areas in an image. Since the image is now 1D, the integral image is only computed along the single row of pixels.\\ 
 
-The next step is calculating the blob response for each point $(x,1)$ along the single row of pixels. In the 2D case, this is typically achieved by performing a 2D convolution, convolving a second order Gaussian derivative with the image at the point $\textbf{x} = (x,y)$. The Gaussian is approximated as a box filter and, combined with the integral image, results in a very efficient computation. In the 1D case, the convolution can only be computed along the single dimensional row of pixels. Thus the box filters have been effectively reduced to 1D box filters and the $xy$ directional box filter \textbf{can be neglected}. The determinant of the Hessian can thus be reduced to \eqnref{eqn:reducedHessian}.\\
+The next step is calculating the blob response for each point $(x,1)$ along the single row of pixels. In the 2D case, this is typically achieved by performing a 2D convolution, convolving a second order Gaussian derivative with the image at the point $\textbf{x} = (x,y)$. The Gaussian is approximated as a box filter and, combined with the integral image, results in a very efficient computation. In the 1D case, the convolution can only be computed along the single dimensional row of pixels. Thus the box filters have been effectively reduced to 1D box filters and the $xy$ and $y$ directional box filters can be neglected. The determinant of the Hessian can thus be reduced to \eqnref{eqn:reducedHessian}.\\
 
 \begin{equation}
-det(Hessian) = D_{xx}D_{yy}
+det(Hessian) = D_{xx}D_{xx}
 \label{eqn:reducedHessian}
 \end{equation} 
 
@@ -380,7 +380,7 @@ An important observation that has been made is that if the same features are obs
 \subsection{Validating Matched Features}
 \label{sec:validation}
 
-\subsubsection{K-Nearest Neighbors Criterion}
+\subsubsection{2-Nearest Neighbors Criterion}
 \label{sec:knnMatching}
 A constraint has been previously utilised to reject invalid matches. This constraint is called the 2-NN Ratio and is computed between the closest and second closest match for a particular interest point \cite{Lowe2004}. This is performed for every detected interest point in the image being evaluated. It has been assumed that each interest point has only a single, unique corresponding match between a pair of images. Based on this assumption, the first 2-NN match should be the true matching interest point in the corresponding image, whereas the second 2-NN match should belong to a different object in the image and hence is an invalid match.\\
 
@@ -657,9 +657,9 @@ S-BRISK & S-BRISK & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 46.25 & 30\tabularnewline
 \hline 
 BRISK4 & BRISK4 & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 51.25 & 30\tabularnewline
 \hline 
-SBRISK & SURF2D & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 43.75 & 30\tabularnewline
+BRISK0 & SURF2D & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 43.75 & 30\tabularnewline
 \hline 
-SBRISK & UBRISK & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 55 & 35\tabularnewline
+BRISK0 & UBRISK & 2-NN & 0.6 & 0.4 & 0.4 & 0.6 & 55 & 35\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:knnStatistics}
@@ -677,9 +677,9 @@ S-BRISK & S-BRISK & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 77.5 & 107.5 & 75 & 115\tab
 \hline 
 BRISK4 & BRISK4 & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 80 & 120 & 65 & 130\tabularnewline
 \hline 
-SBRISK & SURF2D & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
+BRISK0 & SURF2D & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 65 & 0.28 & 60 & 0.28\tabularnewline
 \hline 
-SBRISK & UBRISK & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 75 & 121.25 & 75 & 130\tabularnewline
+BRISK0 & UBRISK & Radius & 0.6 & 0.4 & 0.4 & 0.6 & 75 & 121.25 & 75 & 130\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:hammingStatistics}
@@ -701,7 +701,7 @@ IMS_{i1, i2} = \sum_{ip1, ip2} MS_{ip1, ip2}
 
 In order to determine whether or not this score is a good metric for classifying whether images match or not, an experiment was performed. The experiment involves utilising the images from the datasets in \tabref{table:overlap} to computed matching scores for pairs of overlapping images and pairs of non-overlapping images respectively. It was expected that the matching score for the overlapping images would be larger than that of the non-overlapping images. The BRISK-based feature extraction algorithms utilised for this experiment include BRISK0, BRISK, BRISK0-SURF2D and BRISK0- UBRISK. The matching technique utilised was either 2-Nearest Neighbors (2-NN) or radius matching depending on the feature extraction algorithm.\\
 
-The mean matching scores for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, matching scores for overlapping images are at least an order of magnitude larger than matching scores for non-overlapping images. This indicates that \eqnref{eqn:mis} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criterion that has been used to determine the overall performance of each of the feature extraction algorithms and is detailed in \secref{sec:overallPerformance}.\\
+The mean matching scores for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, matching scores for overlapping images are at least an order of magnitude larger than matching scores for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criterion that has been used to determine the overall performance of each of the feature extraction algorithms and is detailed in \secref{sec:overallPerformance}.\\
 
 \begin{table}
 \caption{The matching scores for each of the BRISK-based feature extraction techniques. This is for overlapping and non-overlapping images respectively}
@@ -712,21 +712,21 @@ Method & Overlapping Score & Non-overlapping Score\tabularnewline
 \hline 
  & \multicolumn{2}{c}{2-NN}\tabularnewline
 \hline 
-SBRISK & 0.213 & 0.002\tabularnewline
+BRISK0 & 0.213 & 0.002\tabularnewline
 \hline 
 BRISK4 & 0.167 & 0.002\tabularnewline
 \hline 
-SBRISK- SURF2D & 66.62 & 3.52\tabularnewline
+BRISK0- SURF2D & 66.62 & 3.52\tabularnewline
 \hline 
 UBRISK & 0.177 & 0.001\tabularnewline
 \hline 
  & \multicolumn{2}{c}{Radius Matching}\tabularnewline
 \hline 
-SBRISK & 0.22 & 0.02\tabularnewline
+BRISK0 & 0.22 & 0.02\tabularnewline
 \hline 
 BRISK4 & 0.21 & 0.01\tabularnewline
 \hline 
-SBRISK- SURF2D & 50.16 & 3.15\tabularnewline
+BRISK0- SURF2D & 50.16 & 3.15\tabularnewline
 \hline 
 UBRISK & 0.20 & 0.01\tabularnewline
 \hline 
@@ -884,25 +884,25 @@ Method (2-NN) & \multicolumn{4}{c}{Overlapping images}\tabularnewline
 \hline 
  & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
 \hline 
-SBRISK  & 175.560 & 15.42 & 160.14 & 77.43000\tabularnewline
+BRISK0  & 175.560 & 15.42 & 160.14 & 77.43000\tabularnewline
 \hline 
 BRISK4 & 175.6300 & 13.23000 & 162.4100 & 73.70000\tabularnewline
 \hline 
-SBRISK-SURF2D  & 218.8800 & 19.01000 & 199.8600 & 97.88000\tabularnewline
+BRISK0-SURF2D  & 218.8800 & 19.01000 & 199.8600 & 97.88000\tabularnewline
 \hline 
-SBRISK - UBRISK & 135.7600 & 16.14000 & 119.6200 & 59.38000\tabularnewline
+BRISK0 - UBRISK & 135.7600 & 16.14000 & 119.6200 & 59.38000\tabularnewline
 \hline 
  & \multicolumn{4}{c}{Non-overlapping images}\tabularnewline
 \hline 
  &  &  &  & \tabularnewline
 \hline 
-SBRISK  & 72.260 & 0.25000 & 72.010 & 77.430\tabularnewline
+BRISK0  & 72.260 & 0.25000 & 72.010 & 77.430\tabularnewline
 \hline 
 BRISK4  & 69.930 & 0.28000 & 69.640 & 73.700\tabularnewline
 \hline 
-SBRISK-SURF2D & 98.700 & 1.3900 & 97.310 & 97.880\tabularnewline
+BRISK0-SURF2D & 98.700 & 1.3900 & 97.310 & 97.880\tabularnewline
 \hline 
-SBRISK - UBRISK & 54.560 & 0.22000 & 54.340 & 59.380\tabularnewline
+BRISK0 - UBRISK & 54.560 & 0.22000 & 54.340 & 59.380\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:keypointsMatchesKNN}
@@ -917,23 +917,23 @@ Method (Radius Matching) & Total Matches & Valid Matches & Invalid Matches & Mea
 \hline 
  & \multicolumn{4}{c}{Overlapping images}\tabularnewline
 \hline 
-SBRISK  & 70.770 & 39.980 & 30.790 & 32.420\tabularnewline
+BRISK0  & 70.770 & 39.980 & 30.790 & 32.420\tabularnewline
 \hline 
 BRISK4  & 91.380 & 57.510 & 33.870 & 31.560\tabularnewline
 \hline 
-SBRISK-SURF2D & 19.530 & 12.050 & 7.4800 & 51.940\tabularnewline
+BRISK0-SURF2D & 19.530 & 12.050 & 7.4800 & 51.940\tabularnewline
 \hline 
-SBRISK - UBRISK & 40.120 & 26.930 & 13.190 & 33.530\tabularnewline
+BRISK0 - UBRISK & 40.120 & 26.930 & 13.190 & 33.530\tabularnewline
 \hline 
  & \multicolumn{4}{c}{Non-overlapping images}\tabularnewline
 \hline 
-SBRISK & 11.150 & 4.9600 & 6.1900 & 32.420\tabularnewline
+BRISK0 & 11.150 & 4.9600 & 6.1900 & 32.420\tabularnewline
 \hline 
 BRISK4 & 5.6300 & 2.3900 & 3.2500 & 31.560\tabularnewline
 \hline 
-SBRISK-SURF2D & 2.6800 & 0.90000 & 1.7800 & 51.940\tabularnewline
+BRISK0-SURF2D & 2.6800 & 0.90000 & 1.7800 & 51.940\tabularnewline
 \hline 
-SBRISK - UBRISK & 3.9700 & 1.8500 & 2.1200 & 33.530\tabularnewline
+BRISK0 - UBRISK & 3.9700 & 1.8500 & 2.1200 & 33.530\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:keypointsMatchesHamming}
@@ -960,21 +960,21 @@ The algorithm with the best general performance is BRISK0 - U-BRISK using Radius
 \textbf{Method (2-KNN)} & Parameter & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 90.429 & 3.4840 & 6.0540 & 1.7070 & 0.029000 & 15.271\tabularnewline
+BRISK0 & MPS & 90.429 & 3.4840 & 6.0540 & 1.7070 & 0.029000 & 15.271\tabularnewline
 \hline 
 BRISK4 & MPS & 88.084 & 10.882 & 5.8820 & 1.5710 & 0.029000 & 22.422\tabularnewline
 \hline 
-SBRISK - SURF2D & MPS & 93.586 & 3.6230 & 12.016 & 0.57800 & 0.039000 & 20.304\tabularnewline
+BRISK0 - SURF2D & MPS & 93.586 & 3.6230 & 12.016 & 0.57800 & 0.039000 & 20.304\tabularnewline
 \hline 
-\textbf{SBRISK - U-BRISK} & \textbf{MPS} & \textbf{87.830} & \textbf{3.3320} & \textbf{2.5950} & \textbf{1.0580} & \textbf{0.024000} & \textbf{11.005}\tabularnewline
+\textbf{BRISK0 - U-BRISK} & \textbf{MPS} & \textbf{87.830} & \textbf{3.3320} & \textbf{2.5950} & \textbf{1.0580} & \textbf{0.024000} & \textbf{11.005}\tabularnewline
 \hline 
-SBRISK & CPS & 93.064 & 4.1300 & 11.108 & 6.4990 & 0.053000 & 25.810\tabularnewline
+BRISK0 & CPS & 93.064 & 4.1300 & 11.108 & 6.4990 & 0.053000 & 25.810\tabularnewline
 \hline 
 BRISK4 & CPS & 90.768 & 15.842 & 10.970 & 6.7440 & 0.057000 & 37.662\tabularnewline
 \hline 
-SBRISK - SURF2D & CPS & 93.799 & 4.2050 & 20.799 & 1.4910 & 0.067000 & 30.628\tabularnewline
+BRISK0 - SURF2D & CPS & 93.799 & 4.2050 & 20.799 & 1.4910 & 0.067000 & 30.628\tabularnewline
 \hline 
-SBRISK - U-BRISK & CPS & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\tabularnewline
+BRISK0 - U-BRISK & CPS & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{69.208} & \textbf{0.27000} & \textbf{0.13400} & \textbf{0.24400} & \textbf{0.028000} & \textbf{13.185}\tabularnewline
 \hline 
@@ -991,21 +991,21 @@ SBRISK - U-BRISK & CPS & 90.350 & 3.8320 & 4.0510 & 3.7750 & 0.042000 & 15.709\t
 Method & Parameters & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification(ms) & Overall(ms)\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 82.908 & 3.0800 & 3.2180 & 0.35200 & 0.016000 & 10.717\tabularnewline
+BRISK0 & MPS & 82.908 & 3.0800 & 3.2180 & 0.35200 & 0.016000 & 10.717\tabularnewline
 \hline 
 BRISK4 & MPS & 76.616 & 8.4920 & 3.3550 & 0.32200 & 0.016000 & 16.259\tabularnewline
 \hline 
-SBRISK-SURF2D & MPS & 86.347 & 3.2310 & 7.2990 & 0.26500 & 0.0090000 & 14.865\tabularnewline
+BRISK0-SURF2D & MPS & 86.347 & 3.2310 & 7.2990 & 0.26500 & 0.0090000 & 14.865\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & MPS & \textbf{90.378} & \textbf{3.0970} & \textbf{1.9530} & \textbf{0.36000} & \textbf{0.010000} & \textbf{9.4310}\tabularnewline
+\textbf{BRISK0-UBRISK} & MPS & \textbf{90.378} & \textbf{3.0970} & \textbf{1.9530} & \textbf{0.36000} & \textbf{0.010000} & \textbf{9.4310}\tabularnewline
 \hline 
-SBRISK & CPS & 83.177 & 3.1130 & 3.3270 & 0.38300 & 0.021000 & 10.860\tabularnewline
+BRISK0 & CPS & 83.177 & 3.1130 & 3.3270 & 0.38300 & 0.021000 & 10.860\tabularnewline
 \hline 
 BRISK4 & CPS & 80.778 & 9.5310 & 4.3610 & 0.67600 & 0.041000 & 18.694\tabularnewline
 \hline 
-SBRISK-SURF2D & CPS & 86.818 & 3.2910 & 8.3150 & 0.31200 & 0.011000 & 15.969\tabularnewline
+BRISK0-SURF2D & CPS & 86.818 & 3.2910 & 8.3150 & 0.31200 & 0.011000 & 15.969\tabularnewline
 \hline 
-SBRISK-UBRISK & CPS & 89.922 & 3.1140 & 1.9970 & 0.36700 & 0.012000 & 9.5030\tabularnewline
+BRISK0-UBRISK & CPS & 89.922 & 3.1140 & 1.9970 & 0.36700 & 0.012000 & 9.5030\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{69.208} & \textbf{0.27000} & \textbf{0.13400} & \textbf{0.24400} & \textbf{0.028000} & \textbf{13.185}\tabularnewline
 \hline 
@@ -1068,13 +1068,13 @@ Two datasets have been created from a random office environment. In total $25$ o
 
 In total $600$ overlapping pairs of images and $600$ non-overlapping pairs of images were generated respectively. Utilising the MPS and CPS parameter values calculated in \secref{sec:overallPerformance}, the feature extraction algorithms were tested on each of the overlapping and non-overlapping image pairs. The feature extraction algorithms were tested using both the 2-NN matching and Radius Matching techniques respectively. The corresponding ROC curves generated from this data are displayed in \figref{fig:compareKnnOffice} to \figref{fig:compareHammingConsistentOffice}. \\
 
-\figref{fig:compareKnnOffice} and \figref{fig:compareHammingOffice} shows the ROC curves that were generated when using the MPS values and 2-NN and Radius Matching respectively. \figref{fig:compareKnnConsistentOffice} and \figref{fig:compareHammingConsistentOffice} have been generated using the CPS values and 2-NN and Radius Matching respectively. As can be seen in the figures, the ROC curves exhibit good matching performance for each of the algorithms. The statistics quantifying the performance are shown in \tabref{tab:rocTimingOffice}. \\
+\figref{fig:compareKnnOffice} and \figref{fig:compareHammingOffice} shows the ROC curves that were generated when using the MPS values and 2-NN and Radius Matching respectively. \figref{fig:compareKnnConsistentOffice} and \figref{fig:compareHammingConsistentOffice} have been generated using the CPS values and 2-NN and Radius Matching respectively. As can be seen in the figures, the ROC curves exhibit good matching performance for each of the algorithms. The statistics quantifying the performance are shown in \tabref{tab:rocTimingOfficeKnn} and \tabref{tab:rocTimingOfficeHamming} for 2-NN and Radius Matching respectively. \\
 
 The AUC of the feature extraction algorithms on this dataset is better than on the previous dataset. This may be due to the fact that the new datasets have areas of high contrast between neighboring pixels, such as the window area shown in \figref{fig:dataset5}. Since the BRISK and SURF-based techniques rely on salient differences between neighboring pixel intensities in order to detect interest points, these types of images may create better discrimination for the feature extraction algorithms. This would result in more salient interest points which ultimately enhances matching performance.\\
 
 In addition to this, since the matching score between images is generally much larger for overlapping images compared to non-overlapping images as shown in \secref{sec:matchingScore}, it is expected that a large AUC value will be generated. This is because most of the TP matches will have much higher matching scores than the FP matches. Thus as the matching score threshold is varied, the TP rate will initially be much larger than the FP rate, effectively generating the large AUC value. \\
 
-As can be seen in the table, BRISK0 has the best AUC value of $99.26\%$. However, timing is also a big concern and thus the best overall feature extraction algorithm is again the BRISK0 - U-BRISK combination. It performs a match between two images in the fastest time of $10.45 ms$ in the best case, and has performance comparable to BRISK0.\\  
+As can be seen in the table, BRISK0 has the best AUC value of $98.46\%$. However, timing is also a big concern and thus the best overall feature extraction algorithm is again the BRISK0 - U-BRISK combination. It performs a match between two images in the fastest time of $10.45 ms$ in the best case, and has performance comparable to BRISK0.\\  
 
 The 1D SURF implementation has also improved upon its performance as expected due to the large amount of salient features in the dataset images. The algorithm is able to better match the features and subsequently generate a larger AUC value. In addition to this improvement, the algorithm still maintains its speed and produces the fastest feature detection and matching performance. However, the overall timing performance is comparable to BRISK0 - U-BRISK as the intermediate stages such as image processing tend to be slower for the 1D SURF implementation.\\
 
@@ -1120,58 +1120,57 @@ The 1D SURF implementation has also improved upon its performance as expected du
 \textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 97.441 & 3.6950 & 8.1660 & 5.5120 & 0.065000 & 21.838\tabularnewline
+BRISK0 & MPS & 97.441 & 3.6950 & 8.1660 & 5.5120 & 0.065000 & 21.838\tabularnewline
 \hline 
 BRISK4 & MPS & 96.933 & 12.096 & 7.1060 & 5.2520 & 0.072000 & 28.970\tabularnewline
 \hline 
-SBRISK-SURF2D & MPS & 94.795 & 3.7930 & 17.157 & 1.4970 & 0.083000 & 26.936\tabularnewline
+BRISK0-SURF2D & MPS & 94.795 & 3.7930 & 17.157 & 1.4970 & 0.083000 & 26.936\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & MPS & \textbf{95.134} & \textbf{3.4690} & \textbf{3.1120} & \textbf{3.2450} & \textbf{0.052000} & \textbf{14.245}\tabularnewline
+\textbf{BRISK0-UBRISK} & MPS & \textbf{95.134} & \textbf{3.4690} & \textbf{3.1120} & \textbf{3.2450} & \textbf{0.052000} & \textbf{14.245}\tabularnewline
 \hline 
-SBRISK & CPS & 98.457 & 4.4990 & 14.911 & 17.984 & 0.11200 & 41.889\tabularnewline
+BRISK0 & CPS & 98.457 & 4.4990 & 14.911 & 17.984 & 0.11200 & 41.889\tabularnewline
 \hline 
 BRISK4 & CPS & 98.282 & 18.546 & 15.856 & 24.097 & 0.13700 & 63.065\tabularnewline
 \hline 
-SBRISK-SURF2D & CPS & 96.210 & 4.5200 & 28.129 & 3.6000 & 0.13100 & 40.822\tabularnewline
+BRISK0-SURF2D & CPS & 96.210 & 4.5200 & 28.129 & 3.6000 & 0.13100 & 40.822\tabularnewline
 \hline 
-SBRISK-UBRISK & CPS & 95.182 & 4.1490 & 5.2980 & 11.723 & 0.090000 & 25.666\tabularnewline
+BRISK0-UBRISK & CPS & 95.182 & 4.1490 & 5.2980 & 11.723 & 0.090000 & 25.666\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.27700} & \textbf{0.19700} & \textbf{0.48300} & \textbf{0.043000} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
+\label{tab:rocTimingOfficeKnn}
 \end{table}
 
 \begin{table}
-
-
 \caption{The AUC and performance statistics for the office environment using
 Hamming/Euclidean distance}
-
 \tiny
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
 \textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 94.846 & 3.0940 & 3.4610 & 0.80800 & 0.011000 & 11.710\tabularnewline
+BRISK0 & MPS & 94.846 & 3.0940 & 3.4610 & 0.80800 & 0.011000 & 11.710\tabularnewline
 \hline 
 BRISK4 & MPS & 96.226 & 8.6260 & 3.2650 & 0.84700 & 0.012000 & 17.198\tabularnewline
 \hline 
-SBRISK-SURF2D & MPS & 96.054 & 3.2550 & 8.4950 & 0.48900 & 0.019000 & 16.626\tabularnewline
+BRISK0-SURF2D & MPS & 96.054 & 3.2550 & 8.4950 & 0.48900 & 0.019000 & 16.626\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{96.149} & \textbf{3.1250} & \textbf{2.0570} & \textbf{0.88300} & \textbf{0.014000} & \textbf{10.453}\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{96.149} & \textbf{3.1250} & \textbf{2.0570} & \textbf{0.88300} & \textbf{0.014000} & \textbf{10.453}\tabularnewline
 \hline 
-SBRISK & CPS & 94.697 & 3.1180 & 3.5900 & 0.88900 & 0.014000 & 11.948\tabularnewline
+BRISK0 & CPS & 94.697 & 3.1180 & 3.5900 & 0.88900 & 0.014000 & 11.948\tabularnewline
 \hline 
 BRISK4 & CPS & 96.274 & 9.9970 & 4.6630 & 2.0820 & 0.023000 & 21.164\tabularnewline
 \hline 
-SBRISK-SURF2D & CPS & 96.084 & 3.3660 & 10.196 & 0.65600 & 0.022000 & 18.577\tabularnewline
+BRISK0-SURF2D & CPS & 96.084 & 3.3660 & 10.196 & 0.65600 & 0.022000 & 18.577\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & \textbf{CPS} & \textbf{96.277} & \textbf{3.1200} & \textbf{2.0600} & \textbf{0.87500} & \textbf{0.017000} & \textbf{10.409}\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{CPS} & \textbf{96.277} & \textbf{3.1200} & \textbf{2.0600} & \textbf{0.87500} & \textbf{0.017000} & \textbf{10.409}\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.27700} & \textbf{0.19700} & \textbf{0.48300} & \textbf{0.043000} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
+\label{tab:rocTimingOfficeHamming}
 \end{table}
 
 
@@ -1194,7 +1193,7 @@ The second environment, as mentioned previously, has been generated in a large h
 \end{minipage}
 \end{figure}
 
-Again, all four of the feature extraction techniques have been tested on overlapping and non-overlapping images. In this case there are $210$ overlapping image pairs and $210$ non-overlapping image pairs. The ROC curves generated from this experiment are shown in \figref{fig:compareKnnOffice3} to \figref{fig:compareHammingConsistentOffice3} respectively. The statistics quantifying these ROC curves are shown in \tabref{tab:hallStatsKnn} and \tabref{hallStatsHamming} respectively.\\
+Again, all four of the feature extraction techniques have been tested on overlapping and non-overlapping images. In this case there are $210$ overlapping image pairs and $210$ non-overlapping image pairs. The ROC curves generated from this experiment are shown in \figref{fig:compareKnnOffice3} to \figref{fig:compareHammingConsistentOffice3} respectively. The statistics quantifying these ROC curves are shown in \tabref{tab:hallStatsKnn} and \tabref{tab:hallStatsHamming} respectively.\\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
@@ -1233,21 +1232,21 @@ using 2-NN}
 \textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 99.263 & 4.0270 & 10.752 & 18.175 & 0.14700 & 37.513\tabularnewline
+BRISK0 & MPS & 99.263 & 4.0270 & 10.752 & 18.175 & 0.14700 & 37.513\tabularnewline
 \hline 
 BRISK4 & MPS & 96.444 & 15.664 & 9.6910 & 13.698 & 0.12600 & 43.645\tabularnewline
 \hline 
-SBRISK-SURF2D & MPS & 95.697 & 4.2080 & 22.242 & 4.2410 & 0.18800 & 35.389\tabularnewline
+BRISK0-SURF2D & MPS & 95.697 & 4.2080 & 22.242 & 4.2410 & 0.18800 & 35.389\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{97.430} & \textbf{3.7010} & \textbf{3.8040} & \textbf{9.8490} & \textbf{0.10900} & \textbf{21.885}\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{97.430} & \textbf{3.7010} & \textbf{3.8040} & \textbf{9.8490} & \textbf{0.10900} & \textbf{21.885}\tabularnewline
 \hline 
-SBRISK & CPS & 98.798 & 5.4120 & 22.181 & 81.944 & 0.30600 & 114.365\tabularnewline
+BRISK0 & CPS & 98.798 & 5.4120 & 22.181 & 81.944 & 0.30600 & 114.365\tabularnewline
 \hline 
 BRISK4 & CPS & 98.703 & 28.349 & 23.880 & 83.456 & 0.29800 & 140.463\tabularnewline
 \hline 
-SBRISK-SURF2D & CPS & 97.024 & 5.4430 & 42.449 & 14.060 & 0.34900 & 66.809\tabularnewline
+BRISK0-SURF2D & CPS & 97.024 & 5.4430 & 42.449 & 14.060 & 0.34900 & 66.809\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & \textbf{CPS} & 96.186 & 4.7870 & 7.2480 & 46.827 & 0.23200 & 63.541\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{CPS} & 96.186 & 4.7870 & 7.2480 & 46.827 & 0.23200 & 63.541\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.27300} & \textbf{0.16100} & \textbf{0.35100} & \textbf{0.044000} & \textbf{14.032}\tabularnewline
 \hline 
@@ -1265,21 +1264,21 @@ using Hamming/Euclidean distance}
 \textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
 \hline 
 \hline 
-SBRISK & MPS & 96.739 & 3.2330 & 4.5650 & 2.3210 & 0.021000 & 14.642\tabularnewline
+BRISK0 & MPS & 96.739 & 3.2330 & 4.5650 & 2.3210 & 0.021000 & 14.642\tabularnewline
 \hline 
 BRISK4 & MPS & 95.516 & 10.115 & 3.9520 & 1.3410 & 0.017000 & 19.893\tabularnewline
 \hline 
-SBRISK-SURF2D & MPS & 98.803 & 3.4360 & 11.197 & 1.2600 & 0.039000 & 20.345\tabularnewline
+BRISK0-SURF2D & MPS & 98.803 & 3.4360 & 11.197 & 1.2600 & 0.039000 & 20.345\tabularnewline
 \hline 
-\textbf{SBRISK-UBRISK} & \textbf{MPS} & \textbf{93.150} & \textbf{3.2490} & \textbf{2.5160} & \textbf{2.6140} & \textbf{0.026000} & \textbf{12.824}\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{93.150} & \textbf{3.2490} & \textbf{2.5160} & \textbf{2.6140} & \textbf{0.026000} & \textbf{12.824}\tabularnewline
 \hline 
-SBRISK & CPS & 96.070 & 3.2680 & 4.7620 & 2.6180 & 0.028000 & 15.091\tabularnewline
+BRISK0 & CPS & 96.070 & 3.2680 & 4.7620 & 2.6180 & 0.028000 & 15.091\tabularnewline
 \hline 
 BRISK4 & CPS & 98.269 & 12.123 & 6.1390 & 4.3590 & 0.045000 & 27.164\tabularnewline
 \hline 
-SBRISK-SURF2D & CPS & 98.786 & 3.6030 & 13.475 & 1.7170 & 0.051000 & 23.414\tabularnewline
+BRISK0-SURF2D & CPS & 98.786 & 3.6030 & 13.475 & 1.7170 & 0.051000 & 23.414\tabularnewline
 \hline 
-SBRISK-UBRISK & CPS & 92.964 & 3.3030 & 2.5810 & 2.6180 & 0.030000 & 13.503\tabularnewline
+BRISK0-UBRISK & CPS & 92.964 & 3.3030 & 2.5810 & 2.6180 & 0.030000 & 13.503\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.27300} & \textbf{0.16100} & \textbf{0.35100} & \textbf{0.044000} & \textbf{14.032}\tabularnewline
 \hline 
@@ -1322,9 +1321,9 @@ For each scenario $i$ four image datasets were generated as in \secref{sec:datas
 
 The lighting setup in the Robocup test environment is as follows. The environment contains a main set of lights that are responsible for providing the general lighting in the room. In addition to these lights are a set of two fluorescent lights that lie adjacent to one another on the ceiling. Each fluorescent light stretches the length room and is responsible for adding additional lighting to the scene. \\
 
-Scenario $1$ involves switching off only a single fluorescent light located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{(fig:leftogright} respectively. Scenario $2$ involves turning off only a single fluorescent light located on the ceiling as well as the main set of lights. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both fluorescent lights, leaving only the main lighting in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. \\
+Scenario $1$ involves switching off only a single fluorescent light located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{fig:leftogright} respectively. Scenario $2$ involves turning off only a single fluorescent light located on the ceiling as well as the main set of lights. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both fluorescent lights, leaving only the main lighting in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. \\
 
-Each of the datasets from the three scenarios have been matched with the original corresponding Robocup datasets detailed in \secref{sec:dataset}. This means that, for example, \textit{$PG Left_1$} from scenario $1$ will be matched to \textit{PG Left} and so on. These datasets are being compared in order to determine whether or not the BRISK0 - U-BRISK algorithm is robust to variations in illumination. The datasets have been matched as shown in \tabref{tab:datasetLighting} to produce $1260$ pairs of overlapping images and $4536$ pairs of non-overlapping images under varying lighting conditions.\\
+Each of the datasets from the three scenarios have been matched with the original corresponding Robocup datasets detailed in \secref{sec:datasets}. This means that, for example, \textit{$PG Left_1$} from scenario $1$ will be matched to \textit{PG Left} and so on. These datasets are being compared in order to determine whether or not the BRISK0 - U-BRISK algorithm is robust to variations in illumination. The datasets have been matched as shown in \tabref{tab:datasetLighting} to produce $1260$ pairs of overlapping images and $4536$ pairs of non-overlapping images under varying lighting conditions.\\
 
 
 \begin{figure}

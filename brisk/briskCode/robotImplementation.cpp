@@ -140,7 +140,7 @@ int main(int argc, char ** argv) {
 
 
 	//Original dataset both lights off
-//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+//	std::string dir = "../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
 //	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
@@ -149,11 +149,11 @@ int main(int argc, char ** argv) {
 
 	//Dataset 3
 	std::string dir = "../images/Dataset3_Overlapping_1";
-	std::string dir1 = "../images/Dataset3_Overlapping_1";
+	std::string dir1 = "../images/Camera_Dataset3_1";
 
 	//Names of the two image files
-	std::string name1 = "4";
-	std::string name2 = "11";
+	std::string name1 = "2";
+	std::string name2 = "7";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -417,8 +417,8 @@ int main(int argc, char ** argv) {
 #endif
 
 	cv::waitKey();
-	cv::imwrite("../images/matching.jpg",outimg);
-	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
+	cv::imwrite("../images/matching_Test_normal.jpg",outimg);
+	//cv::imwrite("../images/match.jpg",outimg);
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 #endif
 
