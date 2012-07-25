@@ -3,7 +3,6 @@ function [fpRateMatrix, tpRateMatrix, statsMatrix, thresholdsMatrix] = createROC
 global stats;
 
 %Separate the datasets
-
 [row1,col1] = find(data(:,1)==1 & data(:,2)==1);
 [row2,col2] = find(data(:,1)==2 & data(:,2)==2);
 [row3,col3] = find(data(:,1)==3 & data(:,2)==3);
@@ -14,6 +13,14 @@ global stats;
 [row14nm,col14nm] = find(data(:,1)==1 & data(:,2)==4);
 [row23nm,col23nm] = find(data(:,1)==2 & data(:,2)==3);
 [row24nm,col24nm] = find(data(:,1)==2 & data(:,2)==4);
+
+%Add an extra set of overlapping matches
+if datasetType==3 || datasetType == 4
+    [row35nm,col35nm] = find(data(:,1)==3 & data(:,2)==5);
+    [row36nm,col36nm] = find(data(:,1)==3 & data(:,2)==6);
+    [row45nm,col45nm] = find(data(:,1)==4 & data(:,2)==5);
+    [row46nm,col46nm] = find(data(:,1)==4 & data(:,2)==6);
+end
 
 %2 additional overlapping datasets
 [row5,col5] = find(data(:,1)==5 & data(:,2)==5);
@@ -35,6 +42,14 @@ dataset23nm = data(row23nm,:);
 dataset14nm = data(row14nm,:);
 dataset24nm = data(row24nm,:);
 
+%The additional non-overlapping rows for datasetType 3
+if datasetType == 3 || datasetType == 4
+    dataset35nm = data(row35nm,:);
+    dataset36nm = data(row36nm,:);
+    dataset45nm = data(row45nm,:);
+    dataset46nm = data(row46nm,:);
+end
+
 %Dataset 2
 dataset5 = data(row5,:);
 dataset6 = data(row6,:);
@@ -43,7 +58,7 @@ dataset6 = data(row6,:);
 dataset56nm = data(row56nm,:);
 
 
-if datasetType ==1 || datasetType ==3
+if datasetType ==1
     %Generate the statistics for each matching dataset
     generateClassificationStats(dataset1,1);
     generateClassificationStats(dataset2,2);
@@ -61,6 +76,29 @@ if datasetType ==1 || datasetType ==3
     %Directory 5 to 8 is for the old Nao camera
     meanMatchesScore = mean(stats(1:4,1))
     meanNonMatchesScore = mean(stats(5:8,1))
+elseif datasetType ==3 || datasetType == 4
+    %Generate the statistics for each matching dataset
+    generateClassificationStats(dataset1,1);
+    generateClassificationStats(dataset2,2);
+    generateClassificationStats(dataset3,3);
+    generateClassificationStats(dataset4,4);
+    
+    %Generate stats for each non-matching dataset
+    generateClassificationStats(dataset13nm,5);
+    generateClassificationStats(dataset23nm,6);
+    generateClassificationStats(dataset14nm,7);
+    generateClassificationStats(dataset24nm,8);
+    
+    generateClassificationStats(dataset35nm,9);
+    generateClassificationStats(dataset36nm,10);
+    generateClassificationStats(dataset45nm,11);
+    generateClassificationStats(dataset46nm,12);
+    
+    %Find the mean of each directory for a specific scene/camera
+    %Directory 1 to 4 is for the new Nao camera
+    %Directory 5 to 8 is for the old Nao camera
+    meanMatchesScore = mean(stats(1:4,1))
+    meanNonMatchesScore = mean(stats(5:12,1))
     
 elseif datasetType==2 || datasetType==21
     %Overlapping dataset
@@ -79,7 +117,7 @@ else
     stepValue = 1;
 end
 
-%Set the interval 
+%Set the interval
 interval =1;
 
 %Counter
@@ -95,12 +133,12 @@ thresholdsMatrix = [];
 thresholdCounter = 1;
 
 for ii=largestThreshold:-stepValue:0
-
+    
     classificationBoundary = meanMatchesScore - ((meanMatchesScore - meanNonMatchesScore)/1.02);
     %classificationBoundary =meanNonMatchesScore*2;
     
     if (counter == 300)
-      counter;  
+        counter;
     end
     
     %Now to perform classification. We use the matching score
@@ -109,12 +147,15 @@ for ii=largestThreshold:-stepValue:0
     data(:,19) = data(:,8)>=ii;
     
     %Find the number of matches for matching pairs
-    if datasetType == 1 || datasetType ==3
+    if datasetType == 1 
         [matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
         [matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm);
     elseif datasetType==2 || datasetType==21
         [matchingStats] = calculateMatchingStats(data, row5,row6);
         [matchingStats1] = calculateMatchingStats(data, row56nm);
+    elseif datasetType ==3 || datasetType == 4
+        [matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
+        [matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm, row35nm, row36nm, row45nm, row46nm);
     end
     %The overall mean matching stat is:
     meanMatchesStat = mean(matchingStats);

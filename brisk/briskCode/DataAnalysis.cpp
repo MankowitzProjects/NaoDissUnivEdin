@@ -48,6 +48,20 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	string dataset3_1;
 	string dataset3_2;
 
+	string cam_dataset3_1;
+	string cam_dataset3_2;
+
+	string cammgLeft;
+	string cammgRight;
+	string camogLeft;
+	string camogRight;
+
+	string naoStreetView_1;
+	string naoStreetView_2;
+	string streetView_1;
+	string streetView_2;
+
+
 	//There are four directories where files can be found
 	if (terminal){
 		//The original dataset
@@ -80,6 +94,25 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		//The second additional dataset
 		dataset3_1 = "../../images/Dataset3_Overlapping_1";
 		dataset3_2 = "../../images/Dataset3_Overlapping_2";
+
+		//The original dataset with camera pics
+		cammgLeft = "../../images/Camera_PicsMG/Matching_Pics_Left_Overlapping";
+		cammgRight = "../../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
+		camogLeft = "../../images/Camera_PicsOG/Matching_Pics_Left_Overlapping";
+		camogRight = "../../images/Camera_PicsOG/Matching_Pics_Right_Overlapping";
+
+		//second additional dataset with camera pics
+		cam_dataset3_1 = "../../images/Camera_Dataset3_1";
+		cam_dataset3_2 = "../../images/Camera_Dataset3_2";
+
+		//Google Street View dataset (Nao Pics)
+		naoStreetView_1 = "../../images/GoogleMaps/NaoSide1";
+		naoStreetView_2 = "../../images/GoogleMaps/NaoSide2";
+
+		//Google Street View Pics
+		streetView_1 = "../../images/GoogleMaps/GoogleSide1";
+		streetView_2 = "../../images/GoogleMaps/GoogleSide2";
+
 
 
 	}
@@ -116,6 +149,25 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		//The second additional dataset
 		dataset3_1 = "../images/Dataset3_Overlapping_1";
 		dataset3_2 = "../images/Dataset3_Overlapping_2";
+
+		//The original dataset with camera pics
+		cammgLeft = "../images/Camera_PicsMG/Matching_Pics_Left_Overlapping";
+		cammgRight = "../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
+		camogLeft = "../images/Camera_PicsOG/Matching_Pics_Left_Overlapping";
+		camogRight = "../images/Camera_PicsOG/Matching_Pics_Right_Overlapping";
+
+		//second additional dataset with camera pics
+		cam_dataset3_1 = "../images/Camera_Dataset3_1";
+		cam_dataset3_2 = "../images/Camera_Dataset3_2";
+
+
+		//Google Street View dataset (Nao Pics)
+		naoStreetView_1 = "../images/GoogleMaps/NaoSide1";
+		naoStreetView_2 = "../images/GoogleMaps/NaoSide2";
+
+		//Google Street View Pics
+		streetView_1 = "../images/GoogleMaps/GoogleSide1";
+		streetView_2 = "../images/GoogleMaps/GoogleSide2";
 	}
 
 
@@ -135,6 +187,11 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 
 	//ADDITIONAL DATASET 1: 17-18
 	//ADDITIONAL DATASET 2: 19-20
+
+	//Camera Dataset in RobotLab: 21-24
+	//Camera Dataset for second additional dataset: 25-26
+	//NAO STREET VIEW: 27-28
+	//GOOGLE STREET VIEW: 29-30
 
 	int value = atoi((*dir).c_str());
 	switch(value){
@@ -197,6 +254,36 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		break;
 	case 20:
 		*dir = dataset3_2;
+		break;
+	case 21:
+		*dir = cammgLeft;
+		break;
+	case 22:
+		*dir = cammgRight;
+		break;
+	case 23:
+		*dir = camogLeft;
+		break;
+	case 24:
+		*dir = camogRight;
+		break;
+	case 25:
+		*dir = cam_dataset3_1;
+		break;
+	case 26:
+		*dir = cam_dataset3_2;
+		break;
+	case 27:
+		*dir = naoStreetView_1;
+		break;
+	case 28:
+		*dir = naoStreetView_2;
+		break;
+	case 29:
+		*dir = streetView_1;
+		break;
+	case 30:
+		*dir = streetView_2;
 		break;
 	default:
 		std::cout<<"Nothing found"<<endl;

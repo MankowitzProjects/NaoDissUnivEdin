@@ -4,18 +4,21 @@ clc
 addpath('../Lighting')
 addpath('../Data3');
 addpath('../Data2');
+addpath('../DataCamera');
 %Choose the dataset type.
 % 1 - means using structure of 1-4
 % 2 - means using structure 1-2
 % 3 - varying lighting
-datasetType = 21;
+% 4 - means matching Nao dataset with camera
+% 5 - means matching Nao dataset with Google Street View
+datasetType = 3;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
-% 2 - Hamming/Euclidean Distance
-knn =2;
+% 2 - Radius Match
+matchingMethod =2;
 
-if knn==1
+if matchingMethod==1
     
     if datasetType == 1
         %BRISK0 UBRISK
@@ -111,7 +114,7 @@ if knn==1
         
     end%datasetType
     
-elseif knn==2 %Hamming/Euclidean distance
+elseif matchingMethod==2 %Hamming/Euclidean distance
     
     if datasetType ==1
         %For BRISK0 UBRISK
@@ -197,18 +200,25 @@ elseif knn==2 %Hamming/Euclidean distance
         
         %All these methods use BRISK0 - UBRISK
         %1. Original Dataset Left light off
-        load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        %load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat' 
         [fpLeft, tpLeft, left_statsMatrix, left_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %2. Original Dataset Right light off
-        load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        %load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
         [fpRight, tpRight, right_statsMatrix, right_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %3. Original dataset both lights off
-        load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        %load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
         [fpBoth, tpBoth, both_statsMatrix, both_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
-    end %End dataset type
+    elseif datasetType==4 %For comparing pics with the camera
+        %Compare the Nao pics with pics taken from a Nikon camera
+        load 'BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        [fpCamera, tpCamera, camera_statsMatrix, camera_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
+    end%End dataset type
     
 end %End KNN neighbors
 
@@ -256,13 +266,29 @@ elseif datasetType==3
     plot(xrand, yrand, 'r--');
     xlabel('False Positive rate');
     ylabel('True positive rate');
-    title('ROC Curve using KNN Consistent');
+    title('ROC Curve');
     hleg1 = legend('Left Light off','Right Light and Main Light off', 'Left and Right Lights off');
     set(hleg1,'Location','SouthEast')
     
     overallStatsMatrix = [left_statsMatrix;
         right_statsMatrix;
         both_statsMatrix];
+elseif datasetType==4
+    %Plot the ROC Curve
+    plot(fpCamera,tpCamera, 'ro-');
+    hold on
+    %Plot the random curve
+    xrand = [0:0.01:1];
+    yrand = [0:0.01:1];
+    plot(xrand, yrand, 'r--');
+    xlabel('False Positive rate');
+    ylabel('True positive rate');
+    title('ROC Curve');
+    hleg1 = legend('Camera Comparison');
+    set(hleg1,'Location','SouthEast')
+    
+    overallStatsMatrix = [camera_statsMatrix]
+    
 end
 
 overallStatsMatrix = Roundoff(overallStatsMatrix,3)

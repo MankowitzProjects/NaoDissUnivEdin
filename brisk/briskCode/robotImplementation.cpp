@@ -126,34 +126,40 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-//	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	//	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+	//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
-//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+	//	std::string dir1 = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 
 	//Original dataset Right light off
-//	std::string dir = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	//	std::string dir = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
+	//	std::string dir1 = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 
 	//Original dataset both lights off
-//	std::string dir = "../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	//	std::string dir = "../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
+	//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
 	//	std::string dir = "../images/Dataset2_Overlapping_1";
 	//	std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
-	std::string dir = "../images/Dataset3_Overlapping_1";
-	std::string dir1 = "../images/Camera_Dataset3_1";
+	//	std::string dir = "../images/Dataset3_Overlapping_1";
+	//	std::string dir1 = "../images/Camera_Dataset3_1";
+
+	//Google Street View dataset
+	std::string dir = "../images/GoogleMaps/GoogleSide1";
+	std::string dir1 = "../images/GoogleMaps/NaoSide1";//PicsOG/Matching_Images_OG_Left
+
+
 
 	//Names of the two image files
-	std::string name1 = "2";
-	std::string name2 = "7";
+	std::string name1 = "4";
+	std::string name2 = "6";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;

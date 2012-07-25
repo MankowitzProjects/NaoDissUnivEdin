@@ -56,6 +56,12 @@
 #define MULTIPLE_IMAGE_TEST 1
 #define DISPLAY 0
 
+enum lighting{
+	LIGHT_LEFT,
+	LIGHT_RIGHT,
+	LIGHT_BOTH
+};
+
 template <class T>
 inline std::string to_string (const T& t)
 {
@@ -101,37 +107,57 @@ int main(int argc, char ** argv) {
 
 
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-		bool hamming=false;
-		std::string feat_detector = "BRISK";
-		std::string feat_descriptor = "SURF";
-		double hammingDistance = 0.28;
-		//double threshold = 30;//45
-		double threshold = 60;
+	//		bool hamming=false;
+	//		std::string feat_detector = "BRISK";
+	//		std::string feat_descriptor = "SURF";
+	//		double hammingDistance = 0.28;
+	//		//double threshold = 30;//45
+	//		double threshold = 60;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-//	bool hamming=true;
-//	std::string feat_detector = "BRISK";
-//	std::string feat_descriptor = "BRISK";
-//	double threshold = 75;//46.25;//46.25 KNN
-//	//	double threshold = 78.75;//Hamming
-//	double hammingDistance = 115;//Hamming
+	bool hamming=true;
+	std::string feat_detector = "BRISK";
+	std::string feat_descriptor = "U-BRISK";
+	double threshold = 75;//46.25;//46.25 KNN
+	//	double threshold = 78.75;//Hamming
+	double hammingDistance = 121.25;//Hamming
 
 	//For BRISK4 (4 octaves)
-//			bool hamming=true;
-//			std::string feat_detector = "BRISK4";
-//			std::string feat_descriptor = "BRISK4";
-//			//double threshold = 30; //KNN 51.25
-//			double threshold = 65;//Hamming
-//			double hammingDistance = 130;//Hamming
+	//			bool hamming=true;
+	//			std::string feat_detector = "BRISK4";
+	//			std::string feat_descriptor = "BRISK4";
+	//			//double threshold = 30; //KNN 51.25
+	//			double threshold = 65;//Hamming
+	//			double hammingDistance = 130;//Hamming
 
 	//Set the date and time
-	string myDate = "22072012";
-	string myTime = "2151";
+	string myDate = "25072012";
+	string myTime = "2038";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
 	//Determine whether the MPS or CPS threshold is being used
-	bool isMax  =  false;
+	bool isMax  =  true;
+	//Are we comparing camera pics to the Nao pics
+	bool usingCamera = false;
+
+	//Lighting parameter
+	lighting light = LIGHT_RIGHT;
+
+	//NB *************************************
+	//CHOOSE THE DATASET TO USE
+	int dataset=3;
+	//dataset =1 for original robocup pics
+	//dataset = 2 for office pics and large hall pics
+	//dataset = 3 for varying illumination and for comparing the robocup dataset with the camera robocup dataset
+	//dataset = 4 Nao Street View 27-28 (directory indices) with Google Street view
+	// AND second dataset 19-20 with camera pic indices 25-26
+
+
+	//Create the non-matching upper and lower bounds
+	int upperBound = 0;
+	int lowerBound = 0;
+
 	//Matching parameters
 	int k_start =0;
 	int k_end = 0;
@@ -140,19 +166,14 @@ int main(int argc, char ** argv) {
 
 	int index = 0;
 
-	//NB *************************************
-	//CHOOSE THE DATASET TO USE
-	//dataset =1 for dataset A (comprised of sets in multiples of 4), 2 for dataset B (comprised of sets in multiples of 2)
-	//dataset = 3 for varying illumination
-	int dataset=2;
 	//Counters used to ensure standard output for processing in Matlab
 	int tempDirCounterkk = 0;
 	int tempDirCounterss = 0;
 
-	//The dataset index step
-	int step = 12;//4 for left lighting, 8 for right lighting, 12 for both lights off
+	//USED FOR LIGHTING AND FOR COMPARING NAO CAMERA PICS
+	int step = 0;
 
-
+	//If we are performing the matching routine
 	if(isMatching)
 	{
 
@@ -182,6 +203,34 @@ int main(int argc, char ** argv) {
 
 			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
 			k_end = 4;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+
+			//Determines which dataset to use. Either lighting datasets or camera datasets
+			if(!usingCamera)
+			{
+				if(light == LIGHT_LEFT)
+					step = 4;
+				else if(light == LIGHT_RIGHT)
+					step = 8;
+				else if (light ==LIGHT_BOTH)
+					step=12;
+			}
+			else //Camera dataset
+				step==20;
+
+			//Camera: 20 for camera pics
+		}
+		else if (dataset==4) //Google Street View
+		{
+			//Street view 27,28,29,30
+			//In matching, we want to match 27-29 and 28-30
+			//Used for matching the correct images
+			step = 2;
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 1;
+
+			k_start = 27;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 28;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
 		}
 
 	}
@@ -209,36 +258,107 @@ int main(int argc, char ** argv) {
 			s_start = 20; //Dataset 2: 18; Dataset 3: 20
 			s_end = 20; //Dataset 2: 18; Dataset 3: 20
 		}
-		else if(dataset==3) //Varying lighting
+		else if(dataset==3) //Varying lighting or comparing the Nao robocup pics with the Nikon Camera pics
 		{
+			//s_start; s_end
+			//Left Light off dataset: 5; Left Light off Dataste 8;
+			//Right Light off Dataset: 9; Right Light off Dataset: 12;
+			//Both Light off Dataset: 13; Both Light off Dataset: 16
+			//Camera Pics Dataset: 21; Camera Pics Dataset: 24
+
 			//Counters used to ensure standard output for processing in Matlab
+			//---------------------------------------------------------------
 			tempDirCounterkk = 1;
 			tempDirCounterss = 3;
-
+			//Set the datasets that you want to match
 			k_start = 1;
-			k_end = 2;
-			s_start =15;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
-			s_end =16;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+			k_end = 4;
+			if(!usingCamera){
+				if(light == LIGHT_LEFT){
+					lowerBound  = 5;
+					upperBound  = 8;
+				}
+				else if(light == LIGHT_RIGHT){
+					lowerBound  = 9;
+					upperBound  = 12;
+				}
+				else if (light ==LIGHT_BOTH){
+					lowerBound  = 13;
+					upperBound  = 16;
+				}
+			}
+			else{
+				lowerBound  = 21;
+				upperBound  = 24;
+			}
 
+
+			s_start = lowerBound;
+			s_end = upperBound;
+			//REMEMBER: CHANGE s_start, s_end IN THE KK LOOP AS WELL
+			//---------------------------------------------------------------
+
+		}
+		else if(dataset==4)
+		{
+			//Run this twice
+			//1. First do 27 and 30
+			//2. Second do 28 and 29
+
+			//Counters used to ensure standard output for processing in Matlab
+			tempDirCounterkk = 1;
+			tempDirCounterss = 2;
+			//Match 27 with 30
+			//Match 28 with 29
+			k_start = 27;
+			k_end = 27;
+			s_start = 30;
+			s_end = 30;
 		}
 	}
 
 	//Begin the matching procedure
 	for(int kk=k_start;kk<=k_end;kk++)
 	{
-		if(isMatching && dataset!=3){
-			s_start = s_end = kk;
-		}
-		else if(isMatching && dataset==3){ //This is for the varying illumination datasets
-			//Comparing datasets
-			s_start = s_end = kk+step;
-			//The counter must be reset for formatting purposes in Matlab
-			tempDirCounterss = kk;
-		}
-		else if (dataset ==1)
-		{
+		if(dataset==1){
 			//The counter must be reset for formatting purposes in Matlab
 			tempDirCounterss = 3;//kk for matching; another number for non-matching
+			if(isMatching)
+				s_start = s_end = kk;
+		}
+		else if(dataset==2)
+		{
+			if(isMatching)
+				s_start = s_end = kk;
+		}
+		else if(dataset==3){ //This is for the varying illumination datasets
+
+			if(isMatching)
+			{
+				//Comparing datasets
+				s_start = s_end = kk+step;
+				//The counter must be reset for formatting purposes in Matlab
+				tempDirCounterss = kk;
+			}
+			else
+			{
+				//This ensures that no datasets are repeated
+				if (kk>=3){
+					tempDirCounterss = 5;
+					s_start = lowerBound;
+					s_end = lowerBound+1;
+				}
+				else{
+					tempDirCounterss = 3;
+					s_start = upperBound - 1;
+					s_end = upperBound;
+				}
+			}
+		}
+		else if (dataset==4)//This is for google street view
+		{
+			if(isMatching)
+				s_start = s_end = kk+ step;
 		}
 
 		for (int ss = s_start;ss<=s_end;ss++)
@@ -289,13 +409,35 @@ int main(int argc, char ** argv) {
 			//strftime (filename,80,"../../data/Matches/matchingData_%b_%d_%H%M%S.txt",timeinfo);
 			//strftime (filename,80,"../data/Matches/nonmatching_matching_Data__BRISK__BRISK_Hamming_070421012_1222.txt",timeinfo);
 			//puts (filename);
-			string filename = "../data3/Matches/";
+			string filename = "../";
 			if (dataset==1)
+			{
+				filename.append("data/Matches/");
 				filename.append("nonmatching_matching_Data__");
-			else if (dataset==2)
-				filename.append("dataset3_nonmatching_matching_Data__");//Or dataset3
-			else if (dataset==3)
-				filename.append("dataLighting_both_lights_off_nonmatching_matching_Data__");
+
+			}else if (dataset==2)
+			{
+				filename.append("data2/Matches/");//Or data3
+				filename.append("dataset2_nonmatching_matching_Data__");//Or dataset3
+			}
+			else if (dataset==3 && !usingCamera)
+			{
+				filename.append("dataLighting/Matches/");
+				if(light==LIGHT_LEFT)
+					filename.append("dataLighting_left_light_off_nonmatching_matching_Data__");
+				else if(light==LIGHT_RIGHT)
+					filename.append("dataLighting_right_light_off_nonmatching_matching_Data__");
+				else if (light==LIGHT_BOTH)
+					filename.append("dataLighting_both_lights_off_nonmatching_matching_Data__");
+			}
+			else if (dataset==3 && usingCamera){
+				filename.append("dataCamera/Matches/");
+				filename.append("camera_nonmatching_matching_Data__");
+			}
+			else if (dataset==4){
+				filename.append("dataStreetView/Matches/");
+				filename.append("streetview_nonmatching_matching_Data__");
+			}
 			filename.append(feat_detector);
 			filename.append("_");
 			filename.append(feat_descriptor);
@@ -313,7 +455,7 @@ int main(int argc, char ** argv) {
 			if (!usingKnnCriterion)
 				filename.append(to_string<int>(hammingDistance));
 			if (isMax)
-			filename.append("_max");
+				filename.append("_max");
 			else
 				filename.append("_consistent");
 			filename.append(".txt");

@@ -208,7 +208,7 @@ Scenario 1 (Left fluorescent Light Off)
 \begin_inset Text
 
 \begin_layout Plain Layout
-1512
+3024
 \end_layout
 
 \end_inset
@@ -248,7 +248,7 @@ Scenario 2 (Right fluorescent light and Main Lights off)
 \begin_inset Text
 
 \begin_layout Plain Layout
-1512
+3024
 \end_layout
 
 \end_inset
@@ -288,7 +288,7 @@ Scenario 3 (Both fluorescent Lights off)
 \begin_inset Text
 
 \begin_layout Plain Layout
-1512
+3024
 \end_layout
 
 \end_inset
@@ -326,7 +326,7 @@ Scenario 3 (Both fluorescent Lights off)
 \begin_inset Text
 
 \begin_layout Plain Layout
-4536
+9072
 \end_layout
 
 \end_inset
@@ -522,7 +522,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-95.315
+96.45
 \end_layout
 
 \end_inset
@@ -543,7 +543,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-2.9820
+2.895
 \end_layout
 
 \end_inset
@@ -564,7 +564,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.7030
+1.506
 \end_layout
 
 \end_inset
@@ -585,7 +585,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.23200
+0.2150
 \end_layout
 
 \end_inset
@@ -606,7 +606,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.0080000
+0.007000
 \end_layout
 
 \end_inset
@@ -627,7 +627,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-8.7850
+8.529
 \end_layout
 
 \end_inset
@@ -659,7 +659,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-96.957
+96.406
 \end_layout
 
 \end_inset
@@ -680,7 +680,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-2.9530
+2.881
 \end_layout
 
 \end_inset
@@ -701,7 +701,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.7110
+1.530
 \end_layout
 
 \end_inset
@@ -722,7 +722,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.22900
+0.2300
 \end_layout
 
 \end_inset
@@ -743,7 +743,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.0070000
+0.007000
 \end_layout
 
 \end_inset
@@ -764,7 +764,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-8.7640
+8.567
 \end_layout
 
 \end_inset
@@ -796,7 +796,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-93.217
+92.223
 \end_layout
 
 \end_inset
@@ -817,7 +817,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-3.0400
+2.976
 \end_layout
 
 \end_inset
@@ -838,7 +838,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.9480
+1.704
 \end_layout
 
 \end_inset
@@ -859,7 +859,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.28300
+0.2940
 \end_layout
 
 \end_inset
@@ -880,7 +880,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.0080000
+0.008000
 \end_layout
 
 \end_inset
@@ -901,7 +901,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-9.3090
+9.394
 \end_layout
 
 \end_inset
