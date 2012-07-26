@@ -109,6 +109,16 @@ elseif datasetType==2 || datasetType==21
     
     meanMatchesScore = mean(stats(1:2,1))
     meanNonMatchesScore = mean(stats(3,1))
+elseif datasetType ==5 || datasetType ==6
+    %Overlapping dataset
+    generateClassificationStats(dataset1,1);
+    generateClassificationStats(dataset2,2);
+    %Non-overlapping dataset
+    generateClassificationStats(dataset13nm,3);
+    generateClassificationStats(dataset24nm,4);
+    
+    meanMatchesScore = mean(stats(1:2,1))
+    meanNonMatchesScore = mean(stats(3:4,1))
 end
 
 if usingBriskorSURF
@@ -156,6 +166,9 @@ for ii=largestThreshold:-stepValue:0
     elseif datasetType ==3 || datasetType == 4
         [matchingStats] = calculateMatchingStats(data, row1,row2,row3,row4);
         [matchingStats1] = calculateMatchingStats(data, row13nm, row23nm, row14nm, row24nm, row35nm, row36nm, row45nm, row46nm);
+    elseif datasetType==5 || datasetType ==6
+        [matchingStats] = calculateMatchingStats(data, row1,row2);
+        [matchingStats1] = calculateMatchingStats(data, row13nm, row24nm)
     end
     %The overall mean matching stat is:
     meanMatchesStat = mean(matchingStats);

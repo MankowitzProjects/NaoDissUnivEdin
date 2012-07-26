@@ -321,12 +321,22 @@ SURF1D KNN - DONE
 
 SURF 1D Hamming - DONE
 
-4. Fix up the mean number of keypoints  - Not yet achieved
-
 24/07/12
 
-1. Take pictures with phone camera of the atrium and the robocup internal arena.
+1. Take pictures with phone camera of the atrium and the robocup internal arena. - DONE
 
-2. Tomorrow, take the Nao outside and take pictures of George Square and a place that uses Google Street View
+2. Tomorrow, take the Nao outside and take pictures of George Square and a place that uses Google Street View - DONE
 
-3. Run the comparison tests to see how well the systems match
+3. Run the comparison tests to see how well the systems match - DONE
+
+
+26/07/12
+
+1. Discuss the classification boundary thresholds
+2. Discuss Google Street View and Camera comparison tests
+3. Add localisation algorithm
+4. Add as much of thesis as possible
+5. Fix up the mean number of keypoints
+
+
+

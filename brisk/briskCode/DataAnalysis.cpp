@@ -268,21 +268,27 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 		*dir = camogRight;
 		break;
 	case 25:
-		*dir = cam_dataset3_1;
+		*dir = dataset3_1;
 		break;
 	case 26:
-		*dir = cam_dataset3_2;
+		*dir = dataset3_2;
 		break;
 	case 27:
-		*dir = naoStreetView_1;
+		*dir = cam_dataset3_1;
 		break;
 	case 28:
-		*dir = naoStreetView_2;
+		*dir = cam_dataset3_2;
 		break;
 	case 29:
-		*dir = streetView_1;
+		*dir = naoStreetView_1;
 		break;
 	case 30:
+		*dir = naoStreetView_2;
+		break;
+	case 31:
+		*dir = streetView_1;
+		break;
+	case 32:
 		*dir = streetView_2;
 		break;
 	default:

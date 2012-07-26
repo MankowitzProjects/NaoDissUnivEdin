@@ -132,7 +132,7 @@ int main(int argc, char ** argv) {
 
 	//Set the date and time
 	string myDate = "25072012";
-	string myTime = "2038";
+	string myTime = "2232";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
@@ -146,7 +146,7 @@ int main(int argc, char ** argv) {
 
 	//NB *************************************
 	//CHOOSE THE DATASET TO USE
-	int dataset=3;
+	int dataset=4;
 	//dataset =1 for original robocup pics
 	//dataset = 2 for office pics and large hall pics
 	//dataset = 3 for varying illumination and for comparing the robocup dataset with the camera robocup dataset
@@ -215,7 +215,7 @@ int main(int argc, char ** argv) {
 					step=12;
 			}
 			else //Camera dataset
-				step==20;
+				step=20;
 
 			//Camera: 20 for camera pics
 		}
@@ -229,8 +229,16 @@ int main(int argc, char ** argv) {
 			tempDirCounterkk = 1;
 			tempDirCounterss = 1;
 
-			k_start = 27;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
-			k_end = 28;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+			if(!usingCamera)
+			{
+				k_start = 27;
+				k_end = 28;
+			}
+			else
+			{
+				k_start = 25;
+				k_end = 26;
+			}
 		}
 
 	}
@@ -307,13 +315,24 @@ int main(int argc, char ** argv) {
 
 			//Counters used to ensure standard output for processing in Matlab
 			tempDirCounterkk = 1;
-			tempDirCounterss = 2;
-			//Match 27 with 30
-			//Match 28 with 29
-			k_start = 27;
-			k_end = 27;
-			s_start = 30;
-			s_end = 30;
+			tempDirCounterss = 3;
+
+			if(!usingCamera)
+			{
+				lowerBound = 29;
+				upperBound = 30;
+				s_start = 31;
+				s_end = 32;
+			}
+			else
+			{
+				lowerBound = 25;
+				upperBound = 26;
+				s_start = 27;
+				s_end = 28;
+			}
+			k_start = lowerBound;
+			k_end = upperBound;
 		}
 	}
 
@@ -359,6 +378,12 @@ int main(int argc, char ** argv) {
 		{
 			if(isMatching)
 				s_start = s_end = kk+ step;
+			else{
+				if (kk==lowerBound)
+					s_start = s_end = lowerBound + 3;
+				else if (kk==upperBound)
+					s_start = s_end = upperBound+1;
+			}
 		}
 
 		for (int ss = s_start;ss<=s_end;ss++)
@@ -435,8 +460,15 @@ int main(int argc, char ** argv) {
 				filename.append("camera_nonmatching_matching_Data__");
 			}
 			else if (dataset==4){
-				filename.append("dataStreetView/Matches/");
-				filename.append("streetview_nonmatching_matching_Data__");
+
+				if(usingCamera){
+					filename.append("dataCamera/Matches/");
+					filename.append("camera_large_hall_nonmatching_matching_Data__");
+				}
+				else{
+					filename.append("dataStreetView/Matches/");
+					filename.append("streetview_nonmatching_matching_Data__");
+				}
 			}
 			filename.append(feat_detector);
 			filename.append("_");

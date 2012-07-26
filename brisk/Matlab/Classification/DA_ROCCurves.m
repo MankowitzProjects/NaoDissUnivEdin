@@ -5,13 +5,14 @@ addpath('../Lighting')
 addpath('../Data3');
 addpath('../Data2');
 addpath('../DataCamera');
+addpath('../DataStreet');
 %Choose the dataset type.
 % 1 - means using structure of 1-4
 % 2 - means using structure 1-2
 % 3 - varying lighting
 % 4 - means matching Nao dataset with camera
 % 5 - means matching Nao dataset with Google Street View
-datasetType = 3;
+datasetType = 6;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
@@ -87,23 +88,23 @@ if matchingMethod==1
         
     elseif datasetType==21
         %BRISK0 - U-BRISK
-                load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
-%         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
         [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01,datasetType, 1);
         
         %BRISK0
-                load dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat''
-%         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
+        load dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat''
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
         [fpSBRISK, tpSBRISK, sb_statsMatrix, sb_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %BRISK4
-                load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
-%         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
         [fpBRISK4, tpBRISK4, b4_statsMatrix, b4_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %For SBRISK SURF2D
-                load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
-%         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
         [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix, sb_2d_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 0);
         
         %1D SURF - This test does not use KNN and is only used for comparison
@@ -148,23 +149,23 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
     elseif datasetType == 2
         %Hamming/Euclidean distance on dataset 2
         %BRISK0 - U-BRISK
-%         load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
-                load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
         [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01,datasetType, 1);
         
         %BRISK0
-%         load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
-                load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
         [fpSBRISK, tpSBRISK, sb_statsMatrix, sb_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %BRISK4
-%         load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
-                load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
         [fpBRISK4, tpBRISK4, b4_statsMatrix, b4_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %For SBRISK SURF2D
-%         load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
-                load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
         [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix, sb_2d_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 0);
         
         %1D SURF - This test does not use KNN and is only used for comparison
@@ -173,23 +174,23 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
         [fpSURF1D, tpSURF1D, s1d_statsMatrix, s1d_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 0);
     elseif datasetType ==21
         %BRISK0 - U-BRISK
-%         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
-                load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
         [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01,datasetType, 1);
         
         %BRISK0
-%         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
-                load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
         [fpSBRISK, tpSBRISK, sb_statsMatrix, sb_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %BRISK4
-%         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
-                load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
         [fpBRISK4, tpBRISK4, b4_statsMatrix, b4_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %For SBRISK SURF2D
-%         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
-                load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
         [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix, sb_2d_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 0);
         
         %1D SURF - This test does not use KNN and is only used for comparison
@@ -201,7 +202,7 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
         %All these methods use BRISK0 - UBRISK
         %1. Original Dataset Left light off
         %load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
-        load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat' 
+        load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
         [fpLeft, tpLeft, left_statsMatrix, left_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %2. Original Dataset Right light off
@@ -215,9 +216,32 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
         [fpBoth, tpBoth, both_statsMatrix, both_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
     elseif datasetType==4 %For comparing pics with the camera
+        %For BRISK0 UBRISK
+        %         load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'
+        load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_14072012_1140_75_130_consistent.mat'
+        [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01, 1, 1);
+        
         %Compare the Nao pics with pics taken from a Nikon camera
-        load 'BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        %load 'BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        load 'camera_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
         [fpCamera, tpCamera, camera_statsMatrix, camera_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
+        
+    elseif datasetType==5
+        %BRISK0 - U-BRISK
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01,21, 1);
+        
+        
+        %Comparing Nao pics with large hall
+        load 'camera_large_hall_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
+        [fpHall, tpHall, hall_statsMatrix, hall_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
+        
+    elseif datasetType == 6
+        %Comparing Nao Pics with Google Street View
+        load 'streetview_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
+        [fpStreet, tpStreet, street_statsMatrix, street_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
+        
     end%End dataset type
     
 end %End KNN neighbors
@@ -275,7 +299,7 @@ elseif datasetType==3
         both_statsMatrix];
 elseif datasetType==4
     %Plot the ROC Curve
-    plot(fpCamera,tpCamera, 'ro-');
+    plot(fpCamera,tpCamera,'bs-', fpUBRISK, tpUBRISK, 'ro-');
     hold on
     %Plot the random curve
     xrand = [0:0.01:1];
@@ -283,11 +307,45 @@ elseif datasetType==4
     plot(xrand, yrand, 'r--');
     xlabel('False Positive rate');
     ylabel('True positive rate');
-    title('ROC Curve');
+    title('ROC Curve for Robocup dataset');
+    hleg1 = legend('Nikon Camera', 'Nao Images');
+    set(hleg1,'Location','SouthEast')
+    
+    overallStatsMatrix = [camera_statsMatrix;
+        ub_statsMatrix]
+    
+elseif datasetType==5
+    %Plot the ROC Curve
+    plot(fpHall,tpHall, 'bs-', fpUBRISK, tpUBRISK, 'ro-');
+    hold on
+    %Plot the random curve
+    xrand = [0:0.01:1];
+    yrand = [0:0.01:1];
+    plot(xrand, yrand, 'r--');
+    xlabel('False Positive rate');
+    ylabel('True positive rate');
+    title('ROC Curve for Large Hall Dataset');
+    hleg1 = legend('Nikon Camera', 'Nao Images');
+    set(hleg1,'Location','SouthEast')
+    
+    overallStatsMatrix = [hall_statsMatrix;
+                          ub_statsMatrix]
+    
+elseif datasetType==6
+    %Plot the ROC Curve
+    plot(fpStreet,tpStreet, 'ro-');
+    hold on
+    %Plot the random curve
+    xrand = [0:0.01:1];
+    yrand = [0:0.01:1];
+    plot(xrand, yrand, 'r--');
+    xlabel('False Positive rate');
+    ylabel('True positive rate');
+    title('ROC Curve for Google Street View dataset');
     hleg1 = legend('Camera Comparison');
     set(hleg1,'Location','SouthEast')
     
-    overallStatsMatrix = [camera_statsMatrix]
+    overallStatsMatrix = [street_statsMatrix]
     
 end
 
