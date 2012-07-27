@@ -6820,7 +6820,7 @@ SBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -6966,7 +6966,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -7112,7 +7112,7 @@ SBRISK-SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -7260,9 +7260,7 @@ SBRISK-UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\series bold
-Maximum
+MPS
 \end_layout
 
 \end_inset
@@ -7372,7 +7370,7 @@ SBRISK
 \uwave off
 \noun off
 \color none
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -7542,7 +7540,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -7712,7 +7710,7 @@ SBRISK-SURF2D
 \uwave off
 \noun off
 \color none
-Consistent
+CPS
 \end_layout
 
 \end_inset
@@ -7882,7 +7880,7 @@ SBRISK-UBRISK
 \uwave off
 \noun off
 \color none
-Consistent
+CPS
 \end_layout
 
 \end_inset

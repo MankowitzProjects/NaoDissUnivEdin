@@ -1,90 +1,325 @@
-%Overall Image statistics
-knn = 0;
-
-if knn
-%SBRISK UBRISK
-%load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
-%load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
-
-%For SBRISK
-%load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_30.mat'
-%load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_4625_max.mat'
-
-%For BRISK4
-%load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_30.mat'
-%load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_51.25_max.mat'
-
-
-%For SBRISK SURF2D
-%load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_30.mat'
-%load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_4375_max.mat'
-else
-    
-%For BRISK0 UBRISK
-% load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'
-
-%For SBRISK
-%load 'nonmatching_matching_Data__SBRISK__SBRISK_Hamming_070521012_2318_78_110_mScoreFixed.mat'
-%load 'nonmatching_matching_Data__BRISK_BRISK_Hamming_12072012_1009_77.5_107_max.mat'
-
-%For BRISK4
-%load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_070521012_2318_85_12125_mScoreFixed.mat'
-% load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_120521012_0055_80_120_max.mat'
-
-%SBRISK SURF2D
-%load 'nonmatching_matching_Data__BRISK_SURF_Hamming_12072012_1009_65_0_max.mat'
-
-
-
-end
-
+%Compare the number of keypoints found and the number of matches for all 3
+%methods
+clear all
+clc
 
 
 global stats;
 
-%Separate the datasets
+addpath('../Lighting')
+addpath('../Data3');
+addpath('../Data2');
+addpath('../DataCamera');
+addpath('../DataStreet');
+%Choose the dataset type.
+% 1 - means using structure of 1-4
+% 2 - means using structure 1-2 (Office Environment)
+% 21 - means using structure 1-2 (Large Hall)
+% 3 - varying lighting
+% 4 - means matching Nao dataset with camera for Robocup
+% 5 - means matching Nao dataset with camera for Large Hall
+% 6 - means matching Nao dataset with Google Street View
+datasetType = 6;
 
-[row1,col1] = find(data(:,1)==1 & data(:,2)==1);
-[row2,col2] = find(data(:,1)==2 & data(:,2)==2);
-[row3,col3] = find(data(:,1)==3 & data(:,2)==3);
-[row4,col4] = find(data(:,1)==4 & data(:,2)==4);
+%Choose if we are comparing knn or hamming/euclidean distance
+% 1 - KNN
+% 2 - Radius Match
+matchingMethod =2;
+
+if matchingMethod==1
+    
+    if datasetType == 1
+        %BRISK0 UBRISK
+        %         load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
+        load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
+        
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %For BRISK0
+        %         load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_30.mat'
+        load 'nonmatching_matching_Data__SBRISK__SBRISK_KNN_100521012_1712_4625_max.mat'
+        
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %For BRISK4
+        %         load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_30.mat'
+        load 'nonmatching_matching_Data__BRISK4__BRISK4_KNN_100521012_1736_51.25_max.mat'
+        
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %For SBRISK SURF2D
+        %         load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_30.mat'
+        load 'nonmatching_matching_Data__SBRISK__SURF2D_KNN_100521012_1829_4375_max.mat'
+        
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %1D SURF - This test does not use KNN and is only used for comparison
+        load 'nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        
+    elseif datasetType ==2
+        %BRISK0 - U-BRISK
+        % load 'dataset2_dataset2_nonmatching_matching_Data__BRISK_U-BRISK_KNN_14072012_1639_60__max.mat'
+        %load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_KNN_14072012_1639_75__consistent.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK0
+        % load 'dataset2_dataset2_nonmatching_matching_Data__BRISK_BRISK_KNN_14072012_1639_45__max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_KNN_14072012_1639_40__consistent.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data,2);
+        
+        %BRISK4
+        % load 'dataset2_dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_14072012_1639_47.5__max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_14072012_1639_40__consistent.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %For SBRISK SURF2D
+        % load 'dataset2_dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_14072012_1639_45__max.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_14072012_1639_40__consistent.mat'
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %1D SURF - This test does not use KNN and is only used for comparison
+        load 'dataset2_nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        
+    elseif datasetType==21
+        %BRISK0 - U-BRISK
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK0
+        load dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat''
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data,2 );
+        
+        %BRISK4
+        load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %For SBRISK SURF2D
+        load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %1D SURF - This test does not use KNN and is only used for comparison
+        load 'dataset3_nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        
+        
+    end%datasetType
+    
+elseif matchingMethod==2 %Hamming/Euclidean distance
+    
+    if datasetType ==1
+        %For BRISK0 UBRISK
+        %         load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'
+        load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_14072012_1140_75_130_consistent.mat'
+        
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %For SBRISK
+        %         load 'nonmatching_matching_Data__BRISK_BRISK_Hamming_12072012_1009_77.5_107_max.mat'
+        load 'nonmatching_matching_Data__BRISK_BRISK_Hamming_14072012_1104_75_115_consistent.mat'
+        
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %For BRISK4
+        %         load 'nonmatching_matching_Data__BRISK4__BRISK4_Hamming_120521012_0055_80_120_max.mat'
+        load 'nonmatching_matching_Data__BRISK4_BRISK4_Hamming_14072012_1140_65_130_consistent.mat'
+        
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %SBRISK SURF2D
+        %         load 'nonmatching_matching_Data__BRISK_SURF_Hamming_12072012_1009_65_0_max.mat'
+        load 'nonmatching_matching_Data__BRISK_SURF_Hamming_14072012_1140_60_0_consistent.mat'
+        
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %1D SURF
+        load 'nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data);
+    elseif datasetType == 2
+        %Hamming/Euclidean distance on dataset 2
+        %BRISK0 - U-BRISK
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK0
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK4
+        %         load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %For SBRISK SURF2D
+        %         load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
+        load 'dataset2_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %1D SURF - This test does not use KNN and is only used for comparison
+        load 'dataset2_nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+    elseif datasetType ==21
+        %BRISK0 - U-BRISK
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK0
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_75_115_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_Hamming_22072012_2151_77.5_107_max.mat'
+        [sb_meanMatchesScore, sb_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %BRISK4
+        %         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_65_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_Hamming_22072012_2151_80_120_max.mat'
+        [b4_meanMatchesScore, b4_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %For SBRISK SURF2D
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_60_0_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_SURF_Hamming_22072012_2151_65_0_max.mat'
+        [sb_2d_meanMatchesScore, sb_2d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+        %1D SURF - This test does not use KNN and is only used for comparison
+        load 'dataset3_nonmatching_matching_Data__SURF1D_Euclidean_22072012_2151_325.125__given.mat'
+        [s1d_meanMatchesScore, s1d_meanNonMatchesScore]  = calculateMatchingScore(data, 2);
+        
+    elseif datasetType == 3 %For varying illumination
+        
+        %All these methods use BRISK0 - UBRISK
+        %1. Original Dataset Left light off
+        %load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        [left_meanMatchesScore, left_meanNonMatchesScore]  = calculateMatchingScore(data,2,3);
+        
+        %2. Original Dataset Right light off
+        %load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        [right_meanMatchesScore, right_meanNonMatchesScore]  = calculateMatchingScore(data,2,3);
+        
+        %3. Original dataset both lights off
+        %load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
+        load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        [both_meanMatchesScore, both_meanNonMatchesScore]  = calculateMatchingScore(data,2,3);
+        
+    elseif datasetType==4 %For comparing pics with the camera
+        %For BRISK0 UBRISK
+        %         load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'
+        load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_14072012_1140_75_130_consistent.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data);
+        
+        %Compare the Nao pics with pics taken from a Nikon camera
+        %load 'BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
+        load 'camera_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
+        [camera_meanMatchesScore, camera_meanNonMatchesScore]  = calculateMatchingScore(data, 2, 3);
+        
+    elseif datasetType==5
+        %BRISK0 - U-BRISK
+        %         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_130_consistent.mat'
+        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_22072012_2151_75_121_max.mat'
+        [ub_meanMatchesScore, ub_meanNonMatchesScore]  = calculateMatchingScore(data,2);
+        
+        
+        %Comparing Nao pics with large hall
+        load 'camera_large_hall_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
+        [hall_meanMatchesScore, hall_meanNonMatchesScore]  = calculateMatchingScore(data,2,3,4);
+        
+    elseif datasetType == 6
+        %Comparing Nao Pics with Google Street View
+        load 'streetview_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2232_75_121_max.mat'
+        [street_meanMatchesScore, street_meanNonMatchesScore]  = calculateMatchingScore(data,2,3,4);
+        
+    end%End dataset type
+    
+end %End KNN neighbors
+
+%----------------------------------------------------------
+%Output the matching statistics for overlapping and non-overlapping
+%datasets respectively
+%The statistics are mean total matches, valid matches, invalid matches,
+%mean number of keypoints
 
 
-[row13nm,col13nm] = find(data(:,1)==1 & data(:,2)==3);
-[row14nm,col14nm] = find(data(:,1)==1 & data(:,2)==4);
-[row23nm,col23nm] = find(data(:,1)==2 & data(:,2)==3);
-[row24nm,col24nm] = find(data(:,1)==2 & data(:,2)==4);
 
-%We have filtered the datasets by directory
-dataset1 = data(row1,:);
-dataset2 = data(row2,:);
-dataset3 = data(row3,:);
-dataset4 = data(row4,:);
+if datasetType ==1 || datasetType ==2 || datasetType == 21
 
-dataset13nm = data(row13nm,:);
-dataset23nm = data(row23nm,:);
-dataset14nm = data(row14nm,:);
-dataset24nm = data(row24nm,:);
+    %Create the matches score matrix
+    overlappingMatchesScoreMatrix = [sb_meanMatchesScore;       
+                                     b4_meanMatchesScore;
+                                     sb_2d_meanMatchesScore;
+                                     ub_meanMatchesScore;
+                                     s1d_meanMatchesScore];
+                                 
+    nonOverlappingMatchesScoreMatrix = [sb_meanNonMatchesScore;
+                                        b4_meanNonMatchesScore;
+                                        sb_2d_meanNonMatchesScore;
+                                        ub_meanNonMatchesScore;
+                                        s1d_meanNonMatchesScore];
+    
+elseif datasetType==3
+%Create the matches score matrix
+    overlappingMatchesScoreMatrix = [left_meanMatchesScore;       
+                                     right_meanMatchesScore;
+                                     both_meanMatchesScore];
+                                 
+    nonOverlappingMatchesScoreMatrix = [left_meanNonMatchesScore;
+                                        right_meanNonMatchesScore;
+                                        both_meanNonMatchesScore];
+    
+    
+elseif datasetType==4
+ %Create the matches score matrix
+    overlappingMatchesScoreMatrix = [ub_meanMatchesScore;       
+                                     camera_meanMatchesScore];
+                                 
+    nonOverlappingMatchesScoreMatrix = [ub_meanNonMatchesScore;
+                                        camera_meanNonMatchesScore];
 
-%Generate the statistics for each matching dataset
-generateClassificationStats(dataset1,1);
-generateClassificationStats(dataset2,2);
-generateClassificationStats(dataset3,3);
-generateClassificationStats(dataset4,4);
+    
+elseif datasetType==5
+ %Create the matches score matrix
+    overlappingMatchesScoreMatrix = [ub_meanMatchesScore;       
+                                     hall_meanMatchesScore];
+                                 
+    nonOverlappingMatchesScoreMatrix = [ub_meanNonMatchesScore;
+                                        hall_meanNonMatchesScore];
 
-%Generate stats for each non-matching dataset
-generateClassificationStats(dataset13nm,5);
-generateClassificationStats(dataset23nm,6);
-generateClassificationStats(dataset14nm,7);
-generateClassificationStats(dataset24nm,8);
+    
+elseif datasetType==6
+%Create the matches score matrix
+    overlappingMatchesScoreMatrix = [street_meanMatchesScore];
+                                 
+    nonOverlappingMatchesScoreMatrix = [street_meanNonMatchesScore];
+
+end
 
 
+overlappingMatchingStats = Roundoff(overlappingMatchesScoreMatrix, 4);
 
-%Find the mean of each directory for a specific scene/camera
-meanMatchesScore = mean(stats(1:4,1))
-meanNonMatchesScore = mean(stats(5:8,1))
+nonOverlappingMatchingStats = Roundoff(nonOverlappingMatchesScoreMatrix,4);
 
-matchesScoreMatrix = [meanMatchesScore meanNonMatchesScore]
+matchesScoreFinal = [overlappingMatchingStats, nonOverlappingMatchingStats]
+
 
 
 

@@ -8,10 +8,12 @@ addpath('../DataCamera');
 addpath('../DataStreet');
 %Choose the dataset type.
 % 1 - means using structure of 1-4
-% 2 - means using structure 1-2
+% 2 - means using structure 1-2 (Office Environment)
+% 21 - means using structure 1-2 (Large Hall)
 % 3 - varying lighting
-% 4 - means matching Nao dataset with camera
-% 5 - means matching Nao dataset with Google Street View
+% 4 - means matching Nao dataset with camera for Robocup
+% 5 - means matching Nao dataset with camera for Large Hall
+% 6 - means matching Nao dataset with Google Street View
 datasetType = 6;
 
 %Choose if we are comparing knn or hamming/euclidean distance
@@ -274,11 +276,11 @@ if datasetType ==1 || datasetType ==2 || datasetType == 21
     
     %Create the thresholds matrix
     %[threshold TP]
-    thresholdsMatrix = [sb_thresh;
+    thresholdsMatrix = Roundoff([sb_thresh;
         b4_thresh;
         sb_2d_thresh;
         ub_thresh;
-        s1d_thresh;]
+        s1d_thresh],3)
     
 elseif datasetType==3
     %Plot the ROC Curve
@@ -297,6 +299,15 @@ elseif datasetType==3
     overallStatsMatrix = [left_statsMatrix;
         right_statsMatrix;
         both_statsMatrix];
+    
+    [left_thresh] = findThresholds(left_thresholdsMatrix);
+    [right_thresh] = findThresholds(right_thresholdsMatrix);
+    [both_thresh] = findThresholds(both_thresholdsMatrix);
+    
+    thresholdsMatrix = Roundoff([left_thresh;
+                        right_thresh;
+                        both_thresh],3)
+    
 elseif datasetType==4
     %Plot the ROC Curve
     plot(fpCamera,tpCamera,'bs-', fpUBRISK, tpUBRISK, 'ro-');
@@ -314,6 +325,12 @@ elseif datasetType==4
     overallStatsMatrix = [camera_statsMatrix;
         ub_statsMatrix]
     
+    [ub_thresh] = findThresholds(ub_thresholdsMatrix);
+    [camera_thresh] = findThresholds(camera_thresholdsMatrix);
+    
+    thresholdsMatrix = Roundoff([ub_thresh;
+                        camera_thresh],3)
+    
 elseif datasetType==5
     %Plot the ROC Curve
     plot(fpHall,tpHall, 'bs-', fpUBRISK, tpUBRISK, 'ro-');
@@ -330,6 +347,12 @@ elseif datasetType==5
     
     overallStatsMatrix = [hall_statsMatrix;
                           ub_statsMatrix]
+                      
+    [ub_thresh] = findThresholds(ub_thresholdsMatrix);
+    [hall_thresh] = findThresholds(hall_thresholdsMatrix);
+    
+    thresholdsMatrix = Roundoff([ub_thresh;
+                        hall_thresh],3)
     
 elseif datasetType==6
     %Plot the ROC Curve
@@ -346,6 +369,10 @@ elseif datasetType==6
     set(hleg1,'Location','SouthEast')
     
     overallStatsMatrix = [street_statsMatrix]
+    
+    [street_thresh] = findThresholds(street_thresholdsMatrix);
+    
+    thresholdsMatrix = Roundoff([street_thresh], 3)
     
 end
 

@@ -828,7 +828,7 @@ Non-overlapping Score
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -886,7 +886,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK- SURF2D
+BRISK0- SURF2D
 \end_layout
 
 \end_inset
@@ -985,7 +985,7 @@ Radius Matching
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -1067,7 +1067,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK- SURF2D
+BRISK0- SURF2D
 \end_layout
 
 \end_inset
@@ -3702,7 +3702,7 @@ Average Score Threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -4393,7 +4393,7 @@ distanceC
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -5372,7 +5372,7 @@ Overall(ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -5688,7 +5688,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -5836,7 +5836,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK - U-BRISK
+BRISK0 - U-BRISK
 \end_layout
 
 \end_inset
@@ -5936,7 +5936,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -6252,7 +6252,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -6410,7 +6410,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK - U-BRISK
+BRISK0 - U-BRISK
 \end_layout
 
 \end_inset
@@ -6811,7 +6811,7 @@ Overall(ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -7103,7 +7103,7 @@ MPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -7251,7 +7251,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -7349,7 +7349,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -7689,7 +7689,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -7859,7 +7859,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -8694,7 +8694,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -8873,7 +8873,7 @@ SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -9737,7 +9737,7 @@ Radius
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -9958,7 +9958,7 @@ Radius
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -10698,7 +10698,7 @@ KNN=2
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -10865,7 +10865,7 @@ KNN=2
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -11172,7 +11172,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -11512,7 +11512,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -11672,7 +11672,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -11782,7 +11782,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -12122,7 +12122,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -12292,7 +12292,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -12689,7 +12689,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -13029,7 +13029,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -13189,7 +13189,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -13289,7 +13289,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -13629,7 +13629,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -13789,7 +13789,7 @@ CPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -14116,7 +14116,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -14456,7 +14456,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -14616,7 +14616,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -14716,7 +14716,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -15056,7 +15056,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -15214,7 +15214,7 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -15531,7 +15531,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -15871,7 +15871,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -16031,7 +16031,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -16131,7 +16131,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -16471,7 +16471,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -16631,7 +16631,7 @@ CPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -17079,7 +17079,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -17419,7 +17419,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -17589,7 +17589,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -18094,7 +18094,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -18434,7 +18434,7 @@ Maximum55
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -18604,7 +18604,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
