@@ -219,7 +219,10 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
-Size
+\begin_inset Formula $\bar{dS}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -228,7 +231,10 @@ Size
 \begin_inset Text
 
 \begin_layout Plain Layout
-Size Std
+\begin_inset Formula $\bar{dS}$
+\end_inset
+
+Std
 \end_layout
 
 \end_inset

@@ -130,36 +130,36 @@ int main(int argc, char ** argv) {
 //	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
-	//	std::string dir = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
-	//	std::string dir1 = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+//		std::string dir1 = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 
 	//Original dataset Right light off
-	//	std::string dir = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
-	//	std::string dir1 = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+//		std::string dir1 = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 
 	//Original dataset both lights off
-	//	std::string dir = "../images/Camera_PicsMG/Matching_Pics_Right_Overlapping";
-	//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
+//		std::string dir1 = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
-	//	std::string dir = "../images/Dataset2_Overlapping_1";
-	//	std::string dir1 = "../images/Dataset2_Overlapping_1";
+//		std::string dir = "../images/Dataset3_Overlapping_1";
+//		std::string dir1 = "../images/Dataset3_Overlapping_1";
 
 	//Dataset 3
-	//	std::string dir = "../images/Dataset3_Overlapping_1";
-	//	std::string dir1 = "../images/Camera_Dataset3_1";
+//		std::string dir = "../images/Dataset3_Overlapping_1";
+//		std::string dir1 = "../images/Camera_Dataset3_1";
 
 	//Google Street View dataset
 		std::string dir = "../images/GoogleMaps/NaoSide1";
-		std::string dir1 = "../images/GoogleMaps/NaoSide2";//PicsOG/Matching_Images_OG_Left
+		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "1";
-	std::string name2 = "6";
+	std::string name1 = "3";
+	std::string name2 = "10";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -231,14 +231,14 @@ int main(int argc, char ** argv) {
 	imgGray2 = imgGray2Full(cv::Rect(0, 0, imgGray2Full.cols, horizonLine));
 
 
-	cv::namedWindow("First Gray image");
-	cv::imshow("First Gray image", imgGray1);
-	cv::imwrite("../images/gray1.jpg",imgGray1);
-	cv::waitKey();
-	cv::namedWindow("Second Gray Image");
-	cv::imshow("Second Gray Image", imgGray2);
-	cv::imwrite("../images/gray2.jpg",imgGray2);
-	cv::waitKey();
+//	cv::namedWindow("First Gray image");
+//	cv::imshow("First Gray image", imgGray1);
+//	cv::imwrite("../images/gray1.jpg",imgGray1);
+//	cv::waitKey();
+//	cv::namedWindow("Second Gray Image");
+//	cv::imshow("Second Gray Image", imgGray2);
+//	cv::imwrite("../images/gray2.jpg",imgGray2);
+//	cv::waitKey();
 
 	//cout<<"Image in directory 1: "<<name1<<", Image in directory 2: "<<name2<<endl;
 
@@ -432,7 +432,15 @@ int main(int argc, char ** argv) {
 #endif
 
 	cv::waitKey();
-	cv::imwrite("../images/matching_Test_normal.jpg",outimg);
+//	cv::imwrite("../images/MainRobocupDataset.jpg",outimg);
+//	cv::imwrite("../images/OfficeDataset.jpg",outimg);
+//	cv::imwrite("../images/LargeHallDataset.jpg",outimg);
+//	cv::imwrite("../images/NaoNikonRobocupDataset.jpg",outimg);
+//	cv::imwrite("../images/NaoNikonLargeHallDataset.jpg",outimg);
+//	cv::imwrite("../images/VaryingIlluminationLeftDataset.jpg",outimg);
+//	cv::imwrite("../images/VaryingIlluminationRightDataset.jpg",outimg);
+//	cv::imwrite("../images/VaryingIlluminationBothDataset.jpg",outimg);
+	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
 	//cv::imwrite("../images/match.jpg",outimg);
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 #endif
