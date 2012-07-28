@@ -1,6 +1,6 @@
 
 %Calculate the matching statistics
-function [overlappingMatchesMatrix, nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data, dataset2, dataset3, dataset5)
+function [overlappingMatchesMatrix, nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data, dataset2, dataset3, dataset5, dataset6)
 
 %Find the overlapping image pairs
 %Separate the datasets
@@ -55,12 +55,11 @@ elseif nargin==3
     [row46nm] = strmatch([4,6], data(:,1:2));
     
     %Create the non-overlapping dataset
-    nonOverlappingDataset = [data(row13nm,:); data(row14nm,:); data(row23nm,:); data(row24nm,:)
-                             data(row35nm,:); data(row36nm,:); data(row45nm,:); data(row46nm,:)];
+    nonOverlappingDataset = [data(row13nm,:); data(row14nm,:); data(row23nm,:); data(row24nm,:); data(row35nm,:); data(row36nm,:); data(row45nm,:); data(row46nm,:)];
     
     
 elseif nargin==4
-     [row1] = strmatch([1,1], data(:,1:2));
+    [row1] = strmatch([1,1], data(:,1:2));
     [row2] = strmatch([2,2], data(:,1:2));
     
     %Create the overlapping dataset
@@ -103,15 +102,23 @@ nonOverlappingMatchesMatrix =[total_matches, valid_matches...
 
 
 %Now determine the mean number of keypoints
-if nargin==1 || nargin==3
+if nargin==1
     meanKeypointsOverlap = mean(data(min(row1):max(row4),6));
     meanKeypointsNonOverlap = mean(data((row4+1):end,6));
+elseif nargin ==3
+    if dataset3==4
+        meanKeypointsOverlap = mean(data(min(row1):max(row4),7));
+        meanKeypointsNonOverlap = mean(data((row4+1):end,7));
+    else
+        meanKeypointsOverlap = mean(data(min(row1):max(row4),6));
+        meanKeypointsNonOverlap = mean(data((row4+1):end,6));
+    end
 elseif nargin==2
     meanKeypointsOverlap = mean(data(min(row5):max(row6),6));
     meanKeypointsNonOverlap = mean(data((row6+1):end,6));
 elseif nargin==4
     meanKeypointsOverlap = mean(data(min(row1):max(row2),6));
-    meanKeypointsNonOverlap = mean(data((row2+1):end,6));  
+    meanKeypointsNonOverlap = mean(data((row2+1):end,6));
 end
 %First for overlapping images
 % [total_keypoints_11, numImages11] = calculateMeanKeypoints(data(row1,:));

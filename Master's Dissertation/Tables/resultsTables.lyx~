@@ -828,7 +828,7 @@ Non-overlapping Score
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -886,7 +886,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK- SURF2D
+BRISK0- SURF2D
 \end_layout
 
 \end_inset
@@ -985,7 +985,7 @@ Radius Matching
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -1067,7 +1067,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK- SURF2D
+BRISK0- SURF2D
 \end_layout
 
 \end_inset
@@ -3702,7 +3702,7 @@ Average Score Threshold
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -4393,7 +4393,7 @@ distanceC
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -5372,7 +5372,7 @@ Overall(ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -5423,7 +5423,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.4840
+3.484
 \end_layout
 
 \end_inset
@@ -5444,7 +5444,7 @@ MPS
 \uwave off
 \noun off
 \color none
-6.0540
+6.054
 \end_layout
 
 \end_inset
@@ -5465,7 +5465,7 @@ MPS
 \uwave off
 \noun off
 \color none
-1.7070
+1.707
 \end_layout
 
 \end_inset
@@ -5486,7 +5486,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.029000
+0.029
 \end_layout
 
 \end_inset
@@ -5602,7 +5602,7 @@ MPS
 \uwave off
 \noun off
 \color none
-5.8820
+5.882
 \end_layout
 
 \end_inset
@@ -5623,7 +5623,7 @@ MPS
 \uwave off
 \noun off
 \color none
-1.5710
+1.571
 \end_layout
 
 \end_inset
@@ -5644,7 +5644,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.029000
+0.029
 \end_layout
 
 \end_inset
@@ -5688,7 +5688,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -5739,7 +5739,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.6230
+3.623
 \end_layout
 
 \end_inset
@@ -5781,7 +5781,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.57800
+0.578
 \end_layout
 
 \end_inset
@@ -5802,7 +5802,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.039000
+0.039
 \end_layout
 
 \end_inset
@@ -5836,7 +5836,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK - U-BRISK
+BRISK0 - U-BRISK
 \end_layout
 
 \end_inset
@@ -5869,7 +5869,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.3320
+3.332
 \end_layout
 
 \end_inset
@@ -5880,7 +5880,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-2.5950
+2.595
 \end_layout
 
 \end_inset
@@ -5891,7 +5891,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-1.0580
+1.058
 \end_layout
 
 \end_inset
@@ -5902,7 +5902,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.024000
+0.024
 \end_layout
 
 \end_inset
@@ -5936,7 +5936,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -5987,7 +5987,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.1300
+4.130
 \end_layout
 
 \end_inset
@@ -6029,7 +6029,7 @@ CPS
 \uwave off
 \noun off
 \color none
-6.4990
+6.499
 \end_layout
 
 \end_inset
@@ -6050,7 +6050,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.053000
+0.053
 \end_layout
 
 \end_inset
@@ -6187,7 +6187,7 @@ CPS
 \uwave off
 \noun off
 \color none
-6.7440
+6.744
 \end_layout
 
 \end_inset
@@ -6208,7 +6208,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.057000
+0.057
 \end_layout
 
 \end_inset
@@ -6252,7 +6252,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -6303,7 +6303,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.2050
+4.205
 \end_layout
 
 \end_inset
@@ -6345,7 +6345,7 @@ CPS
 \uwave off
 \noun off
 \color none
-1.4910
+1.491
 \end_layout
 
 \end_inset
@@ -6366,7 +6366,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.067000
+0.067
 \end_layout
 
 \end_inset
@@ -6410,7 +6410,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK - U-BRISK
+BRISK0 - U-BRISK
 \end_layout
 
 \end_inset
@@ -6461,7 +6461,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.8320
+3.832
 \end_layout
 
 \end_inset
@@ -6482,7 +6482,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.0510
+4.051
 \end_layout
 
 \end_inset
@@ -6503,7 +6503,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.7750
+3.775
 \end_layout
 
 \end_inset
@@ -6524,7 +6524,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.042000
+0.042
 \end_layout
 
 \end_inset
@@ -6591,7 +6591,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.27000
+0.270
 \end_layout
 
 \end_inset
@@ -6602,7 +6602,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.13400
+0.134
 \end_layout
 
 \end_inset
@@ -6613,7 +6613,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.24400
+0.244
 \end_layout
 
 \end_inset
@@ -6624,7 +6624,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.028000
+0.028
 \end_layout
 
 \end_inset
@@ -6811,7 +6811,7 @@ Overall(ms)
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -6862,7 +6862,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.0800
+3.080
 \end_layout
 
 \end_inset
@@ -6883,7 +6883,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.2180
+3.218
 \end_layout
 
 \end_inset
@@ -6904,7 +6904,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.35200
+0.352
 \end_layout
 
 \end_inset
@@ -6925,7 +6925,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.016000
+0.016
 \end_layout
 
 \end_inset
@@ -7008,7 +7008,7 @@ MPS
 \uwave off
 \noun off
 \color none
-8.4920
+8.492
 \end_layout
 
 \end_inset
@@ -7029,7 +7029,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.3550
+3.355
 \end_layout
 
 \end_inset
@@ -7050,7 +7050,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.32200
+0.322
 \end_layout
 
 \end_inset
@@ -7071,7 +7071,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.016000
+0.016
 \end_layout
 
 \end_inset
@@ -7103,7 +7103,7 @@ MPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -7154,7 +7154,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.2310
+3.231
 \end_layout
 
 \end_inset
@@ -7175,7 +7175,7 @@ MPS
 \uwave off
 \noun off
 \color none
-7.2990
+7.299
 \end_layout
 
 \end_inset
@@ -7196,7 +7196,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.26500
+0.265
 \end_layout
 
 \end_inset
@@ -7217,7 +7217,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.0090000
+0.009
 \end_layout
 
 \end_inset
@@ -7251,7 +7251,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -7260,6 +7260,8 @@ SBRISK-UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 MPS
 \end_layout
 
@@ -7282,7 +7284,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.0970
+3.097
 \end_layout
 
 \end_inset
@@ -7293,7 +7295,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-1.9530
+1.953
 \end_layout
 
 \end_inset
@@ -7304,7 +7306,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.36000
+0.360
 \end_layout
 
 \end_inset
@@ -7315,7 +7317,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.010000
+0.010
 \end_layout
 
 \end_inset
@@ -7326,7 +7328,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-9.4310
+9.431
 \end_layout
 
 \end_inset
@@ -7349,7 +7351,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -7412,7 +7414,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.1130
+3.113
 \end_layout
 
 \end_inset
@@ -7433,7 +7435,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.3270
+3.327
 \end_layout
 
 \end_inset
@@ -7454,7 +7456,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.38300
+0.383
 \end_layout
 
 \end_inset
@@ -7475,7 +7477,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.021000
+0.021
 \end_layout
 
 \end_inset
@@ -7582,7 +7584,7 @@ CPS
 \uwave off
 \noun off
 \color none
-9.5310
+9.531
 \end_layout
 
 \end_inset
@@ -7603,7 +7605,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.3610
+4.361
 \end_layout
 
 \end_inset
@@ -7624,7 +7626,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.67600
+0.676
 \end_layout
 
 \end_inset
@@ -7645,7 +7647,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.041000
+0.041
 \end_layout
 
 \end_inset
@@ -7689,7 +7691,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -7752,7 +7754,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.2910
+3.291
 \end_layout
 
 \end_inset
@@ -7773,7 +7775,7 @@ CPS
 \uwave off
 \noun off
 \color none
-8.3150
+8.315
 \end_layout
 
 \end_inset
@@ -7794,7 +7796,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.31200
+0.312
 \end_layout
 
 \end_inset
@@ -7815,7 +7817,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.011000
+0.011
 \end_layout
 
 \end_inset
@@ -7859,7 +7861,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -7922,7 +7924,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.1140
+3.114
 \end_layout
 
 \end_inset
@@ -7943,7 +7945,7 @@ CPS
 \uwave off
 \noun off
 \color none
-1.9970
+1.997
 \end_layout
 
 \end_inset
@@ -7964,7 +7966,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.36700
+0.367
 \end_layout
 
 \end_inset
@@ -7985,7 +7987,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.012000
+0.012
 \end_layout
 
 \end_inset
@@ -8006,7 +8008,7 @@ CPS
 \uwave off
 \noun off
 \color none
-9.5030
+9.503
 \end_layout
 
 \end_inset
@@ -8052,7 +8054,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.27000
+0.270
 \end_layout
 
 \end_inset
@@ -8063,7 +8065,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.13400
+0.134
 \end_layout
 
 \end_inset
@@ -8074,7 +8076,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.24400
+0.244
 \end_layout
 
 \end_inset
@@ -8085,7 +8087,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.028000
+0.028
 \end_layout
 
 \end_inset
@@ -8694,7 +8696,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -8873,7 +8875,7 @@ SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -9737,7 +9739,7 @@ Radius
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -9958,7 +9960,7 @@ Radius
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -10698,7 +10700,7 @@ KNN=2
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -10865,7 +10867,7 @@ KNN=2
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -11172,7 +11174,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -11235,7 +11237,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.6950
+3.695
 \end_layout
 
 \end_inset
@@ -11256,7 +11258,7 @@ MPS
 \uwave off
 \noun off
 \color none
-8.1660
+8.166
 \end_layout
 
 \end_inset
@@ -11277,7 +11279,7 @@ MPS
 \uwave off
 \noun off
 \color none
-5.5120
+5.512
 \end_layout
 
 \end_inset
@@ -11298,7 +11300,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.065000
+0.065
 \end_layout
 
 \end_inset
@@ -11426,7 +11428,7 @@ MPS
 \uwave off
 \noun off
 \color none
-7.1060
+7.106
 \end_layout
 
 \end_inset
@@ -11447,7 +11449,7 @@ MPS
 \uwave off
 \noun off
 \color none
-5.2520
+5.252
 \end_layout
 
 \end_inset
@@ -11468,7 +11470,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.072000
+0.072
 \end_layout
 
 \end_inset
@@ -11512,7 +11514,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -11575,7 +11577,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.7930
+3.793
 \end_layout
 
 \end_inset
@@ -11617,7 +11619,7 @@ MPS
 \uwave off
 \noun off
 \color none
-1.4970
+1.497
 \end_layout
 
 \end_inset
@@ -11638,7 +11640,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.083000
+0.083
 \end_layout
 
 \end_inset
@@ -11672,7 +11674,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -11682,17 +11684,7 @@ SBRISK-UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 MPS
 \end_layout
 
@@ -11715,7 +11707,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.4690
+3.469
 \end_layout
 
 \end_inset
@@ -11726,7 +11718,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.1120
+3.112
 \end_layout
 
 \end_inset
@@ -11737,7 +11729,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.2450
+3.245
 \end_layout
 
 \end_inset
@@ -11748,7 +11740,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.052000
+0.052
 \end_layout
 
 \end_inset
@@ -11782,7 +11774,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -11845,7 +11837,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.4990
+4.499
 \end_layout
 
 \end_inset
@@ -11908,7 +11900,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.11200
+0.112
 \end_layout
 
 \end_inset
@@ -12078,7 +12070,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.13700
+0.137
 \end_layout
 
 \end_inset
@@ -12122,7 +12114,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -12185,7 +12177,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.5200
+4.520
 \end_layout
 
 \end_inset
@@ -12227,7 +12219,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.6000
+3.600
 \end_layout
 
 \end_inset
@@ -12248,7 +12240,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.13100
+0.131
 \end_layout
 
 \end_inset
@@ -12292,7 +12284,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -12355,7 +12347,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.1490
+4.149
 \end_layout
 
 \end_inset
@@ -12376,7 +12368,7 @@ CPS
 \uwave off
 \noun off
 \color none
-5.2980
+5.298
 \end_layout
 
 \end_inset
@@ -12418,7 +12410,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.090000
+0.090
 \end_layout
 
 \end_inset
@@ -12485,7 +12477,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.27700
+0.277
 \end_layout
 
 \end_inset
@@ -12496,7 +12488,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.19700
+0.197
 \end_layout
 
 \end_inset
@@ -12507,7 +12499,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.48300
+0.483
 \end_layout
 
 \end_inset
@@ -12518,7 +12510,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.043000
+0.043
 \end_layout
 
 \end_inset
@@ -12689,7 +12681,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -12752,7 +12744,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.0940
+3.094
 \end_layout
 
 \end_inset
@@ -12773,7 +12765,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.4610
+3.461
 \end_layout
 
 \end_inset
@@ -12794,7 +12786,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.80800
+0.808
 \end_layout
 
 \end_inset
@@ -12815,7 +12807,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.011000
+0.011
 \end_layout
 
 \end_inset
@@ -12922,7 +12914,7 @@ MPS
 \uwave off
 \noun off
 \color none
-8.6260
+8.626
 \end_layout
 
 \end_inset
@@ -12943,7 +12935,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.2650
+3.265
 \end_layout
 
 \end_inset
@@ -12964,7 +12956,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.84700
+0.847
 \end_layout
 
 \end_inset
@@ -12985,7 +12977,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.012000
+0.012
 \end_layout
 
 \end_inset
@@ -13029,7 +13021,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -13092,7 +13084,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.2550
+3.255
 \end_layout
 
 \end_inset
@@ -13113,7 +13105,7 @@ MPS
 \uwave off
 \noun off
 \color none
-8.4950
+8.495
 \end_layout
 
 \end_inset
@@ -13134,7 +13126,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.48900
+0.489
 \end_layout
 
 \end_inset
@@ -13155,7 +13147,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.019000
+0.019
 \end_layout
 
 \end_inset
@@ -13189,7 +13181,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -13222,7 +13214,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.1250
+3.125
 \end_layout
 
 \end_inset
@@ -13233,7 +13225,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-2.0570
+2.057
 \end_layout
 
 \end_inset
@@ -13244,7 +13236,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.88300
+0.883
 \end_layout
 
 \end_inset
@@ -13255,7 +13247,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.014000
+0.014
 \end_layout
 
 \end_inset
@@ -13289,7 +13281,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -13352,7 +13344,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.1180
+3.118
 \end_layout
 
 \end_inset
@@ -13373,7 +13365,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.5900
+3.590
 \end_layout
 
 \end_inset
@@ -13394,7 +13386,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.88900
+0.889
 \end_layout
 
 \end_inset
@@ -13415,7 +13407,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.014000
+0.014
 \end_layout
 
 \end_inset
@@ -13522,7 +13514,7 @@ CPS
 \uwave off
 \noun off
 \color none
-9.9970
+9.997
 \end_layout
 
 \end_inset
@@ -13543,7 +13535,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.6630
+4.663
 \end_layout
 
 \end_inset
@@ -13564,7 +13556,7 @@ CPS
 \uwave off
 \noun off
 \color none
-2.0820
+2.082
 \end_layout
 
 \end_inset
@@ -13585,7 +13577,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.023000
+0.023
 \end_layout
 
 \end_inset
@@ -13629,7 +13621,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -13692,7 +13684,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.3660
+3.366
 \end_layout
 
 \end_inset
@@ -13734,7 +13726,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.65600
+0.656
 \end_layout
 
 \end_inset
@@ -13755,7 +13747,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.022000
+0.022
 \end_layout
 
 \end_inset
@@ -13789,7 +13781,7 @@ CPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -13810,7 +13802,17 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 96.277
 \end_layout
 
@@ -13821,8 +13823,18 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
-3.1200
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+3.120
 \end_layout
 
 \end_inset
@@ -13832,8 +13844,18 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
-2.0600
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2.060
 \end_layout
 
 \end_inset
@@ -13843,8 +13865,18 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
-0.87500
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.875
 \end_layout
 
 \end_inset
@@ -13854,8 +13886,18 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
-0.017000
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.017
 \end_layout
 
 \end_inset
@@ -13865,7 +13907,17 @@ CPS
 
 \begin_layout Plain Layout
 
-\series bold
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 10.409
 \end_layout
 
@@ -13912,7 +13964,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.27700
+0.277
 \end_layout
 
 \end_inset
@@ -13923,7 +13975,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.19700
+0.197
 \end_layout
 
 \end_inset
@@ -13934,7 +13986,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.48300
+0.483
 \end_layout
 
 \end_inset
@@ -13945,7 +13997,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.043000
+0.043
 \end_layout
 
 \end_inset
@@ -14116,7 +14168,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -14179,7 +14231,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.2330
+3.233
 \end_layout
 
 \end_inset
@@ -14200,7 +14252,7 @@ MPS
 \uwave off
 \noun off
 \color none
-4.5650
+4.565
 \end_layout
 
 \end_inset
@@ -14221,7 +14273,7 @@ MPS
 \uwave off
 \noun off
 \color none
-2.3210
+2.321
 \end_layout
 
 \end_inset
@@ -14242,7 +14294,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.021000
+0.021
 \end_layout
 
 \end_inset
@@ -14370,7 +14422,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.9520
+3.952
 \end_layout
 
 \end_inset
@@ -14391,7 +14443,7 @@ MPS
 \uwave off
 \noun off
 \color none
-1.3410
+1.341
 \end_layout
 
 \end_inset
@@ -14412,7 +14464,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.017000
+0.017
 \end_layout
 
 \end_inset
@@ -14456,7 +14508,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -14519,7 +14571,7 @@ MPS
 \uwave off
 \noun off
 \color none
-3.4360
+3.436
 \end_layout
 
 \end_inset
@@ -14561,7 +14613,7 @@ MPS
 \uwave off
 \noun off
 \color none
-1.2600
+1.260
 \end_layout
 
 \end_inset
@@ -14582,7 +14634,7 @@ MPS
 \uwave off
 \noun off
 \color none
-0.039000
+0.039
 \end_layout
 
 \end_inset
@@ -14616,7 +14668,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -14649,7 +14701,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-3.2490
+3.249
 \end_layout
 
 \end_inset
@@ -14660,7 +14712,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-2.5160
+2.516
 \end_layout
 
 \end_inset
@@ -14671,7 +14723,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-2.6140
+2.614
 \end_layout
 
 \end_inset
@@ -14682,7 +14734,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-0.026000
+0.026
 \end_layout
 
 \end_inset
@@ -14716,7 +14768,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -14779,7 +14831,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.2680
+3.268
 \end_layout
 
 \end_inset
@@ -14800,7 +14852,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.7620
+4.762
 \end_layout
 
 \end_inset
@@ -14821,7 +14873,7 @@ CPS
 \uwave off
 \noun off
 \color none
-2.6180
+2.618
 \end_layout
 
 \end_inset
@@ -14842,7 +14894,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.028000
+0.028
 \end_layout
 
 \end_inset
@@ -14970,7 +15022,7 @@ CPS
 \uwave off
 \noun off
 \color none
-6.1390
+6.139
 \end_layout
 
 \end_inset
@@ -14991,7 +15043,7 @@ CPS
 \uwave off
 \noun off
 \color none
-4.3590
+4.359
 \end_layout
 
 \end_inset
@@ -15012,7 +15064,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.045000
+0.045
 \end_layout
 
 \end_inset
@@ -15056,7 +15108,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -15119,7 +15171,7 @@ CPS
 \uwave off
 \noun off
 \color none
-3.6030
+3.603
 \end_layout
 
 \end_inset
@@ -15161,7 +15213,7 @@ CPS
 \uwave off
 \noun off
 \color none
-1.7170
+1.717
 \end_layout
 
 \end_inset
@@ -15182,7 +15234,7 @@ CPS
 \uwave off
 \noun off
 \color none
-0.051000
+0.051
 \end_layout
 
 \end_inset
@@ -15214,7 +15266,7 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -15232,6 +15284,18 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 92.964
 \end_layout
 
@@ -15241,7 +15305,19 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.3030
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+3.303
 \end_layout
 
 \end_inset
@@ -15250,7 +15326,19 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.5810
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2.581
 \end_layout
 
 \end_inset
@@ -15259,7 +15347,19 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.6180
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2.618
 \end_layout
 
 \end_inset
@@ -15268,7 +15368,19 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.030000
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.030
 \end_layout
 
 \end_inset
@@ -15277,6 +15389,18 @@ CPS
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 13.503
 \end_layout
 
@@ -15323,7 +15447,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.27300
+0.273
 \end_layout
 
 \end_inset
@@ -15334,7 +15458,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.16100
+0.161
 \end_layout
 
 \end_inset
@@ -15345,7 +15469,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.35100
+0.351
 \end_layout
 
 \end_inset
@@ -15356,7 +15480,7 @@ Given
 \begin_layout Plain Layout
 
 \series bold
-0.044000
+0.044
 \end_layout
 
 \end_inset
@@ -15531,7 +15655,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -15871,7 +15995,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -16031,7 +16155,7 @@ MPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -16131,7 +16255,7 @@ MPS
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -16471,7 +16595,7 @@ CPS
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -16631,7 +16755,7 @@ CPS
 \begin_layout Plain Layout
 
 \series bold
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -17079,7 +17203,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -17419,7 +17543,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -17589,7 +17713,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset
@@ -18094,7 +18218,7 @@ Overall(ms)
 \uwave off
 \noun off
 \color none
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -18434,7 +18558,7 @@ Maximum55
 \uwave off
 \noun off
 \color none
-SBRISK-SURF2D
+BRISK0-SURF2D
 \end_layout
 
 \end_inset
@@ -18604,7 +18728,7 @@ Maximum
 \uwave off
 \noun off
 \color none
-SBRISK-UBRISK
+BRISK0-UBRISK
 \end_layout
 
 \end_inset

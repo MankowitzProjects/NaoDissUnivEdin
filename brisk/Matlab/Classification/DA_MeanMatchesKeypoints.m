@@ -15,7 +15,7 @@ addpath('../DataStreet');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 6;
+datasetType = 1;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
@@ -206,17 +206,17 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
         %1. Original Dataset Left light off
         %load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
         load 'dataLighting_left_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
-        [left_overlappingMatchesMatrix, left_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,3);
+        [left_overlappingMatchesMatrix, left_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,4);
         
         %2. Original Dataset Right light off
         %load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
         load 'dataLighting_right_light_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
-        [right_overlappingMatchesMatrix, right_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,3);
+        [right_overlappingMatchesMatrix, right_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,4);
         
         %3. Original dataset both lights off
         %load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_21072012_1317_75_121_consistent.mat'
         load 'dataLighting_both_lights_off_nonmatching_matching_Data__BRISK_U-BRISK_Hamming_25072012_2038_75_121_max.mat'
-        [both_overlappingMatchesMatrix, both_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,3);
+        [both_overlappingMatchesMatrix, both_nonOverlappingMatchesMatrix]  = calculateMatchingStatistics(data,2,4);
         
     elseif datasetType==4 %For comparing pics with the camera
         %For BRISK0 UBRISK

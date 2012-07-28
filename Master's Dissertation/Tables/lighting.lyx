@@ -543,6 +543,27 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
+96.450
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
 2.895
 \end_layout
 
@@ -585,28 +606,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.2150
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.007000
+0.215
 \end_layout
 
 \end_inset
@@ -627,7 +627,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-8.529
+0.007
 \end_layout
 
 \end_inset
@@ -639,6 +639,27 @@ Overall Time (ms)
 
 \begin_layout Plain Layout
 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+96.406
 \end_layout
 
 \end_inset
@@ -722,28 +743,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.2300
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.007000
+0.230
 \end_layout
 
 \end_inset
@@ -764,7 +764,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-8.567
+0.007
 \end_layout
 
 \end_inset
@@ -776,6 +776,27 @@ Overall Time (ms)
 
 \begin_layout Plain Layout
 3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+92.223
 \end_layout
 
 \end_inset
@@ -859,28 +880,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.2940
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.008000
+0.294
 \end_layout
 
 \end_inset
@@ -901,7 +901,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-9.394
+0.008
 \end_layout
 
 \end_inset

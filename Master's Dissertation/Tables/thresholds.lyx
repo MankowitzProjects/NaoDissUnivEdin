@@ -157,7 +157,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.0600
+0.06
 \end_layout
 
 \end_inset
@@ -178,7 +178,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.595
+0.60
 \end_layout
 
 \end_inset
@@ -222,7 +222,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.0500
+0.05
 \end_layout
 
 \end_inset
@@ -243,7 +243,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.572
+0.57
 \end_layout
 
 \end_inset
@@ -287,7 +287,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-30
+30.00
 \end_layout
 
 \end_inset
@@ -308,7 +308,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.579
+0.58
 \end_layout
 
 \end_inset
@@ -352,7 +352,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.0500
+0.05
 \end_layout
 
 \end_inset
@@ -373,7 +373,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.560
+0.56
 \end_layout
 
 \end_inset
@@ -417,7 +417,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-294
+294.00
 \end_layout
 
 \end_inset
@@ -438,7 +438,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-0.057
+0.06
 \end_layout
 
 \end_inset
@@ -594,7 +594,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.160
+0.16
 \end_layout
 
 \end_inset
@@ -615,7 +615,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.398
+0.40
 \end_layout
 
 \end_inset
@@ -659,7 +659,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.220
+0.22
 \end_layout
 
 \end_inset
@@ -680,7 +680,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.414
+0.41
 \end_layout
 
 \end_inset
@@ -724,7 +724,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-32
+32.00
 \end_layout
 
 \end_inset
@@ -745,7 +745,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.465
+0.47
 \end_layout
 
 \end_inset
@@ -789,7 +789,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.130
+0.13
 \end_layout
 
 \end_inset
@@ -810,7 +810,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.377
+0.38
 \end_layout
 
 \end_inset
@@ -854,7 +854,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-294
+294.00
 \end_layout
 
 \end_inset
@@ -875,7 +875,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-0.057
+0.06
 \end_layout
 
 \end_inset
@@ -1023,7 +1023,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.090
+0.09
 \end_layout
 
 \end_inset
@@ -1044,7 +1044,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.758
+0.76
 \end_layout
 
 \end_inset
@@ -1088,7 +1088,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.070
+0.07
 \end_layout
 
 \end_inset
@@ -1109,7 +1109,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.738
+0.74
 \end_layout
 
 \end_inset
@@ -1153,7 +1153,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-79
+79.00
 \end_layout
 
 \end_inset
@@ -1174,7 +1174,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.585
+0.59
 \end_layout
 
 \end_inset
@@ -1239,7 +1239,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.633
+0.63
 \end_layout
 
 \end_inset
@@ -1283,7 +1283,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-432
+432.00
 \end_layout
 
 \end_inset
@@ -1304,7 +1304,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-0.180
+0.18
 \end_layout
 
 \end_inset
@@ -1456,7 +1456,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.080
+0.08
 \end_layout
 
 \end_inset
@@ -1477,7 +1477,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.718
+0.72
 \end_layout
 
 \end_inset
@@ -1521,7 +1521,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.080
+0.08
 \end_layout
 
 \end_inset
@@ -1586,7 +1586,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-54
+54.00
 \end_layout
 
 \end_inset
@@ -1607,7 +1607,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.682
+0.68
 \end_layout
 
 \end_inset
@@ -1651,7 +1651,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.080
+0.08
 \end_layout
 
 \end_inset
@@ -1716,7 +1716,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-432
+432.00
 \end_layout
 
 \end_inset
@@ -1893,7 +1893,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.100
+0.10
 \end_layout
 
 \end_inset
@@ -1914,7 +1914,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.933
+0.93
 \end_layout
 
 \end_inset
@@ -1958,7 +1958,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.0600
+0.06
 \end_layout
 
 \end_inset
@@ -1979,7 +1979,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.952
+0.95
 \end_layout
 
 \end_inset
@@ -2023,7 +2023,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-82
+82.00
 \end_layout
 
 \end_inset
@@ -2044,7 +2044,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.900
+0.90
 \end_layout
 
 \end_inset
@@ -2088,7 +2088,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.0700
+0.07
 \end_layout
 
 \end_inset
@@ -2109,7 +2109,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.886
+0.89
 \end_layout
 
 \end_inset
@@ -2153,7 +2153,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-80
+80.00
 \end_layout
 
 \end_inset
@@ -2174,7 +2174,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-0.600
+0.60
 \end_layout
 
 \end_inset
@@ -2326,7 +2326,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.0800
+0.08
 \end_layout
 
 \end_inset
@@ -2347,7 +2347,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.895
+0.90
 \end_layout
 
 \end_inset
@@ -2391,7 +2391,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.0800
+0.08
 \end_layout
 
 \end_inset
@@ -2412,7 +2412,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.814
+0.81
 \end_layout
 
 \end_inset
@@ -2456,7 +2456,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-62
+62.00
 \end_layout
 
 \end_inset
@@ -2477,7 +2477,7 @@ BRISK0-SURF2D
 \uwave off
 \noun off
 \color none
-0.886
+0.89
 \end_layout
 
 \end_inset
@@ -2521,7 +2521,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.0700
+0.07
 \end_layout
 
 \end_inset
@@ -2542,7 +2542,7 @@ BRISK0-UBRISK
 \uwave off
 \noun off
 \color none
-0.900
+0.90
 \end_layout
 
 \end_inset
@@ -2586,7 +2586,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-80
+80.00
 \end_layout
 
 \end_inset
@@ -2607,7 +2607,7 @@ SURF 1D
 \uwave off
 \noun off
 \color none
-0.600
+0.60
 \end_layout
 
 \end_inset
@@ -2748,7 +2748,7 @@ Left Light turned off
 \uwave off
 \noun off
 \color none
-0.0900
+0.09
 \end_layout
 
 \end_inset
@@ -2769,7 +2769,7 @@ Left Light turned off
 \uwave off
 \noun off
 \color none
-0.433
+0.43
 \end_layout
 
 \end_inset
@@ -2813,7 +2813,7 @@ Right Light and Main lights turned off
 \uwave off
 \noun off
 \color none
-0.0700
+0.07
 \end_layout
 
 \end_inset
@@ -2834,7 +2834,7 @@ Right Light and Main lights turned off
 \uwave off
 \noun off
 \color none
-0.555
+0.56
 \end_layout
 
 \end_inset
@@ -2878,7 +2878,7 @@ Both Lights turned off
 \uwave off
 \noun off
 \color none
-0.0900
+0.09
 \end_layout
 
 \end_inset
@@ -2899,7 +2899,7 @@ Both Lights turned off
 \uwave off
 \noun off
 \color none
-0.412
+0.41
 \end_layout
 
 \end_inset
@@ -3040,7 +3040,7 @@ Nao only
 \uwave off
 \noun off
 \color none
-0.130
+0.13
 \end_layout
 
 \end_inset
@@ -3061,7 +3061,7 @@ Nao only
 \uwave off
 \noun off
 \color none
-0.377
+0.38
 \end_layout
 
 \end_inset
@@ -3093,7 +3093,7 @@ Nao and Nikon
 \uwave off
 \noun off
 \color none
-0.0800
+0.08
 \end_layout
 
 \end_inset
@@ -3114,7 +3114,7 @@ Nao and Nikon
 \uwave off
 \noun off
 \color none
-0.364
+0.36
 \end_layout
 
 \end_inset
@@ -3255,7 +3255,7 @@ Nao only
 \uwave off
 \noun off
 \color none
-0.070
+0.07
 \end_layout
 
 \end_inset
@@ -3308,7 +3308,7 @@ Nao and Nikon
 \uwave off
 \noun off
 \color none
-0.090
+0.09
 \end_layout
 
 \end_inset
