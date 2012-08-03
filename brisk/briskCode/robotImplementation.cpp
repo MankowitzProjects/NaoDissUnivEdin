@@ -47,6 +47,7 @@
 #include <sstream>
 
 #define DEBUG_MODE 0
+#define MATCHES_MODE 1
 #define DEBUG_TIMES 1
 #define DEBUG_MATCHES 1
 #define OUTPUT 0
@@ -103,7 +104,7 @@ int main(int argc, char ** argv) {
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
 	double threshold = 75;//46.25
-	int hammingDistance = 121.25;//BRISK BRISK
+	double hammingDistance = 121.25;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
 	std::string feat_descriptor = "U-BRISK";
 
@@ -126,8 +127,8 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-//	std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/PicsMG/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	std::string dir = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
+	std::string dir1 = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
 //		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
@@ -144,22 +145,22 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
-//		std::string dir = "../images/Dataset3_Overlapping_1";
-//		std::string dir1 = "../images/Dataset3_Overlapping_1";
+//		std::string dir = "../images/Dataset2_Overlapping_1";
+//		std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
 //		std::string dir = "../images/Dataset3_Overlapping_1";
 //		std::string dir1 = "../images/Camera_Dataset3_1";
 
 	//Google Street View dataset
-		std::string dir = "../images/GoogleMaps/NaoSide1";
-		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/GoogleMaps/NaoSide1";
+//		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "3";
-	std::string name2 = "10";
+	std::string name1 = "7";
+	std::string name2 = "12";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -341,7 +342,9 @@ int main(int argc, char ** argv) {
 	float overallTime = diff(ts,te).tv_nsec/1000000.0f;
 
 
-#if (DEBUG_MODE)
+#if (MATCHES_MODE)
+	cout<<"The total number of keypoints in Left image: "<<keypoints.size()<<endl;
+	cout<<"The total number of keypoints in Right image: "<<keypoints2.size()<<endl;
 	cout<<"****************************************"<<endl;
 	cout<<"The matching score for the image (condsidering all matches) is "<<feature.imageMatchingScore<<endl;
 	cout<<"The matching score for the image (condsidering best match only) is "<<feature.imageMatchingScoreBest<<endl;
@@ -440,7 +443,9 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/VaryingIlluminationLeftDataset.jpg",outimg);
 //	cv::imwrite("../images/VaryingIlluminationRightDataset.jpg",outimg);
 //	cv::imwrite("../images/VaryingIlluminationBothDataset.jpg",outimg);
-	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
+//	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
+//	cv::imwrite("../images/KNN_ratio.jpg",outimg);//Image 4,4 Datasets 1,1
+//	cv::imwrite("../images/LightingBrisk4.jpg",outimg);//Img 30, 8 from dataset 3,3
 	//cv::imwrite("../images/match.jpg",outimg);
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 #endif

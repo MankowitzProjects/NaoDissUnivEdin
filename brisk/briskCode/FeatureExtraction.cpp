@@ -274,10 +274,10 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		//Verify the Knn Neighbors matching criteria
 		if (matches[i].size()>0){
 
-		if(usingKnnCriterion)
-		verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
-		else
-			isKnnMatch=true;
+			if(usingKnnCriterion)
+				verifyKNNMatches(matches[i]);//Check if the KNN ratio holds
+			else
+				isKnnMatch=true;
 
 #if (FEATURE_DEBUG_MATCHES)
 			cout<<"The index is: "<<i<<endl;
@@ -373,12 +373,12 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 #endif
 
 
-					#if (SINGLE_IMAGE_COMPARISONS)
+#if (SINGLE_IMAGE_COMPARISONS)
 					//This stores the coordinates of the invalid matches
 					leftPointsAngle.push_back(keypoints[i1]);
 					rightPointsAngle.push_back(keypoints2[i2]);
 					keypointDistanceAngle.push_back(matches[i][counter].distance);
-					#endif
+#endif
 
 					//Erase the matches
 					//***************************************************
@@ -433,14 +433,14 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 					keypointDistanceKNN.push_back(matches[i].begin()->distance);
 					neighborIndexKNN.push_back(j);
 #endif
-//					cout<<"Match 1: "<<matches[i].begin()->distance<<endl;
-//					cout<<"Match 2: "<<(matches[i].begin()+1)->distance<<endl;
-//
-//					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
-//					cout<<"Matches size: "<<matches[i].size()<<endl;
-//					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
-//					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
-//					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
+					//					cout<<"Match 1: "<<matches[i].begin()->distance<<endl;
+					//					cout<<"Match 2: "<<(matches[i].begin()+1)->distance<<endl;
+					//
+					//					cout<<"(i,j) indices: "<<i<<", "<<j<<endl;
+					//					cout<<"Matches size: "<<matches[i].size()<<endl;
+					//					cout<<"Keypoint Left to be erased row,col : "<<keypoints[matches[i].begin()->queryIdx].pt.y<<", "<<keypoints[matches[i].begin()->queryIdx].pt.x<<endl;
+					//					cout<<"Keypoint Right to be erased row,col : "<<keypoints2[matches[i].begin()->trainIdx].pt.y<<", "<<keypoints2[matches[i].begin()->trainIdx].pt.x<<endl;
+					//					cout<<"The match distance is: "<<matches[i].begin()->distance<<endl;
 
 					matches[i].erase(matches[i].begin());
 					totalNumInvalidMatches++;
@@ -454,6 +454,22 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 		totalNumValidMatches = totalNumValidMatches + matches[i].size();
 		totalNumMatches = totalNumMatches + allMatches;
 	}
+
+
+	//removeSecondMatches(matches);
+
+}
+
+bool FeatureExtraction::removeSecondMatches(std::vector<std::vector<cv::DMatch> > &matches){
+
+	cout<<"Matches size before: "<<matches.size()<<endl;
+	for (int j = 0;j<matches.size();j++)
+	{
+			//Remove every second match
+			matches[j].erase(matches[j].begin()+1);
+	}
+
+	cout<<"Matches size: "<<matches.size()<<endl;
 
 }
 

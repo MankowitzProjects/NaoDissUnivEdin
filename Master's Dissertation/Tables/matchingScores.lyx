@@ -232,7 +232,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.213
+0.300
 \end_layout
 
 \end_inset
@@ -253,7 +253,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.002
+0.003
 \end_layout
 
 \end_inset
@@ -297,7 +297,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.167
+0.250
 \end_layout
 
 \end_inset
@@ -318,7 +318,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.002
+0.005
 \end_layout
 
 \end_inset
@@ -362,7 +362,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-66.627
+73.932
 \end_layout
 
 \end_inset
@@ -383,7 +383,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-3.516
+3.085
 \end_layout
 
 \end_inset
@@ -427,7 +427,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.178
+0.212
 \end_layout
 
 \end_inset
@@ -480,7 +480,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-91.436
+99.756
 \end_layout
 
 \end_inset
@@ -501,7 +501,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-34.428
+31.537
 \end_layout
 
 \end_inset
@@ -522,18 +522,6 @@ UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-Radius Matching
 \end_layout
 
 \end_inset
@@ -586,7 +574,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.243
+Radius Matching
 \end_layout
 
 \end_inset
@@ -596,18 +584,6 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-0.033
 \end_layout
 
 \end_inset
@@ -651,7 +627,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.363
+0.226
 \end_layout
 
 \end_inset
@@ -672,7 +648,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.046
+0.020
 \end_layout
 
 \end_inset
@@ -716,7 +692,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-59.819
+0.171
 \end_layout
 
 \end_inset
@@ -737,7 +713,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-3.935
+0.006
 \end_layout
 
 \end_inset
@@ -781,7 +757,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.208
+47.783
 \end_layout
 
 \end_inset
@@ -802,7 +778,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.017
+1.612
 \end_layout
 
 \end_inset
@@ -834,7 +810,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-91.436
+0.209
 \end_layout
 
 \end_inset
@@ -855,7 +831,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-34.428
+0.010
 \end_layout
 
 \end_inset
@@ -2517,13 +2493,13 @@ The Matching Score for the Varying Lighting Datasets
 
 \begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="3">
+<lyxtabular version="3" rows="6" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2544,7 +2520,7 @@ Method
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2565,7 +2541,7 @@ Overlapping Score
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2633,6 +2609,59 @@ Radius Matching
 \begin_inset Text
 
 \begin_layout Plain Layout
+Main Robocup Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.209
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.010
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Left fluorescent Light Off
 \end_layout
 
@@ -2654,7 +2683,7 @@ Left fluorescent Light Off
 \uwave off
 \noun off
 \color none
-0.128
+0.144
 \end_layout
 
 \end_inset
@@ -2675,7 +2704,7 @@ Left fluorescent Light Off
 \uwave off
 \noun off
 \color none
-0.009
+0.007
 \end_layout
 
 \end_inset
@@ -2707,7 +2736,7 @@ Right fluorescent light and Main Lights off
 \uwave off
 \noun off
 \color none
-0.128
+0.135
 \end_layout
 
 \end_inset
@@ -2728,7 +2757,7 @@ Right fluorescent light and Main Lights off
 \uwave off
 \noun off
 \color none
-0.006
+0.005
 \end_layout
 
 \end_inset
@@ -2760,7 +2789,7 @@ Both fluorescent Lights off
 \uwave off
 \noun off
 \color none
-0.112
+0.115
 \end_layout
 
 \end_inset
@@ -2781,7 +2810,7 @@ Both fluorescent Lights off
 \uwave off
 \noun off
 \color none
-0.013
+0.011
 \end_layout
 
 \end_inset
@@ -2968,7 +2997,7 @@ Nao only
 \uwave off
 \noun off
 \color none
-0.208
+0.209
 \end_layout
 
 \end_inset
@@ -2989,7 +3018,7 @@ Nao only
 \uwave off
 \noun off
 \color none
-0.017
+0.010
 \end_layout
 
 \end_inset
@@ -3021,7 +3050,7 @@ Nao and Nikon
 \uwave off
 \noun off
 \color none
-0.096
+0.099
 \end_layout
 
 \end_inset
@@ -3042,7 +3071,7 @@ Nao and Nikon
 \uwave off
 \noun off
 \color none
-0.006
+0.005
 \end_layout
 
 \end_inset

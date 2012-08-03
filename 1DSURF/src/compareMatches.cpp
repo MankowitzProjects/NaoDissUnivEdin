@@ -239,8 +239,8 @@ int main(int argc, char *argv[])
 	bool terminal = false;
 
 	//Set the date and time
-	string myDate = "22072012";
-	string myTime = "2151";
+	string myDate = "02082012";
+	string myTime = "1523";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
 	//CHOOSE THE DATASET TO USE
 	//dataset =1 for dataset A (comprised of sets in multiples of 4), 2 for dataset B (comprised of sets in multiples of 2)
 	//dataset = 3 for varying illumination
-	int dataset=2;
+	int dataset=1;
 	//Counters used to ensure standard output for processing in Matlab
 	int tempDirCounterkk = 0;
 	int tempDirCounterss = 0;
@@ -353,10 +353,16 @@ int main(int argc, char *argv[])
 			//The counter must be reset for formatting purposes in Matlab
 			tempDirCounterss = kk;
 		}
-		else if (dataset ==1)
-		{
+		else if(dataset==1){
 			//The counter must be reset for formatting purposes in Matlab
-			tempDirCounterss = 3;//kk for matching; another number for non-matching
+
+			if(isMatching){
+				s_start = s_end = kk;
+				tempDirCounterss = kk;//kk for matching
+			}
+			else{
+				tempDirCounterss = 3;// 3 for non-matching
+			}
 		}
 
 		for (int ss = s_start;ss<=s_end;ss++)

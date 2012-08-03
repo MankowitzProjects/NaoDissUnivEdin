@@ -51,10 +51,16 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	//There are four directories where files can be found
 	if (terminal){
 		//The original dataset
-		mgMatchLeft = "../../images/PicsMG/Matching_Pics_Left_Overlapping";
-		mgMatchRight = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
-		ogMatchLeft = "../../images/PicsOG/Matching_Pics_Left_Overlapping";
-		ogMatchRight = "../../images/PicsOG/Matching_Pics_Right_Overlapping";
+		//		mgMatchLeft = "../../images/PicsMG/Matching_Pics_Left_Overlapping";
+		//		mgMatchRight = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
+		//		ogMatchLeft = "../../images/PicsOG/Matching_Pics_Left_Overlapping";
+		//		ogMatchRight = "../../images/PicsOG/Matching_Pics_Right_Overlapping";
+		//The original dataset (Validation Set)
+		mgMatchLeft = "../../images/PicsMGValidation/Matching_Pics_Left_Overlapping";
+		mgMatchRight = "../../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+		ogMatchLeft = "../../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
+		ogMatchRight = "../../images/PicsOGValidation/Matching_Pics_Right_Overlapping";
+
 
 		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
 		mgLeftMatchLeft = "../../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
@@ -87,10 +93,16 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	{
 
 		//The original dataset
-		mgMatchLeft = "../brisk/images/PicsMG/Matching_Pics_Left_Overlapping";
-		mgMatchRight = "../brisk/images/PicsMG/Matching_Pics_Right_Overlapping";
-		ogMatchLeft = "../brisk/images/PicsOG/Matching_Pics_Left_Overlapping";
-		ogMatchRight = "../brisk/images/PicsOG/Matching_Pics_Right_Overlapping";
+		//		mgMatchLeft = "../brisk/images/PicsMG/Matching_Pics_Left_Overlapping";
+		//		mgMatchRight = "../brisk/images/PicsMG/Matching_Pics_Right_Overlapping";
+		//		ogMatchLeft = "../brisk/images/PicsOG/Matching_Pics_Left_Overlapping";
+		//		ogMatchRight = "../brisk/images/PicsOG/Matching_Pics_Right_Overlapping";
+		//The original dataset (Validation Set)
+		mgMatchLeft = "../brisk/images/PicsMGValidation/Matching_Pics_Left_Overlapping";
+		mgMatchRight = "../brisk/images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+		ogMatchLeft = "../brisk/images/PicsOGValidation/Matching_Pics_Left_Overlapping";
+		ogMatchRight = "../brisk/images/PicsOGValidation/Matching_Pics_Right_Overlapping";
+
 
 		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
 		mgLeftMatchLeft = "../brisk/images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";

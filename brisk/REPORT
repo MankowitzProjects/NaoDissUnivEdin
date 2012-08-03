@@ -1,0 +1,134 @@
+To add to report
+
+1. 300 Pixels from the top of the image for the other image processing techniques RB
+2. An angle of 10 degrees CONS
+3. A distance of 200 pixels CONS
+4. For 1D SURF, 120 pixels from the top of the image RB
+
+5. Emphasize Ceiling Features (Less dynamic interest points)
+
+29/07/12
+
+1. 2-NN criterion is only applied to 2-NN matching MATCHING
+
+2. All the feature extraction algorithms operate at different thresholds EX
+
+3. Each interest point can have more than one match in radius matching MATCHING
+
+4. Only the best matching score is used as the threshold when creating the ROC Curves EX
+
+
+02/08/12
+
+1. The interest point properties have been calculated using the MPS parameter setting EX
+2. 2-NN Ratio was also calculated using the MPS parameter setting EX
+ - The matching statistics and keypoints have been generated using the MPS parameter setting EX
+
+
+
+3. Fix up discussion of the matching score EX
+4. Motivate why I chose alpha and beta (I.e. their values) EX
+5. Discuss that I could have found the Median value rather than averaging the maximum values EX
+
+6. At the beginning of the optimal parameters section, state how the score is used to find the optimal detection parameters EX
+And then the optimal paramters are used as a basis for comparison for each of the feature extraction algorithms
+
+7. Emphasize that cannot test on training data and therefore generated a new completely unseen dataset EX
+8. How did I find the visual overlap? (Justify using eyeball) EX
+
+9. Strong edges are preserved when there is strong light. These edges have very similar neighborhood intensities. Causes duplicate matches EX
+
+
+TO FIX:
+
+1. Redo varying lighting conditions - DONE
+2. Redo Nikon-camera Nao in Main Robocup dataset (new dataset) - DONE
+
+5. Add a statistic that calculates the number of zero matches.
+
+Why is MPS better than CPS?
+
+1. Gives slightly better performance overall.
+2. Even though MPS gives slightly better performance, CPS is less prone to outliers than MPS since it finds the most consistent values.
+3. However, MPS has a lower radius which means it will reject more potentially invalid matches
+
+***********************ANALYSIS**********************************
+Answer in the following order for each technique:
+1. 2-NN
+2. Radius Matching
+
+Num interest points
+AUC
+Time
+Reasons for problems:
+1. Number FP matches detected
+2. Matching Score Ratio
+
+3. Number of matches detected
+4. The number of valid matches
+
+
+
+For the Main Robocup Dataset:
+There are more matches in the Main Robocup dataset than in the other two datasets for these methods:
+Methods:
+1. BRISK0
+2. BRISK4
+
+Radius Matching:
+1. Total Num Matches
+2. Total Num Valid Matches
+
+why not U-BRISK or 2D SURF create the same stats??
+- Not that many interest points are detected by BRISK0, BRISK4, but many matches result.
+- Could suggest a noisy environment, since there are more matches for each interest point
+
+- Definitely Fluoresent lights are causing multiple matches. This is causing interest points to have multiple matches.
+
+- This may not be the case for U-BRISK since due to the lack of rotation, it is not rotation invariant and therefore won't detect as many points
+
+- BRISK0 is rotation invariant and therefore has the same problem as BRISK4.
+
+- SURF2D uses the intensity information surrounding the interest point to describe the interest point. Thus descriptors are built based
+
+on this information. It is possible that this distinguishes the interest point better than simple brightness comparison tests that are 
+present in BRISK0
+
+BRISK0-SURF2D:
+1. Might not be set at an optimal threshold, therefore doesnt detect many matches
+
+
+BRISK4:
+
+1. Performs a non-maximal suppression along scale space which results in less interest points being detected
+2. But more interest points may be detected as there are more octaves and therefore more ways to test interest points
+
+3. Since BRISK4 has such a strong non-maximal suppression  criterion, it detects a large number of zero matches. This causes
+the ROC curve to have a lower value than the other ROC curves.
+4. In addition, BRISK4 has a large number of valid matches (these are duplicate matches that are matched with the fluorescent lights)
+There are many strong edges and therefore these will go through the BRISK4's non-maximal suppression criterion.
+
+BRISK0:
+1. BRISK0 has less matches since less interest points are detected and therefore less valid matches are realised. However, the strong edges
+will still get through these valid matches
+
+U-BRISK:
+1. U-BRISK is rotation variant and therefore many matches are lost due to this constraint. This actually aids the algorithm in removing
+duplicate matches.
+2. UBRISK - Does not perform a rotation and therefore less matches may be found
+
+
+U-BRISK Lighting:
+1. Many interest points found around wires and near the main lights.
+2. It is possible that stronger edges are created due to the main light being on near the wires and this causes the large number of interest
+points to be detected
+
+
+
+SURF2D:
+
+1.SURF2D has fewer matches
+
+
+
+ - Reflections cause invalid matches. Remember to use the reflections from the window in the Main Robocup dataset

@@ -107,12 +107,12 @@ int main(int argc, char ** argv) {
 
 
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-	//		bool hamming=false;
-	//		std::string feat_detector = "BRISK";
-	//		std::string feat_descriptor = "SURF";
-	//		double hammingDistance = 0.28;
-	//		//double threshold = 30;//45
-	//		double threshold = 60;
+//			bool hamming=false;
+//			std::string feat_detector = "BRISK";
+//			std::string feat_descriptor = "SURF";
+//			double hammingDistance = 0.28;
+//			//double threshold = 30;//45
+//			double threshold = 65;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
 	bool hamming=true;
@@ -123,30 +123,30 @@ int main(int argc, char ** argv) {
 	double hammingDistance = 121.25;//Hamming
 
 	//For BRISK4 (4 octaves)
-	//			bool hamming=true;
-	//			std::string feat_detector = "BRISK4";
-	//			std::string feat_descriptor = "BRISK4";
-	//			//double threshold = 30; //KNN 51.25
-	//			double threshold = 65;//Hamming
-	//			double hammingDistance = 130;//Hamming
+//				bool hamming=true;
+//				std::string feat_detector = "BRISK4";
+//				std::string feat_descriptor = "BRISK4";
+//				//double threshold = 30; //KNN 51.25
+//				double threshold = 80;//Hamming
+//				double hammingDistance = 120;//Hamming
 
 	//Set the date and time
-	string myDate = "25072012";
-	string myTime = "2232";
+	string myDate = "03082012";
+	string myTime = "1033";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
 	//Determine whether the MPS or CPS threshold is being used
 	bool isMax  =  true;
 	//Are we comparing camera pics to the Nao pics
-	bool usingCamera = false;
+	bool usingCamera = true;
 
 	//Lighting parameter
-	lighting light = LIGHT_RIGHT;
+	lighting light = LIGHT_BOTH;
 
 	//NB *************************************
 	//CHOOSE THE DATASET TO USE
-	int dataset=4;
+	int dataset=3;
 	//dataset =1 for original robocup pics
 	//dataset = 2 for office pics and large hall pics
 	//dataset = 3 for varying illumination and for comparing the robocup dataset with the camera robocup dataset
@@ -171,7 +171,7 @@ int main(int argc, char ** argv) {
 	int tempDirCounterss = 0;
 
 	//USED FOR LIGHTING AND FOR COMPARING NAO CAMERA PICS
-	int step = 0;
+	int step = 4;
 
 	//If we are performing the matching routine
 	if(isMatching)
@@ -183,8 +183,8 @@ int main(int argc, char ** argv) {
 			tempDirCounterkk = 1;
 			tempDirCounterss = 1;
 
-			k_start = 13;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
-			k_end = 16;//Left dataset: 8; Right Dataset 12; Both Dataset: 16
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 4;//Left dataset: 8; Right Dataset 12; Both Dataset: 16
 		}
 		else if (dataset==2)//Additional datasets
 		{
@@ -250,10 +250,10 @@ int main(int argc, char ** argv) {
 			tempDirCounterkk = 1;
 			tempDirCounterss = 3;
 
-			k_start = 13;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
-			k_end = 14;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
-			s_start = 15;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
-			s_end = 16;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
+			k_start = 1;//Left dataset: 5; Right Dataset: 9; Both Dataset: 13
+			k_end = 2;//Left dataset: 6; Right Dataset: 10; Both Dataset: 14
+			s_start = 3;//Left dataset: 7; Right Dataset: 11; Both Dataset: 15
+			s_end = 4;//Left dataset: 8; Right Dataset: 12; Both Dataset: 16
 		}
 		else if (dataset==2)
 		{
@@ -341,9 +341,14 @@ int main(int argc, char ** argv) {
 	{
 		if(dataset==1){
 			//The counter must be reset for formatting purposes in Matlab
-			tempDirCounterss = 3;//kk for matching; another number for non-matching
-			if(isMatching)
+
+			if(isMatching){
 				s_start = s_end = kk;
+				tempDirCounterss = kk;//kk for matching
+			}
+			else{
+				tempDirCounterss = 3;// 3 for non-matching
+			}
 		}
 		else if(dataset==2)
 		{
@@ -437,7 +442,7 @@ int main(int argc, char ** argv) {
 			string filename = "../";
 			if (dataset==1)
 			{
-				filename.append("data/Matches/");
+				filename.append("dataRobocup/Matches/");
 				filename.append("nonmatching_matching_Data__");
 
 			}else if (dataset==2)
@@ -495,7 +500,7 @@ int main(int argc, char ** argv) {
 			cout<<filename<<endl;
 			//*************************************
 			//Make sure that there are the same number of images in each frame (Not for non matches)
-			if (isMatching)
+			if (isMatching && !(dataset==3))
 			{
 				if(jpegCounter>jpegCounter1)
 					jpegCounter = jpegCounter1;
@@ -506,7 +511,7 @@ int main(int argc, char ** argv) {
 			//Determine matches without repetition
 			for (int ii = 1;ii<=jpegCounter;ii++)
 			{
-				if(isMatching)
+				if(isMatching && !(dataset ==3))
 					index = ii;
 				else
 					index = jpegCounter1;

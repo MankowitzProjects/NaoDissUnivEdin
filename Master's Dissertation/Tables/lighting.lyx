@@ -181,7 +181,7 @@ Non-overlapping Image pairs
 \begin_layout Plain Layout
 
 \series bold
-Original Dataset
+Robocup Dataset
 \end_layout
 
 \end_inset
@@ -199,7 +199,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-420
+1680
 \end_layout
 
 \end_inset
@@ -208,7 +208,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-3024
+3360
 \end_layout
 
 \end_inset
@@ -221,7 +221,7 @@ Original Dataset
 \begin_layout Plain Layout
 
 \series bold
-Original Dataset
+Robocup Dataset
 \end_layout
 
 \end_inset
@@ -239,7 +239,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-420
+1680
 \end_layout
 
 \end_inset
@@ -248,7 +248,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-3024
+3360
 \end_layout
 
 \end_inset
@@ -261,7 +261,7 @@ Original Dataset
 \begin_layout Plain Layout
 
 \series bold
-Original Dataset
+Robocup Dataset
 \end_layout
 
 \end_inset
@@ -279,7 +279,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-420
+1680
 \end_layout
 
 \end_inset
@@ -288,7 +288,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-3024
+3360
 \end_layout
 
 \end_inset
@@ -317,7 +317,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-1260
+5040
 \end_layout
 
 \end_inset
@@ -326,7 +326,7 @@ Original Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-9072
+10008
 \end_layout
 
 \end_inset
@@ -522,7 +522,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-96.45
+97.309
 \end_layout
 
 \end_inset
@@ -543,7 +543,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-96.450
+2.899
 \end_layout
 
 \end_inset
@@ -564,7 +564,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-2.895
+1.505
 \end_layout
 
 \end_inset
@@ -585,7 +585,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.506
+0.199
 \end_layout
 
 \end_inset
@@ -606,7 +606,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.215
+0.008
 \end_layout
 
 \end_inset
@@ -627,7 +627,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.007
+8.522
 \end_layout
 
 \end_inset
@@ -659,7 +659,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-96.406
+97.861
 \end_layout
 
 \end_inset
@@ -680,7 +680,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-96.406
+2.857
 \end_layout
 
 \end_inset
@@ -701,7 +701,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-2.881
+1.491
 \end_layout
 
 \end_inset
@@ -722,7 +722,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.530
+0.207
 \end_layout
 
 \end_inset
@@ -743,7 +743,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.230
+0.008
 \end_layout
 
 \end_inset
@@ -764,7 +764,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.007
+8.484
 \end_layout
 
 \end_inset
@@ -796,7 +796,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-92.223
+95.257
 \end_layout
 
 \end_inset
@@ -817,7 +817,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-92.223
+2.939
 \end_layout
 
 \end_inset
@@ -838,7 +838,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-2.976
+1.662
 \end_layout
 
 \end_inset
@@ -859,7 +859,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-1.704
+0.257
 \end_layout
 
 \end_inset
@@ -880,7 +880,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.294
+0.009
 \end_layout
 
 \end_inset
@@ -901,7 +901,7 @@ Overall Time (ms)
 \uwave off
 \noun off
 \color none
-0.008
+9.241
 \end_layout
 
 \end_inset

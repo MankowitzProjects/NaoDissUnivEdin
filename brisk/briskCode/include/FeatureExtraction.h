@@ -29,6 +29,8 @@ class FeatureExtraction
         void verifyKNNMatches(std::vector<cv::DMatch>  &matches);
         void verifyMatchingOrder(const cv::Mat & image,cv::Mat descriptors, cv::Mat descriptors2, std::vector<std::vector<cv::DMatch> > &matches);
 
+        //Removes second matches for report purposes
+        bool removeSecondMatches(std::vector<std::vector<cv::DMatch> > &matches);
         //The matching variables
         float imageMatchingScore;
         float imageMatchingScoreBest;

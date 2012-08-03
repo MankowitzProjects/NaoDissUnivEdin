@@ -45,6 +45,18 @@ To Do for RAM:
 3. Get my algorithm to work on the robot
 
 
+Questions for Steven:
+
+
+1. Why would the right and main lights off give a better TP (FP=0) rate than with the lights on? Less saturated pixels?
+
+2. Is my validation of the 
+
+3. Why would the camera cause less interest points to be detected? Lower contrast perhaps?
+
+4. 2D SURF seems to be more robust?
+
+5. How to explain graphs with strange peaks?
 
 
 

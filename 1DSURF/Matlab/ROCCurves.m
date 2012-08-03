@@ -11,7 +11,7 @@ datasetA = 1;
 
 %The number of files
 if datasetA==1
-numFiles = 108;
+numFiles = 120;
 else
 numFiles = 50;
 end
@@ -26,10 +26,10 @@ rightMatrix = repmat(right,numFiles,1)
 %rightMatrix = num2str(rightMatrix)
 %Set the angles (corresponding to directions)
 if datasetA == 1
-directions(1:26,:) = 10;
-directions(27:54,:) = 100;
-directions(55:85,:) = 190;
-directions(86:108,:) = 280;
+directions(1:30,:) = 10;
+directions(31:60,:) = 100;
+directions(61:90,:) = 190;
+directions(91:120,:) = 280;
 else
 directions(1:25,:) = 10;
 directions(26:50,:) = 100;   
