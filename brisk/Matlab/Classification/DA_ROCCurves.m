@@ -15,12 +15,12 @@ addpath('../DataStreet');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 4;
+datasetType = 21;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
 % 2 - Radius Match
-matchingMethod =2;
+matchingMethod =1;
 
 %Whether we plot the ROC Curve or not
 plotROC = 0;
@@ -110,23 +110,23 @@ if matchingMethod==1
         
     elseif datasetType==21
         %BRISK0 - U-BRISK
-        load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
-%                 load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
+%         load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_35__consistent.mat'
+                load 'dataset3_nonmatching_matching_Data__BRISK_U-BRISK_KNN_22072012_2151_55__max.mat'
         [fpUBRISK, tpUBRISK, ub_statsMatrix, ub_thresholdsMatrix] = createROCCurve(data, 0.01,datasetType, 1);
         
         %BRISK0
-        load dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat''
-%                 load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
+%         load dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_30__consistent.mat''
+                load 'dataset3_nonmatching_matching_Data__BRISK_BRISK_KNN_22072012_2151_46.25__max.mat'
         [fpSBRISK, tpSBRISK, sb_statsMatrix, sb_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %BRISK4
-        load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
-%                 load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
+%         load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_30__consistent.mat'
+                load 'dataset3_nonmatching_matching_Data__BRISK4_BRISK4_KNN_22072012_2151_51.25__max.mat'
         [fpBRISK4, tpBRISK4, b4_statsMatrix, b4_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 1);
         
         %For SBRISK SURF2D
-        load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
-%                 load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
+%         load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_30__consistent.mat'
+                load 'dataset3_nonmatching_matching_Data__BRISK_SURF_KNN_22072012_2151_43.75__max.mat'
         [fpSBRISKSURF2D, tpSBRISKSURF2D, sb_2d_statsMatrix, sb_2d_thresholdsMatrix] = createROCCurve(data, 0.01, datasetType, 0);
         
         %1D SURF - This test does not use KNN and is only used for comparison
