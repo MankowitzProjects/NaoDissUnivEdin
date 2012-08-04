@@ -20,7 +20,7 @@ addpath('../DataVariation');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 21;
+datasetType = 1;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
@@ -32,10 +32,10 @@ if matchingMethod==1
     if datasetType == 1
         %BRISK0 UBRISK
         %         load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
-%         load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
+        load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
         
         %         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_75__consistent.mat'
-        load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_60__max.mat'
+%         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_60__max.mat'
         [ub_meanMatchesScore, ub_meanNonMatchesScore, ub_matches_std, ub_nonMatches_std]  = calculateMatchingScore(data);
         
         %For BRISK0

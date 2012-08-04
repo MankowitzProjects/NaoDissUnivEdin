@@ -73,6 +73,8 @@
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Dataset A
 \end_layout
 
@@ -82,6 +84,8 @@ Dataset A
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Dataset B
 \end_layout
 
@@ -91,6 +95,8 @@ Dataset B
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Images in A
 \end_layout
 
@@ -100,6 +106,8 @@ Images in A
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Images in B
 \end_layout
 
@@ -109,7 +117,9 @@ Images in B
 \begin_inset Text
 
 \begin_layout Plain Layout
-Compared Image Pairs
+
+\series bold
+Image Pairs
 \end_layout
 
 \end_inset
@@ -120,6 +130,8 @@ Compared Image Pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Overlapping Images
 \end_layout
 
@@ -134,7 +146,7 @@ Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -143,7 +155,7 @@ Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -152,7 +164,7 @@ Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -167,19 +179,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-1
+MG LEFT
 \end_layout
 
 \end_inset
@@ -188,19 +188,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-1
+MG LEFT
 \end_layout
 
 \end_inset
@@ -209,18 +197,6 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 26
 \end_layout
 
@@ -230,18 +206,6 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 26
 \end_layout
 
@@ -251,18 +215,6 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
 325
 \end_layout
 
@@ -274,7 +226,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+MG RIGHT
 \end_layout
 
 \end_inset
@@ -283,7 +235,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+MG RIGHT
 \end_layout
 
 \end_inset
@@ -321,7 +273,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+OG LEFT
 \end_layout
 
 \end_inset
@@ -330,7 +282,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+OG LEFT
 \end_layout
 
 \end_inset
@@ -368,7 +320,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+OG RIGHT
 \end_layout
 
 \end_inset
@@ -377,7 +329,7 @@ Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+OG RIGHT
 \end_layout
 
 \end_inset
@@ -411,20 +363,22 @@ Overlapping Images
 </cell>
 </row>
 <row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Total
+
 \end_layout
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
+\series bold
+Total
 \end_layout
 
 \end_inset
@@ -462,6 +416,8 @@ Total
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Non-Overlapping Images
 \end_layout
 
@@ -476,7 +432,7 @@ Non-Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -485,7 +441,7 @@ Non-Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -494,7 +450,7 @@ Non-Overlapping Images
 
 \end_inset
 </cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -509,7 +465,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+MG LEFT
 \end_layout
 
 \end_inset
@@ -518,7 +474,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+OG LEFT
 \end_layout
 
 \end_inset
@@ -545,7 +501,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-325
+780
 \end_layout
 
 \end_inset
@@ -556,7 +512,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+MG LEFT
 \end_layout
 
 \end_inset
@@ -565,7 +521,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+OG RIGHT
 \end_layout
 
 \end_inset
@@ -592,7 +548,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-253
+572
 \end_layout
 
 \end_inset
@@ -603,7 +559,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+MG RIGHT
 \end_layout
 
 \end_inset
@@ -612,7 +568,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+OG LEFT
 \end_layout
 
 \end_inset
@@ -639,7 +595,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-378
+840
 \end_layout
 
 \end_inset
@@ -650,7 +606,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+MG RIGHT
 \end_layout
 
 \end_inset
@@ -659,7 +615,7 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+OG RIGHT
 \end_layout
 
 \end_inset
@@ -686,27 +642,29 @@ Non-Overlapping Images
 \begin_inset Text
 
 \begin_layout Plain Layout
-253
+616
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
 Total
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
 \end_layout
 
 \end_inset
@@ -733,7 +691,248 @@ Total
 \begin_inset Text
 
 \begin_layout Plain Layout
-1209
+2808
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Dataset A
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Dataset B
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Overlapping Images
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG LEFT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG LEFT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG LEFT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG LEFT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Non-Overlapping Images
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG LEFT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG LEFT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG LEFT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG LEFT
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MG RIGHT
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OG RIGHT
 \end_layout
 
 \end_inset
@@ -8792,7 +8991,7 @@ UBRISK
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="9">
+<lyxtabular version="3" rows="6" columns="9">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
@@ -8804,7 +9003,7 @@ UBRISK
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8825,7 +9024,7 @@ Detector
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8846,7 +9045,7 @@ Extractor
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8867,7 +9066,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8879,7 +9078,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8891,7 +9090,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8915,7 +9114,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8931,7 +9130,7 @@ Matcher
 \uwave off
 \noun off
 \color none
-\begin_inset Formula $MAHD_{MPS}/MAED_{MPS}$
+\begin_inset Formula $MAHD_{MPS}$
 \end_inset
 
 
@@ -8939,7 +9138,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8963,7 +9162,7 @@ Matcher
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -8979,7 +9178,120 @@ Matcher
 \uwave off
 \noun off
 \color none
-\begin_inset Formula $MAHD_{CPS}/MAED_{CPS}$
+\begin_inset Formula $MAHD_{CPS}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $/MAED_{MPS}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula $/MAED_{CPS}$
 \end_inset
 
 

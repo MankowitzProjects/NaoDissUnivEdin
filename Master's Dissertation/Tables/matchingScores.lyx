@@ -522,47 +522,6 @@ UBRISK
 
 \begin_layout Plain Layout
 
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
-BRISK0
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
 \family roman
 \series medium
 \shape up
@@ -606,7 +565,7 @@ Radius Matching
 \uwave off
 \noun off
 \color none
-BRISK4
+BRISK0
 \end_layout
 
 \end_inset
@@ -671,7 +630,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-BRISK0- SURF2D
+BRISK4
 \end_layout
 
 \end_inset
@@ -736,7 +695,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-UBRISK
+BRISK0- SURF2D
 \end_layout
 
 \end_inset
@@ -785,6 +744,71 @@ UBRISK
 </cell>
 </row>
 <row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+UBRISK
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.209
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+0.010
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
@@ -810,7 +834,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.209
+99.756
 \end_layout
 
 \end_inset
@@ -831,7 +855,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.010
+31.537
 \end_layout
 
 \end_inset
