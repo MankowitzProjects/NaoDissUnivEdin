@@ -275,6 +275,7 @@ int main(int argc, char *argv[])
 					if(visible){
 						cvShowImage("1D SURF", display);
 						cvWaitKey(0);
+
 						cvReleaseImage(&display);
 					}
 					pos++;

@@ -15,7 +15,7 @@ addpath('../DataStreet');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 21;
+datasetType = 2;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
@@ -23,7 +23,7 @@ datasetType = 21;
 matchingMethod =1;
 
 %Whether we plot the ROC Curve or not
-plotROC = 0;
+plotROC = 1;
 
 if matchingMethod==1
     

@@ -54,7 +54,7 @@
 #define DEBUG_TIMES 0
 #define SINGLE_IMAGE_TEST 1
 #define MULTIPLE_IMAGE_TEST 1
-#define DISPLAY 0
+#define DISPLAY 1
 
 enum lighting{
 	LIGHT_LEFT,

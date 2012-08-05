@@ -92,7 +92,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = false;
+	bool usingKnnCriterion = true;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
@@ -103,7 +103,7 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 75;//46.25
+	double threshold = 55;//46.25
 	double hammingDistance = 121.25;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
 	std::string feat_descriptor = "U-BRISK";
@@ -127,8 +127,8 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-	std::string dir = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
-	std::string dir1 = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
 //		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
@@ -145,8 +145,8 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
-//		std::string dir = "../images/Dataset2_Overlapping_1";
-//		std::string dir1 = "../images/Dataset2_Overlapping_1";
+		std::string dir = "../images/Dataset2_Overlapping_1";
+		std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
 //		std::string dir = "../images/Dataset3_Overlapping_1";
@@ -159,8 +159,8 @@ int main(int argc, char ** argv) {
 
 
 	//Names of the two image files
-	std::string name1 = "7";
-	std::string name2 = "12";
+	std::string name1 = "16";
+	std::string name2 = "8";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -446,8 +446,18 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
 //	cv::imwrite("../images/KNN_ratio.jpg",outimg);//Image 4,4 Datasets 1,1
 //	cv::imwrite("../images/LightingBrisk4.jpg",outimg);//Img 30, 8 from dataset 3,3
+//	cv::imwrite("../images/weakInterestPointMatch.jpg",outimg);//Img 22, 1 from dataset 2,2
+//	cv::imwrite("../images/fpMatchBRISK0.jpg",outimg);//Img 29, 11 from dataset 2,2
+//	cv::imwrite("../images/reflectionsBrisk0.jpg",outimg);//Img 8, 7 from dataset 3,3
+//	cv::imwrite("../images/noMatchesBrisk4.jpg",outimg);//Img 11, 4 from dataset 2,2
+//	cv::imwrite("../images/rotationsUBRISK.jpg",outimg);//Img 100, 101 from dataset 1,1
 	//cv::imwrite("../images/match.jpg",outimg);
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
+
+
+	//Dataset2
+//	cv::imwrite("../images/dataset2_interestPoints.jpg",outimg);//Img 5,10 dataset 5,6
+
 #endif
 
 	return 0;

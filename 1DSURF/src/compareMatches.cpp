@@ -197,7 +197,7 @@ int main(int argc, char *argv[])
 {
 
 	//Determine whether or not you should show the matches and print the ROC curve
-	bool visible = false;
+	bool visible = true;
 	bool printROC = false;
 	if (argc == 2){
 		string arg(argv[1]);
@@ -239,11 +239,11 @@ int main(int argc, char *argv[])
 	bool terminal = false;
 
 	//Set the date and time
-	string myDate = "02082012";
+	string myDate = "04082012";
 	string myTime = "1523";
 
 	//Set if you are matching or not matching
-	bool isMatching = false;
+	bool isMatching = true;
 	//Matching parameters
 	int k_start =0;
 	int k_end = 0;

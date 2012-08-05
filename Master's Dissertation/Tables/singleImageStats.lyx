@@ -245,7 +245,7 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK
+BRISK0
 \end_layout
 
 \end_inset
@@ -382,7 +382,7 @@ SBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
-BRISK4
+BRISK
 \end_layout
 
 \end_inset
@@ -519,7 +519,7 @@ BRISK4
 \begin_inset Text
 
 \begin_layout Plain Layout
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -656,7 +656,7 @@ SBRISK - SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
-UBRISK
+BRISK0 - UBRISK
 \end_layout
 
 \end_inset
@@ -870,7 +870,7 @@ Invalid Matches due to KNN Ratio Constraint
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+BRISK0
 \end_layout
 
 \end_inset
@@ -1019,7 +1019,7 @@ Invalid Matches due to KNN Ratio Constraint
 \uwave off
 \noun off
 \color none
-BRISK4
+BRISK
 \end_layout
 
 \end_inset
@@ -1168,7 +1168,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -1317,7 +1317,7 @@ SBRISK - SURF2D
 \uwave off
 \noun off
 \color none
-UBRISK
+BRISK0 - UBRISK
 \end_layout
 
 \end_inset
@@ -1531,7 +1531,7 @@ Valid Matches
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+BRISK0
 \end_layout
 
 \end_inset
@@ -1680,7 +1680,7 @@ Valid Matches
 \uwave off
 \noun off
 \color none
-BRISK4
+BRISK
 \end_layout
 
 \end_inset
@@ -1829,7 +1829,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-SBRISK - SURF2D
+BRISK0 - SURF2D
 \end_layout
 
 \end_inset
@@ -1978,7 +1978,7 @@ SBRISK - SURF2D
 \uwave off
 \noun off
 \color none
-UBRISK
+BRISK0 - UBRISK
 \end_layout
 
 \end_inset

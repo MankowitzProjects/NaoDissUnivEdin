@@ -16,12 +16,12 @@ addpath('../DataValidation');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 4;
+datasetType = 1;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
 % 2 - Radius Match
-matchingMethod =2;
+matchingMethod =1;
 
 if matchingMethod==1
     

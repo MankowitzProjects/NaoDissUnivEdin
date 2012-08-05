@@ -84,6 +84,11 @@ invalid_matches_overlap = mean(overlappingDataset(:,12));
 
 best_matches_overlap = mean(overlappingDataset(:,13));
 
+%Now calculate the number of zero matches (NZMs)
+overlapping_nzm = sum(strmatch([0], overlappingDataset(:,11))>0);
+
+
+
 %Generate the matching statistics for non-overlapping matches
 
 total_matches = mean(nonOverlappingDataset(:,10));
@@ -94,17 +99,22 @@ invalid_matches = mean(nonOverlappingDataset(:,12));
 
 best_matches = mean(nonOverlappingDataset(:,13));
 
+%Now calculate the number of zero matches (NZMs)
+non_overlapping_nzm = sum(strmatch([0], nonOverlappingDataset(:,11))>0);
+
+
 %Generate the stats matrix
 overlappingMatchesMatrix = [total_matches_overlap, valid_matches_overlap...
-    invalid_matches_overlap];
+    invalid_matches_overlap, overlapping_nzm];
 nonOverlappingMatchesMatrix =[total_matches, valid_matches...
-    invalid_matches];
+    invalid_matches, non_overlapping_nzm];
 
 
 %Now determine the mean number of keypoints
 if nargin==1
     meanKeypointsOverlap = mean(data(min(row1):max(row4),6));
     meanKeypointsNonOverlap = mean(data((row4+1):end,6));
+    
 elseif nargin ==3
     if dataset3==4
         meanKeypointsOverlap = mean(data(min(row1):max(row4),7));
@@ -120,6 +130,7 @@ elseif nargin==4
     meanKeypointsOverlap = mean(data(min(row1):max(row2),6));
     meanKeypointsNonOverlap = mean(data((row2+1):end,6));
 end
+
 %First for overlapping images
 % [total_keypoints_11, numImages11] = calculateMeanKeypoints(data(row1,:));
 % [total_keypoints_22, numImages22] = calculateMeanKeypoints(data(row2,:));

@@ -15,26 +15,28 @@ To add to report
 
 3. Each interest point can have more than one match in radius matching MATCHING
 
-4. Only the best matching score is used as the threshold when creating the ROC Curves EX
+4. Only the best matching score is used as the threshold when creating the ROC Curves EX - DONE
 
 5. Ceiling Features mentioned where the Nao Robocup Methods are mentioned
+
+6. Use the term corners for BRISK
 02/08/12
 
-1. The interest point properties have been calculated using the MPS parameter setting EX
-2. 2-NN Ratio was also calculated using the MPS parameter setting EX
- - The matching statistics and keypoints have been generated using the MPS parameter setting EX
+1. The interest point properties have been calculated using the MPS parameter setting EX - DONE
+2. 2-NN Ratio was also calculated using the MPS parameter setting EX - DONE
+ - The matching statistics and keypoints have been generated using the MPS parameter setting EX - DONE
 
 
 
-3. Fix up discussion of the matching score EX
-4. Motivate why I chose alpha and beta (I.e. their values) EX
-5. Discuss that I could have found the Median value rather than averaging the maximum values EX
+3. Fix up discussion of the matching score EX - DONE
+4. Motivate why I chose alpha and beta (I.e. their values) EX - DONE
+5. Discuss that I could have found the Median value rather than averaging the maximum values FUTURE
 
-6. At the beginning of the optimal parameters section, state how the score is used to find the optimal detection parameters EX
+6. At the beginning of the optimal parameters section, state how the score is used to find the optimal detection parameters EX - DONE
 And then the optimal paramters are used as a basis for comparison for each of the feature extraction algorithms
 
-7. Emphasize that cannot test on training data and therefore generated a new completely unseen dataset EX
-8. How did I find the visual overlap? (Justify using eyeball) EX
+7. Emphasize that cannot test on training data and therefore generated a new completely unseen dataset EX - DONE
+8. How did I find the visual overlap? (Justify using eyeball) EX - DONE
 
 9. Strong edges are preserved when there is strong light. These edges have very similar neighborhood intensities. Causes duplicate matches EX
 
@@ -44,7 +46,7 @@ TO FIX:
 1. Redo varying lighting conditions - DONE
 2. Redo Nikon-camera Nao in Main Robocup dataset (new dataset) - DONE
 
-5. Add a statistic that calculates the number of zero matches.
+5. Add a statistic that calculates the number of zero matches. - DONE
 
 Why is MPS better than CPS?
 

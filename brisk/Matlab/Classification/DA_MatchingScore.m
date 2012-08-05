@@ -20,7 +20,7 @@ addpath('../DataVariation');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 1;
+datasetType = 2;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
@@ -32,10 +32,13 @@ if matchingMethod==1
     if datasetType == 1
         %BRISK0 UBRISK
         %         load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'
-        load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
+%         load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_55_max.mat'
         
         %         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_75__consistent.mat'
-%         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_60__max.mat'
+        load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_02082012_1033_60__max.mat'
+        
+        
+%         plotMatchingScores(data) 
         [ub_meanMatchesScore, ub_meanNonMatchesScore, ub_matches_std, ub_nonMatches_std]  = calculateMatchingScore(data);
         
         %For BRISK0
@@ -45,6 +48,7 @@ if matchingMethod==1
         %         load 'nonmatching_matching_Data__BRISK_BRISK_KNN_02082012_1033_40__consistent.mat'
         load 'nonmatching_matching_Data__BRISK_BRISK_KNN_02082012_1033_45__max.mat'
     
+       
         [sb_meanMatchesScore, sb_meanNonMatchesScore, sb_matches_std, sb_nonMatches_std]  = calculateMatchingScore(data);
         
         %For BRISK4
@@ -145,7 +149,7 @@ elseif matchingMethod==2 %Hamming/Euclidean distance
 
 %         load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_02082012_1033_75_130_consistent.mat'
                 load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_02082012_1033_75_121_max.mat'
-  
+        
         [ub_meanMatchesScore, ub_meanNonMatchesScore, ub_matches_std, ub_nonMatches_std]  = calculateMatchingScore(data);
         
         %For SBRISK
@@ -304,17 +308,17 @@ end %End KNN neighbors
 if datasetType ==1 || datasetType ==2 || datasetType == 21
 
     %Create the matches score matrix
-    overlappingMatchesScoreMatrix = [sb_meanMatchesScore;%, sb_matches_std;       
-                                     b4_meanMatchesScore;%, b4_matches_std;
-                                     sb_2d_meanMatchesScore;%, sb_2d_matches_std;
-                                     ub_meanMatchesScore;%, ub_matches_std;
-                                     s1d_meanMatchesScore];%, s1d_matches_std];
+    overlappingMatchesScoreMatrix = [sb_meanMatchesScore, sb_matches_std;       
+                                     b4_meanMatchesScore, b4_matches_std;
+                                     sb_2d_meanMatchesScore, sb_2d_matches_std;
+                                     ub_meanMatchesScore, ub_matches_std;
+                                     s1d_meanMatchesScore, s1d_matches_std];
                                  
-    nonOverlappingMatchesScoreMatrix = [sb_meanNonMatchesScore;%, sb_nonMatches_std;
-                                        b4_meanNonMatchesScore;%, b4_nonMatches_std;
-                                        sb_2d_meanNonMatchesScore;%, sb_2d_nonMatches_std;
-                                        ub_meanNonMatchesScore;%, ub_nonMatches_std;
-                                        s1d_meanNonMatchesScore];%, s1d_nonMatches_std];
+    nonOverlappingMatchesScoreMatrix = [sb_meanNonMatchesScore, sb_nonMatches_std;
+                                        b4_meanNonMatchesScore, b4_nonMatches_std;
+                                        sb_2d_meanNonMatchesScore, sb_2d_nonMatches_std;
+                                        ub_meanNonMatchesScore, ub_nonMatches_std;
+                                        s1d_meanNonMatchesScore, s1d_nonMatches_std];
     
 elseif datasetType==3
 %Create the matches score matrix

@@ -456,7 +456,7 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 	}
 
 
-	//removeSecondMatches(matches);
+//	removeSecondMatches(matches);
 
 }
 
