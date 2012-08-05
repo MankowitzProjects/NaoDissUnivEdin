@@ -152,7 +152,7 @@ It is important to note that the Vertical field of view has been increased for e
 
 
 %A landmark that has been identified using a visual perception system is often referred to as an \textit{interest point}. One popular definition of an interest point is a specific location or patch in an image that has a large contrast change with respect to its neighbors \cite{Szeliski2010}. Examples include edges and corners in images.\\
-\section{Objectives}
+\section{Main Objectives}
 \label{sec:objectives}
 The detection of visual landmarks (also referred to as \textit{Interest Points}) is achieved using feature extraction algorithms. A feature extraction algorithm utilises camera images to extract visual algorithmic-dependant interest points from the environment. These interest points can then be used as landmarks and a robot can then localise itself by subsequently re-observing these landmarks. \\
 
@@ -175,10 +175,25 @@ This thesis conducts a comparison of five different feature extraction algorithm
 
 \section{Related Work}
 \label{sec:relatedWork}
+There are a number of different works that utilise feature extraction algorithms to detect visual landmarks and perform robot localisation. One of the first feature extraction algorithms is called the Scale Invariant Feature Transform (SIFT)\cite{Lowe1999}. This algorithm detects landmarks that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A Monte Carlo Localisation algorithm has been implemented using SIFT for feature detection \cite{Gil}. The robot is given a map of the environment and, using stereo vision, is able to find its location in an environment with better accuracy than simply using odometry estimates.\\
+
+
+SIFT has been implemented on various different SLAM implementations. Using a triclops stereo vision system and detecting visual landmarks using SIFT, a mobile robot has been able to perform homing with good accuracy \cite{Se2001, Se2002}. The visual landmarks detected using SIFT were robustly matched and a consistent 3-Dimensional map was generated. SIFT has also been implemented on a mobile robot, with a stereo camera and odometric sensors, using a FastSLAM algorithm. It achieved very good feature tracking and enabled the robot to estimate its position to within $0.5\%$ to $4\%$ of the total distance travelled \cite{Barfoot2005}.\\
+
+SIFT and a variation of SIFT, called Speeded-Up Robust Features (SURF) \cite{Bay2008}, have been utilised for underwater SLAM \cite{Aulinas2011, Thomas}. The work conducted in \cite{Aulinas} extracts features from underwater images using SURF and matches the features using the SURF matching algorithm. This is performed off-line but results in increased accuracy in the final SLAM estimate.\\
+
+Single camera SLAM, more formally referred to as Monocular SLAM (MonoSLAM), has also been utilised to good effect. Davison \textit{et al.} \cite{Davison2007} uses a single uncontrolled camera as the sole sensor on a mobile robot to actively perform localisation and mapping. The algorithm detects persistent natural features in the environment and is also able to determine the orientation of the features. MonoSLAM has also been implemented on a humanoid robot \cite{Wang2011}. SURF was used as the feature detection technique and visual SLAM was achieved.\\
+
+Regarding the Robocup, one previous work has been developed by the \textit{rUNSWift} Robocup team to enable a Nao robot to localise itself on the Robocup football pitch using visual landmarks \cite{Anderson}. Visual landmarks are detected along a single row of pixels that are computed as a vertical average of a band of pixels above the robot's horizon which is defined in \cite{Bhuman}. In addition, a variation of 2D SURF, called 1D SURF, has been developed to detect and match interest points along this single dimension. 1D SURF is significantly faster than 2D SURF and has been implemented in real-time on the robot.\\
+
+
+
+
+
 
 There are a number of algorithms currently available such as the Scale Invariant Feature Transform (SIFT)\cite{Lowe1999}. This algorithm detects features that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A far faster yet slightly less robust version of SIFT is Speeded-Up Robust Features (SURF) \cite{Bay2008}. This method maintains good performance compared to SIFT as well as other feature detection techniques \cite{Juan2009} and is ideal for systems that are constrained by the amount of processing power available. Another newer and potentially faster feature detection algorithm is that of Binary Robust Invariant Scalable Keypoints (BRISK) \cite{Leutenegger}. This approach utilises a scale-space FAST-based detector and outperforms the original, unmodified version of SURF by an order of magnitude in the experiments conducted in \cite{Leutenegger}.
 
-The related work can be broken up into three different sections. These include 
+
 
 %(For both appraoches describe stereo vision or monocular vision solutions)
 %SLAM-based approaches
@@ -197,20 +212,18 @@ The related work can be broken up into three different sections. These include
 
 %The above-mentioned feature detection techniques are used to detect features in the robot's environment. These features are the observations that are fed into localisation as well as Simultaneous Localisation and Mapping (SLAM) algorithms. The observed features are detected and their range and bearing measured either using stereo vision, involving two or more cameras, or using a single camera and various specialised feature-detection techniques.\\
 
-A Monte Carlo Localisation algorithm has been implemented using SIFT for feature detection \cite{Gil}. The robot is given a map of the environment and, using stereo vision, is able to find its location in an environment with better accuracy than simply using odometry estimates.\\
 
-SIFT has been implemented on various different SLAM implementations. Using a triclops stereo vision system and detecting features using SIFT, a mobile robot has been able to perform homing with good accuracy \cite{Se2001, Se2002}. SIFT has been implemented on a mobile robot, with a stereo camera and odometric sensors, using a FastSLAM algorithm. It achieved very good feature tracking and enabled the robot to estimate its position to within $0.5\%$ to $4\%$ of the total distance travelled \cite{Barfoot2005}.\\
+
+
 
 Single camera SLAM, more formally referred to as Monocular SLAM (MonoSLAM), has also been utilised to good effect. Davison \textit{et al.} \cite{Davison2007} uses a single uncontrolled camera as the sole sensor on a mobile robot to actively perform localisation and mapping. The algorithm detects persistent natural features in the environment and is also able to determine the orientation of the features. MonoSLAM has also been implemented on a humanoid robot \cite{Wang2011}. SURF was used as the feature detection technique and visual SLAM was achieved.\\
 
-\subsection{Nao Localisation Algorithms}
-\label{sec:introNaoLocalise}
-SLAM has not yet been implemented on the Nao as the Nao has access to a map of the football field. It typically uses features such as the goalposts, line segments and corners in order to localise itself on the field \cite{Bhuman}. There are a number of different localisation algorithms that have been implemented on the Nao to achieve localisation. These include \textit{Augmented} Monte Carlo Particle Filters \cite{Laue}, Kalman Filters and Dynamic Tree Localisation \cite{Team2012}.\\
+
 
 
 \section{Outline}
 \label{sec:outline}
-
+The structure of the thesis is as follows: Chapter \ref{sec:background} gives an in-depth overview of the main feature extraction techniques that have been used in this project. This includes 2D SURF and Binary Robust Invariant Scalable Keypoints (BRISK). Chapter \ref{sec:sec:realtimeFeatureExtraction} discusses the variations of these methods that have been developed for the purposes of Robocup. This Chapter also includes a discussion of the \textit{rUNSWift} team's 1D SURF feature extraction algorithm. Chapter \ref{sec:matching} details the matching techniques and constraints that have been implemented and developed respectively to match interest points in corresponding images. This is followed in Chapter \ref{sec:localisation} by a description the localisation algorithm that has been developed for the Nao Robot to use in the Robocup competition. Chapter \ref{sec:experimentsResults} contains the results obtained from comparing the various feature extraction algorithms in a number of different environments. The best performing algorithm is then recommended and analysed further. Finally, Chapter \ref{sec:discussionConclusion} concludes the thesis by discussing potential problems, limitations and recommendations for future work. The key results are also summarised.\\
 
 
 
@@ -693,6 +706,8 @@ Two new matching constraints have been developed in order to determine whether o
 
 \chapter{Localisation}
 \label{sec:localisation}
+SLAM has not yet been implemented on the Nao as the Nao has access to a map of the football field. It typically uses features such as the goalposts, line segments and corners in order to localise itself on the field \cite{Bhuman}. There are a number of different localisation algorithms that have been implemented on the Nao to achieve localisation. These include \textit{Augmented} Monte Carlo Particle Filters \cite{Laue}, Kalman Filters and Dynamic Tree Localisation \cite{Team2012}.\\
+
 The Nao robot is able to perform localisation as it is initially given a map of the Robocup soccer field. It typically uses features such as the goalposts, line segments and corners in order to localise itself on the field \cite{Bhuman}. There are a number of different localisation algorithms that have been previously implemented on the Nao to achieve localisation. The localisation algorithm utilised for this project is the \textit{Augmented} Monte Carlo Particle Filter \cite{Laue}.
 
 \section{Augmented Monte Carlo Particle Filter}
