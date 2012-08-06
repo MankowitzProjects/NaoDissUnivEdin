@@ -462,25 +462,48 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 
 }
 
-bool FeatureExtraction::removeSecondMatches(std::vector<std::vector<cv::DMatch> > &matches){
+bool FeatureExtraction::removeSecondMatches(std::vector<std::vector<cv::DMatch> > &matches, int numMatchesToDisplay, bool useDifferentNumMatches, bool removeMatches){
 
-	int currentSize = 0;
-	for (int j = 0;j<matches.size();j++)
+	int totalNumMatches = matches.size();
+
+	if(useDifferentNumMatches)
+		totalNumMatches = numMatchesToDisplay;
+
+	//If we want less matches to display, delete all matches after the first 'number of matches to keep'
+	if(useDifferentNumMatches)
 	{
-		cout<<"Match size for: "<<j<<" is "<<matches[j].size()<<endl;
-
-		currentSize = matches[j].size();
-			//Remove every second match
-		for(int k=currentSize;k>=0;k--)
+		for(int p = numMatchesToDisplay;p<matches.size();p++)
 		{
-			if(k<=1)
-				break;
-			else
-			matches[j].erase(matches[j].begin()+currentSize);
+			int currentSize = matches[p].size();
+			for(int k=currentSize;k>=0;k--)
+			{
+				if(k==0)
+					break;
+				else
+					matches[p].clear();//erase(matches[p].begin()+currentSize);
+			}
 		}
-
-		cout<<"Matches size after: "<<matches[j].size()<<endl;
 	}
+	if (removeMatches){
+		int currentSize = 0;
+		for (int j = 0;j<totalNumMatches;j++)
+		{
+			cout<<"Match size for: "<<j<<" is "<<matches[j].size()<<endl;
+
+			currentSize = matches[j].size();
+			//Remove every second match
+			for(int k=currentSize;k>=0;k--)
+			{
+				if(k<=1)
+					break;
+				else
+					matches[j].erase(matches[j].begin()+currentSize);
+			}
+
+			cout<<"Matches size after: "<<matches[j].size()<<endl;
+		}
+	}
+
 
 	return 1;
 

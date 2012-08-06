@@ -87,7 +87,7 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 //Main function
 int main(int argc, char ** argv) {
 	//The angle used for matching validation
-	double angle = 10;
+	double angle = 2;
 	//The distance threshold
 	double distance = 200;
 
@@ -97,16 +97,25 @@ int main(int argc, char ** argv) {
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
 
+	//Removes all matches except the first ones if true
+	bool removeMatches = true;
+
+	//Validates the matches
+	bool performValidation=true;
+
+	//Choose the number of KNN matches to display
+	bool useDifferentNumMatches = false ;
+	int numMatchesToDisplay = 20;
 
 	//Set the arguments
 	//std::string feat_dMetector = "SURF";
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 77.5;//46.25
-	double hammingDistance = 107.5;//BRISK BRISK
+	double threshold = 75;//46.25
+	double hammingDistance = 121.25;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
-	std::string feat_descriptor = "BRISK";
+	std::string feat_descriptor = "U-BRISK";
 
 	//For changing the threshold
 	int testThreshold = 10;
@@ -127,8 +136,8 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-	std::string dir = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
-	std::string dir1 = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";//PicsOG/Matching_Images_OG_Left
+//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Left_Overlapping";
+//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Left_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
 //		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
@@ -153,14 +162,14 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Dataset3_Overlapping_1";
 
 	//Google Street View dataset
-//		std::string dir = "../images/GoogleMaps/NaoSide1";
-//		std::string dir1 = "../images/GoogleMaps/GoogleSide2";//PicsOG/Matching_Images_OG_Left
+		std::string dir = "../images/GoogleMaps/NaoSide1";
+		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "8";
-	std::string name2 = "7";
+	std::string name1 = "10";
+	std::string name2 = "2";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -330,6 +339,7 @@ int main(int argc, char ** argv) {
 
 	//Perform the matching verification
 	//*************************************************************************
+	if (performValidation)
 	feature.performMatchingValidation(imgGray1,keypoints, keypoints2, matches, hamming);
 	//*************************************************************************
 	clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &verifye);
@@ -373,7 +383,8 @@ int main(int argc, char ** argv) {
 	cv::Mat outimg;
 
 #if (DISPLAY)
-	feature.removeSecondMatches(matches);
+
+	feature.removeSecondMatches(matches, numMatchesToDisplay, useDifferentNumMatches, removeMatches);
 
 	drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
 			cv::Scalar(0,255,0), cv::Scalar(0,0,255),
@@ -401,7 +412,13 @@ int main(int argc, char ** argv) {
 	//#endif
 	//		colourChanger = colourChanger+30;
 	//	}
-	for (int k = 0; k<matches.size(); k++)
+
+	//This function draws the circles around each of the matches
+
+	//The number of matches to display
+	int totalMatches = matches.size();
+
+	for (int k = 0; k<totalMatches; k++)
 	{
 		for (int j=0;j<matches[k].size();j++)
 		{
@@ -438,6 +455,8 @@ int main(int argc, char ** argv) {
 #endif
 
 	cv::waitKey();
+
+	//Demo pics for the thesis
 //	cv::imwrite("../images/MainRobocupDataset.jpg",outimg);
 //	cv::imwrite("../images/OfficeDataset.jpg",outimg);
 //	cv::imwrite("../images/LargeHallDataset.jpg",outimg);
@@ -447,6 +466,8 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/VaryingIlluminationRightDataset.jpg",outimg);
 //	cv::imwrite("../images/VaryingIlluminationBothDataset.jpg",outimg);
 //	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
+
+	//Pics showing problems - Mainly in main Robocup dataset
 //	cv::imwrite("../images/KNN_ratio.jpg",outimg);//Image 4,4 Datasets 1,1
 //	cv::imwrite("../images/LightingBrisk4.jpg",outimg);//Img 30, 8 from dataset 3,3
 //	cv::imwrite("../images/weakInterestPointMatch.jpg",outimg);//Img 22, 1 from dataset 2,2
@@ -462,6 +483,31 @@ int main(int argc, char ** argv) {
 	//Dataset2
 //	cv::imwrite("../images/dataset2_interestPoints.jpg",outimg);//Img 5,10 dataset 5,6
 
+
+	//Feature Matching Images
+	//2-NN Matching and Radius Matching
+//	cv::imwrite("../images/dataset1_without_validation_knn.jpg",outimg);//Img 8,7 dataset 1: 3,3
+//	cv::imwrite("../images/dataset1_without_validation_knn_best.jpg",outimg);//Img 8,7 dataset 1: 3,3
+//	cv::imwrite("../images/dataset1_without_validation_radius.jpg",outimg);//Img 10,7 dataset 3: 3,3
+//	cv::imwrite("../images/dataset1_without_validation_radius_best.jpg",outimg);//Img 10,7 dataset 3: 3,3
+
+	//Matching constraints - 2-NN Ratio
+//	cv::imwrite("../images/dataset_2nn_matching_constraint_before.jpg",outimg);//Img 10,9 dataset 1: 3,3
+//	cv::imwrite("../images/dataset_2nn_matching_constraint_applied.jpg",outimg);//Img 10,9 dataset 1: 3,3
+//	cv::imwrite("../images/dataset_2nn_matching_constraint_after.jpg",outimg);//Img 10,9 dataset 1: 3,3
+
+	//Angle Constraint
+//	cv::imwrite("../images/dataset_angle_constraint_before.jpg",outimg);//Img 10,9 dataset 2: 1,1
+//	cv::imwrite("../images/dataset_angle_constraint_after.jpg",outimg);//Img 10,9 dataset 2: 1,1
+
+	//Distance constraint
+//	cv::imwrite("../images/dataset_distance_constraint_before.jpg",outimg);//Img 20,9 dataset 1: 1,1
+//	cv::imwrite("../images/dataset_distance_constraint_after.jpg",outimg);//Img 20,9 dataset 1: 1,1
+
+	//Discussion
+//	cv::imwrite("../images/dataset_similar_scene.jpg",outimg);//Img 10,2 dataset Street View: 2,1
+//	cv::imwrite("../images/dataset_similar_scene_bad_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
+//	cv::imwrite("../images/dataset_similar_scene_bad_matches_smaller_angle.jpg",outimg);//Img 10,2 dataset Street View: 1,1
 #endif
 
 	return 0;
