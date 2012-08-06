@@ -105,9 +105,9 @@ non_overlapping_nzm = sum(strmatch([0], nonOverlappingDataset(:,11))>0);
 
 %Generate the stats matrix
 overlappingMatchesMatrix = [total_matches_overlap, valid_matches_overlap...
-    invalid_matches_overlap, overlapping_nzm];
+    invalid_matches_overlap, overlapping_nzm, best_matches_overlap];
 nonOverlappingMatchesMatrix =[total_matches, valid_matches...
-    invalid_matches, non_overlapping_nzm];
+    invalid_matches, non_overlapping_nzm, best_matches];
 
 
 %Now determine the mean number of keypoints

@@ -232,7 +232,7 @@ BRISK0
 \uwave off
 \noun off
 \color none
-0.300
+0.286
 \end_layout
 
 \end_inset
@@ -297,7 +297,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.250
+0.222
 \end_layout
 
 \end_inset
@@ -318,7 +318,7 @@ BRISK4
 \uwave off
 \noun off
 \color none
-0.005
+0.004
 \end_layout
 
 \end_inset
@@ -362,7 +362,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-73.932
+77.500
 \end_layout
 
 \end_inset
@@ -383,7 +383,7 @@ BRISK0- SURF2D
 \uwave off
 \noun off
 \color none
-3.085
+3.259
 \end_layout
 
 \end_inset
@@ -427,7 +427,7 @@ UBRISK
 \uwave off
 \noun off
 \color none
-0.212
+0.232
 \end_layout
 
 \end_inset

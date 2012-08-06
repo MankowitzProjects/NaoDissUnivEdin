@@ -311,8 +311,10 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 
 				//Give a constant reward for being under a certain threshold
 				matchingScore = 0;
-				if (distanceMatch==0)
+				if (distanceMatch==0 && !hamming)
 					matchingScore=100;
+				else if(distanceMatch==0 && hamming)
+					matchingScore=1;
 				else{
 					if (hamming)
 						matchingScore = 1/distanceMatch;
@@ -456,20 +458,31 @@ void FeatureExtraction::performMatchingValidation(const cv::Mat & img, std::vect
 	}
 
 
-//	removeSecondMatches(matches);
+
 
 }
 
 bool FeatureExtraction::removeSecondMatches(std::vector<std::vector<cv::DMatch> > &matches){
 
-	cout<<"Matches size before: "<<matches.size()<<endl;
+	int currentSize = 0;
 	for (int j = 0;j<matches.size();j++)
 	{
+		cout<<"Match size for: "<<j<<" is "<<matches[j].size()<<endl;
+
+		currentSize = matches[j].size();
 			//Remove every second match
-			matches[j].erase(matches[j].begin()+1);
+		for(int k=currentSize;k>=0;k--)
+		{
+			if(k<=1)
+				break;
+			else
+			matches[j].erase(matches[j].begin()+currentSize);
+		}
+
+		cout<<"Matches size after: "<<matches[j].size()<<endl;
 	}
 
-	cout<<"Matches size: "<<matches.size()<<endl;
+	return 1;
 
 }
 

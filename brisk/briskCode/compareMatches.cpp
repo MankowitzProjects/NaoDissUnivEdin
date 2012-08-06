@@ -54,7 +54,7 @@
 #define DEBUG_TIMES 0
 #define SINGLE_IMAGE_TEST 1
 #define MULTIPLE_IMAGE_TEST 1
-#define DISPLAY 1
+#define DISPLAY 0
 
 enum lighting{
 	LIGHT_LEFT,
@@ -97,7 +97,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = false;
+	bool usingKnnCriterion = true;
 
 	//The horizon line
 	int horizonLine = 300;
@@ -107,32 +107,32 @@ int main(int argc, char ** argv) {
 
 
 	//For BRISK SURF Using radius = 0.20, threshold = 70
-//			bool hamming=false;
-//			std::string feat_detector = "BRISK";
-//			std::string feat_descriptor = "SURF";
-//			double hammingDistance = 0.28;
-//			//double threshold = 30;//45
-//			double threshold = 65;
+			bool hamming=false;
+			std::string feat_detector = "BRISK";
+			std::string feat_descriptor = "SURF";
+			double hammingDistance = 0.28;
+			//double threshold = 30;//45
+			double threshold = 43.75;
 
 	//For SBRISK SBRISK, hammingDistance = 85, Threshold = 100
-	bool hamming=true;
-	std::string feat_detector = "BRISK";
-	std::string feat_descriptor = "U-BRISK";
-	double threshold = 75;//46.25;//46.25 KNN
-	//	double threshold = 78.75;//Hamming
-	double hammingDistance = 121.25;//Hamming
+//	bool hamming=true;
+//	std::string feat_detector = "BRISK";
+//	std::string feat_descriptor = "BRISK";
+//	double threshold = 46.25;//46.25;//46.25 KNN
+//	//	double threshold = 78.75;//Hamming
+//	double hammingDistance = 121.25;//Hamming
 
 	//For BRISK4 (4 octaves)
 //				bool hamming=true;
 //				std::string feat_detector = "BRISK4";
 //				std::string feat_descriptor = "BRISK4";
 //				//double threshold = 30; //KNN 51.25
-//				double threshold = 80;//Hamming
+//				double threshold = 51.25;//Hamming
 //				double hammingDistance = 120;//Hamming
 
 	//Set the date and time
-	string myDate = "03082012";
-	string myTime = "1033";
+	string myDate = "06082012";
+	string myTime = "1402";
 
 	//Set if you are matching or not matching
 	bool isMatching = false;
@@ -146,7 +146,7 @@ int main(int argc, char ** argv) {
 
 	//NB *************************************
 	//CHOOSE THE DATASET TO USE
-	int dataset=3;
+	int dataset=1;
 	//dataset =1 for original robocup pics
 	//dataset = 2 for office pics and large hall pics
 	//dataset = 3 for varying illumination and for comparing the robocup dataset with the camera robocup dataset
@@ -678,6 +678,7 @@ int main(int argc, char ** argv) {
 					cout<<"The matching score for the image (condsidering all matches) is "<<feature.imageMatchingScore<<endl;
 					cout<<"The matching score for the image (condsidering best match only) is "<<feature.imageMatchingScoreBest<<endl;
 					cout<<"The total number of matches is "<<feature.totalNumMatches<<endl;
+					cout<<"The total number of best matches is "<<feature.totalNumBestMatches<<endl;
 					cout<<"****************************************"<<endl;
 #endif
 #if (DEBUG_TIMES)
@@ -698,6 +699,7 @@ int main(int argc, char ** argv) {
 					writeFile.close();
 
 #if (DISPLAY)
+
 					drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
 							cv::Scalar(0,255,0), cv::Scalar(0,0,255),
 							std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );

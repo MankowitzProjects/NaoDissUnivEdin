@@ -92,7 +92,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = true;
+	bool usingKnnCriterion = false;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
@@ -103,10 +103,10 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 55;//46.25
-	double hammingDistance = 121.25;//BRISK BRISK
+	double threshold = 77.5;//46.25
+	double hammingDistance = 107.5;//BRISK BRISK
 	double radius = 0.50;//BRISK SURF
-	std::string feat_descriptor = "U-BRISK";
+	std::string feat_descriptor = "BRISK";
 
 	//For changing the threshold
 	int testThreshold = 10;
@@ -127,8 +127,8 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	std::string dir = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
+	std::string dir1 = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
 //		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
@@ -145,22 +145,22 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
-		std::string dir = "../images/Dataset2_Overlapping_1";
-		std::string dir1 = "../images/Dataset2_Overlapping_1";
+//		std::string dir = "../images/Dataset2_Overlapping_1";
+//		std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
 //		std::string dir = "../images/Dataset3_Overlapping_1";
-//		std::string dir1 = "../images/Camera_Dataset3_1";
+//		std::string dir1 = "../images/Dataset3_Overlapping_1";
 
 	//Google Street View dataset
 //		std::string dir = "../images/GoogleMaps/NaoSide1";
-//		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
+//		std::string dir1 = "../images/GoogleMaps/GoogleSide2";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "16";
-	std::string name2 = "8";
+	std::string name1 = "8";
+	std::string name2 = "7";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -350,6 +350,7 @@ int main(int argc, char ** argv) {
 	cout<<"The matching score for the image (condsidering best match only) is "<<feature.imageMatchingScoreBest<<endl;
 	cout<<"The total number of matches is "<<feature.totalNumMatches<<endl;
 	cout<<"The total number of valid matches is "<<feature.totalNumValidMatches<<endl;
+	cout<<"The total number of best matches is "<<feature.totalNumBestMatches<<endl;
 	cout<<"****************************************"<<endl;
 #endif
 #if (DEBUG_TIMES)
@@ -372,6 +373,8 @@ int main(int argc, char ** argv) {
 	cv::Mat outimg;
 
 #if (DISPLAY)
+	feature.removeSecondMatches(matches);
+
 	drawMatches(imgGray1, keypoints, imgGray2, keypoints2,matches,outimg,
 			cv::Scalar(0,255,0), cv::Scalar(0,0,255),
 			std::vector<std::vector<char> >(), cv::DrawMatchesFlags::DRAW_RICH_KEYPOINTS );
@@ -452,6 +455,7 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/noMatchesBrisk4.jpg",outimg);//Img 11, 4 from dataset 2,2
 //	cv::imwrite("../images/rotationsUBRISK.jpg",outimg);//Img 100, 101 from dataset 1,1
 	//cv::imwrite("../images/match.jpg",outimg);
+//	cv::imwrite("../images/GoogleStreetViewMatch.jpg",outimg);//Img 10, 8 dataset Nao1, Google1
 	//cv::imwrite("../images/t_20_hd_55_OG_Left_MG_Right_2_12.jpg",outimg);
 
 

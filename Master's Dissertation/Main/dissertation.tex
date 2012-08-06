@@ -587,7 +587,7 @@ descriptor = [ \sum dx_1, \sum |dx_1|,\sum dx_2, \sum |dx_2|,\sum dx_3, \sum |dx
 
 \chapter{Feature Matching}
 \label{sec:matching}
-Once the interest points have been detected and the descriptors have been computed, the features can be matched between pairs of images. This is achieved by first calculating the distance between the interest point descriptors in each image. The interest points are then matched if they are within various thresholds or constraints as pre-defined by the matching technique that is current being utilised. An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}.
+Once the interest points have been detected and the descriptors have been computed, the interest points can be matched between pairs of images. This is achieved by first calculating the distance in feature space between the interest point descriptors in each image. The interest points are then matched if they are within various thresholds or constraints as pre-defined by the matching technique that is being utilised. An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}. Matched interest points in corresponding images are connected by a green line as seen in the figure.\\
 
 \begin{figure}[h!] 
   \centering
@@ -596,14 +596,14 @@ Once the interest points have been detected and the descriptors have been comput
     \label{fig:matchesIntro}
 \end{figure}
 
-The calculation of the distance between interest point descriptors and the various matching techniques will be described below. \\
+The methods used to calculate the distance between interest point descriptors and the various matching techniques will be described below. In addition to this, the constraints imposed on matched interest points to determine whether they are indeed a valid match will also be detailed in the sections to follow.\\
 
 \section{Calculating Distance between Feature Descriptors}
 \label{sec:distance}
 
 \subsection{Hamming Distance}
 \label{sec:hamming}
-The Hamming distance is a metric that is used to indicate the difference between two strings \cite{Banzal2007}. Assume that there are two strings $A$ and $B$ of equal length. In this example, these strings can only take values of $0$ or $1$. The hamming distance is then calculated by determining whether or not the values of corresponding elements in each of the strings are different. If the values are different, then the hamming distance is incremented by a value of $1$.\\
+The Hamming distance is a metric that is used to indicate how much two strings differ from one another \cite{Banzal2007}. Assume that there are two strings $A$ and $B$ of equal length. In this example, these strings can only take values of $0$ or $1$. The hamming distance is then calculated by determining whether or not the values of corresponding elements in each of the strings are different. If the values are different, then the hamming distance is incremented by a value of $1$.\\
 
 This metric is used to determine the distance between feature descriptors in the BRISK algorithm \cite{Leutenegger2011}. Since the feature descriptors, as mentioned in \secref{sec:briskDescribe}, are vectors of $512$ bits in length, the Hamming distance of two feature descriptors is calculated by determining how different the first feature descriptor is from the other. It is desired that the feature descriptors are as similar as possible for the descriptors to be a match; that is, they have a very low hamming distance. \\
 
@@ -1284,13 +1284,13 @@ Method & Overlapping Score & Non-overlapping Score\tabularnewline
 \hline 
  & 2-NN & \tabularnewline
 \hline 
-BRISK0 & 0.300 & 0.003\tabularnewline
+BRISK0 & 0.286 & 0.003\tabularnewline
 \hline 
-BRISK4 & 0.250 & 0.005\tabularnewline
+BRISK4 & 0.222 & 0.004\tabularnewline
 \hline 
-BRISK0- SURF2D & 73.932 & 3.085\tabularnewline
+BRISK0- SURF2D & 77.500 & 3.259\tabularnewline
 \hline 
-UBRISK & 0.212 & 0.002\tabularnewline
+UBRISK & 0.232 & 0.002\tabularnewline
 \hline 
 1D SURF & 99.756 & 31.537\tabularnewline
 \hline 
@@ -1491,27 +1491,17 @@ Overlapping images generate the True Positive (TP) matches. The $IMS_{best}$ thr
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/RobocupDataset/ROC_General_Hamming_consistent.jpg}
-\caption{A comparison of the ROC curves for the Robocup datasets using Radius Matching and CPS values}
-\label{fig:compareHammingConsistent}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/RobocupDataset/ROC_General_KNN_max.jpg}
 \caption{A comparison of the ROC curves for the Robocup datasets using 2-NN for matching and MPS values}
 \label{fig:compareKNN}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/RobocupDataset/ROC_General_KNN_consistent.jpg}
-\caption{A comparison of the ROC curves for the Robocup datasets using 2-NN for matching and CPS values}
-\label{fig:compareKNNConsist}
 \end{minipage}
 \end{figure}
 
 
 
 \begin{table}
-\centering
-\caption{The performance statistics of 2-NN feature extraction algorithms}
+\caption{The AUC and performance statistics for the Main Robocup Dataset using
+2-NN}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
@@ -1519,31 +1509,23 @@ Overlapping images generate the True Positive (TP) matches. The $IMS_{best}$ thr
  &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
-BRISK0 & MPS & 97.531 & 3.312 & 4.816 & 1.013 & 0.022 & 13.076\tabularnewline
+BRISK0 & MPS & 97.407 & 3.348 & 4.766 & 0.942 & 0.022 & 13.073\tabularnewline
 \hline 
-BRISK4 & MPS & 95.821 & 10.404 & 5.005 & 1.063 & 0.023 & 20.495\tabularnewline
+BRISK4 & MPS & 95.039 & 10.007 & 4.555 & 0.807 & 0.021 & 19.415\tabularnewline
 \hline 
-BRISK0-SURF2D & MPS & 98.644 & 3.359 & 9.157 & 0.360 & 0.026 & 16.867\tabularnewline
+BRISK0-SURF2D & MPS & 98.654 & 3.432 & 9.312 & 0.359 & 0.028 & 17.179\tabularnewline
 \hline 
-\textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{94.908} & \textbf{3.078} & \textbf{1.999} & \textbf{0.471} & \textbf{0.016} & \textbf{9.484}\tabularnewline
-\hline 
-BRISK0 & CPS & 98.029 & 3.406 & 5.600 & 1.473 & 0.026 & 14.397\tabularnewline
-\hline 
-BRISK4 & CPS & 96.708 & 11.527 & 6.165 & 1.782 & 0.030 & 23.482\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 98.788 & 3.464 & 10.782 & 0.450 & 0.031 & 18.665\tabularnewline
-\hline 
-\textbf{BRISK0-UBRISK} & \textbf{CPS} & \textbf{94.190} & \textbf{2.932} & \textbf{1.670} & \textbf{0.238} & \textbf{0.011} & \textbf{8.751}\tabularnewline
+\textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{95.356} & \textbf{3.224} & \textbf{2.244} & \textbf{0.588} & \textbf{0.018} & \textbf{10.049}\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{74.039} & \textbf{0.271} & \textbf{0.134} & \textbf{0.242} & \textbf{0.030} & \textbf{13.301}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:mrd_times_knn}
+\label{sec:mrd_times_knn}
 \end{table}
 
 \begin{table}
-\centering
-\caption{The performance statistics of Radius Matching feature extraction algorithms}
+\caption{The AUC and performance statistics for the Main Robocup Dataset using
+Radius Matching}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
@@ -1558,14 +1540,6 @@ BRISK4 & MPS & 83.290 & 7.870 & 2.556 & 0.161 & 0.010 & 14.627\tabularnewline
 BRISK0-SURF2D & MPS & 96.033 & 3.115 & 5.711 & 0.192 & 0.007 & 13.027\tabularnewline
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{97.242} & \textbf{2.973} & \textbf{1.672} & \textbf{0.207} & \textbf{0.008} & \textbf{8.805}\tabularnewline
-\hline 
-BRISK0 & CPS & 92.952 & 2.980 & 2.666 & 0.227 & 0.015 & 9.818\tabularnewline
-\hline 
-BRISK4 & CPS & 90.343 & 8.577 & 3.229 & 0.355 & 0.027 & 16.173\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 96.503 & 3.181 & 6.406 & 0.218 & 0.008 & 13.815\tabularnewline
-\hline 
-\textbf{BRISK0-UBRISK} & \textbf{CPS} & \textbf{96.637} & \textbf{2.943} & \textbf{1.675} & \textbf{0.215} & \textbf{0.010} & \textbf{8.755}\tabularnewline
 \hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{74.039} & \textbf{0.271} & \textbf{0.134} & \textbf{0.242} & \textbf{0.030} & \textbf{13.301}\tabularnewline
 \hline 
@@ -1692,36 +1666,36 @@ This algorithm detects on average $51.22$ interest points. However,the 1D SURF t
 \begin{table}
 \caption{The number of Image Zero Matches (IZMs) for each feature extraction
 algorithm using 2-NN and Radius Matching in the Main Robocup Environment}
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|c|c|}
 \hline 
-\textbf{Method} & \multicolumn{2}{c|}{\textbf{Image Zero Matches}}\tabularnewline
+\textbf{Method} & \multicolumn{1}{c|}{\textbf{Image Zero Matches}}\tabularnewline
 \hline 
- & \multicolumn{2}{c|}{\textbf{2-NN Matching}}\tabularnewline
+ & \multicolumn{1}{c|}{\textbf{2-NN Matching}}\tabularnewline
 \hline 
- & \textbf{MPS} & \textbf{CPS}\tabularnewline
+ & \textbf{MPS}\tabularnewline
 \hline 
 \hline 
-BRISK0 & 52.00 & 35.00\tabularnewline
+BRISK0 & 60.00\tabularnewline
 \hline 
-BRISK4 & 83.00 & 63.00\tabularnewline
+BRISK & 105.00\tabularnewline
 \hline 
-BRISK0- SURF2D & 7.00 & 5.00\tabularnewline
+BRISK0- SURF2D & 8.00\tabularnewline
 \hline 
-UBRISK & 114.00 & 156.00\tabularnewline
+UBRISK & 108.00\tabularnewline
 \hline 
-1D SURF & 17.00 & 17.00\tabularnewline
+1D SURF & 17.00\tabularnewline
 \hline 
- & \multicolumn{2}{c|}{\textbf{Radius Matching}}\tabularnewline
+ & \multicolumn{1}{c|}{\textbf{Radius Matching}}\tabularnewline
 \hline 
-BRISK0 & 55.00 & 21.00\tabularnewline
+BRISK0 & 55.00\tabularnewline
 \hline 
-BRISK & 402.00 & 24.00\tabularnewline
+BRISK & 402.00\tabularnewline
 \hline 
-BRISK0- SURF2D & 77.00 & 57.00\tabularnewline
+BRISK0- SURF2D & 77.00\tabularnewline
 \hline 
-UBRISK & 33.00 & 29.00\tabularnewline
+UBRISK & 33.00\tabularnewline
 \hline 
-1D SURF & 17.00 & 17.00\tabularnewline
+1D SURF & 17.00\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:mrd_izm}
@@ -1976,21 +1950,11 @@ The 1D SURF implementation has also improved upon its performance as expected du
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves in the office environment using the CPS thresholds}
-\label{fig:compareKnnConsistentOffice}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming.jpg}
 \caption{A comparison of the ROC curves in the office environment using the MPS Hamming/Euclidean distance thresholds}
 \label{fig:compareHammingOffice}
 \end{minipage}
-\hspace{0.5cm}
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming_Consistent.jpg}
-\caption{A comparison of the ROC curves in the office environment using the CPS Hamming/Euclidean distance thresholds}
-\label{fig:compareHammingConsistentOffice}
-\end{minipage}
+
 \end{figure}
 
 
@@ -2013,28 +1977,20 @@ BRISK0-SURF2D & MPS & 94.795 & 3.793 & 17.157 & 1.497 & 0.083 & 26.936\tabularne
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{95.134} & \textbf{3.469} & \textbf{3.112} & \textbf{3.245} & \textbf{0.052} & \textbf{14.245}\tabularnewline
 \hline 
-BRISK0 & CPS & 98.457 & 4.499 & 14.911 & 17.984 & 0.112 & 41.889\tabularnewline
-\hline 
-BRISK4 & CPS & 98.282 & 18.546 & 15.856 & 24.097 & 0.137 & 63.065\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 96.210 & 4.520 & 28.129 & 3.600 & 0.131 & 40.822\tabularnewline
-\hline 
-BRISK0-UBRISK & CPS & 95.182 & 4.149 & 5.298 & 11.723 & 0.090 & 25.666\tabularnewline
-\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.277} & \textbf{0.197} & \textbf{0.483} & \textbf{0.043} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:rocTimingOfficeKnn}
+\label{tab:oe_times_knn}
 \end{table}
 
 \begin{table}
 \caption{The AUC and performance statistics for the office environment using
-Hamming/Euclidean distance}
+Radius Matching}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
 \textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+ & Some  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & MPS & 94.846 & 3.094 & 3.461 & 0.808 & 0.011 & 11.710\tabularnewline
@@ -2045,18 +2001,10 @@ BRISK0-SURF2D & MPS & 96.054 & 3.255 & 8.495 & 0.489 & 0.019 & 16.626\tabularnew
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{96.149} & \textbf{3.125} & \textbf{2.057} & \textbf{0.883} & \textbf{0.014} & \textbf{10.453}\tabularnewline
 \hline 
-BRISK0 & CPS & 94.697 & 3.118 & 3.590 & 0.889 & 0.014 & 11.948\tabularnewline
-\hline 
-BRISK4 & CPS & 96.274 & 9.997 & 4.663 & 2.082 & 0.023 & 21.164\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 96.084 & 3.366 & 10.196 & 0.656 & 0.022 & 18.577\tabularnewline
-\hline 
-\textbf{BRISK0-UBRISK} & \textbf{CPS} & 96.277 & 3.120 & 2.060 & 0.875 & 0.017 & 10.409\tabularnewline
-\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.277} & \textbf{0.197} & \textbf{0.483} & \textbf{0.043} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:rocTimingOfficeHamming}
+\label{tab:oe_times_hamming}
 \end{table}
 
 %\begin{table}
@@ -2336,87 +2284,59 @@ Again, all four of the feature extraction techniques have been tested on overlap
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN_Consistent.jpg}
-\caption{A comparison of the ROC curves in the large hall environment using the CPS thresholds}
-\label{fig:compareKnnConsistentOffice3}
-\end{minipage}
-\begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming.jpg}
 \caption{A comparison of the ROC curves in the large hall environment using the MPS Hamming/Euclidean distance thresholds}
 \label{fig:compareHammingOffice3}
 \end{minipage}
-\hspace{0.5cm}
-\begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming_Consistent.jpg}
-\caption{A comparison of the ROC curves in the large hall environment using the CPS Hamming/Euclidean distance thresholds}
-\label{fig:compareHammingConsistentOffice3}
-\end{minipage}
 \end{figure}
 
 \begin{table}
-
-\tiny
 \caption{The AUC and performance statistics for the large hall environment
 using 2-NN}
-
-
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & MPS & 99.263 & 4.027 & 10.752 & 18.175 & 0.147 & 37.513\tabularnewline
 \hline 
-BRISK & MPS & 96.444 & 15.664 & 9.691 & 13.698 & 0.126 & 43.645\tabularnewline
+BRISK4 & MPS & 96.444 & 15.664 & 9.691 & 13.698 & 0.126 & 43.645\tabularnewline
 \hline 
 BRISK0-SURF2D & MPS & 95.697 & 4.208 & 22.242 & 4.241 & 0.188 & 35.389\tabularnewline
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{97.430} & \textbf{3.701} & \textbf{3.804} & \textbf{9.849} & \textbf{0.109} & \textbf{21.885}\tabularnewline
 \hline 
-BRISK0 & CPS & 98.798 & 5.412 & 22.181 & 81.944 & 0.306 & 114.365\tabularnewline
-\hline 
-BRISK & CPS & 98.703 & 28.349 & 23.880 & 83.456 & 0.298 & 140.463\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 97.024 & 5.443 & 42.449 & 14.060 & 0.349 & 66.809\tabularnewline
-\hline 
-\textbf{BRISK0-UBRISK} & \textbf{CPS} & \textbf{96.186} & \textbf{4.787} & \textbf{7.248} & \textbf{46.827} & \textbf{0.232} & \textbf{63.541}\tabularnewline
-\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.273} & \textbf{0.161} & \textbf{0.351} & \textbf{0.044} & \textbf{14.032}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:hallStatsKnn}
+\label{tab:lh_knn}
 \end{table}
 
 
 \begin{table}
-\caption{The AUC and performance statistics for the large hall environment
-using Hamming/Euclidean distance}
-\tiny
+\caption{The AUC and performance statistics for the Large Hall Environment
+using Radius Matching}
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection(ms)} & \textbf{Extraction(ms)} & \textbf{Matching(ms)} & \textbf{Verification(ms)} & \textbf{Overall(ms)}\tabularnewline
+\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & MPS & 96.739 & 3.233 & 4.565 & 2.321 & 0.021 & 14.642\tabularnewline
 \hline 
-BRISK & MPS & 95.516 & 10.115 & 3.952 & 1.341 & 0.017 & 19.893\tabularnewline
+BRISK4 & MPS & 95.516 & 10.115 & 3.952 & 1.341 & 0.017 & 19.893\tabularnewline
 \hline 
 BRISK0-SURF2D & MPS & 98.803 & 3.436 & 11.197 & 1.260 & 0.039 & 20.345\tabularnewline
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{93.150} & \textbf{3.249} & \textbf{2.516} & \textbf{2.614} & \textbf{0.026} & \textbf{12.824}\tabularnewline
 \hline 
-BRISK0 & CPS & 96.070 & 3.268 & 4.762 & 2.618 & 0.028 & 15.091\tabularnewline
-\hline 
-BRISK & CPS & 98.269 & 12.123 & 6.139 & 4.359 & 0.045 & 27.164\tabularnewline
-\hline 
-BRISK0-SURF2D & CPS & 98.786 & 3.603 & 13.475 & 1.717 & 0.051 & 23.414\tabularnewline
-\hline 
-BRISK0-UBRISK & CPS & 92.964 & 3.303 & 2.581 & 2.618 & 0.030 & 13.503\tabularnewline
-\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.273} & \textbf{0.161} & \textbf{0.351} & \textbf{0.044} & \textbf{14.032}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:hallStatsHamming}
+\label{tab:lh_hamming}
 \end{table}
 
 
@@ -2824,7 +2744,7 @@ Scenario & \% AUC & Detection(ms) & Extraction(ms) & Matching(ms) & Verification
 
 \begin{figure}[h!] 
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/varyingLight_matches_keypoints.pdf}
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/varyingLight_matches_keypoints_best.pdf}
     \caption{The statistics for the Main Robocup Datasets under varying lighting conditions}
     \label{fig:varyingLighting_matches_keypoints}
 \end{figure}
@@ -2951,7 +2871,7 @@ Nao only & 97.242 & 2.973 & 1.672 & 0.207 & 0.008 & 8.805\tabularnewline
 
 \begin{figure}[h!] 
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_mrb_matches_keypoints.pdf}
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_mrb_matches_keypoints_best.pdf}
     \caption{The matched point and interest point statistics for the Main Robocup Datasets
 and Nikon Camera Datasets using Radius Matching}
     \label{fig:nikon_mrb_matches_keypoints}
@@ -3074,7 +2994,7 @@ Nao only & 93.150 & 3.249 & 2.516 & 2.614 & 0.026 & 12.824\tabularnewline
 
 \begin{figure}[h!] 
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_lh_matches_keypoints.pdf}
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_lh_matches_keypoints_best.pdf}
     \caption{The matched point and interest point statistics for the Nao-only and Nao-Nikon camera images in the Large hall Environment}
     \label{fig:nikon_lh_matches_keypoints}
 \end{figure}
@@ -3274,16 +3194,349 @@ The TPs might be biased since duplicate matches contribute towards the IMS Score
 
 \bibliographystyle{witseie}
 \bibliography{bibliography}
-% \newpage
-%\onecolumn
-%\appendix
-%\setcounter{table}{0}
-%\setcounter{figure}{0}
-%\setcounter{subsection}{0}
-%\makeatletter \renewcommand{\thefigure}{A.\@arabic\c@figure} \renewcommand{\thetable}{A.\@arabic\c@table} \renewcommand{\thesection}{A.\@arabic\c@section} \makeatother
-%\section*{APPENDIX A}
-%
-%\section{Control Program}
+ \newpage
+\onecolumn
+\appendix
+\setcounter{table}{0}
+\setcounter{figure}{0}
+\setcounter{subsection}{0}
+\makeatletter \renewcommand{\thefigure}{A.\@arabic\c@figure} \renewcommand{\thetable}{A.\@arabic\c@table} \renewcommand{\thesection}{A.\@arabic\c@section} \makeatother
+\section*{APPENDIX A}
+
+\section{CPS Statistics}
+\label{app:cps}
+
+\subsection{Main Robocup Dataset Environment}
+\label{app:mrd}
+
+\begin{figure}[ht!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/RobocupDataset/ROC_General_KNN_consistent.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using 2-NN for matching and CPS values}
+\label{fig:compareKNNConsist}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/RobocupDataset/ROC_General_Hamming_consistent.jpg}
+\caption{A comparison of the ROC curves for the Robocup datasets using Radius Matching and CPS values}
+\label{fig:compareHammingConsistent}
+\end{minipage}
+\end{figure}
+
+
+\begin{table}
+
+
+\caption{The AUC and performance statistics for the Main Robocup Dataset using
+2-NN using CPS parameters}
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 98.000 & 3.863 & 8.342 & 3.380 & 0.039 & 19.622\tabularnewline
+\hline 
+BRISK4 & CPS & 97.388 & 14.214 & 8.912 & 4.057 & 0.045 & 31.304\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 98.498 & 3.872 & 15.580 & 0.852 & 0.048 & 24.358\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 97.375 & 3.619 & 3.285 & 2.020 & 0.032 & 12.934\tabularnewline
+\hline 
+\end{tabular}
+\label{app:mrd_knn}
+\end{table}
+
+
+
+\begin{table}
+\caption{The AUC and performance statistics for the Main Robocup Dataset using
+Radius Matching using CPS parameters}
+
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 92.952 & 2.980 & 2.666 & 0.227 & 0.015 & 9.818\tabularnewline
+\hline 
+BRISK4 & CPS & 90.343 & 8.577 & 3.229 & 0.355 & 0.027 & 16.173\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 96.503 & 3.181 & 6.406 & 0.218 & 0.008 & 13.815\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 96.637 & 2.943 & 1.675 & 0.215 & 0.010 & 8.755\tabularnewline
+\hline 
+\end{tabular}
+\label{app:mrd_hamming}
+\end{table}
+
+\begin{table}
+\caption{The number of Image Zero Matches (IZMs) for each feature extraction
+algorithm using 2-NN and Radius Matching in the Main Robocup Environment}
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Method} & \multicolumn{1}{c|}{\textbf{Image Zero Matches}}\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{2-NN Matching}}\tabularnewline
+\hline 
+ & \textbf{CPS}\tabularnewline
+\hline 
+\hline 
+BRISK0 & 35.00\tabularnewline
+\hline 
+BRISK & 63.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 5.00\tabularnewline
+\hline 
+UBRISK & 156.00\tabularnewline
+\hline 
+1D SURF & 17.00\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{Radius Matching}}\tabularnewline
+\hline 
+BRISK0 & 21.00\tabularnewline
+\hline 
+BRISK & 24.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 57.00\tabularnewline
+\hline 
+UBRISK & 29.00\tabularnewline
+\hline 
+1D SURF & 17.00\tabularnewline
+\hline 
+\end{tabular}
+\label{app:mrd_izm}
+\end{table}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/tp_rate_mrb_cps.pdf}
+    \caption{The $TP_{FP=0}^{max}$ rate for the Main Robocup datasets} 
+    \label{app:tp_rate_mrd}
+\end{figure}
+
+
+
+\subsection{Office Environment}
+\label{app:oe}
+
+\begin{figure}[ht!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves in the office environment using the CPS thresholds}
+\label{fig:compareKnnConsistentOffice}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves in the office environment using the CPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingConsistentOffice}
+\end{minipage}
+\end{figure}
+
+\begin{table}
+\caption{The AUC and performance statistics for the Office Environment Datasets
+using 2-NN using CPS parameters}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 98.457 & 4.499 & 14.911 & 17.984 & 0.112 & 41.889\tabularnewline
+\hline 
+BRISK4 & CPS & 98.282 & 18.546 & 15.856 & 24.097 & 0.137 & 63.065\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 96.210 & 4.520 & 28.129 & 3.600 & 0.131 & 40.822\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 95.182 & 4.149 & 5.298 & 11.723 & 0.090 & 25.666\tabularnewline
+\hline 
+\end{tabular}
+\label{app:oe_knn}
+\end{table}
+
+\begin{table}
+\caption{The AUC and performance statistics for the Office Environment Datasets
+using Radius Macthing and CPS parameters}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 94.697 & 3.118 & 3.590 & 0.889 & 0.014 & 11.948\tabularnewline
+\hline 
+BRISK4 & CPS & 96.274 & 9.997 & 4.663 & 2.082 & 0.023 & 21.164\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 96.084 & 3.366 & 10.196 & 0.656 & 0.022 & 18.577\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 96.277 & 3.120 & 2.060 & 0.875 & 0.017 & 10.409\tabularnewline
+\hline 
+\end{tabular}
+\label{app:oe_hamming}
+\end{table}
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/tp_rate_oe_cps.pdf}
+    \caption{The $TP_{FP=0}^{max}$ rate for the Office Environment datasets} 
+    \label{app:tp_rate_oe}
+\end{figure}
+
+
+\begin{table}
+\caption{The number of Image Zero Matches (IZMs) for each feature extraction
+algorithm using 2-NN and Radius Matching in the Office Environment}
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Method} & \multicolumn{1}{c|}{\textbf{Image Zero Matches}}\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{2-NN Matching}}\tabularnewline
+\hline 
+ & \textbf{CPS}\tabularnewline
+\hline 
+\hline 
+BRISK0 & 6.00\tabularnewline
+\hline 
+BRISK & 5.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 0.00\tabularnewline
+\hline 
+UBRISK & 27.00\tabularnewline
+\hline 
+1D SURF & 0.00\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{Radius Matching}}\tabularnewline
+\hline 
+BRISK0 & 10.00\tabularnewline
+\hline 
+BRISK & 0.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 7.00\tabularnewline
+\hline 
+UBRISK & 6.00\tabularnewline
+\hline 
+1D SURF & 0.00\tabularnewline
+\hline 
+\end{tabular}
+\label{app:oe_izm}
+\end{table}
+
+
+\subsection{Large Hall Environment}
+\label{app:lh}
+
+\begin{figure}[ht!]
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN_Consistent.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the CPS thresholds}
+\label{fig:compareKnnConsistentOffice3}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.5\linewidth}
+\includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming_Consistent.jpg}
+\caption{A comparison of the ROC curves in the large hall environment using the CPS Hamming/Euclidean distance thresholds}
+\label{fig:compareHammingConsistentOffice3}
+\end{minipage}
+\end{figure}
+
+\begin{table}
+\caption{The AUC and performance statistics for the Large Hall Environment
+Datasets using 2-NN Matching and CPS parameters}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 98.798 & 5.412 & 22.181 & 81.944 & 0.306 & 114.365\tabularnewline
+\hline 
+BRISK4 & CPS & 98.703 & 28.349 & 23.880 & 83.456 & 0.298 & 140.463\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 97.024 & 5.443 & 42.449 & 14.060 & 0.349 & 66.809\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 96.186 & 4.787 & 7.248 & 46.827 & 0.232 & 63.541\tabularnewline
+\hline 
+\end{tabular}
+\label{app:lh_hamming}
+\end{table}
+
+
+\begin{table}
+\caption{The AUC and performance statistics for the Large Hall Environment
+Datasets using Radius Matching and CPS parameters}
+\begin{tabular}{|c|c|c|c|c|c|c|c|}
+\hline 
+\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+ &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\hline 
+\hline 
+BRISK0 & CPS & 96.070 & 3.268 & 4.762 & 2.618 & 0.028 & 15.091\tabularnewline
+\hline 
+BRISK4 & CPS & 98.269 & 12.123 & 6.139 & 4.359 & 0.045 & 27.164\tabularnewline
+\hline 
+BRISK0-SURF2D & CPS & 98.786 & 3.603 & 13.475 & 1.717 & 0.051 & 23.414\tabularnewline
+\hline 
+BRISK0-UBRISK & CPS & 92.964 & 3.303 & 2.581 & 2.618 & 0.030 & 13.503\tabularnewline
+\hline 
+\end{tabular}
+\label{app:lh_hamming}
+\end{table}
+
+
+
+\begin{table}
+\caption{The number of Image Zero Matches (IZMs) for each feature extraction
+algorithm using 2-NN and Radius Matching in the Large Environment}
+
+
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Method} & \multicolumn{1}{c|}{\textbf{Image Zero Matches}}\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{2-NN Matching}}\tabularnewline
+\hline 
+ & \textbf{CPS}\tabularnewline
+\hline 
+\hline 
+BRISK0 & 0.00\tabularnewline
+\hline 
+BRISK & 1.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 0.00\tabularnewline
+\hline 
+UBRISK & 1.00\tabularnewline
+\hline 
+1D SURF & 0.00\tabularnewline
+\hline 
+ & \multicolumn{1}{c|}{\textbf{Radius Matching}}\tabularnewline
+\hline 
+BRISK0 & 0.00\tabularnewline
+\hline 
+BRISK & 0.00\tabularnewline
+\hline 
+BRISK0- SURF2D & 0.00\tabularnewline
+\hline 
+UBRISK & 0.00\tabularnewline
+\hline 
+1D SURF & 0.00\tabularnewline
+\hline 
+\end{tabular}
+\label{app:lh_izm}
+\end{table}
+
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/tp_rate_lh_cps.pdf}
+    \caption{The $TP_{FP=0}^{max}$ rate for the Large Hall Environment datasets} 
+    \label{app:tp_rate_lh}
+\end{figure}
+
 %Add the matlab code to this file...
 %\lstinputlisting{codeSnippets.cpp}
  

@@ -133,7 +133,7 @@ interval =1;
 %Counter
 counter = 1;
 %To generate values for the ROC Curve
-largestThreshold = ceil(max(stats(:,2)));
+largestThreshold = ceil(max(stats(:,4)));
 
 tpRateMatrix = zeros(1,largestThreshold/stepValue);
 fpRateMatrix = zeros(1,largestThreshold/stepValue);
