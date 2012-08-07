@@ -84,53 +84,97 @@ The datasets that have been compared under varying lighting conditions to
 
 \begin_layout Plain Layout
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="4">
+<lyxtabular version="3" rows="7" columns="4">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <column alignment="center" valignment="top" width="0">
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
-Dataset
+Datasets
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
-Scenario Dataset
+Scenario Datasets
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
-Overlapping Image Pairs
+Overlapping 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 
 \series bold
-Non-overlapping Image pairs
+Non-overlapping 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+(All Lights On)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Image Pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+Image pairs
 \end_layout
 
 \end_inset
@@ -181,7 +225,7 @@ Non-overlapping Image pairs
 \begin_layout Plain Layout
 
 \series bold
-Robocup Dataset
+Main Robocup Datasets
 \end_layout
 
 \end_inset
@@ -190,7 +234,7 @@ Robocup Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-1- Left fluorescent Light Off
+1- Left Light: off, Right Light: on, Main Lights: on
 \end_layout
 
 \end_inset
@@ -221,7 +265,7 @@ Robocup Dataset
 \begin_layout Plain Layout
 
 \series bold
-Robocup Dataset
+Main Robocup Datasets
 \end_layout
 
 \end_inset
@@ -230,7 +274,7 @@ Robocup Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-2 -Right fluorescent light and Main Lights off
+2- Left Light: on, Right Light: off, Main Lights: off
 \end_layout
 
 \end_inset
@@ -261,7 +305,7 @@ Robocup Dataset
 \begin_layout Plain Layout
 
 \series bold
-Robocup Dataset
+Main Robocup Datasets
 \end_layout
 
 \end_inset
@@ -270,7 +314,7 @@ Robocup Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-3 -Both fluorescent Lights off
+3- Left Light: off, Right Light: off, Main Lights: on
 \end_layout
 
 \end_inset

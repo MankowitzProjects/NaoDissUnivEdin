@@ -59,6 +59,7 @@ Score getMatchesRANSAC(IpVec &ipts1, IpVec &ipts2, IpPairVec &matches)
 		{
 			// Store the match
 			matches.push_back(std::make_pair(ipts1[i], *match));
+			//Increment the matching score
 			matching_score += 1/d1;
 		}
 	}
@@ -78,18 +79,24 @@ Score getMatchesRANSAC(IpVec &ipts1, IpVec &ipts2, IpPairVec &matches)
 		best_score = 0;
 
 		for(int i=0; i<ITERATIONS; i++){
+			//Choose random matches
 			int pos1 = rand() % (int)matches.size();
 			int pos2 = rand() % (int)matches.size();
 			while(pos1 == pos2) {
+				//Make sure that both matches are different
 				pos2 = rand() % (int)matches.size();
 			}
+			//Should generate a positive value
 			float m = (matches.at(pos2).second.x - matches.at(pos1).second.x)/(matches.at(pos2).first.x - matches.at(pos1).first.x);
+			//If a gradient is discarded
 			if (m <= 0){
 				continue;
 			}
+			//Calculate the translation component
 			float b = matches.at(pos2).second.x - m*matches.at(pos2).first.x;
 			float score = 0;
 			for(int j=0; j<(int)matches.size(); j++){
+				//Calculate the function x_stored,i = b_s * x_test,i + b_d
 				if( fabs(matches.at(j).second.x - (m*matches.at(j).first.x + b)) < PIXEL_ERROR_MARGIN)
 					score += 1/fabs(matches.at(j).first - matches.at(j).second);
 			}
@@ -101,7 +108,7 @@ Score getMatchesRANSAC(IpVec &ipts1, IpVec &ipts2, IpPairVec &matches)
 		}
 	}
 
-	// Now update the matches
+	// Now remove all matches who are not within this pixel error margin
 	//if(best_m > 0){
 	for(int j=0; j<(int)matches.size(); j++){
 		if( fabs(matches.at(j).second.x - (best_m*matches.at(j).first.x + best_b)) >= PIXEL_ERROR_MARGIN) {

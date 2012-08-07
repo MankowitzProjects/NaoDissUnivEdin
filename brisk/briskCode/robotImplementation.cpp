@@ -87,34 +87,34 @@ const float r=2.5; // found 8-9-11, r=3.6, exponent 1.5
 //Main function
 int main(int argc, char ** argv) {
 	//The angle used for matching validation
-	double angle = 2;
+	double angle = 10;
 	//The distance threshold
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = false;
+	bool usingKnnCriterion = true;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
 
 	//Removes all matches except the first ones if true
-	bool removeMatches = true;
+	bool removeMatches = false;
 
 	//Validates the matches
 	bool performValidation=true;
 
 	//Choose the number of KNN matches to display
-	bool useDifferentNumMatches = false ;
-	int numMatchesToDisplay = 20;
+	bool useDifferentNumMatches = true ;
+	int numMatchesToDisplay = 0;
 
 	//Set the arguments
 	//std::string feat_dMetector = "SURF";
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 75;//46.25
+	double threshold = 55;//46.25
 	double hammingDistance = 121.25;//BRISK BRISK
-	double radius = 0.50;//BRISK SURF
+	double radius = 0.28;//BRISK SURF
 	std::string feat_descriptor = "U-BRISK";
 
 	//For changing the threshold
@@ -136,12 +136,12 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Left_Overlapping";
-//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Left_Overlapping";//PicsOG/Matching_Images_OG_Left
+//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
-//		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-//		std::string dir1 = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/PicsMG/Matching_Pics_Left_Overlapping";
+//		std::string dir1 = "../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 
 	//Original dataset Right light off
@@ -158,18 +158,18 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
-//		std::string dir = "../images/Dataset3_Overlapping_1";
-//		std::string dir1 = "../images/Dataset3_Overlapping_1";
+		std::string dir = "../images/Dataset3_Overlapping_1";
+		std::string dir1 = "../images/Dataset3_Overlapping_2";
 
 	//Google Street View dataset
-		std::string dir = "../images/GoogleMaps/NaoSide1";
-		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/GoogleMaps/NaoSide1";
+//		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "10";
-	std::string name2 = "2";
+	std::string name1 = "13";
+	std::string name2 = "1";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -457,15 +457,15 @@ int main(int argc, char ** argv) {
 	cv::waitKey();
 
 	//Demo pics for the thesis
-//	cv::imwrite("../images/MainRobocupDataset.jpg",outimg);
-//	cv::imwrite("../images/OfficeDataset.jpg",outimg);
-//	cv::imwrite("../images/LargeHallDataset.jpg",outimg);
-//	cv::imwrite("../images/NaoNikonRobocupDataset.jpg",outimg);
-//	cv::imwrite("../images/NaoNikonLargeHallDataset.jpg",outimg);
-//	cv::imwrite("../images/VaryingIlluminationLeftDataset.jpg",outimg);
-//	cv::imwrite("../images/VaryingIlluminationRightDataset.jpg",outimg);
-//	cv::imwrite("../images/VaryingIlluminationBothDataset.jpg",outimg);
-//	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);
+//	cv::imwrite("../images/MainRobocupDataset.jpg",outimg); //10,2 D: 3,3
+//	cv::imwrite("../images/OfficeDataset.jpg",outimg); //10,6 D: 1,1
+//	cv::imwrite("../images/LargeHallDataset.jpg",outimg); //10,5 D: 1,1
+//	cv::imwrite("../images/NaoNikonRobocupDataset.jpg",outimg); //16,9 D: 3,3
+//	cv::imwrite("../images/NaoNikonLargeHallDataset.jpg",outimg);//2,12 D:1,1
+//	cv::imwrite("../images/VaryingIlluminationLeftDataset.jpg",outimg);//19,6 D:1,1
+//	cv::imwrite("../images/VaryingIlluminationRightDataset.jpg",outimg);//2,12 D:2,2
+//	cv::imwrite("../images/VaryingIlluminationBothDataset.jpg",outimg);//5,15 D:2,2
+//	cv::imwrite("../images/GoogleStreetViewDataset.jpg",outimg);//10,10 D:1,1
 
 	//Pics showing problems - Mainly in main Robocup dataset
 //	cv::imwrite("../images/KNN_ratio.jpg",outimg);//Image 4,4 Datasets 1,1
@@ -483,6 +483,8 @@ int main(int argc, char ** argv) {
 	//Dataset2
 //	cv::imwrite("../images/dataset2_interestPoints.jpg",outimg);//Img 5,10 dataset 5,6
 
+	//Dataset3
+//	cv::imwrite("../images/dataset3_interestPoints.jpg",outimg);//Img 13,1 dataset 5,6
 
 	//Feature Matching Images
 	//2-NN Matching and Radius Matching

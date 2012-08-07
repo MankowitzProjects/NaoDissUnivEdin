@@ -77,11 +77,11 @@ float visualStaticMatch(TestImage image1, TestImage image2, bool visual, IplImag
 		//Draws the horizon lines
 		cvLine(img1, cvPoint(0, image1.left+WIDTH/2),cvPoint(img1->width, image1.right+WIDTH/2), cvScalar(0, 0, 255),1);
 		cvLine(img1, cvPoint(0, image1.left-WIDTH/2),cvPoint(img1->width, image1.right-WIDTH/2), cvScalar(0, 0, 255),1);
-		cvLine(img2, cvPoint(0, image2.left+WIDTH/2),cvPoint(img2->width, image2.right+WIDTH/2), cvScalar(0, 0, 255),1); 
-		cvLine(img2, cvPoint(0, image2.left-WIDTH/2),cvPoint(img2->width, image2.right-WIDTH/2), cvScalar(0, 0, 255),1); 
+		cvLine(img2, cvPoint(0, image2.left+WIDTH/2),cvPoint(img2->width, image2.right+WIDTH/2), cvScalar(0, 0, 255),1);
+		cvLine(img2, cvPoint(0, image2.left-WIDTH/2),cvPoint(img2->width, image2.right-WIDTH/2), cvScalar(0, 0, 255),1);
 
 		// Copy the original images to the output
-		IplImage* visual = cvCreateImage( cvSize(img1->width + img2->height + integral_height, 
+		IplImage* visual = cvCreateImage( cvSize(img1->width + img2->height + integral_height,
 				img2->width + img1->height + integral_height), img1->depth, img1->nChannels );
 		cvZero(visual);
 		cvSetImageROI( visual, cvRect( img2->height + integral_height, img2->width+ integral_height, img1->width, img1->height ) );
@@ -101,7 +101,7 @@ float visualStaticMatch(TestImage image1, TestImage image2, bool visual, IplImag
 		cvConvertScale(int_img1, im8, 255.);
 		IplImage *colint_img1 = cvCreateImage( cvSize(int_img1->width, int_img1->height), visual->depth, visual->nChannels );
 		cvCvtColor( im8, colint_img1, CV_GRAY2BGR );
-		cvSetImageROI( visual, cvRect( img2->height + integral_height, img2->width, int_img1->width, integral_height ) );	
+		cvSetImageROI( visual, cvRect( img2->height + integral_height, img2->width, int_img1->width, integral_height ) );
 		cvResize(colint_img1, visual);
 		cvReleaseImage(&int_img1);
 		cvReleaseImage(&im8);
@@ -112,7 +112,7 @@ float visualStaticMatch(TestImage image1, TestImage image2, bool visual, IplImag
 		cvConvertScale(int_img2, im8, 255.);
 		IplImage *colint_img2 = cvCreateImage( cvSize(int_img2->width, int_img2->height), visual->depth, visual->nChannels );
 		cvCvtColor( im8, colint_img2, CV_GRAY2BGR );
-		cvSetImageROI( visual, cvRect( img2->height , 0, integral_height, int_img2->width  ) );	
+		cvSetImageROI( visual, cvRect( img2->height , 0, integral_height, int_img2->width  ) );
 
 		IplImage *transpose = cvCreateImage( cvSize(colint_img2->height, colint_img2->width), colint_img2->depth, colint_img2->nChannels );
 		cvFlip(colint_img2, NULL, 0);

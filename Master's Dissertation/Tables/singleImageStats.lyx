@@ -97,6 +97,8 @@ The properties of valid and invalid interest point matches
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Property
 \end_layout
 
@@ -106,6 +108,8 @@ Property
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Invalid Matches due to Angle Constraint
 \end_layout
 
@@ -162,6 +166,8 @@ Invalid Matches due to Angle Constraint
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Method
 \end_layout
 
@@ -171,6 +177,8 @@ Method
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{d\alpha}$
 \end_inset
 
@@ -183,6 +191,8 @@ Method
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{d\alpha}$
 \end_inset
 
@@ -195,6 +205,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{dR}$
 \end_inset
 
@@ -207,6 +219,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{dR}$
 \end_inset
 
@@ -219,6 +233,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{dS}$
 \end_inset
 
@@ -231,6 +247,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 \begin_inset Formula $\bar{dS}$
 \end_inset
 
@@ -245,6 +263,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0
 \end_layout
 
@@ -382,6 +402,8 @@ BRISK0
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK
 \end_layout
 
@@ -519,6 +541,8 @@ BRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0 - SURF2D
 \end_layout
 
@@ -656,6 +680,8 @@ BRISK0 - SURF2D
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0 - UBRISK
 \end_layout
 
@@ -803,17 +829,7 @@ BRISK0 - UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Invalid Matches due to KNN Ratio Constraint
 \end_layout
 
@@ -870,6 +886,8 @@ Invalid Matches due to KNN Ratio Constraint
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0
 \end_layout
 
@@ -1008,17 +1026,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK
 \end_layout
 
@@ -1157,17 +1165,7 @@ BRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0 - SURF2D
 \end_layout
 
@@ -1306,17 +1304,7 @@ BRISK0 - SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0 - UBRISK
 \end_layout
 
@@ -1464,17 +1452,7 @@ BRISK0 - UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Valid Matches
 \end_layout
 
@@ -1531,6 +1509,8 @@ Valid Matches
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0
 \end_layout
 
@@ -1669,17 +1649,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK
 \end_layout
 
@@ -1818,17 +1788,7 @@ BRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0 - SURF2D
 \end_layout
 
@@ -1967,17 +1927,7 @@ BRISK0 - SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0 - UBRISK
 \end_layout
 
@@ -2155,6 +2105,8 @@ The KNN Ratios
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Method
 \end_layout
 
@@ -2165,17 +2117,7 @@ Method
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Match Type
 \end_layout
 
@@ -2185,6 +2127,8 @@ Match Type
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Mean KNN
 \end_layout
 
@@ -2194,6 +2138,8 @@ Mean KNN
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Std 
 \end_layout
 
@@ -2203,6 +2149,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Mean Distance 
 \end_layout
 
@@ -2212,6 +2160,8 @@ Mean Distance
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Std 
 \end_layout
 
@@ -2241,6 +2191,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
  Ratio
 \end_layout
 
@@ -2250,6 +2202,8 @@ Std
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Deviation
 \end_layout
 
@@ -2259,6 +2213,8 @@ Deviation
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 between KNN neighbors
 \end_layout
 
@@ -2268,6 +2224,8 @@ between KNN neighbors
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 Deviation
 \end_layout
 
@@ -2279,6 +2237,8 @@ Deviation
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0
 \end_layout
 
@@ -2415,6 +2375,8 @@ alid Matches
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK
 \end_layout
 
@@ -2527,6 +2489,8 @@ Valid Matches
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0 - UBRISK
 \end_layout
 
@@ -2711,6 +2675,8 @@ Valid Matches
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 BRISK0 - SURF2D
 \end_layout
 

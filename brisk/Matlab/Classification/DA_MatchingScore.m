@@ -37,7 +37,7 @@ if matchingMethod==1
         
 %         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_06082012_1402_35__consistent.mat'
         load 'nonmatching_matching_Data__BRISK_U-BRISK_KNN_06082012_1402_55__max.mat'
-        
+          
         %         plotMatchingScores(data)
         [ub_meanMatchesScore, ub_meanNonMatchesScore, ub_matches_std, ub_nonMatches_std]  = calculateMatchingScore(data);
         
@@ -48,7 +48,7 @@ if matchingMethod==1
 %         load 'nonmatching_matching_Data__BRISK_BRISK_KNN_06082012_1402_30__consistent.mat'
         load 'nonmatching_matching_Data__BRISK_BRISK_KNN_06082012_1402_46.25__max.mat'
         
-        
+         plotMatchingScores(data) 
         [sb_meanMatchesScore, sb_meanNonMatchesScore, sb_matches_std, sb_nonMatches_std]  = calculateMatchingScore(data);
         
         %For BRISK4

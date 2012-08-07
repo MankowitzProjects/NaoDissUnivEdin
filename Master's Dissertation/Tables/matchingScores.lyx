@@ -94,17 +94,7 @@ The Matching Score for the Main Robocup Dataset
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Method
 \end_layout
 
@@ -115,17 +105,7 @@ Method
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Overlapping Score
 \end_layout
 
@@ -136,17 +116,7 @@ Overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Non-overlapping Score
 \end_layout
 
@@ -200,17 +170,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -265,17 +225,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -330,17 +280,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -395,17 +335,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -459,6 +389,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -522,17 +454,7 @@ UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Radius Matching
 \end_layout
 
@@ -554,17 +476,7 @@ Radius Matching
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -619,17 +531,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -684,17 +586,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -749,17 +641,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -813,6 +695,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -908,17 +792,7 @@ The Matching Score for the Office Environment Dataset
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Method
 \end_layout
 
@@ -929,17 +803,7 @@ Method
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Overlapping Score
 \end_layout
 
@@ -950,17 +814,7 @@ Overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Non-overlapping Score
 \end_layout
 
@@ -982,17 +836,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 2-NN
 \end_layout
 
@@ -1014,17 +858,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -1079,17 +913,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -1144,17 +968,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -1209,17 +1023,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -1273,6 +1077,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -1336,17 +1142,7 @@ UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Radius Matching
 \end_layout
 
@@ -1368,17 +1164,7 @@ Radius Matching
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -1433,17 +1219,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -1498,17 +1274,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -1563,17 +1329,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -1627,6 +1383,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -1718,17 +1476,7 @@ The Matching Score for the Large Hall Datasets
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Method
 \end_layout
 
@@ -1739,17 +1487,7 @@ Method
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Overlapping Score
 \end_layout
 
@@ -1760,17 +1498,7 @@ Overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Non-overlapping Score
 \end_layout
 
@@ -1824,17 +1552,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -1889,17 +1607,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -1954,17 +1662,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -2019,17 +1717,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -2083,6 +1771,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -2178,17 +1868,7 @@ Radius Matching
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0
 \end_layout
 
@@ -2243,17 +1923,7 @@ BRISK0
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK4
 \end_layout
 
@@ -2308,17 +1978,7 @@ BRISK4
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 BRISK0- SURF2D
 \end_layout
 
@@ -2373,17 +2033,7 @@ BRISK0- SURF2D
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 UBRISK
 \end_layout
 
@@ -2437,6 +2087,8 @@ UBRISK
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\series bold
 1D SURF
 \end_layout
 
@@ -2528,17 +2180,7 @@ The Matching Score for the Varying Lighting Datasets
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Method
 \end_layout
 
@@ -2549,17 +2191,7 @@ Method
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Overlapping Score
 \end_layout
 
@@ -2570,17 +2202,7 @@ Overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Non-overlapping Score
 \end_layout
 
@@ -2602,17 +2224,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Radius Matching
 \end_layout
 
@@ -2633,7 +2245,7 @@ Radius Matching
 \begin_inset Text
 
 \begin_layout Plain Layout
-Main Robocup Dataset
+Main Robocup Dataset (All Lights On)
 \end_layout
 
 \end_inset
@@ -2686,7 +2298,19 @@ Main Robocup Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-Left fluorescent Light Off
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+1- Left Light: off, Right Light: on, Main Lights: on
 \end_layout
 
 \end_inset
@@ -2739,7 +2363,19 @@ Left fluorescent Light Off
 \begin_inset Text
 
 \begin_layout Plain Layout
-Right fluorescent light and Main Lights off
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2- Left Light: on, Right Light: off, Main Lights: off
 \end_layout
 
 \end_inset
@@ -2792,7 +2428,19 @@ Right fluorescent light and Main Lights off
 \begin_inset Text
 
 \begin_layout Plain Layout
-Both fluorescent Lights off
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+3- Left Light: off, Right Light: off, Main Lights: on
 \end_layout
 
 \end_inset

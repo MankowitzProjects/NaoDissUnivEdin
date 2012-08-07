@@ -15,12 +15,12 @@ addpath('../DataStreet');
 % 4 - means matching Nao dataset with camera for Robocup
 % 5 - means matching Nao dataset with camera for Large Hall
 % 6 - means matching Nao dataset with Google Street View
-datasetType = 1;
+datasetType = 3;
 
 %Choose if we are comparing knn or hamming/euclidean distance
 % 1 - KNN
 % 2 - Radius Match
-matchingMethod =1;
+matchingMethod =2;
 
 %Whether we plot the ROC Curve or not
 plotROC = 1;
@@ -335,7 +335,7 @@ elseif datasetType==3
     xlabel('False Positive rate');
     ylabel('True positive rate');
     title('ROC Curve');
-    hleg1 = legend('Left Light off','Right Light and Main Light off', 'Left and Right Lights off');
+    hleg1 = legend('Left Light: off, Right Light: on, Main Lights: on','Left Light: on, Right Light: off, Main Lights: off', 'Left Light: off, Right Light: off, Main Lights: on');
     set(hleg1,'Location','SouthEast')
     
     overallStatsMatrix = [left_statsMatrix;
