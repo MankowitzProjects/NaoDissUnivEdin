@@ -389,9 +389,9 @@ V = max(\sum_{x \epsilon S_{bright}} \mid I_{p \rightarrow x} - I_p \mid - t, \s
 
 It is important to consider the order in which the points on the circle surrounding the potential interest point are evaluated, for computational efficiency. One method is to evaluate pixels $1, 5, 9 $ and $13$ corresponding to the compass directions \cite{Rosten2006}. At least three of these pixels need to be brighter or darker than the central pixel $p$ plus the chosen threshold in order for the central pixel to be evaluated further. If this is not the case, then the pixel $p$ is discarded as it cannot have $9$ contiguous pixels as mentioned previously and is therefore not an interest point. If at least three of the above-mentioned pixels fulfil the criteria, then the Accelerated Segment Test (AST) is applied to the circle of pixels in order to determine whether or not the central pixel is indeed an interest point. There are a different ways of applying the AST in order to determine whether or not a point is an interest point. Both FAST and AGAST use decision trees to search the circle of pixels in a specific order so as to maximise the efficiency with which each potential interest point is evaluated. The techniques differ in terms of the order in which the $16$ circle pixels are evaluated. In addition, AGAST has an adaptive tree switching technique which enables the method to switch to different decision trees that are optimised for a particular area of an image. This has an effect on computational efficiency and how well the methods generalise to different domains.   \\
 
-FAST performs the AST by first learning a \textit{ternary} tree which has possible pixel states of \textit{brighter}, \textit{darker} or \textit{similar}. In building the tree, at each step, all remaining pixels are asked the question whether or not they are \textit{brighter} or \textit{darker} than the central pixel. The pixel with the highest information gain is chosen as the next branch in the tree. Each pixel can have one of four possible states, namely unknown (u), darker(d), brighter(b) or similar(s). Since $16$ pixels are being evaluated in the circle surrounding the central pixel and each of these pixels have four possible states, there are a total of $4^{16}$ possible configurations. \\
-
-AGAST performs a more efficient and generic AST than that of FAST. One improvement in AGAST's method is that it has a richer configuration space. In addition, a \textit{binary} tree is constructed rather than a \textit{ternary} tree. \textbf{TO DO}\\
+%FAST performs the AST by first learning a \textit{ternary} tree which has possible pixel states of \textit{brighter}, \textit{darker} or \textit{similar}. In building the tree, at each step, all remaining pixels are asked the question whether or not they are \textit{brighter} or \textit{darker} than the central pixel. The pixel with the highest information gain is chosen as the next branch in the tree. Each pixel can have one of four possible states, namely unknown (u), darker(d), brighter(b) or similar(s). Since $16$ pixels are being evaluated in the circle surrounding the central pixel and each of these pixels have four possible states, there are a total of $4^{16}$ possible configurations. \\
+%
+%AGAST performs a more efficient and generic AST than that of FAST. One improvement in AGAST's method is that it has a richer configuration space. In addition, a \textit{binary} tree is constructed rather than a \textit{ternary} tree. \textbf{TO DO}\\
 
 \subsubsection{Detector}
 \label{briskDetect}
@@ -2519,15 +2519,15 @@ The $IMS_{boundary}$ needs to be defined such that no False Positives (FP) will 
 
 \section{Lighting Variation}
 \label{sec:lighting}
-Since BRISK - U-BRISK using Radius Matching has been chosen as the feature extraction algorithm to be implemented on the Nao, various properties of the algorithm should be tested. This includes testing the robustness of the algorithm to changes in illumination. This is important because Robocup venues change every year and the illumination may not be uniform. In order to determine how well BRISK0 - U-BRISK performs in these conditions, three scenarios were created with slightly different varying lighting conditions. All of these scenarios were created in the \textit{Main Robocup Environment}, detailed in \secref{sec:datasets}.\\ 
+Since BRISK - U-BRISK using Radius Matching has been chosen as the feature extraction algorithm to be implemented on the Nao, various properties of the algorithm should be tested. This includes testing the robustness of the algorithm to changes in illumination. This is important because Robocup venues change every year and the illumination is almost certainly not uniform. In order to determine how well BRISK0 - U-BRISK performs in these conditions, three scenarios were created with slightly different lighting conditions. All of these scenarios were created in the \textit{Main Robocup Environment}, detailed in \secref{sec:datasets}.\\ 
 
 For each scenario $i$ four image datasets were generated as in \secref{sec:datasets}. These include  two datasets of images behind the player's goal namely, \textit{$PG Left_{i}$} and \textit{$PG Right_i$} as well as two datasets behind the opponent's goal, namely \textit{$OG Left_i$} and \textit{$OG Right_i$} respectively. Each image dataset contains $15$ images. All of the images in each dataset were taken at the same scale since only the performance under varying illumination is being tested in this experiment.\\ 
 
-The lighting setup in the Robocup test environment is as follows. The environment contains a main set of lights that are responsible for providing the general lighting in the room. In addition to these lights are a set of two fluorescent lights that lie adjacent to one another on the ceiling. Each fluorescent light stretches the length room and is responsible for adding additional lighting to the scene. \\
+The lighting setup in the Robocup test environment is as follows. The environment contains \textit{Main Lights} that are responsible for providing soft lighting to the room. In addition to these lights are two adjacent \textit{Fluorescent Lights} on the ceiling denoted \textit{Left Fluorescent Light} and \textit{Right Fluorescent Light}. Each fluorescent light stretches the length of the room and provides harder lighting than the main lights to the scene. \\
 
 \textbf{ANM IMAGE OF THE LIGHTING SETUP IN THE ENVIRONMENT}
 
-Scenario $1$ involves switching off only a single fluorescent light located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{fig:leftogright} respectively. Scenario $2$ involves turning off only a single fluorescent light located on the ceiling as well as the main set of lights. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both fluorescent lights, leaving only the main lighting in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. \\
+Scenario $1$ involves switching off only the \textit{Left Fluorescent Light} located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{fig:leftogright} respectively. Scenario $2$ involves turning off only the \textit{Right Fluorescent Light} located on the ceiling as well as the \textit{Main Lights}. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both the \textit{Left Fluorescent Light} and \textit{Right Fluorescent Light}, leaving only the \textit{Main Lights} on in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. It should be noted that scenario $3$ has the lowest illumination compared to the other two scenarios. \\
 
 Each of the datasets from the three scenarios have been matched with the images from the \textit{Main Robocup Datasets} detailed in \secref{sec:datasets}. This means that, for example, \textit{$PG Left_1$} from scenario $1$ will be matched to \textit{PG Left} from the \textit{Main Robocup Datasets} and so on. These datasets are being compared in order to determine whether or not the BRISK0 - U-BRISK algorithm is robust to variations in illumination. The datasets have been matched as shown in \tabref{tab:datasetLighting} to produce $5040$ pairs of overlapping images and $10008$ pairs of non-overlapping images under varying lighting conditions.\\
 
@@ -2638,9 +2638,35 @@ to the original Robocup datasets}
 \label{tab:datasetLighting}
 \end{table}
 
-ROC curves have been generated for each scenario and are shown in \figref{fig:rocLighting}. The ROC curve with the poorest performance is generated from the third scenario. This scenario corresponds to the lowest illumination since both the fluorescent lights are turned off. It is therefore expected that this scenario would produce the worst performance relative to the other two. The marginally best performing datasets are from scenario two where a fluorescent light and the main lights are turned off. \\
+A number of observations can be made regarding the interest points detected and the matches between interest points found from the statistics shown in \figref{fig:varyingLighting_matches_keypoints}. It can be seen that less interest points are detected on average in scenes with lower illumination. It is interesting to note that when both lights are turned off in scenario $3$, more interest points are detected compared to scenario $1$ and $2$ respectively. This is due to the nature of the environment as the \textit{Main Lights} are still on in this scenario causing more interest points to be detected behind the opponents goal as seen in \figref{fig:lighting_og}. \\
 
-The statistics corresponding to the ROC curves are tabulated in \tabref{tab:lightingStats}. It should be noted that AUC values of over $90\%$ have been recorded indicating a high level of matching performance. \\
+In addition, less total matches and less valid matches are found in these scenarios. The number of valid matches seems to correspond to the amount of illumination in the scene as seen in \figref{fig:varyingLighting_matches_keypoints} and decreases as the illumination decreases. However, it should be noted that a sufficient amount of interest points can still be detected and valid matches between interest points found whilst varying the illumination.\\
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_lighting_incorrect_matches_OG.jpg}
+    \caption{The interest points detected in scenario $3$ behind the opponent's goal}
+    \label{fig:lighting_og}
+\end{figure}
+
+It is expected that scenario $3$ will produce the worst performance relative to the other two. This due to the lack of lighting behind the player's goal, since both fluorescent lights have been turned off, as seen in \figref{fig:lighting_pg}. Less illumination causes the edges and corners in the image to become less distinguishable and therefore less valid matches between interest points will be matched as seen in \figref{fig:varyingLighting_matches_keypoints}. The other two scenarios have comparable performance which is to be expected since, in both cases, a single fluorescent light, providing the hard lighting, remains turned on.\\
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_lighting_incorrect_matches.jpg}
+    \caption{The interest points detected in scenario $3$ behind the player's goal}
+    \label{fig:lighting_pg}
+\end{figure}
+
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/varyingLight_matches_keypoints_best.pdf}
+    \caption{The statistics for the Main Robocup Datasets under varying lighting conditions}
+    \label{fig:varyingLighting_matches_keypoints}
+\end{figure}
+
+
+The statistics corresponding to the ROC curves are tabulated in \tabref{tab:lightingStats}. It should be noted that the third scenario, as expected has the lowest classification performance with an AUC of $95.25\%$. In addition, the overall times for these methods are comparable to the times tabulated in \secref{sec:mrdPerformance}.\\
 
 
 \begin{figure}[h!] 
@@ -2669,12 +2695,12 @@ The statistics corresponding to the ROC curves are tabulated in \tabref{tab:ligh
 \label{tab:lightingStats}
 \end{table}
 
-\begin{figure}[h!] 
-  \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/varyingLight_matches_keypoints_best.pdf}
-    \caption{The statistics for the Main Robocup Datasets under varying lighting conditions}
-    \label{fig:varyingLighting_matches_keypoints}
-\end{figure}
+
+
+
+The $IMS_{best}$ values for each of the scenarios are shown in \figref{fig:ms_lighting}. Scenario $1$ and $2$ generate similar $IMS_{best}$ values for both overlapping and non-overlapping images. Scenario $3$ has the lowest $IMS_{best}$ value for overlapping images and the largest $IMS_{best}$ value for non-overlapping images. This contributes to the lower performance previously discussed.\\
+
+The $TP_{FP=0}^{max}$ values are also lower for scenarios with varying illumination as shown in \figref{fig:tp_rate_lighting}. This is to be expected based on the above-mentioned statistics. Thus, in conclusion, less valid matches and less total matches are to be expected in scenes of lower illumination. A sufficient number of valid matches can still be detected and overlapping image pairs can still be matched based on the $TP_{FP=0}^{max}$ values calculated for each scenario.\\
 
 \begin{table}
 \caption{The Matching Score for the Varying Lighting Datasets}
@@ -2694,7 +2720,7 @@ Main Robocup Dataset (All Lights On) & 0.209 & 0.010\tabularnewline
 3- Left Light: off, Right Light: off, Main Lights: on & 0.115 & 0.011\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:lvMS}
+\label{tab:ms_lighting}
 \end{table}
 
 %\begin{table}
@@ -2757,12 +2783,14 @@ Main Robocup Dataset (All Lights On) & 0.209 & 0.010\tabularnewline
 
 \section{Camera Dataset}
 \label{sec:cameraMatching}
-One possible reason why the robot is able to match pairs of images, achieving good performance, is that both images were captured by the robot. These images were therefore captured using the same camera and the same camera settings. This may potentially be the reason why the robot is producing good matching performance. Therefore, an experiment has been designed to capture images using a Nikon Coolpix digital camera. These images have been captured at a resolution of $640 \times 480$ which is the same resolution as the images captured by the robot. The images captured by the robot are then matched with the Nikon's images and the matching performance is evaluated. The \textit{Main Robocup} and \textit{Large Hall} environments respectively have been used for this experiment.\\
+One possible reason why the robot is able to match pairs of overlapping images using BRISK0 - U-BRISK with Radius Matching, with relatively good performance, is that the image pair have both been captured by the Nao's camera. These images were therefore captured using the same camera and the same camera settings. This may potentially be the reason why the robot is producing good matching performance. Therefore, an experiment has been designed to capture images using a Nikon Coolpix digital camera. These images have been captured at a resolution of $640 \times 480$ which is the same resolution as the images captured by the robot. The images captured by the robot are then matched with the Nikon's images and the matching performance is evaluated. The \textit{Main Robocup} and \textit{Large Hall} environments respectively have been used for this experiment.\\
 
 \subsection{Main Robocup Dataset with Nikon Camera}
 \label{sec:nikonRobocup}
 
-The Nikon camera was used to capture $60$ images to create $4$ datasets of the \textit{Main Robocup} environment, each containing $15$ images. The datasets are of the same regions as that detailed in \secref{sec:datasets}. Using the images from the \textit{Main Robocup} dataset captured by the Nao as well as the \textit{Main Robocup} images captured by the Nikon camera, pairs of overlapping and non-overlapping images were matched. In total, $420$ overlapping image pairs were generated as well as $3024$ non-overlapping image pairs. An example of an overlapping pair of images is shown in \figref{fig:cameraOverlapRobocup}. Here, the left image is that captured by the Nao and the right image has been captured by the Nikon camera.\\
+The Nikon camera was used to capture $60$ images to create $4$ datasets of the \textit{Main Robocup Environment}, each containing $15$ images. The datasets are of the same regions as that detailed in \secref{sec:datasets}. The \textit{Main Robocup Testing Datasets} from \secref{mrdPerformance} have been used in this experiment and will be referred to as the \textit{Nao-only Datasets} as these datasets only contain images captured by the Nao's camera.\\
+
+Pairs of overlapping and non-overlapping images were generated by combining the images from the \textit{Nao-only Datasets} with the Nikon camera images. These newly formed image datasets will be referred to as the \textit{Nao-Nikon Datasets}. In total, $420$ overlapping image pairs were generated as well as $3024$ non-overlapping image pairs from the \textit{Nao-Nikon Datasets}. An example of an overlapping pair of images is shown in \figref{fig:cameraOverlapRobocup}. Here, the left image is that captured by the Nao and the right image has been captured by the Nikon camera.\\
 
 \begin{figure}[h!] 
   \centering
@@ -2771,7 +2799,7 @@ The Nikon camera was used to capture $60$ images to create $4$ datasets of the \
     \label{fig:cameraOverlapRobocup}
 \end{figure}
 
-After performing the matching of overlapping and non-overlapping pairs of images respectively, a ROC curve was generated. The ROC curve, shown in blue, generated from comparing Nao images with the Nikon camera's captured images is shown in \figref{fig:rocRobocupNikon}. This is compared with the original Robocup datasets, shown in red, which are only composed of Nao camera images. As can be seen in the figure, the original Robocup datasets seem to have a better overall performance compared to the Nao, Nikon camera combination. The statistics detailing the performance of the two techniques can be seen in \tabref{tab:naoNikonRobocup}. Comparing Nao camera images with Nikon camera images does indeed produce worse performance as the AUC is $81.58\%$. This is still acceptable performance but is not as robust as simply comparing images captured by the Nao.\\
+A ROC curve, shown in blue in \figref{fig:rocRobocupNikon}, has been generated using the \textit{Nao-Nikon Datasets}.  This is compared with the \textit{Nao-only Datasets}' ROC curve generated in \secref{sec:mrdPerformance}, shown in red. As can be seen in the figure, the \textit{Nao-only Datasets} seem to have a better overall performance compared to the \textit{Nao-Nikon Datasets}. The statistics detailing the performance of the BRISK0 - U-BRISK algorithm on each set of data can be seen in \tabref{tab:naoNikonRobocup}. The \textit{Nao-Nikon Datasets} generate an AUC value of $84.01\%$ which is lower than the \textit{Nao-only Datasets}' value of $97.24\%$. This seems to imply that the different camera settings affect the classification performance. In addition to this, the overall time for the \textit{Nao-Nikon Datasets} is larger since the Nikon camera's images are of a slightly better quality resulting in a larger image processing time. \\
 
 \begin{figure}[h!] 
   \centering
@@ -2798,6 +2826,8 @@ Nao only & 97.242 & 2.973 & 1.672 & 0.207 & 0.008 & 8.805\tabularnewline
 \label{tab:naoNikonRobocup}
 \end{table}
 
+As can be seen in \figref{fig:nikon_mrb_matches_keypoints}, less total matches and valid matches are found for the \textit{Nao-Nikon Datasets}. This is potentially due to the different settings and quality of the respective cameras. This implies that when matching an image captured by the Nao and an image captured by the Nikon camera, the detected interest points have slightly different intensity neighborhoods in each image. This generates slightly different descriptors causing the matching of interest points to become less likely. However, sufficient valid interest point matches are still found enabling overlapping image pairs to be matched. An example of this is shown in \figref{fig:mrd_nikon_match}.\\
+
 \begin{figure}[h!] 
   \centering
     \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_mrb_matches_keypoints_best.pdf}
@@ -2806,6 +2836,15 @@ and Nikon Camera Datasets using Radius Matching}
     \label{fig:nikon_mrb_matches_keypoints}
 \end{figure}
 
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/NaoNikonRobocupDataset.jpg}
+    \caption{Matching overlapping image pairs in the Nao-Nikon Datasets.}
+    \label{fig:mrd_nikon_match}
+\end{figure}
+
+
+In addition, the $IMS_{best}$ values are lower in the \textit{Nao-Nikon Datasets} for overlapping images as seen in \tabref{tab:ms_nikon_mrd} since less matches are detected on average. In addition, the $TP_{FP=0}^{max}$ value is $0.42$ for \textit{Nao-Nikon Datasets} as seen in \figref{fig:tp_rate_nikon_mrd} further illustrating the drop in performance. However, based on the above results, it is still possible to match overlapping image pairs with a FP rate of $0$ using different perception sensors.\\
 
 \begin{table}
 \caption{The Matching Score for the Main Robocup Datasets and Nikon Camera
@@ -2822,7 +2861,7 @@ Nao only & 0.209 & 0.010\tabularnewline
 Nao and Nikon & 0.099 & 0.005\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:nkmrdMS}
+\label{tab:ms_nikon_mrd}
 \end{table}
 
 
@@ -2830,7 +2869,7 @@ Nao and Nikon & 0.099 & 0.005\tabularnewline
   \centering
     \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/tp_rate_nikon_mrd.pdf}
     \caption{The $TP_{FP=0}$ rate for the Main Robocup Environment for Nao-only and Nao-Nikon camera images}
-    \label{fig:tp_rate_nikon_mrd.pdf}
+    \label{fig:tp_rate_nikon_mrd}
 \end{figure}
 
 %\begin{table}
@@ -2883,7 +2922,7 @@ Nao and Nikon & 0.099 & 0.005\tabularnewline
 
 \subsection{Large Hall Dataset with Nikon Camera}
 \label{sec:nikonlargeHall}
-In total $28$ images were captured from a Nikon camera in the \textit{Large Hall} environment and were divided into two datasets respectively. These datasets are of the same form discussed in \secref{sec:largeHall}. Each dataset represents one side of the hall. The images captured on the Nao as shown in \secref{sec:largeHall} are matched with images captured on the Nikon camera. The Nao and Nikon images have been grouped together and formed into overlapping and non-overlapping image pairs as was detailed in the previous section. Examples of an overlapping image pair is shown in \figref{fig:cameraOverlaplargeHall}.\\
+The results obtained in the \textit{Large Hall Environment} using the Nikon camera show the same trends as those in \secref{sec:nikonRobocup}. In total $28$ images were captured from a Nikon camera in the \textit{Large Hall} environment and were divided into two datasets respectively. These datasets are of the same form discussed in \secref{sec:largeHall}. Each dataset represents one side of the hall. The images captured on the Nao as shown in \secref{sec:largeHall} are matched with images captured on the Nikon camera. The Nao and Nikon images have been grouped together and formed into overlapping and non-overlapping image pairs as was detailed in the previous section. Examples of an overlapping image pair is shown in \figref{fig:cameraOverlaplargeHall}.\\
 
 \begin{figure}[h!] 
   \centering
@@ -2894,7 +2933,7 @@ In total $28$ images were captured from a Nikon camera in the \textit{Large Hall
 
 In total, $182$ overlapping image pairs and $390$ non-overlapping image pairs were generated. It should be noted that, not only have these images been taken from two different cameras, but the illumination in the various images from each of the datasets is slightly different as well. This is evident in  \figref{fig:cameraOverlaplargeHall} since the image captured by the camera on the right, includes some offices with lights turned on as well as the main lighting, found at the top of the image, turned off. \\
 
-After matching these images, the ROC curves shown in \figref{fig:rocLargeHallNikon} were generated. The ROC curve matching the Nikon camera and the Nao's images is shown in blue. This produces comparable performance compared to the ROC curve generated from matching pairs of images captured by the Nao. The statistics related to each of these ROC curves are tabulated in \tabref{tab:naoNikonLargeHall}. As can be seen in the table, the Nao-Nikon camera combination performs marginally worse than the Nao-only combination with an AUC of $91.11\%$. This is still a high level of performance, but is not as good as processing and matching pairs of images captured only on the Nao. The performance of the Nao-Nikon combination is significantly better in the large hall environment compared to the \textit{Main Robocup} environment. This may again be due to the presence of more salient features in the \textit{Large Hall} environment. This will enable stronger interest points to be detected during the non-maximal suppression stage resulting in robust matching performance.\\ 
+The blue ROC curve shown in \figref{fig:rocLargeHallNikon} has been generated for the \textit{Nao-Nikon Large Hall Datasets}. This produces comparable performance compared to the ROC curve generated from the \textit{Nao-only Large Hall Datasets}. The statistics related to each of these ROC curves are tabulated in \tabref{tab:naoNikonLargeHall}. As can be seen in the table, the Nao-Nikon camera combination performs marginally worse than the Nao-only combination with an AUC of $91.11\%$. The performance of the Nao-Nikon combination is slightly better in the large hall environment compared to the \textit{Main Robocup} environment. This may again be due to the presence of more salient features in the \textit{Large Hall} environment. This will enable stronger interest points to be detected during the non-maximal suppression stage resulting in robust matching performance.\\ 
 
 %This may be due to the fact that the images captured from the Nikon camera are of a slightly better quality than those captured by the Nao, and therefore take a longer amount of time to process. 
 
@@ -2923,6 +2962,10 @@ Nao only & 93.150 & 3.249 & 2.516 & 2.614 & 0.026 & 12.824\tabularnewline
 \label{tab:naoNikonLargeHall}
 \end{table}
 
+The interest point matching statistics can be seen in \tabref{tab:nikon_lh_matches_keypoints}. Less valid matches and total matches have been detected for the same reasons as in \secref{sec:nikonRobocup}. There is an expected drop in the $IMS_{best}$ value for the \textit{Nao-Nikon Datasets} as seen in \tabref{tab:ms_nikon_lh} and the $TP_{FP=0}^{max}$ value is also significantly lower than the \textit{Nao-only Datasets}.\\
+
+Based on the above datasets taken from two different environments, it appears that the camera settings and quality have an overall negative effect on the ability of the BRISK0 - U-BRISK algorithm to match overlapping and non-overlapping image pairs.\\
+
 \begin{figure}[h!] 
   \centering
     \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/nikon_lh_matches_keypoints_best.pdf}
@@ -2945,7 +2988,7 @@ Nao only & 1.014 & 0.027\tabularnewline
 Nao and Nikon & 0.142 & 0.021\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:nklhMS}
+\label{tab:ms_nikon_lh}
 \end{table}
 
 \begin{figure}[h!] 
@@ -3000,7 +3043,7 @@ Nao and Nikon & 0.142 & 0.021\tabularnewline
 
 \section{Google Street View Dataset}
 \label{sec:streetView}
-A further experiment has been setup to determine whether images captured on a Nao's camera can be robustly matched to images captured on a different device in a completely different environment. Therefore, images available on Google Street View have been utilised for this experiment. The Google Street view images were downloaded using the Google Street View API \cite{StreetView}. These images are $640 \times 480$ (the same resolution as the Nao's images) and are found at latitude: $55.94474$ and longitude: $-3.18779$. In total, $30$ Google Street View images were downloaded and sub-divided into two datasets of $15$ images each. Each dataset represents the view of a single side of a street found at the given location. Example images from either side of the street are shown in \figref{fig:googleStreetImages}.\\
+This experiment refers to \secref{sec:motivation} since, if the Nao can detect overlapping images in a city whilst walking along the street, then in principal it can localise itself using an image database such as Google Street View. Therefore, images available on Google Street View have been utilised for this experiment. The Google Street view images were downloaded using the Google Street View API \cite{StreetView}. These images are $640 \times 480$ (the same resolution as the Nao's images) and are found at latitude: $55.94474$ and longitude: $-3.18779$. In total, $30$ Google Street View images were downloaded and sub-divided into two datasets of $15$ images each. Each dataset represents the view of a single side of a street found at the given location. Example images from either side of the street are shown in \figref{fig:googleStreetImages}.\\
 
  \begin{figure}[h!] 
   \centering
@@ -3009,16 +3052,22 @@ A further experiment has been setup to determine whether images captured on a Na
     \label{fig:googleStreetImages}
 \end{figure}
 
-These images were compared with $30$ images captured by the Nao at the same location. Similar to the Google Street View images, the Nao's captured images formed two datasets of $15$ images each. Each dataset was of a different side of the street. The Google Street View images and the Nao's images were then grouped into $210$ overlapping and $420$ non-overlapping image pairs respectively. Example overlapping images can be seen in \figref{fig:googleStreetOverlapping}.\\
+These images were compared with $30$ images captured by the Nao at the same location. Similar to the Google Street View images, the Nao's captured images formed two datasets of $15$ images each. Each dataset was of a different side of the street. The Google Street View images and the Nao's images were then grouped into $210$ overlapping and $420$ non-overlapping image pairs respectively. These will be referred to as the \textit{Nao-Google Datasets}. Example overlapping images can be seen in \figref{fig:googleStreetOverlapping}.\\
 
  \begin{figure}[h!] 
   \centering
     \includegraphics[width=0.8\textwidth]{../Drawings/streetView/googleOverlapping.jpg}
     \caption{Typical overlapping images of the Nao (Left figure) and Google Street View (Right image)}
-    \label{fig:googleStreetImages}
+    \label{fig:googleStreetOverlapping}
 \end{figure}
 
-It should be noted that the illumination is very different in each of the images. The sample Google Street View image is also slightly distorted and both images have been captured at different angles and scales. After running the feature extraction algorithm, the ROC curve shown in \figref{fig:rocGoogleStreet} was generated. The statistics generated for this ROC curve are tabulated in \tabref{tab:naoGoogleStreetRoc}. This curve exhibits fairly good performance but the BRISK - U-BRISK algorithm is not as robust on this dataset as in previous datasets with an AUC of $77.57\%$. One reason for the resulting drop in performance is due to the similarity of the two scenes captured on either side of the street. Since only the top $300$ pixel rows in each image are used for processing, images from either side of the street look relatively similar as seen in \figref{fig:similarGoogleStreetView}.\\
+It should be noted that the illumination of the Nao's images and the Google Street View's images is very different. This is to be expected due to the images being captured at different times of day and in different weather conditions. The sample Google Street View images are also slightly distorted and the images have been captured at different angles and scales.\\
+
+After running the BRISK0 - U-BRISK feature extraction algorithm, the ROC curve shown in \figref{fig:rocGoogleStreet} was generated. The statistics generated for this ROC curve are tabulated in \tabref{tab:naoGoogleStreetRoc}. This curve exhibits fairly good performance but the BRISK - U-BRISK algorithm is not as robust on this dataset as in previous datasets with an AUC of $77.57\%$. One reason for the resulting drop in performance is due to the similarity of the two scenes captured on either side of the street. Since only the top $300$ pixel rows in each image are used for processing, images from either side of the street look relatively similar as seen in \figref{fig:similarGoogleStreetView}.\\
+
+In addition to this, there is an increase in the overall computational time since more total matches and valid matches are detected as shown in \tabref{tab:google_matches_keypoints}. This is expected due to the many edges found in these environments causing a large number of interest points to be detected as shown in \figref{fig:google_interest_points}. An example match between a Nao image and a Google Street View image is shown in \figref{fig:google_matches}. A number of ambiguous matches are also detected due to the windows on the building. This is not necessarily a big problem since office buildings generally have similar features, such as windows. Duplicate interest point matches of the same building may provide better discrimination enabling the Nao to better match overlapping images.\\
+
+The $IMS_{best}$ value is large for non-overlapping image pairs compared to overlapping image pairs as shown in \tabref{tab:ms_google}. This subsequently results in a comparatively low $TP_{FP=0}^{max}$ value as seen in \tabref{tab:tp_rate_google}. The value of $0.39$ still enables the Nao to match overlapping pairs of images. However, approximately $61\%$ of the overlapping image pairs will not be matched. Based on the results, it seems feasible that the Nao can match its images to those of Google Street View albeit with a lower success rate.\\
 
  \begin{figure}[h!] 
   \centering
@@ -3050,23 +3099,6 @@ Nao and Google Street View & 77.567 & 4.448 & 4.978 & 8.035 & 0.038 & 22.434\tab
     \label{fig:similarGoogleStreetView}
 \end{figure}
 
-
-\begin{table}
-\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-a FP rate of 0 for each of the feature extraction algorithms. This
-is for Radius Matching of the Google Street View Environment with
-Nao camera images}
-\begin{tabular}{|c|c|c|}
-\hline 
-Scenario & Threshold & TP rate\tabularnewline
-\hline 
-\hline 
-Nao and Google Street View Images & 0.36 & 0.39\tabularnewline
-\hline 
-\end{tabular}
-\label{tab:tpStreetView}
-\end{table}
-
 \begin{table}
 \caption{The matched point and keypoint statistics for the Google Street View
 Datasets}
@@ -3084,8 +3116,25 @@ Street View  & 160.39 & 73.850 & 86.540 & 154.88\tabularnewline
 Street View & 28.210 & 11.500 & 16.710 & 153.01\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:gsMK}
+\label{tab:google_matches_keypoints}
 \end{table}
+
+
+ \begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/google_street_interest_points.jpg}
+    \caption{The large number of interest points generated due to edges in the environment such as office building windows}
+    \label{fig:google_interest_points}
+\end{figure}
+
+
+ \begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/GoogleStreetViewDataset.jpg}
+    \caption{The matches generated for a pair of overlapping images. The left image has been captured by the Nao and the right image is from Google Street View}
+    \label{fig:google_matches}
+\end{figure}
+
 
 \begin{table}
 \caption{The Matching Score for the Google Street View images}
@@ -3099,8 +3148,28 @@ Method & Overlapping Score & Non-overlapping Score\tabularnewline
 Street View & 0.2964 & 0.07780\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:gsMS}
+\label{tab:ms_google}
 \end{table}
+
+\begin{table}
+\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
+a FP rate of 0 for each of the feature extraction algorithms. This
+is for Radius Matching of the Google Street View Environment with
+Nao camera images}
+\begin{tabular}{|c|c|c|}
+\hline 
+Scenario & Threshold & TP rate\tabularnewline
+\hline 
+\hline 
+Nao and Google Street View Images & 0.36 & 0.39\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:tp_rate_google}
+\end{table}
+
+
+
+
 
 \section{Summary}
 \label{sec:summary}
@@ -3110,6 +3179,54 @@ Street View & 0.2964 & 0.07780\tabularnewline
 
 \section{Discussion}
 \label{sec:discussion}
+%1. Results and success
+In this thesis, five feature extraction algorithms have been compared using images captured by a Nao humanoid robot. Two of the algorithms, BRISK0 and BRISK0 - U-BRISK, are variations of the original BRISK implementation \cite{Leutenegger2011}. BRISK0 has also been combined with 2D SURF to create the BRISK0 - SURF2D algorithm. The 1D SURF algorithm has been developed and implemented by the \textit{rUNSWift} team \cite{Anderson}.\\
+
+A novel scoring function termed the \textit{Multi-Image Score} (MIS) has been developed in order to determine the optimal parameters for each  of the BRISK-based feature extraction algorithms. This scoring function determines the optimal parameters based on efficiency, NVMs and IZMs.\\
+
+Using these parameters, all of the BRISK-based feature extraction algorithms as well as 1D SURF were compared in three different environments and BRISK0 - U-BRISK generated the best overall performance. In the worst case, this algorithm can match $67\%$ of the overlapping image pairs whilst maintaining a FP rate of $0$. 1D SURF is an order of magnitude faster but BRISK0 - U-BRISK achieves superior classification performance in all three environments. \\
+
+
+
+
+
+a novel scoring function has been developed based on computational efficiency, NVMs and IZMs for each of the 
+
+Novel Scoring Function
+
+BRISK0 - U-BRISK selected as the best algorithm
+
+Varying lighting
+
+Different camera sensor
+
+Google Street View
+
+Matching Score as the inverse distance between descirptors in feature space
+
+2-NN Ratio verified.
+
+Developed a matching constraint
+
+Localisation Algorithm
+
+
+
+%2. Why hard for others
+
+%3. Essence of innovation
+ - Developing a novel score function to find the optimal thresholds for feature extraction algorithms
+ - Incorporated variations of BRISK such that it can be used on a Nao
+ - Created a localisation algorithm to help the Nao localise for Robocup
+ - Tested the algorithm using Nao images with Google Street View.
+
+
+%Problems and Limitations
+
+It has been found that features such as windows tend to increase the number of interest points that are detected. In addition, fewer interest points are detected on lower resolution features.\\
+
+BRISK0 - U-BRISK was analysed further and it was found that varying the illumination of an environment causes less valid interest point matches to be detected. However, BRISK0 - U-BRISK still detects on average $9.53$ valid matches for overlapping images in the worst case scenario. BRISK0 - U-BRISK is also sensitive to different camera settings and it has been found that matching image pairs from different cameras decreases the performance.\\
+
 Computing the median rather than the max - Outliers
 
 Learning distances to features using vision papers - see email
@@ -3120,7 +3237,18 @@ Valid Matches - Overlapping images tend to produce a large number of matches tha
 
 Similar looking scenes are going to cause a large number of ambiguous matches and reduce the performance.
 
-The TPs might be biased since duplicate matches contribute towards the IMS Score and this causes a larger IMS value and hence more TPs at higher thresholds
+%Recommendations for future work
+Calculate range and bearing to visual landmarks
+
+Implement on the robot
+
+More extensive analysis using Google Street View
+
+Test other methods on Google Street View
+
+Increase the performance of BRISK or SURF
+
+
 
 \section{Conclusion}
 \label{sec:conclusion}

@@ -92,7 +92,7 @@ int main(int argc, char ** argv) {
 	double distance = 200;
 
 	//Determine if the KNN validation criterion is necessary
-	bool usingKnnCriterion = true;
+	bool usingKnnCriterion = false;
 
 	//Declare the horizon line above which the image is processed
 	int horizonLine = 300;
@@ -112,7 +112,7 @@ int main(int argc, char ** argv) {
 	//int threshold = 1000;
 	bool hamming=true;
 	std::string feat_detector = "BRISK";
-	double threshold = 55;//46.25
+	double threshold = 75;//46.25
 	double hammingDistance = 121.25;//BRISK BRISK
 	double radius = 0.28;//BRISK SURF
 	std::string feat_descriptor = "U-BRISK";
@@ -150,26 +150,26 @@ int main(int argc, char ** argv) {
 
 
 	//Original dataset both lights off
-//		std::string dir = "../images/PicsMG/Matching_Pics_Right_Overlapping";
-//		std::string dir1 = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
+//		std::string dir1 = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Dataset 2
 //		std::string dir = "../images/Dataset2_Overlapping_1";
 //		std::string dir1 = "../images/Dataset2_Overlapping_1";
 
 	//Dataset 3
-		std::string dir = "../images/Dataset3_Overlapping_1";
-		std::string dir1 = "../images/Dataset3_Overlapping_2";
+//		std::string dir = "../images/Dataset3_Overlapping_1";
+//		std::string dir1 = "../images/Dataset3_Overlapping_2";
 
 	//Google Street View dataset
-//		std::string dir = "../images/GoogleMaps/NaoSide1";
-//		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
+		std::string dir = "../images/GoogleMaps/NaoSide1";
+		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "13";
-	std::string name2 = "1";
+	std::string name1 = "9";
+	std::string name2 = "3";
 
 	//Get the first gray image
 	cv::Mat imgGray1Full;
@@ -485,6 +485,13 @@ int main(int argc, char ** argv) {
 
 	//Dataset3
 //	cv::imwrite("../images/dataset3_interestPoints.jpg",outimg);//Img 13,1 dataset 5,6
+
+	//Varying Lighting
+//	cv::imwrite("../images/dataset_lighting_incorrect_matches.jpg",outimg);//Img 9,10 dataset 1,1
+//	cv::imwrite("../images/dataset_lighting_incorrect_matches_OG.jpg",outimg);//Img 9,10 dataset 3,3
+
+	//Google Street View
+//	cv::imwrite("../images/google_street_interest_points.jpg",outimg);//Img 9,10 dataset 3,3
 
 	//Feature Matching Images
 	//2-NN Matching and Radius Matching

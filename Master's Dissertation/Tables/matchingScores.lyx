@@ -1520,17 +1520,7 @@ Non-overlapping Score
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 2-NN
 \end_layout
 
@@ -1836,17 +1826,7 @@ UBRISK
 
 \begin_layout Plain Layout
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\uuline off
-\uwave off
-\noun off
-\color none
+\series bold
 Radius Matching
 \end_layout
 

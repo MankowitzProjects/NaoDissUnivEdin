@@ -1,17 +1,17 @@
 To add to report
 
 1. 300 Pixels from the top of the image for the other image processing techniques RB
-2. An angle of 10 degrees CONS
-3. A distance of 200 pixels CONS
+2. An angle of 10 degrees CONS - DONE
+3. A distance of 200 pixels CONS - DONE
 4. For 1D SURF, 120 pixels from the top of the image RB
 
 5. Emphasize Ceiling Features (Less dynamic interest points)
 
 29/07/12
 
-1. 2-NN criterion is only applied to 2-NN matching MATCHING
+1. 2-NN criterion is only applied to 2-NN matching MATCHING - DONE
 
-2. All the feature extraction algorithms operate at different thresholds EX
+2. All the feature extraction algorithms operate at different thresholds EX - DONE
 
 3. Each interest point can have more than one match in radius matching MATCHING
 
@@ -19,16 +19,17 @@ To add to report
 
 5. Ceiling Features mentioned where the Nao Robocup Methods are mentioned
 
-6. Use the term corners for BRISK
-
-7. Lookup RANSAC MATCHING
+7. Lookup RANSAC MATCHING - DONE
 
 8. Repeatability problem FUTURE
 
-9. Change IMS_{best} to IMS_{general}. EX
-
 10. Add main results to the introduction INTRO
 
+11. Add specs of laptop EX
+
+12. Add additional Figures (Throughout the report)
+
+13. BRISK TO DO Section
 
 02/08/12
 
