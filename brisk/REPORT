@@ -13,7 +13,7 @@ To add to report
 
 2. All the feature extraction algorithms operate at different thresholds EX - DONE
 
-3. Each interest point can have more than one match in radius matching MATCHING
+3. Each interest point can have more than one match in radius matching MATCHING - DONE
 
 4. Only the best matching score is used as the threshold when creating the ROC Curves EX - DONE
 
@@ -35,7 +35,7 @@ To add to report
 
 15. 30ms to perform tasks
 
-16. Do I add in summary
+16. Do I add in summary - DONE
 
 17. State that the red circles are interest points
 
