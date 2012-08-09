@@ -57,9 +57,11 @@
 \pagenumbering{roman}
 \chapter*{Abstract}
 \label{sec:abstract}
+This thesis compares five feature extraction algorithms in order to determine the best algorithm to be implemented on a Nao humanoid robot for the purpose of localisation. These algorithms include 1D SURF that has been developed by the \textit{rUNSWift} Robocup team \cite{Anderson} as well as BRISK-based feature extraction algorithms \cite{Leutenegger2011}. A novel scoring function has been developed in order to find the optimal parameters for the BRISK-based algorithms. Using these parameters BRISK0 - U-BRISK, a variation of BRISK, has been developed and implemented, producing the best overall performance. In the best case scenario it can match image pairs that overlap one another $90\%$ of the time without matching any images that do not overlap. This method can match Nao image pairs under varying illumination and can achieve reasonable matching performance when matching Nao images with those captured by a Nikon camera. A key result is that this method has been able to match a Nao's camera images with Google Street View images (albeit with decreased performance) which suggests that street navigation with the Nao may be possible. In addition, a novel constraint has been developed to remove invalid interest point matches in images. A new interest point property has also been created that may be used for the same purpose. Finally, a localisation algorithm that incorporates the BRISK0 U-BRISK feature extraction algorithm has also been developed for Robocup. This enables the Nao to efficiently determine its location on the football field.\\
 
 \chapter*{Acknowledgements}
 \label{sec:acknowledgements}
+I would like to extend a huge thank you to my supervisor, Dr. Subramanian Ramamoorthy, for his incredibly helpful advice and useful insight that guided me in the right direction, resulting in a successful thesis. In addition I would like to thank Benjamin Rosman for his great ideas and useful feedback which were extremely helpful in developing my thesis. Aris Valtazanos was instrumental in helping me gain an excellent understanding of the Nao robot. Efstathios Vafeias gave me very useful insight into the inner-workings of feature extraction algorithms and the Nao's localisation module.
 
 \chapter*{Declaration}
 \label{sec:declaration}
@@ -279,7 +281,7 @@ H(\textbf{x}, \sigma) = \left[ \begin{array}{cc} L_{xx}(\textbf{x}, \sigma) & L_
 
 The variable $L_{xx}(\textbf{x}, \sigma)$ is analogous to the second order derivative, $ \frac{\partial I}{\partial x^2}$, detailed in \eqnref{eqn:hessian}. This second order derivative is computed in SURF detectors by convolving the image, at point $\textbf{x}$, with a particular kernel \cite{Evans2009}. The kernel in this instance is the second order Gaussian derivative, $\frac{\partial g(\sigma)}{\partial x^2)}$. \\
 
-There are a number of reasons why Gaussians are used as the kernel in computing the second order derivatives. One of the main reasons is that it is possible to vary the amount of smoothing resulting from the convolution of the Gaussian with the image \cite{Evans2009}. This enables the calculation of the Hessian determinant at different scales which is used for non-maximal suppresion and identifying scale-invariant interest points.\\
+There are a number of reasons why Gaussians are used as the kernel in computing the second order derivatives. One of the main reasons is that it is possible to vary the amount of smoothing resulting from the convolution of the Gaussian with the image \cite{Evans2009}. This enables the calculation of the Hessian determinant at different scales which is used for non-maximal suppression and identifying scale-invariant interest points.\\
 
 The SURF implementation approximates Gaussian second order derivatives for the convolution stage by using box filters. Box filters are used to perform very fast convolutions. A box filter consists of positive and negative lobes. Each lobe is assigned a particular weighting. For example, in \figref{fig:boxFilters} \cite{Bay2008}, the white lobes are assigned a weighting of positive one, the black lobes are assigned a weighting of negative one and the gray lobes are assigned a weighting of 0. The box filters are created in the $x$, $y$ and $xy$ directions in order to compute the Hessian and subsequently its determinant. One of the key advantages to this approach is the computational cost. This is because it is possible to use a combination of integral images and box filters to perform the second order derivative computation very efficiently. It is also possible to increase the size of the box filters at no additional computational cost \cite{Bay2008}.\\
 
@@ -1676,15 +1678,7 @@ Reflections and lights again cause a problem for BRISK resulting in a large numb
 
 In terms of speed, BRISK0 - U-BRISK is the best performing algorithm with a best overall time of $8.81 ms$ as seen in \tabref{tab:mrd_times_hamming} using the Radius Matching technique.  This is expected since a number of constraints have been relaxed. These include the single scale constraint as well as removing rotation invariance as mentioned in \secref{sec:brisk0}. These constraints have been relaxed in order to maximise computational efficiency and therefore satisfy the computational requirements of the Nao robot. This method therefore has the fastest extraction time of $1.67 ms$ as the sampling pattern is not rotated in this variation of the BRISK technique. \\
 
-The BRISK0 - U-BRISK algorithm detects on average $38.23$ and $21.30$ interest points for 2-NN and Radius Matching respectively as shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. When using 2-NN matching, this algorithm achieves an AUC value of $95.35\%$. This is relatively low compared to the other feature extraction algorithms for 2-NN matching. This is due to the algorithm having the largest number of IZMs. It has $108$ IZMs as shown in \tabref{tab:mrd_izm}. This is expected, since this method is not rotation invariant since the sampling pattern is not rotated in order to achieve better computational performance. This causes a number of matches to be lost since large image rotations cause corresponding interest points to be set at different orientations which may prevent these points from being matched. To prove this, an identical image was considerably rotated and compared with its unrotated version as shown in \figref{fig:rotationUbrisk}. An interest point has been identified between both of the fluorescent lights in each image but the interest point has not been matched due to this rotation. However, since the Nao will not be subject to large rotations when coming onto the pitch after serving a penalty ban in the Robocup environment, this method is still a feasible option. \\
-
-\begin{figure}
-  \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/rotationsUBRISK.jpg}
-    \caption{Matches lost due to BRISK0 - U-BRISK being rotation variant} 
-    \label{fig:rotationUbrisk}
-\end{figure}
-
+The BRISK0 - U-BRISK algorithm detects on average $38.23$ and $21.30$ interest points for 2-NN and Radius Matching respectively as shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. When using 2-NN matching, this algorithm achieves an AUC value of $95.35\%$. This is relatively low compared to the other feature extraction algorithms for 2-NN matching. This is due to the algorithm having the largest number of IZMs. It has $108$ IZMs as shown in \tabref{tab:mrd_izm}. This is expected, since this method is not rotation invariant since the sampling pattern is not rotated in order to achieve better computational performance. This causes a number of matches to be lost since large image rotations cause corresponding interest points to be set at different orientations which may prevent these points from being matched. This problem will be discussed in \secref{sec:problemsLimitations}.\\
 %When using 2-NN matching, this method achieves an AUC value of $87.83\%$ as seen in \tabref{tab:overall_times_knn}. This algorithm also has a small number of FP matches as seen in \figref{fig:mrd_nvm_nol}. This results in a lower matching score for non-overlapping images which ultimately produces a larger AUC value since there is a large difference between the overlapping matching score and the non-overlapping matching score as shown in \tabref{tab:matchingScoreCompare}. 
 
 This algorithm produces very good classification performance when using Radius Matching as an AUC value of $97.24\%$ is achieved. This good performance is mainly due the lower number of IZMs. This value has significantly decreased for Radius Matching to a mean value of $33$ for overlapping image pairs. This is mainly due to the MPS's MAHD value that determines the threshold, below which, two interest point descriptors match one another. This value causes an increase in the number of detected matches resulting in the improved performance.\\
@@ -3174,84 +3168,85 @@ Nao and Google Street View Images & 0.36 & 0.39\tabularnewline
 \section{Summary}
 \label{sec:summary}
 
-\chapter{Discussion and Conclusion}
-\label{sec:discussionConclusion}
+\chapter{Conclusion}
+\label{sec:Conclusion}
 
-\section{Discussion}
-\label{sec:discussion}
 %1. Results and success
-In this thesis, five feature extraction algorithms have been compared using images captured by a Nao humanoid robot. Two of the algorithms, BRISK0 and BRISK0 - U-BRISK, are variations of the original BRISK implementation \cite{Leutenegger2011}. BRISK0 has also been combined with 2D SURF to create the BRISK0 - SURF2D algorithm. The 1D SURF algorithm has been developed and implemented by the \textit{rUNSWift} team \cite{Anderson}.\\
-
-A novel scoring function termed the \textit{Multi-Image Score} (MIS) has been developed in order to determine the optimal parameters for each  of the BRISK-based feature extraction algorithms. This scoring function determines the optimal parameters based on efficiency, NVMs and IZMs.\\
-
-Using these parameters, all of the BRISK-based feature extraction algorithms as well as 1D SURF were compared in three different environments and BRISK0 - U-BRISK generated the best overall performance. In the worst case, this algorithm can match $67\%$ of the overlapping image pairs whilst maintaining a FP rate of $0$. 1D SURF is an order of magnitude faster but BRISK0 - U-BRISK achieves superior classification performance in all three environments. \\
-
-
-
-
-
-a novel scoring function has been developed based on computational efficiency, NVMs and IZMs for each of the 
-
-Novel Scoring Function
-
-BRISK0 - U-BRISK selected as the best algorithm
-
-Varying lighting
-
-Different camera sensor
-
-Google Street View
-
-Matching Score as the inverse distance between descirptors in feature space
-
-2-NN Ratio verified.
-
-Developed a matching constraint
-
-Localisation Algorithm
-
-
 
 %2. Why hard for others
 
 %3. Essence of innovation
- - Developing a novel score function to find the optimal thresholds for feature extraction algorithms
- - Incorporated variations of BRISK such that it can be used on a Nao
- - Created a localisation algorithm to help the Nao localise for Robocup
- - Tested the algorithm using Nao images with Google Street View.
+\subsection{Key Results}
+\label{sec:keyResults}
+In this thesis, five feature extraction algorithms have been compared using images captured by a Nao humanoid robot. A novel scoring function termed the \textit{Multi-Image Score} (MIS) has been developed in order to determine the optimal parameters for each  of the BRISK-based feature extraction algorithms.\\
+
+Using these parameters, it was found that BRISK0 - U-BRISK generated the best overall performance. In the best case, this algorithm can match $90\%$ of the overlapping image pairs whilst maintaining a FP rate of $0$. This algorithm is also computationally efficient with a mean overall time of $8.8 ms$ in the best case which is well within the computational requirements of the Nao. BRISK0 - U-BRISK can therefore be implemented on the Nao. This algorithm can still work under varying illumination and can match overlapping images captured from different sensors albeit with decreased matching performance.\\
+
+Another key result is that this algorithm can match Nao images with overlapping Google Street View images. The performance is reduced to a $TP_{FP=0}^{max}$ rate of $39\%$ but nevertheless can match overlapping image pairs. This can potentially be extended and improved to enable the Nao to perform street navigation.\\
+
+Novel angle and distance constraints have been developed to remove invalid matches. A new interest point property entitled the mean response difference $\bar{dR}$ has been developed and can potentially become an additional constraint used to remove invalid matches.\\
+
+Finally, a novel addition to the \textit{Augmented Monte Carlo Particle Filter} has been proposed. This will incorporate the feature extraction algorithm to enable the Nao to localise on the Robocup field.\\
 
 
+
+\section{Problems and Limitations}
+\label{sec:problemsLimitations}
 %Problems and Limitations
+The MPS parameters are calculated by averaging the maximum parameter settings for each dataset as discussed in \secref{sec:optimalParameters}. Averaging is sensitive to outliers and therefore taking the median value may improve the performance.\\
 
-It has been found that features such as windows tend to increase the number of interest points that are detected. In addition, fewer interest points are detected on lower resolution features.\\
+Due to the weak non-maximal suppression criteria imposed on the BRISK0 - U-BRISK algorithm, weak interest points are detected.  As a result of this relaxed constraint, a number of interest points may match that are not necessarily valid matches. An example of this can be seen in \figref{fig:weak}. A number of interest points in the left image are matched to an incorrect location in the right image having already passed the angle and distance constraints. This may imply that Radius Matching is not the best matching technique and 2-NN Matching should be used to increase the chances of removing these matches.\\
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_valid_invalid_matches.jpg}
+    \caption{Invalid matches that has passed through the matching constraints} 
+    \label{fig:weak}
+\end{figure}
+
+BRISK0 - U-BRISK is rotation variant which may prevent interest points from matching if either of the image pair undergo a significant rotation. To illustrate this, an identical image was  rotated clockwise by approximately $45^{\circ}$ and compared with its original version as shown in \figref{fig:rotationUbrisk}. An interest point has been identified between both of the fluorescent lights in each image but the interest point has not been matched due to this rotation. However, since the Nao will not be subject to rotations of this magnitude when coming onto the pitch after serving a penalty ban in the Robocup environment, this method is still a feasible option for Robocup. \\
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/rotationsUBRISK.jpg}
+    \caption{Matches lost due to BRISK0 - U-BRISK being rotation variant} 
+    \label{fig:rotationUbrisk}
+\end{figure}
+
+A major problem that hinders all of the feature extraction algorithms are environments with many similar features. An example of this can be seen in the Google Street View Datasets. Both sides of the street contain buildings with similar looking windows as seen in \figref{fig:similarScene}. The left image has been captured with the Nao's camera and the right image is from Google Street View. Both images are from opposite sides of the street but contain similar features causing incorrect matches to be found.\\
+
+\begin{figure}
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_similar_scene.jpg}
+    \caption{Similar scenes cause ambiguities} 
+    \label{fig:similarScene}
+\end{figure}
+
 
 BRISK0 - U-BRISK was analysed further and it was found that varying the illumination of an environment causes less valid interest point matches to be detected. However, BRISK0 - U-BRISK still detects on average $9.53$ valid matches for overlapping images in the worst case scenario. BRISK0 - U-BRISK is also sensitive to different camera settings and it has been found that matching image pairs from different cameras decreases the performance.\\
 
-Computing the median rather than the max - Outliers
+%Computing the median rather than the max - Outliers
 
-Learning distances to features using vision papers - see email
+%Learning distances to features using vision papers - see email
 
-Valid Matches - Overlapping images tend to produce a large number of matches that are invalid. However, since the images are similar and weak interest points are being detected, it seems plausible that matches will be generated in the same region and all other matches will be filtered out from the constraints. This is because the overlapping regions tend to have similar features???
+%Valid Matches - Overlapping images tend to produce a large number of matches that are invalid. However, since the images are similar and weak interest points are being detected, it seems plausible that matches will be generated in the same region and all other matches will be filtered out from the constraints. This is because the overlapping regions tend to have similar features???
 
-2-NN Constraints
+%2-NN Constraints
 
-Similar looking scenes are going to cause a large number of ambiguous matches and reduce the performance.
+%Similar looking scenes are going to cause a large number of ambiguous matches and reduce the performance.
 
 %Recommendations for future work
-Calculate range and bearing to visual landmarks
+\section{Recommendations for Future Work}
+\label{sec:recommend}
+The following recommendations are suggested for future work. The BRISK0 - U-BRISK algorithm should be implemented on the Nao robot in order to evaluate the robot's subsequent real-time performance.\\
 
-Implement on the robot
+BRISK0 - U-BRISK is currently rotation variant and this may cause problems outside of the Robocup environment if the Nao is subject to large rotations. Thus enforcing rotation invariance and optimising the algorithm differently may create more robust matching performance.\\
 
-More extensive analysis using Google Street View
+The localisation algorithm should also be implemented on the Nao incorporating BRISK0 - U-BRISK for the purposes of Robocup. In addition, the localisation algorithm is limited to the Robocup domain. This could be extended to a more general domain by calculating the distance to visual landmarks. One possible solution is to utilise a \textit{Markox Random Field} to estimate detailed 3D structure using a single image \cite{Saxena}. It may also be possible to calculate the bearing to the visual landmarks.  
 
-Test other methods on Google Street View
+More extensive analysis needs to be performed on matching Nao images with Google Street View images to determine further improvements that need to be made to the algorithm in order to increase matching accuracy. It would also be interesting to test the other feature extraction algorithms on Google Street View images and compare their respective performance.\\
 
-Increase the performance of BRISK or SURF
-
-
-
-\section{Conclusion}
-\label{sec:conclusion}
+The BRISK0 and BRISK0 - U-BRISK algorithms can be further optimised to increase their efficiency. This includes using a reduced sampling pattern as suggest in \cite{Leutenegger2011}. It may also be feasible to reduce the dimensionality of the bit vector by performing less intensity comparisons.\\ 
 
 \bibliographystyle{witseie}
 \bibliography{bibliography}

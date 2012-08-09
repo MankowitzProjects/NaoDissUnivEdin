@@ -98,13 +98,13 @@ int main(int argc, char ** argv) {
 	int horizonLine = 300;
 
 	//Removes all matches except the first ones if true
-	bool removeMatches = false;
+	bool removeMatches = true;
 
 	//Validates the matches
 	bool performValidation=true;
 
 	//Choose the number of KNN matches to display
-	bool useDifferentNumMatches = true ;
+	bool useDifferentNumMatches = false ;
 	int numMatchesToDisplay = 0;
 
 	//Set the arguments
@@ -136,8 +136,8 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-//	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
-//	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
+	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
 //		std::string dir = "../images/PicsMG/Matching_Pics_Left_Overlapping";
@@ -162,13 +162,13 @@ int main(int argc, char ** argv) {
 //		std::string dir1 = "../images/Dataset3_Overlapping_2";
 
 	//Google Street View dataset
-		std::string dir = "../images/GoogleMaps/NaoSide1";
-		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
+//		std::string dir = "../images/GoogleMaps/NaoSide1";
+//		std::string dir1 = "../images/GoogleMaps/GoogleSide1";//PicsOG/Matching_Images_OG_Left
 
 
 
 	//Names of the two image files
-	std::string name1 = "9";
+	std::string name1 = "15";
 	std::string name2 = "3";
 
 	//Get the first gray image
@@ -517,6 +517,7 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/dataset_similar_scene.jpg",outimg);//Img 10,2 dataset Street View: 2,1
 //	cv::imwrite("../images/dataset_similar_scene_bad_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
 //	cv::imwrite("../images/dataset_similar_scene_bad_matches_smaller_angle.jpg",outimg);//Img 10,2 dataset Street View: 1,1
+	cv::imwrite("../images/dataset_valid_invalid_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
 #endif
 
 	return 0;
