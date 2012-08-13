@@ -11,12 +11,13 @@ The algorithms are run in a variety of different environments as will be discuss
 Parameters $p$ in this chapter correspond to the various thresholds required for detecting interest points and determining matches. The parameters used for each method are shown in \tabref{tab:parameters}. The Minimum Interest Point Detection Threshold (MIPDT) is the threshold above which a pixel is detected as an interest point. The Maximum Accepted Hamming Distance (MAHD) is the maximum number of bits that can differ when comparing two feature descriptors, below which the descriptors are to be considered a match. The Maximum Accepted Euclidean Distance (MAED) is the maximum euclidean distance below which two feature descriptors are considered to be a match.\\
 
 \begin{table}
+\centering
 \caption{The parameters evaluated for each feature extraction algorithm}
 \begin{tabular}{|c|c|c|}
 \hline 
 Method & Parameter 1 & Parameter 2\tabularnewline
 \hline 
- & \multicolumn{2}{c}{2-Nearest Neighbors Matching}\tabularnewline
+ & \multicolumn{2}{c|}{2-Nearest Neighbors Matching}\tabularnewline
 \hline 
 BRISK0 & MIPDT & N/A\tabularnewline
 \hline 
@@ -26,7 +27,7 @@ BRISK0 SURF2D & MIPDT & N/A\tabularnewline
 \hline 
 BRISK0 - UBRISK & MIPDT & N/A\tabularnewline
 \hline 
- & \multicolumn{2}{c}{Radius Matching}\tabularnewline
+ & \multicolumn{2}{c|}{Radius Matching}\tabularnewline
 \hline 
 BRISK0 & MIPDT & MAHD\tabularnewline
 \hline 
@@ -91,6 +92,7 @@ As can be seen in the figure, the first dataset is of the area to the left of th
 Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. This has been manually performed to ensure that the images do indeed overlap. Pairs of images with no overlap, taken from different datasets, are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the football field were compared. Thus datasets \textit{PG Left} and \textit{PG Right} have been separately compared with datasets \textit{OG Left} and \textit{OG Right} respectively. Generating overlapping and non-overlapping image pairs has therefore been achieved by combining datasets as shown in \tabref{table:overlap}. If the same dataset appears in both columns in the table, then images within the same dataset are compared to one another generating overlapping image pairs. \\
 
 \begin{table}
+\centering
 \caption{Combinations of datasets used to generate overlapping and non-overlapping image pairs in the \textit{MRE}}
 \begin{tabular}{|c|c|}
 \hline 
@@ -124,13 +126,14 @@ MG RIGHT & OG RIGHT\tabularnewline
 The \textit{MRE} has been used as the test environment in \secref{sec:optimalParameters} and \secref{sec:matchingProperties}. Four image datasets of regions behind the Robocup goalposts have been captured specifically for the experiments in these sections and will be referred to as the \textit{Main Robocup Parameter Datasets}. In total, these datasets collectively contain $108$ overlapping images which have been used to generate $1421$ overlapping image pairs. This is achieved by pairing all combinations of images without repetition in each image dataset. A further $108$ non-overlapping images have been used to generate $2808$ non-overlapping image pairs. The combinations of the various datasets and the number of image pairs generated are shown in \tabref{tab:mrpd}. \\
 
 \begin{table}
+\centering
 \caption{Overlapping and non-overlapping image pairs generated from the \textit{Main Robocup Parameter Datasets} }
 \begin{tabular}{|c|c|c|c|c|}
 \hline 
 \textbf{Dataset A} & \textbf{Dataset B} & \textbf{Images in A} & \textbf{Images in B} & \textbf{Image Pairs}\tabularnewline
 \hline 
 \hline 
-\multicolumn{5}{|c}{\textbf{Overlapping Images}}\tabularnewline
+\multicolumn{5}{|c|}{\textbf{Overlapping Images}}\tabularnewline
 \hline 
 MG LEFT & MG LEFT & 26 & 26 & 325\tabularnewline
 \hline 
@@ -142,7 +145,7 @@ OG RIGHT & OG RIGHT & 23 & 23 & 253\tabularnewline
 \hline 
  & \textbf{Total} & 108 & 108 & 1421\tabularnewline
 \hline 
-\multicolumn{5}{|c}{\textbf{Non-Overlapping Images}}\tabularnewline
+\multicolumn{5}{|c|}{\textbf{Non-Overlapping Images}}\tabularnewline
 \hline 
 MG LEFT & OG LEFT & 26 & 31 & 780\tabularnewline
 \hline 
@@ -289,6 +292,7 @@ As can be seen from the tables, the MPS parameter values tend to favour higher M
 Furthermore, both the MPS and CPS settings have been compared in three different environments as will be discussed in the sections to follow. It has been found that the MPS setting exhibits marginally better feature extraction performance in these environments. Based on this fact and since computational performance is a crucial aspect in developing a feature extraction algorithm that is suitable for real-time use on the Nao, the MPS setting will be used as the default setting for each of the relevant feature extraction algorithms. Therefore, the MPS setting is assumed to have generated the statistics unless otherwise stated in the sections to follow.\\
 
 \begin{table}
+\centering
 \caption{The optimal thresholds for the 2-NN feature extraction algorithms}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -309,6 +313,7 @@ BRISK0 & UBRISK & 2-NN & 0.6 & 0.4 & 55 & 35\tabularnewline
 \end{table}
 
 \begin{table}
+\centering
 \caption{The optimal thresholds for the Hamming/Euclidean distance feature extraction algorithms}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
@@ -351,13 +356,13 @@ This result illustrates a significant difference between the first and second ne
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/KNNRatio_SBRISK_UBRISK_20_60.jpg}
+\includegraphics[scale=0.4]{../Drawings/KNNRatio_SBRISK_UBRISK_20_60.jpg}
 \caption{The 2-NN ratio for non-overlapping and overlapping images respectively using the BRISK0 - UBRISK method}
 \label{fig:b0ubknnratio}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/KNNRatio_SBRISK_SURF2D_20_60.jpg}
+\includegraphics[scale=0.4]{../Drawings/KNNRatio_SBRISK_SURF2D_20_60.jpg}
 \caption{The 2-NN ratio for non-overlapping and overlapping images respectively using the BRISK0 method}
 \label{fig:b0knnratio}
 \end{minipage}
@@ -366,6 +371,7 @@ This result illustrates a significant difference between the first and second ne
 In addition to this, the mean distance in feature space between the first and second nearest neighbor for each algorithm has been computed. It has been found that there is a significant difference between the distances for valid and invalid matches respectively. The mean distance could also be used as a global acceptance threshold but this is not generic and some feature descriptors may be more discriminatory than others \citep{Lowe2004}. This is evident in the case of BRISK0-SURF2D whose standard deviation is $68\%$ of the total mean distance for valid matches, indicating a huge amount of fluctuation about the mean. Thus the 2-NN ratio seems to be a more robust constraint than the mean distance in this scenario.\\
 
 \begin{table}
+\centering
 \caption{The 2-NN Ratios}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -413,6 +419,7 @@ In order to determine whether or not this score is a good metric for classifying
 The mean IMS for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, the IMS values for overlapping images are at least an order of magnitude larger than the IMS for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criteria that has been used to determine the overall performance of each of the feature extraction algorithms in the sections to follow.\\
 
 \begin{table}
+\centering
 \caption{The matching scores for each of the feature extraction algorithms. This is for overlapping and non-overlapping images respectively for the Main Robocup Datasets}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -482,10 +489,11 @@ Therefore, it may be possible to utilise these properties in order to further de
 %The keypoints in image A were subtracted from the keypoints in image B.
 
 \begin{table}
+\centering
 \caption{The properties of valid and invalid interest point matches}
 \begin{tabular}{|c|c|c|c|c|c|r@{\extracolsep{0pt}.}l|}
 \hline 
-\textbf{Property} & \multicolumn{7}{c}{\textbf{Invalid Matches due to Angle Constraint}}\tabularnewline
+\textbf{Property} & \multicolumn{7}{c|}{\textbf{Invalid Matches due to Angle Constraint}}\tabularnewline
 \hline 
 \hline 
 \textbf{Method} & \textbf{$\bar{d\alpha}$} & \textbf{$\bar{d\alpha}$Std} & \textbf{$\bar{dR}$} & \textbf{$\bar{dR}$Std} & \textbf{$\bar{dS}$} & \multicolumn{2}{c|}{\textbf{$\bar{dS}$Std}}\tabularnewline
@@ -498,7 +506,7 @@ Therefore, it may be possible to utilise these properties in order to further de
 \hline 
 \textbf{BRISK0 - UBRISK} & 0.00 & 0.00 & 0.13 & 2.06 & 0.00 & 0&00\tabularnewline
 \hline 
- & \multicolumn{7}{c}{\textbf{Invalid Matches due to KNN Ratio Constraint}}\tabularnewline
+ & \multicolumn{7}{c|}{\textbf{Invalid Matches due to KNN Ratio Constraint}}\tabularnewline
 \hline 
 \textbf{BRISK0} & 4.28 & 0.87 & 6.81 & 1.98 & 0.00 & 0&00\tabularnewline
 \hline 
@@ -508,7 +516,7 @@ Therefore, it may be possible to utilise these properties in order to further de
 \hline 
 \textbf{BRISK0 - UBRISK} & 0.00 & 0.00 & 4.61 & 1.71 & 0.00 & 0&00\tabularnewline
 \hline 
- & \multicolumn{7}{c}{\textbf{Valid Matches}}\tabularnewline
+ & \multicolumn{7}{c|}{\textbf{Valid Matches}}\tabularnewline
 \hline 
 \textbf{BRISK0} & 0.66 & 0.52 & 0.08 & 0.10 & 0.00 & 0&00\tabularnewline
 \hline 
@@ -577,6 +585,7 @@ In total, three environments have been used for comparing the various feature ex
 A set of optimal parameters were previously calculated in \secref{sec:optimalParameters}. Using these parameters, each of the feature extraction algorithms have been tested in different environments in order to determine which algorithm produces the best overall performance. The first environment is the \textit{MRE}. The \textit{Main Robocup Parameter Datasets} that were used to find the optimal parameters should not be used to test the performance of the feature extraction algorithms. This would risk overfitting to the data since you would be testing the performance of the algorithms on the same data used to find the optimal parameters. Thus, a new set of datasets have been generated in the \textit{MRE}. These datasets are referred to as the \textit{Main Robocup Testing Datasets}. The datasets have the same structure as those used to calculate the optimal parameters. However, each dataset now contains $30$ images, producing in total $120$ overlapping images and $120$ non-overlapping images as shown in \tabref{tab:mrtd}. These images were then combined to create $1740$ overlapping image pairs and $3480$ non-overlapping image pairs.\\
 
 \begin{table}
+\centering
 \caption{The set of overlapping and non-overlapping images generated using
 the Main Robocup Validation Datasets}
 \begin{tabular}{|c|c|c|c|c|}
@@ -584,7 +593,7 @@ the Main Robocup Validation Datasets}
 \textbf{Dataset A} & \textbf{Dataset B} & \textbf{Images in A} & \textbf{Images in B} & \textbf{Image Pairs}\tabularnewline
 \hline 
 \hline 
-\multicolumn{5}{|c}{\textbf{Overlapping Images}}\tabularnewline
+\multicolumn{5}{|c|}{\textbf{Overlapping Images}}\tabularnewline
 \hline 
 MG LEFT & MG LEFT & 30 & 30 & 435\tabularnewline
 \hline 
@@ -596,7 +605,7 @@ OG RIGHT & OG RIGHT & 30 & 30 & 435\tabularnewline
 \hline 
  & \textbf{Total} & 120 & 120 & 1740\tabularnewline
 \hline 
-\multicolumn{5}{|c}{\textbf{Non-Overlapping Images}}\tabularnewline
+\multicolumn{5}{|c|}{\textbf{Non-Overlapping Images}}\tabularnewline
 \hline 
 MG LEFT & OG LEFT & 30 & 30 & 870\tabularnewline
 \hline 
@@ -637,6 +646,7 @@ Overlapping images generate the True Positive (TP) matches. The $IMS_{best}$ thr
 
 
 \begin{table}
+\centering
 \caption{The AUC and performance statistics for the Main Robocup Dataset using
 2-NN}
 \footnotesize
@@ -661,6 +671,7 @@ BRISK0-SURF2D & MPS & 98.654 & 3.432 & 9.312 & 0.359 & 0.028 & 17.179\tabularnew
 \end{table}
 
 \begin{table}
+\centering
 \caption{The AUC and performance statistics for the Main Robocup Dataset using
 Radius Matching}
 \footnotesize
@@ -799,6 +810,7 @@ This algorithm detects on average $51.22$ interest points. However,the 1D SURF t
 
 
 \begin{table}
+\centering
 \caption{The number of Image Zero Matches (IZMs) for each feature extraction
 algorithm using 2-NN and Radius Matching in the Main Robocup Environment}
 \begin{tabular}{|c|c|}
@@ -1032,14 +1044,14 @@ Two datasets have been created from a random office environment. In total $25$ o
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset5.jpg}
-\caption{The first dataset showing a typical image from one side of the random office environment}
+\includegraphics[scale=0.4]{../Drawings/datasetImages/dataset5.jpg}
+\caption{The first dataset showing a typical image from one side of the office environment}
 \label{fig:dataset5}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset6.jpg}
-\caption{The second dataset showing a typical image from one side of the random office environment}
+\includegraphics[scale=0.4]{../Drawings/datasetImages/dataset6.jpg}
+\caption{The second dataset showing a typical image from one side of the office environment}
 \label{fig:dataset6}
 \end{minipage}
 \end{figure}
@@ -1077,13 +1089,13 @@ As mentioned previously in \secref{sec:matchingScore}, the mean $IMS_{best}$ val
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves in the office environment using the MPS thresholds}
+\caption{A comparison of the ROC curves in the office environment using the MPS thresholds and 2-NN Matching}
 \label{fig:compareKnnOffice}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_Hamming.jpg}
-\caption{A comparison of the ROC curves in the office environment using the MPS Hamming/Euclidean distance thresholds}
+\caption{A comparison of the ROC curves in the office environment using the MPS thresholds and Radius Matching}
 \label{fig:compareHammingOffice}
 \end{minipage}
 
@@ -1092,6 +1104,7 @@ As mentioned previously in \secref{sec:matchingScore}, the mean $IMS_{best}$ val
 
 
 \begin{table}
+\centering
 \caption{The AUC and performance statistics for the office environment using
 2-NN}
 \footnotesize
@@ -1116,6 +1129,7 @@ BRISK0-SURF2D & MPS & 94.795 & 3.793 & 17.157 & 1.497 & 0.083 & 26.936\tabularne
 \end{table}
 
 \begin{table}
+\centering
 \caption{The AUC and performance statistics for the office environment using
 Radius Matching}
 \footnotesize
@@ -1247,6 +1261,7 @@ BRISK0-SURF2D & MPS & 96.054 & 3.255 & 8.495 & 0.489 & 0.019 & 16.626\tabularnew
 %\end{figure}
 
 \begin{table}
+\centering
 \caption{The Number of Zero Matches (NZMs) for each feature extraction algorithm
 using 2-NN and Radius Matching in the Office Environment}
 \begin{tabular}{|c|c|}
@@ -1285,6 +1300,7 @@ UBRISK & 13.00\tabularnewline
 
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Office Environment Dataset}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -1397,13 +1413,13 @@ The second environment, as mentioned previously, has been generated in a large h
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset3_1.jpg}
+\includegraphics[scale=0.4]{../Drawings/datasetImages/dataset3_1.jpg}
 \caption{A typical image from the first large hall dataset}
 \label{fig:largeHall1}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
-\includegraphics[scale=0.5]{../Drawings/datasetImages/dataset3_2.jpg}
+\includegraphics[scale=0.4]{../Drawings/datasetImages/dataset3_2.jpg}
 \caption{A typical image from the second large hall dataset}
 \label{fig:largeHall2}
 \end{minipage}
@@ -1414,18 +1430,19 @@ Again, all five of the feature extraction techniques have been tested on overlap
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN.jpg}
-\caption{A comparison of the ROC curves in the large hall environment using the MPS thresholds}
+\caption{A comparison of the ROC curves in the large hall environment using the MPS thresholds and 2-NN Matching}
 \label{fig:compareKnnOffice3}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_Hamming.jpg}
-\caption{A comparison of the ROC curves in the large hall environment using the MPS Hamming/Euclidean distance thresholds}
+\caption{A comparison of the ROC curves in the large hall environment using the MPS thresholds and Radius Matching}
 \label{fig:compareHammingOffice3}
 \end{minipage}
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The AUC and performance statistics for the large hall environment
 using 2-NN}
 \footnotesize
@@ -1494,6 +1511,7 @@ The matching times and extraction times increase for the respective algorithms a
 
 
 \begin{table}
+\centering
 \caption{The Number of Zero Matches (NZMs) for each feature extraction algorithm
 using 2-NN and Radius Matching in the Large Environment}
 \begin{tabular}{|c|c|}
@@ -1530,6 +1548,7 @@ UBRISK & 3.00\tabularnewline
 \end{table}
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Large Hall Datasets}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -1695,6 +1714,7 @@ Each of the datasets from the three scenarios have been matched with the images 
 
 
 \begin{table}
+\centering
 \caption{The datasets that have been compared under varying lighting conditions
 to the original Robocup datasets}
 \footnotesize
@@ -1757,6 +1777,7 @@ The statistics corresponding to the ROC curves are tabulated in \tabref{tab:ligh
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The statistics for the matching performance under varying lighting conditions}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -1783,6 +1804,7 @@ The $IMS_{best}$ values for each of the scenarios are shown in \tabref{tab:ms_li
 The $TP_{FP=0}^{max}$ values are also lower for scenarios with varying illumination as shown in \figref{fig:tp_rate_lighting}. This is to be expected based on the above-mentioned statistics. Thus, in conclusion, less valid matches and less total matches are to be expected in scenes of lower illumination. A sufficient number of valid matches can still be detected and overlapping image pairs can still be matched based on the $TP_{FP=0}^{max}$ values calculated for each scenario.\\
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Varying Lighting Datasets}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -1883,12 +1905,13 @@ A ROC curve, shown in blue in \figref{fig:rocRobocupNikon}, has been generated u
 
 \begin{figure}[h!] 
   \centering
-    \includegraphics[width=0.5\textwidth]{../Drawings/camera/ROC_Robocup.jpg}
+    \includegraphics[width=0.8\textwidth]{../Drawings/camera/ROC_Robocup.jpg}
     \caption{A comparison of ROC curves. The red curve is that generated by only matching Nao images. The blue curve is generated by comparing Nao images to the Nikon camera's images. }
     \label{fig:rocRobocupNikon}
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The statistics generated from matching the Nao's captured images with
 a Nikon Camera's captured images. It also details the statistics generated from comparing images that have only been captured on the Nao.}
 \footnotesize
@@ -1927,6 +1950,7 @@ and Nikon Camera Datasets using Radius Matching}
 In addition, the $IMS_{best}$ values are lower in the \textit{Nao-Nikon Datasets} for overlapping images as seen in \tabref{tab:ms_nikon_mrd} since less matches are detected on average. In addition, the $TP_{FP=0}^{max}$ value is $0.42$ for \textit{Nao-Nikon Datasets} as seen in \figref{fig:tp_rate_nikon_mrd} further illustrating the drop in performance. However, based on the above results, it is still possible to match overlapping image pairs with a FP rate of $0$ using different perception sensors.\\
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Main Robocup Datasets and Nikon Camera
 images}
 \begin{tabular}{|c|c|c|}
@@ -2019,12 +2043,13 @@ The blue ROC curve shown in \figref{fig:rocLargeHallNikon} has been generated fo
 
  \begin{figure}[h!] 
   \centering
-    \includegraphics[width=0.5\textwidth]{../Drawings/camera/ROC_dataset3.jpg}
+    \includegraphics[width=0.8\textwidth]{../Drawings/camera/ROC_dataset3.jpg}
     \caption{A comparison of ROC curves for the large hall environment. The red curve is that generated by only matching Nao images. The blue curve is generated by comparing Nao images to the Nikon camera's images. }
     \label{fig:rocLargeHallNikon}
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The statistics generated from matching the Nao's captured images with
 a Nikon cameras captured images in the large hall environment}
 \footnotesize
@@ -2055,6 +2080,7 @@ Based on the above datasets taken from two different environments, it appears th
 
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Main Large Hall and Nikon Camera images}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -2151,12 +2177,13 @@ The $IMS_{best}$ value is large for non-overlapping image pairs compared to over
 
  \begin{figure}[h!] 
   \centering
-    \includegraphics[width=0.5\textwidth]{../Drawings/streetView/ROC_StreetView.jpg}
+    \includegraphics[width=0.8\textwidth]{../Drawings/streetView/ROC_StreetView.jpg}
     \caption{The ROC curve generated by comparing and matching images captured on the Nao with Google Street View images.}
     \label{fig:rocGoogleStreet}
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The statistics generated from matching the Nao's captured images with
 images downloaded from Google Street View}
 \footnotesize
@@ -2180,6 +2207,7 @@ Nao and Google Street View & 77.567 & 4.448 & 4.978 & 8.035 & 0.038 & 22.434\tab
 \end{figure}
 
 \begin{table}
+\centering
 \caption{The matched point and keypoint statistics for the Google Street View
 Datasets}
 \begin{tabular}{|c|c|c|c|c|}
@@ -2217,6 +2245,7 @@ Street View & 28.210 & 11.500 & 16.710 & 153.01\tabularnewline
 
 
 \begin{table}
+\centering
 \caption{The Matching Score for the Google Street View images}
 \begin{tabular}{|c|c|c|}
 \hline 
@@ -2232,6 +2261,7 @@ Street View & 0.2964 & 0.07780\tabularnewline
 \end{table}
 
 \begin{table}
+\centering
 \caption{The thresholds at which the TP rate is a maximum whilst still maintaining
 a FP rate of 0 for each of the feature extraction algorithms. This
 is for Radius Matching of the Google Street View Environment with
