@@ -2,6 +2,7 @@
 %**************************************************
 clear all
 clc
+
 %load 'DA_Radius_Threshold_11062012_4_directories.mat'
 
 %Initialises which method is being used. I.e. BRISK or SURF-based

@@ -2,8 +2,12 @@
 clear all
 clc
 
-addpath('../Lighting')
-addpath('../Data3');
+addpath('../Varying_Lighting_Datasets')
+addpath('../Main_Robocup_Testing_Datasets');
+addpath('../Large_Hall_Datasets');
+addpath('../Office_Environment_Datasets');
+addpath('../Nikon_Camera_Datasets');
+addpath('../Google_Street_View_Datasets');
 
 %For BRISK0 UBRISK
 %load 'nonmatching_matching_Data__BRISK_U-BRISK_Hamming_12072012_1009_75_121_max.mat'

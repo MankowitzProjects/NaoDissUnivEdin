@@ -136,7 +136,7 @@ int main(int argc, char ** argv) {
 	//Start by creating the stored image
 	//****************************************************************************************
 	//Find the directory where the image is stored
-	std::string dir = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+	std::string dir = "../images/PicsOGValidation/Matching_Pics_Right_Overlapping";
 	std::string dir1 = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";//PicsOG/Matching_Images_OG_Left
 
 	//Original Dataset Left light off
@@ -155,7 +155,7 @@ int main(int argc, char ** argv) {
 
 	//Dataset 2
 //		std::string dir = "../images/Dataset2_Overlapping_1";
-//		std::string dir1 = "../images/Dataset2_Overlapping_1";
+//		std::string dir1 = "../images/Dataset2_Overlapping_2";
 
 	//Dataset 3
 //		std::string dir = "../images/Dataset3_Overlapping_1";
@@ -517,7 +517,12 @@ int main(int argc, char ** argv) {
 //	cv::imwrite("../images/dataset_similar_scene.jpg",outimg);//Img 10,2 dataset Street View: 2,1
 //	cv::imwrite("../images/dataset_similar_scene_bad_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
 //	cv::imwrite("../images/dataset_similar_scene_bad_matches_smaller_angle.jpg",outimg);//Img 10,2 dataset Street View: 1,1
-	cv::imwrite("../images/dataset_valid_invalid_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
+//	cv::imwrite("../images/dataset_valid_invalid_matches.jpg",outimg);//Img 10,2 dataset Street View: 1,1
+
+	//My Question
+//	cv::imwrite("../images/office_dataset_nonOverlapping.jpg",outimg);//Img 10,2 dataset Street View: 15,3
+//	cv::imwrite("../images/mrd_dataset_overlapping.jpg",outimg);//Img 10,2 dataset Street View: 15,3
+//	cv::imwrite("../images/mrd_dataset_nonOverlapping.jpg",outimg);//Img 10,2 dataset Street View: 15,3
 #endif
 
 	return 0;

@@ -1,9 +1,38 @@
 To add to report
 
-1. 300 Pixels from the top of the image for the other image processing techniques RB
+To Do:
+
+1. Emphasize that speed is crucial since the robot must match as many frames as are possible when on the field. It receives 30 frames perform
+second and therefore must try and process one frame every 33 ms. This will allow the robot to match images faster utilising every possible
+frame in order to find an image match
+
+2. The overall time is not very relevant for the rUNSWift team since they use different image processing techniques on the robot.
+
+3. Do I change BRISK0 to SBRISK
+
+4. Reference IRP where info is reused
+
+5. Find the conversion between my laptop and the robot
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. 300 Pixels from the top of the image for the other image processing techniques RB - DONE
 2. An angle of 10 degrees CONS - DONE
 3. A distance of 200 pixels CONS - DONE
-4. For 1D SURF, 120 pixels from the top of the image RB
+4. For 1D SURF, 120 pixels from the top of the image RB - DONE
 
 5. Emphasize Ceiling Features (Less dynamic interest points)
 
@@ -17,7 +46,7 @@ To add to report
 
 4. Only the best matching score is used as the threshold when creating the ROC Curves EX - DONE
 
-5. Ceiling Features mentioned where the Nao Robocup Methods are mentioned
+5. Ceiling Features mentioned where the Nao Robocup Methods are mentioned - DONE
 
 7. Lookup RANSAC MATCHING - DONE
 
@@ -25,21 +54,21 @@ To add to report
 
 10. Add main results to the introduction INTRO
 
-11. Add specs of laptop EX
+11. Add specs of laptop EX - DONE
 
-12. Add additional Figures (Throughout the report)
+12. Add additional Figures (Throughout the report) - DONE
 
 13. BRISK TO DO Section - DONE
 
-14. Specs of my laptop and the Nao's processor
+14. Specs of my laptop and the Nao's processor - DONE
 
-15. 30ms to perform tasks
+15. 30ms to perform tasks - DONE
 
 16. Do I add in summary - DONE
 
-17. State that the red circles are interest points
+17. State that the red circles are interest points - DONE
 
-18. Add circles around figures to make them more clear
+18. Add circles around figures to make them more clear - DONE
 
 02/08/12
 

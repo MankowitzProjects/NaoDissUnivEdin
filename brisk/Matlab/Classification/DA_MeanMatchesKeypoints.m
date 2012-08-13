@@ -2,23 +2,23 @@
 %methods
 clear all
 clc
-addpath('../Lighting')
-addpath('../Data3');
-addpath('../Data2');
-addpath('../DataCamera');
-addpath('../DataStreet');
-addpath('../DataValidation');
-%Choose the dataset type.
-% 1 - means using structure of 1-4
-% 2 - means using structure 1-2 (Office Environment)
-% 21 - means using structure 1-2 (Large Hall)
-% 3 - varying lighting
-% 4 - means matching Nao dataset with camera for Robocup
-% 5 - means matching Nao dataset with camera for Large Hall
-% 6 - means matching Nao dataset with Google Street View
+addpath('../Varying_Lighting_Datasets')
+addpath('../Main_Robocup_Testing_Datasets');
+addpath('../Large_Hall_Datasets');
+addpath('../Office_Environment_Datasets');
+addpath('../Nikon_Camera_Datasets');
+addpath('../Google_Street_View_Datasets');
+%Choose the dataset type. 
+% 1 - Main_Robocup_Testing_Datasets
+% 2 - Office_Environment_Datasets
+% 21 - Large_Hall_Datasets
+% 3 - Varying_Lighting_Datasets
+% 4 - Nikon_Camera_Datasets for Robocup
+% 5 - Nikon_Camera_Datasets for Large Hall
+% 6 - Google_Street_View_Datasets
 datasetType = 6;
 
-%Choose if we are comparing knn or hamming/euclidean distance
+%Choose if we are using 2-NN Matching or Radius Matching
 % 1 - KNN
 % 2 - Radius Match
 matchingMethod =2;

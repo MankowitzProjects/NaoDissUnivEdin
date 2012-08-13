@@ -48,97 +48,39 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	string dataset3_1;
 	string dataset3_2;
 
-	//There are four directories where files can be found
-	if (terminal){
-		//The original dataset
-		//		mgMatchLeft = "../../images/PicsMG/Matching_Pics_Left_Overlapping";
-		//		mgMatchRight = "../../images/PicsMG/Matching_Pics_Right_Overlapping";
-		//		ogMatchLeft = "../../images/PicsOG/Matching_Pics_Left_Overlapping";
-		//		ogMatchRight = "../../images/PicsOG/Matching_Pics_Right_Overlapping";
-		//The original dataset (Validation Set)
-		mgMatchLeft = "../../images/PicsMGValidation/Matching_Pics_Left_Overlapping";
-		mgMatchRight = "../../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
-		ogMatchLeft = "../../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
-		ogMatchRight = "../../images/PicsOGValidation/Matching_Pics_Right_Overlapping";
+	//There directories where the files can be found
+	//The original dataset (Testing Set)
+	mgMatchLeft = "../images/PicsMGValidation/Matching_Pics_Left_Overlapping";
+	mgMatchRight = "../images/PicsMGValidation/Matching_Pics_Right_Overlapping";
+	ogMatchLeft = "../images/PicsOGValidation/Matching_Pics_Left_Overlapping";
+	ogMatchRight = "../images/PicsOGValidation/Matching_Pics_Right_Overlapping";
 
 
-		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
-		mgLeftMatchLeft = "../../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
-		mgLeftMatchRight = "../../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
-		ogLeftMatchLeft = "../../images/Pics1OGLeftLightOff/Matching_Pics_Left_Overlapping";
-		ogLeftMatchRight = "../../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";
+	//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
+	mgLeftMatchLeft = "../images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
+	mgLeftMatchRight = "../images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
+	ogLeftMatchLeft = "../images/Pics1OGLeftLightOff/Matching_Pics_Left_Overlapping";
+	ogLeftMatchRight = "../images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";
 
-		//The original dataset with lighting variation - RIGHT LIGHT OFF (MAIN LIGHT OFF)
-		mgRightMatchLeft = "../../images/Pics2MGRightLightOff/Matching_Pics_Left_Overlapping";
-		mgRightMatchRight = "../../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
-		ogRightMatchLeft = "../../images/Pics2OGRightLightOff/Matching_Pics_Left_Overlapping";
-		ogRightMatchRight = "../../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";
+	//The original dataset with lighting variation - RIGHT LIGHT OFF (MAIN LIGHT OFF)
+	mgRightMatchLeft = "../images/Pics2MGRightLightOff/Matching_Pics_Left_Overlapping";
+	mgRightMatchRight = "../images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
+	ogRightMatchLeft = "../images/Pics2OGRightLightOff/Matching_Pics_Left_Overlapping";
+	ogRightMatchRight = "../images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";
 
-		//The original dataset with lighting variation - BOTH LIGHTS OFF (MAIN LIGHT ON)
-		mgBothMatchLeft = "../../images/Pics3MGBothLightsOff/Matching_Pics_Left_Overlapping";
-		mgBothMatchRight = "../../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
-		ogBothMatchLeft = "../../images/Pics3OGBothLightsOff/Matching_Pics_Left_Overlapping";
-		ogBothMatchRight = "../../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
+	//The original dataset with lighting variation - BOTH LIGHTS OFF (MAIN LIGHT ON)
+	mgBothMatchLeft = "../images/Pics3MGBothLightsOff/Matching_Pics_Left_Overlapping";
+	mgBothMatchRight = "../images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
+	ogBothMatchLeft = "../images/Pics3OGBothLightsOff/Matching_Pics_Left_Overlapping";
+	ogBothMatchRight = "../images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
 
-		//The first additional dataset
-		dataset2_1 = "../../images/Dataset2_Overlapping_1";
-		dataset2_2 = "../../images/Dataset2_Overlapping_2";
-		//The second additional dataset
-		dataset3_1 = "../../images/Dataset3_Overlapping_1";
-		dataset3_2 = "../../images/Dataset3_Overlapping_2";
+	//The first additional dataset
+	dataset2_1 = "../images/Dataset2_Overlapping_1";
+	dataset2_2 = "../images/Dataset2_Overlapping_2";
+	//The second additional dataset
+	dataset3_1 = "../images/Dataset3_Overlapping_1";
+	dataset3_2 = "../images/Dataset3_Overlapping_2";
 
-
-	}
-	else
-	{
-
-		//The original dataset
-		//		mgMatchLeft = "../brisk/images/PicsMG/Matching_Pics_Left_Overlapping";
-		//		mgMatchRight = "../brisk/images/PicsMG/Matching_Pics_Right_Overlapping";
-		//		ogMatchLeft = "../brisk/images/PicsOG/Matching_Pics_Left_Overlapping";
-		//		ogMatchRight = "../brisk/images/PicsOG/Matching_Pics_Right_Overlapping";
-		//The original dataset (Validation Set)
-		mgMatchLeft = "../brisk/images/PicsMGValidation/Matching_Pics_Left_Overlapping";
-		mgMatchRight = "../brisk/images/PicsMGValidation/Matching_Pics_Right_Overlapping";
-		ogMatchLeft = "../brisk/images/PicsOGValidation/Matching_Pics_Left_Overlapping";
-		ogMatchRight = "../brisk/images/PicsOGValidation/Matching_Pics_Right_Overlapping";
-
-
-		//The original dataset with lighting variation - LEFT LIGHT OFF (MAIN LIGHT ON)
-		mgLeftMatchLeft = "../brisk/images/Pics1MGLeftLightOff/Matching_Pics_Left_Overlapping";
-		mgLeftMatchRight = "../brisk/images/Pics1MGLeftLightOff/Matching_Pics_Right_Overlapping";
-		ogLeftMatchLeft = "../brisk/images/Pics1OGLeftLightOff/Matching_Pics_Left_Overlapping";
-		ogLeftMatchRight = "../brisk/images/Pics1OGLeftLightOff/Matching_Pics_Right_Overlapping";
-
-		//The original dataset with lighting variation - RIGHT LIGHT OFF (MAIN LIGHT OFF)
-		mgRightMatchLeft = "../brisk/images/Pics2MGRightLightOff/Matching_Pics_Left_Overlapping";
-		mgRightMatchRight = "../brisk/images/Pics2MGRightLightOff/Matching_Pics_Right_Overlapping";
-		ogRightMatchLeft = "../brisk/images/Pics2OGRightLightOff/Matching_Pics_Left_Overlapping";
-		ogRightMatchRight = "../brisk/images/Pics2OGRightLightOff/Matching_Pics_Right_Overlapping";
-
-		//The original dataset with lighting variation - BOTH LIGHTS OFF (MAIN LIGHT ON)
-		mgBothMatchLeft = "../brisk/images/Pics3MGBothLightsOff/Matching_Pics_Left_Overlapping";
-		mgBothMatchRight = "../brisk/images/Pics3MGBothLightsOff/Matching_Pics_Right_Overlapping";
-		ogBothMatchLeft = "../brisk/images/Pics3OGBothLightsOff/Matching_Pics_Left_Overlapping";
-		ogBothMatchRight = "../brisk/images/Pics3OGBothLightsOff/Matching_Pics_Right_Overlapping";
-
-		//The first additional dataset
-		dataset2_1 = "../brisk/images/Dataset2_Overlapping_1";
-		dataset2_2 = "../brisk/images/Dataset2_Overlapping_2";
-		//The second additional dataset
-		dataset3_1 = "../brisk/images/Dataset3_Overlapping_1";
-		dataset3_2 = "../brisk/images/Dataset3_Overlapping_2";
-	}
-
-
-	//For the images from the old Nao
-	string mgMatchLeftOld = "../../images/PicsMGOld/Matching_MG_Left_old";
-	string mgMatchRightOld = "../../images/PicsMGOld/Matching_MG_Right_old";
-	string ogMatchLeftOld = "../../images/PicsOGOld/Matching_OG_Left_old";
-	string ogMatchRightOld = "../../images/PicsOGOld/Matching_OG_Right_old";
-
-	//std::cout << "dir to get files of: " << flush;
-	//getline( cin, *dir);  // gets everything the user ENTERs
 	//DATASETS****************************
 	//ORIGINAL DATASET: 1-4
 	//DATASET LEFT LIGHT OFF: 5-8
@@ -238,28 +180,6 @@ int DataAnalysis::getNumImagesInDirectory(string *dir, bool terminal)
 	closedir( dp );
 
 	return jpegCounter;
-
-}
-
-void DataAnalysis::displayOutput(vector<cv::KeyPoint> keypoints, vector<cv::KeyPoint> keypoints2,float matchingScore, int i1, int i2)
-{
-	//std::cout<<"This corresponds to keypoints ("<<keypoints[i1].pt.y<<", "<<keypoints[i1].pt.x<<") and second ("<<keypoints2[i2].pt.y<<", "<<keypoints2[i2].pt.x<<")"<<endl;
-
-	//cout<<"The distance between "<<i1<<" and "<<i2<<" is "<<1/matchingScore<<endl;
-	//cout<<"The matching score between "<<i1<<" and "<<i2<<" is "<<matchingScore<<endl;
-
-	std::cout<<"The size 1: "<<keypoints[i1].size<<" The size 2: "<<keypoints[i2].size<<endl;
-	//std::cout<<"The angle 1: "<<keypoints[i1].angle<<" The angle 2: "<<keypoints[i2].angle<<endl;
-	std::cout<<"The response 1: "<<keypoints[i1].response<<" The response 2: "<<keypoints[i2].response<<endl;
-	std::cout<<"The octave 1: "<<keypoints[i1].octave<<" The octave 2: "<<keypoints[i2].octave<<endl;
-	//std::cout<<"The class id 1: "<<keypoints[i1].class_id<<" The class id 2: "<<keypoints[i2].class_id<<endl;
-
-}
-
-void DataAnalysis::writeToFile(){
-
-
-
 
 }
 

@@ -4,7 +4,12 @@ clc
 
 load 'runswiftROC.mat'
 
-
+addpath('../Varying_Lighting_Datasets')
+addpath('../Main_Robocup_Testing_Datasets');
+addpath('../Large_Hall_Datasets');
+addpath('../Office_Environment_Datasets');
+addpath('../Nikon_Camera_Datasets');
+addpath('../Google_Street_View_Datasets');
 
 %SBRISK UBRISK
 %load 'nonmatching_matching_Data__SBRISK__UBRISK_KNN_100521012_1736_35.mat'

@@ -57,11 +57,11 @@
 \pagenumbering{roman}
 \chapter*{Abstract}
 \label{sec:abstract}
-This thesis compares five feature extraction algorithms in order to determine the best algorithm to be implemented on a Nao humanoid robot for the purpose of localisation. These algorithms include 1D SURF that has been developed by the \textit{rUNSWift} Robocup team \cite{Anderson} as well as BRISK-based feature extraction algorithms \cite{Leutenegger2011}. A novel scoring function has been developed in order to find the optimal parameters for the BRISK-based algorithms. Using these parameters BRISK0 - U-BRISK, a variation of BRISK, has been developed and implemented, producing the best overall performance. In the best case scenario it can match image pairs that overlap one another $90\%$ of the time without matching any images that do not overlap. This method can match Nao image pairs under varying illumination and can achieve reasonable matching performance when matching Nao images with those captured by a Nikon camera. A key result is that this method has been able to match a Nao's camera images with Google Street View images (albeit with decreased performance) which suggests that street navigation with the Nao may be possible. In addition, a novel constraint has been developed to remove invalid interest point matches in images. A new interest point property has also been created that may be used for the same purpose. Finally, a localisation algorithm that incorporates the BRISK0 U-BRISK feature extraction algorithm has also been developed for Robocup. This enables the Nao to efficiently determine its location on the football field.\\
+This thesis compares five feature extraction algorithms in order to determine the best algorithm to be implemented on a Nao humanoid robot for the purpose of localisation. The immediate application of this method is Robocup. The feature extraction algorithms include 1D SURF that has been developed by the \textit{rUNSWift} Robocup team \cite{Anderson} as well as BRISK-based techniques \cite{Leutenegger2011}. A novel scoring function has been developed in order to find the optimal parameters for the BRISK-based algorithms. Using these parameters BRISK0 - U-BRISK, a variation of BRISK, has been utilised, producing the best overall performance of all the algorithms. In the best case scenario it can match image pairs that overlap one another $90\%$ of the time without matching image pairs that do not overlap. This method can match Nao image pairs under varying illumination and can achieve reasonable matching performance when matching Nao images with those captured by a Nikon camera. A key result is that this method has been able to match a Nao's camera images with Google Street View images (albeit with decreased performance) which suggests that street navigation with the Nao may be possible. In addition, a novel constraint has been developed to remove invalid interest point matches in images. A new interest point property has also been created that may be used for the same purpose. Finally, a localisation algorithm that incorporates the BRISK0 U-BRISK feature extraction algorithm has also been developed for Robocup. This enables the Nao to efficiently determine its location on the football field.\\
 
 \chapter*{Acknowledgements}
 \label{sec:acknowledgements}
-I would like to extend a huge thank you to my supervisor, Dr. Subramanian Ramamoorthy, for his incredibly helpful advice and useful insight that guided me in the right direction, resulting in a successful thesis. In addition I would like to thank Benjamin Rosman for his great ideas and useful feedback which were extremely helpful in developing my thesis. Aris Valtazanos was instrumental in helping me gain an excellent understanding of the Nao robot. Efstathios Vafeias gave me very useful insight into the inner-workings of feature extraction algorithms and the Nao's localisation module.
+I would like to extend a huge thank you to my supervisor, Dr. Subramanian Ramamoorthy, for his incredibly helpful advice and useful insight that guided me in the right direction, resulting in a successful thesis. In addition I would like to thank Benjamin Rosman for his great ideas and useful feedback which were very helpful in developing my thesis. Aris Valtazanos was instrumental in helping me gain an excellent understanding of the Nao robot. Efstathios Vafeias gave me very useful insight into the inner-workings of feature extraction algorithms and the Nao's localisation module. I am also really grateful to Stephen McDonagh for his helpful feedback and useful comments.\\
 
 \chapter*{Declaration}
 \label{sec:declaration}
@@ -82,13 +82,14 @@ I would like to extend a huge thank you to my supervisor, Dr. Subramanian Ramamo
 \chapter{Introduction}
 \label{sec:introduction}
 
+
 \section{Motivation}
 \label{sec:motivation}
 Mobile Robot Localisation is defined as the ability of a mobile robot to determine its pose relative to a map of an environment \cite{Thrun2002}. Localisation is achieved by identifying landmarks in the environment and determining their corresponding positions on the map. The robot then uses this information to determine its pose. If a map of the environment is available, then the robot can immediately orient itself with respect to the map. However, in many cases a map is not available, in which case the robot has to first build a map of the environment and then localise using this map. This is referred to as Simultaneous Localisation and Mapping (SLAM) \cite{Durrant2006, Bailey2006b}.\\
 
 The ability of a robot to localise itself with respect to its environment is crucial in many different applications. One of the more well-known applications is that of the Mar's Rover used for space exploration. Due to a large communication latency, sending commands to the Mar's Rover has a one-way data transfer time that varies between $6$ and $20$ minutes \cite{Powell2006}. Therefore, performing teleoperations to control the rover is impractical and often infeasible. The robot is therefore required to be autonomous which includes the ability to localise itself with respect to its environment such that it can identify landmarks, compute safe traversal paths and avoid obstacles \cite{Powell2006}.\\
 
-Another application where localisation is of great importance is related to the \textit{DARPA Robotics Challenge} \cite{darpa}. The most recent challenge requires the development of robots for disaster-response operations. Often natural and man-made disasters create grave-risks for rescue and aid workers preventing a timely human response. Thus one potential solution is to deploy robots that can build maps and localise themselves in these environments and perform useful tasks such as clearing disaster sites and searching for victims as shown in \figref{fig:darpa} \cite{darpa}.\\   
+Another application where localisation is of great importance is related to the \textit{DARPA Robotics Challenge} \cite{darpa2012}. The most recent challenge requires the development of robots for disaster-response operations. Often natural and man-made disasters create grave-risks for rescue and aid workers preventing a timely human response. Thus one potential solution is to deploy robots that can build maps and localise themselves in these environments and perform useful tasks such as clearing disaster sites and searching for victims as shown in \figref{fig:darpa} \cite{darpa2012}.\\   
 
 \begin{figure}[h!] 
   \centering
@@ -114,7 +115,7 @@ The general setup of a Robocup game of football in the Standard Platform League 
 %Identify common methods applied in the field and voids in literature
 \begin{figure}[h!] 
   \centering
-    \includegraphics[width=0.8\textwidth]{../Drawings/robocup/NaoField.pdf}
+    \includegraphics[width=0.8\textwidth]{../Drawings/robocup/NaoField.jpg}
     \caption{The standard setup for a game of football before kick-off \cite{Rules}}
     \label{fig:naofield}
 \end{figure}
@@ -158,7 +159,7 @@ It is important to note that the Vertical field of view has been increased for e
 \label{sec:objectives}
 The detection of visual landmarks (also referred to as \textit{Interest Points}) is achieved using feature extraction algorithms. A feature extraction algorithm utilises camera images to extract visual algorithmic-dependant interest points from the environment. These interest points can then be used as landmarks and a robot can then localise itself by subsequently re-observing these landmarks. \\
 
-This thesis conducts a comparison of five different feature extraction algorithms in terms of computational performance and matching accuracy. Matching accuracy refers to the ability of an algorithm to correctly match a pair of images that contain the same visual landmarks. Image datasets are generated using the Nao's upper camera and the algorithms are compared on this data. The algorithm with the best performance along these dimensions is then further analysed and is recommended as the algorithm to be implemented on the Nao robot. In addition to this, a localisation algorithm has been developed for the purpose of Robocup. This algorithm aims to incorporate the best performing feature extraction algorithm to enable the Nao robot to localise itself on the football pitch.\\
+This thesis conducts a comparison of five different feature extraction algorithms in terms of computational performance and matching accuracy. Matching accuracy refers to the ability of an algorithm to correctly match a pair of images that contain the same visual landmarks. Image datasets are generated using the Nao's upper camera and the algorithms are compared on this data. The algorithm with the best performance along these dimensions is then further analysed and is recommended as the algorithm to be implemented on the Nao robot. In addition to this, a novel localisation algorithm has been developed for the purposes of Robocup. This algorithm aims to incorporate the best performing feature extraction algorithm to enable the Nao robot to localise itself on the football pitch.\\
 
 
 %Localisation is where an agent is given a map of the environment and needs to determine its position relative to the map. This can be achieved be forming hypotheses of possible positions and weighting the likelihood of being in a certain position based on observations of the environment. If an agent is removed from the environment (the so-called \textit{kidnapping} problem) then it has to re-establish its position relative to the map. In a symmetrical environment, such as a football field, this can be difficult since the robot can be in a number of possible locations on re-entering the football field. In this case, it may be possible to solve the problem by observing visual natural features that are found above the football field.\\
@@ -177,23 +178,18 @@ This thesis conducts a comparison of five different feature extraction algorithm
 
 \section{Related Work}
 \label{sec:relatedWork}
-There are a number of different works that utilise feature extraction algorithms to detect visual landmarks and perform robot localisation. One of the first feature extraction algorithms is called the Scale Invariant Feature Transform (SIFT)\cite{Lowe1999}. This algorithm detects landmarks that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A Monte Carlo Localisation algorithm has been implemented using SIFT for feature detection \cite{Gil}. The robot is given a map of the environment and, using stereo vision, is able to find its location in an environment with better accuracy than simply using odometry estimates.\\
+There are a number of different works that utilise feature extraction algorithms to detect visual landmarks and perform robot localisation. One of the first feature extraction algorithms is called the Scale Invariant Feature Transform (SIFT)\cite{Lowe2004}. This algorithm detects landmarks that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A Monte Carlo Localisation algorithm has been implemented using SIFT for feature detection \cite{Gil}. The robot is given a map of the environment and, using stereo vision, is able to find its location in an environment with better accuracy than simply using odometry estimates.\\
 
 
 SIFT has been implemented on various different SLAM implementations. Using a triclops stereo vision system and detecting visual landmarks using SIFT, a mobile robot has been able to perform homing with good accuracy \cite{Se2001, Se2002}. The visual landmarks detected using SIFT were robustly matched and a consistent 3-Dimensional map was generated. SIFT has also been implemented on a mobile robot, with a stereo camera and odometric sensors, using a FastSLAM algorithm. It achieved very good feature tracking and enabled the robot to estimate its position to within $0.5\%$ to $4\%$ of the total distance travelled \cite{Barfoot2005}.\\
 
-SIFT and a variation of SIFT, called Speeded-Up Robust Features (SURF) \cite{Bay2008}, have been utilised for underwater SLAM \cite{Aulinas2011, Thomas}. The work conducted in \cite{Aulinas} extracts features from underwater images using SURF and matches the features using the SURF matching algorithm. This is performed off-line but results in increased accuracy in the final SLAM estimate.\\
+SIFT and a variation of SIFT, called Speeded-Up Robust Features (SURF) \cite{Bay2008}, have been utilised for underwater SLAM \cite{Aulinas2011, Thomas}. The work conducted in \cite{Aulinas2011} extracts features from underwater images using SURF and matches the features using the SURF matching algorithm. This is performed off-line but results in increased accuracy in the final SLAM estimate.\\
 
 Single camera SLAM, more formally referred to as Monocular SLAM (MonoSLAM), has also been utilised to good effect. Davison \textit{et al.} \cite{Davison2007} uses a single uncontrolled camera as the sole sensor on a mobile robot to actively perform localisation and mapping. The algorithm detects persistent natural features in the environment and is also able to determine the orientation of the features. MonoSLAM has also been implemented on a humanoid robot \cite{Wang2011}. SURF was used as the feature detection technique and visual SLAM was achieved.\\
 
 Regarding the Robocup, one previous work has been developed by the \textit{rUNSWift} Robocup team to enable a Nao robot to localise itself on the Robocup football pitch using visual landmarks \cite{Anderson}. Visual landmarks are detected along a single row of pixels that are computed as a vertical average of a band of pixels above the robot's horizon which is defined in \cite{Bhuman}. In addition, a variation of 2D SURF, called 1D SURF, has been developed to detect and match interest points along this single dimension. 1D SURF is significantly faster than 2D SURF and has been implemented in real-time on the robot.\\
 
-
-
-
-
-
-There are a number of algorithms currently available such as the Scale Invariant Feature Transform (SIFT)\cite{Lowe1999}. This algorithm detects features that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A far faster yet slightly less robust version of SIFT is Speeded-Up Robust Features (SURF) \cite{Bay2008}. This method maintains good performance compared to SIFT as well as other feature detection techniques \cite{Juan2009} and is ideal for systems that are constrained by the amount of processing power available. Another newer and potentially faster feature detection algorithm is that of Binary Robust Invariant Scalable Keypoints (BRISK) \cite{Leutenegger}. This approach utilises a scale-space FAST-based detector and outperforms the original, unmodified version of SURF by an order of magnitude in the experiments conducted in \cite{Leutenegger}.
+There are a number of algorithms currently available such as the Scale Invariant Feature Transform (SIFT)\cite{Lowe2004}. This algorithm detects features that are invariant to translation, rotation and image scaling and are thus ideal for a situation where features may be detected from multiple views. A far faster yet slightly less robust version of SIFT is Speeded-Up Robust Features (SURF) \cite{Bay2008}. This method maintains good performance compared to SIFT as well as other feature detection techniques \cite{Juan2009} and is ideal for systems that are constrained by the amount of processing power available. Another newer and potentially faster feature detection algorithm is that of Binary Robust Invariant Scalable Keypoints (BRISK) \cite{Leutenegger2011}. This approach utilises a scale-space FAST-based detector and outperforms the original, unmodified version of SURF by an order of magnitude in the experiments conducted in \cite{Leutenegger2011}.
 
 
 
@@ -225,20 +221,19 @@ Single camera SLAM, more formally referred to as Monocular SLAM (MonoSLAM), has 
 
 \section{Outline}
 \label{sec:outline}
-The structure of the thesis is as follows: Chapter \ref{sec:background} gives an in-depth overview of the main feature extraction techniques that have been used in this project. This includes 2D SURF and Binary Robust Invariant Scalable Keypoints (BRISK). Chapter \ref{sec:sec:realtimeFeatureExtraction} discusses the variations of these methods that have been developed for the purposes of Robocup. This Chapter also includes a discussion of the \textit{rUNSWift} team's 1D SURF feature extraction algorithm. Chapter \ref{sec:matching} details the matching techniques and constraints that have been implemented and developed respectively to match interest points in corresponding images. This is followed in Chapter \ref{sec:localisation} by a description the localisation algorithm that has been developed for the Nao Robot to use in the Robocup competition. Chapter \ref{sec:experimentsResults} contains the results obtained from comparing the various feature extraction algorithms in a number of different environments. The best performing algorithm is then recommended and analysed further. Finally, Chapter \ref{sec:discussionConclusion} concludes the thesis by discussing potential problems, limitations and recommendations for future work. The key results are also summarised.\\
+The structure of the thesis is as follows: Chapter \ref{sec:background} gives an in-depth overview of the main feature extraction techniques that have been used in this project. This includes 2D SURF and Binary Robust Invariant Scalable Keypoints (BRISK). Chapter \ref{sec:realtimeFeatureExtraction} discusses the variations of these methods that have been developed for the purposes of Robocup. This Chapter also includes a discussion of the \textit{rUNSWift} team's 1D SURF feature extraction algorithm. Chapter \ref{sec:matching} details the matching techniques and constraints that have been implemented and developed respectively to match interest points in corresponding images. This is followed in Chapter \ref{sec:localisation} by a description the localisation algorithm that has been developed for the Nao Robot to use in the Robocup competition. Chapter \ref{sec:experimentsResults} contains the results obtained from comparing the various feature extraction algorithms in a number of different environments. The best performing algorithm is then recommended and analysed further. Finally, Chapter \ref{sec:Conclusion} concludes the thesis by discussing potential problems, limitations and recommendations for future work. The key results are also summarised.\\
 
 
 
 \chapter{Background}
 \label{sec:background}
 
-\section{General Feature Extraction Techniques}
+\section{General Feature Extraction Algorithms}
 \label{sec:genFeatureExtract}
+This chapter describes two feature extraction algorithms, 2D SURF and BRISK, on which the algorithms used for this thesis are based. From here on in, \textit{Detector} will refer to the module of the feature extraction algorithm that is used to detect the interest points. \textit{Descriptor} will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point.\\
 
-Throughout this paper, detector refers to the module of the feature extraction algorithm that is used to detect the interest points. Descriptor will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point.\\
 
-
-\subsection{2DSURF}
+\subsection{2D SURF}
 \label{sec:2dsurf}
 The SURF feature extraction algorithm is based on approximating the Hessian matrix at every point in an image. The determinant of the Hessian is then computed at each point and is referred to as the blob response. This computation is performed over a number of different scales in scale-space as well as in image space in order to find local maxima. A non-maximal suppression is then performed and the local maxima that exist after this stage will be defined as interest points. Each interest point is represented by a descriptor of length $64$. Interest points in different images are then matched based on the Euclidean distance between their respective feature vectors. The smaller the distance, the more certain the match becomes. 
 
@@ -465,11 +460,14 @@ d_k = \left\{ \begin{array}{rl}
 
 This produces the rotation and scale invariant descriptor vector.\\
 
-\subsection{Summary}
-\label{sec:summary1} 
+%\subsection{Summary}
+%\label{sec:summary1} 
 
 \chapter{Robocup Feature Extraction Techniques}
 \label{sec:realtimeFeatureExtraction}
+This chapter describes the main feature extraction algorithms that are to be compared, in order to determine the best algorithm to be implemented on the Nao humanoid robot. Variations of the original BRISK implementation \cite{Leutenegger2011} have been utilised and includes BRISK0, BRISK0 - SURF2D and BRISK0 - U-BRISK. 1D SURF has already been developed and implemented on a Nao robot by the \textit{rUNSWift} Robocup team \cite{Anderson} and is used in this thesis as a means of comparison with the BRISK-based algorithms.\\
+
+In the Robocup scenario, when observing features, the robot's head will be tilted upwards at the maximum possible angle in order to observe features that are on or near the ceiling. This is because in a real Robocup environment, dynamic objects such as humans will be detected as dynamic features. These feature are not necessarily repeatable and will potentially hinder the robot's  ability to match interest points and hence images during the course of the football game.\\
 
 \section{BRISK0 - UBRISK}
 \label{sec:brisk0}
@@ -477,11 +475,9 @@ In order to make the BRISK algorithm suitable for the Robocup domain, some sligh
 
 \subsection{Image Processing}
 \label{sec:imageProcessingBrisk}
-In the Robocup scenario, when observing features, the robot's head will be tilted upwards at the maximum possible angle in order to observe features that are on or near the ceiling. This is because in a real Robocup environment, dynamic objects such as humans will generate volatile features. These feature are not necessarily repeatable and will potentially hinder the robot's localisation ability.\\
+Only the upper $300$ pixel rows of the image are utilised for processing.  This should effectively prevent dynamic objects such as humans, found in the lower image portion, from being detected as interest points. In addition to the advantage of generating potentially repeatable features, evaluating only a sub-section of the image results in a significant increase in computational performance. \\ 
 
-In order to improve the chances of generating non-volatile features, only the section of the image above the robot's horizon line is evaluated. This will effectively remove the dynamic background clutter that is found below the horizon line. In addition to the advantage of generating potentially non-volatile features, evaluating only a sub-section of the image results in a significant increase in computational performance. \\ 
-
-The image processing procedure used for the BRISK-based implementations is as follows. Initially a $640 \times 480$ YUV image captured by the Nao is converted to a gray scale image as shown in \figref{fig:colourGrayscale}. One of the main reasons for this is that it allows the image to be processed along a single channel which optimises computational performance. \\
+The image processing procedure used for the BRISK-based implementations is as follows. Initially a $640 \times 480$ YUV image, captured by the Nao's camera, is converted to a gray scale image as shown in \figref{fig:colourGrayscale}. One of the main reasons for this is that it allows the image to be processed along a single channel which optimises computational performance. \\
 
 \begin{figure}[h!] 
   \centering
@@ -503,13 +499,13 @@ Since we are only interested in features near the ceiling, the bottom section of
 \label{sec:BRISK0Detect}
 The BRISK detector typically detects features by progressively half-sampling an image and in doing so creates a scale-space pyramid as defined in \secref{sec:brisk}. Creating this pyramid is computationally expensive but generates robust scale-invariant interest points.\\
 
-The scale-space pyramid is not needed for this application and thus interest points are only detected along a single scale. This is achieved by setting the number of octaves to $0$ on the BRISK detector, effectively creating BRISK0. This causes the scale-space pyramid to be `flattened' to a single layer which is utilised to detect interest points. The effect of this is that FAST scores are only computed for a single layer and thus a non-maximal suppression is only performed on this layer in scale space. This results in a significant increase in computational performance. \\
+The scale-space pyramid is not needed for this application since the robot is not expected to undergo significant rotations when re-entering the Robocup field. Thus interest points are only detected along a single scale. This is achieved by setting the number of octaves to $0$ on the BRISK detector, effectively creating BRISK0. This causes the scale-space pyramid to be `flattened' to a single layer which is utilised to detect interest points. The effect of this is that FAST scores are only computed for a single layer and thus a non-maximal suppression is only performed on this layer in scale space. This results in a significant increase in computational performance. \\
 
 %In addition to this, more features will be detected as the constraint required for detecting an interest point has been relaxed. This is also useful since regions around the ceiling do not usually have a large amount of variation and thus the amount of interest points detected will be relatively limited.\\
 
 A 2D sub-pixel refinement is still applied to the interest points on the single layer resulting in an increased accuracy in interest point image coordinates.\\
 
-Since only a single octave is utilised and interest points are therefore only detected on a single scale, the 1D parabola that is fitted along the scale-space axis \cite{Leutenegger2011} is also discarded. The disadvantage of this approach is that the local maxima FAST scores are not as accurate as in the original implementation but the increase in accuracy is not crucial in this application as good performance is still obtained as shown in \secref{sec:overallPerformance}. Furthermore, the increase in computational performance is crucial in developing a method that is practically implementable on the robot. This generates a bank of interest points and the descriptors are then computed.\\
+Since only a single octave is utilised and interest points are therefore only detected on a single scale, the 1D parabola that is fitted along the scale-space axis \cite{Leutenegger2011} is also discarded. The disadvantage of this approach is that the local maxima FAST scores are not as accurate as in the original implementation but the increase in accuracy is not crucial in this application as good performance is still obtained as shown in Chapter \ref{sec:experimentsResults}. Furthermore, the increase in computational performance is crucial in developing a method that is practically implementable on the robot. This generates a bank of interest points and the descriptors are then computed.\\
 
 \subsection{Descriptor}
 \label{sec:BRISK0Describe}
@@ -517,21 +513,22 @@ In order to determine the best feature extraction algorithm to be utilised on th
 
 The BRISK0 descriptor complements the BRISK0 detector as assigns the same scale to all of the interest points. This is because interest points are detected on only a single scale as mentioned previously. The rest of the BRISK algorithm is computed according to the original BRISK implementation resulting in a rotation invariant descriptor of length $512$ bits\cite{Leutenegger2011}.\\
 
-The SURF 2D descriptor is also combined with the BRISK0 detector. This creates a descriptor vector of length $64$ as implemented in 2D SURF \cite{Bay}. No modifications have been made to the SURF descriptor resulting in the same output as 2D SURF.\\ 
+The SURF 2D descriptor is also combined with the BRISK0 detector. This creates a descriptor vector of length $64$ as implemented in 2D SURF \cite{Bay2008}. No modifications have been made to the SURF descriptor resulting in the same output as 2D SURF.\\ 
 
-The U-BRISK descriptor contains a slight modification to the original BRISK descriptor. The rotation of the sampling pattern, which was described in \secref{sec:briskDescribe}, has been discarded. This removes the rotation invariant property of the BRISK feature extraction algorithm, but provides a significant increase in computational performance. The brightness comparison tests used to create the descriptor vector are therefore performed on interest points with a sampling pattern that remains in a standard orientation. The combination of BRISK0 and U-BRISK produces the best overall performance for the Robocup scenario as detailed in \secref{sec:overallPerformance}. \\
+The U-BRISK descriptor contains a slight modification to the original BRISK descriptor. The rotation of the sampling pattern, which was described in \secref{sec:briskDescribe}, has been discarded. This removes the rotation invariant property of the BRISK feature extraction algorithm, but provides a significant increase in computational performance. The brightness comparison tests used to create the descriptor vector are therefore performed on interest points with a sampling pattern that remains in a standard orientation. The combination of BRISK0 and U-BRISK produces the best overall performance for the Robocup scenario as detailed in Chapter \ref{sec:experimentsResults}. \\
 
 \section{1DSURF}
 \label{sec:1dsurf}
-Another technique that can be utilised for the Robocup is the 1D SURF feature extraction algorithm that has been previously implemented \cite{Anderson} for use in the Robocup. This algorithm extracts features from a single row of pixels in an image $A$. These features are then matched with features extracted from a row of pixels generated from an image $B$ being compared to image $A$. This technique is many orders of magnitude faster than the traditional 2D SURF implementation and is potentially suitable for use in the Robocup \cite{Anderson}.\\
+Another technique that can be utilised for the Robocup is the 1D SURF feature extraction algorithm that has been previously developed and implemented on a Nao robot for Robocup \cite{Anderson}. This algorithm extracts features from a single row of pixels in an image $A$. These features are then matched with features extracted from a row of pixels generated from an image $B$ being compared to image $A$. This technique is a number of orders of magnitude faster than the traditional 2D SURF implementation and is potentially suitable for use in the Robocup \cite{Anderson}.\\
 
-In order to utilise the feature extraction algorithm, it had to be implemented according to the design detailed in \cite{Anderson}. The OpenSURF implementation, which is freely available online \cite{opensurf} has been utilised in order to implement this algorithm.\\
+The original implementation of this algorithm has been provided by the \textit{rUNSWift} team and has been utilised as a means of comparison in this thesis \cite{Anderson}. The OpenSURF implementation, which is freely available online \cite{opensurf} has been utilised by the \textit{rUNSWift} team in order to implement this algorithm.\\
 
-The main task is transforming 2D SURF into its 1D SURF implementation. This requires changes to both the detector and Descriptor and will be explained in the sections to follow.\\
+The novelty of this algorithm is transforming 2D SURF into its 1D SURF implementation. This requires changes to both the detector and descriptor and will be explained in the sections to follow.\\
 
 \subsection{Image Processing}
 \label{sec:imageProcessing}
-The first main step in implementing the 1D SURF algorithm is to extract a single row of gray-scale pixels from the image. This is achieved by sampling every fourth pixel intensity value along the robot's horizon line in order to speed up processing time \cite{Anderson}. 
+The first main step in implementing the 1D SURF algorithm is to extract a single row of gray-scale pixels from the image. This is typically achieved by sampling every fourth pixel intensity value along the robot's horizon line \cite{Bhuman} in order to speed up processing time \cite{Anderson}. A change has been made whereby the pixels are now sampled $120$ pixel rows from the top of the image. This ensures that the algorithm is detecting features near the ceiling and helps prevent dynamic interest points from being detected.\\
+
 In addition to this, each sampled pixel intensity value is summed with a vertical band of $30$ pixels as shown in \figref{fig:rows}. This is performed instead of taking the mean primarily since it is faster to compute. This procedure therefore ultimately generates a row of summed pixel intensities. It is from this row of intensities that features will be extracted and matched.\\
 
 \begin{figure}[h!] 
@@ -584,12 +581,12 @@ descriptor = [ \sum dx_1, \sum |dx_1|,\sum dx_2, \sum |dx_2|,\sum dx_3, \sum |dx
 \label{eqn:descriptor1d}
 \end{equation}
 
-\section{Summary}
-\label{sec:summary3}
+%\section{Summary}
+%\label{sec:summary3}
 
 \chapter{Feature Matching}
 \label{sec:matching}
-Once the interest points have been detected and the descriptors have been computed, the interest points can be matched between pairs of images. This is achieved by first calculating the distance in feature space between the interest point descriptors in each image. The interest points are then matched if their descriptor distances are within various thresholds or constraints of one another as pre-defined by the matching technique that is being utilised. An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}. Matched interest points in corresponding images are connected by a green line as seen in the figure.\\
+Once the interest points have been detected and the descriptors have been computed, the interest points can be matched between pairs of images. This is achieved by first calculating the distance in feature space between the interest point descriptors in each image. The interest points are then matched if their descriptor distances are within various thresholds or constraints of one another as pre-defined by the matching technique that is being utilised. An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}. Matched interest points in corresponding images are connected by a green line as seen in the figure. Interest points that have not been matched are represented by red circles.\\
 
 \begin{figure}[h!] 
   \centering
@@ -652,12 +649,12 @@ Based on the results in \secref{sec:knnMatchingConstraint}, all matches with a t
 
 \subsection{Angle and Distance Constraints}
 \label{sec:angleDistanceConstraints}
-Two additional matching constraints have been developed in order to determine whether or not a match between two interest points in corresponding images are valid; namely, the angle and distance constraints respectively. A pair of interest points have to fulfil both of these constraints in order to be considered a valid match. In order to verify that the match fulfils these constraints, the pair of images that are being evaluated are placed next to one another as shown in \figref{fig:imagesSide}. A line is then connected between each pair of matched interest points as shown in \figref{fig:angleConstraint} and \figref{fig:distanceConstraint}. It is this line that is used to determine whether the matched pair of interest points are valid.\\
+Two additional matching constraints have been developed in order to determine whether or not a match between two interest points in corresponding images are valid; namely, the angle and distance constraints respectively. A pair of interest points have to fulfil both of these constraints in order to be considered a valid match. In order to verify that the match fulfils these constraints, the pair of images that are being evaluated are placed next to one another as shown in \figref{fig:angleConstraint}. A line is then connected between each pair of matched interest points as shown in \figref{fig:angleConstraint} and \figref{fig:distanceConstraint}. It is this line that is used to determine whether the matched pair of interest points are valid.\\
 
 The angle constraint calculates the angle from the interest point in the left image relative to the interest point in the right image. It has been determined through visual analysis that the angle between two matched interest points should be less than  $10^{\circ}$. This is because corresponding matches should be placed at approximately the same height provided there are no large image rotations. Since Robocup is the immediate application, negligible rotation is expected as the robot re-enters the field after a \textit{Standard Removal Penalty}.
 If the angle is within the pre-defined threshold then the match is valid, otherwise it is invalid. As can be seen in the figure, $\alpha$ is larger than the pre-defined threshold and therefore the match is marked as invalid. $\beta$ is within the threshold and therefore pertains to a valid match. \\
 
-The distance constraint states that the length of the line connecting two matched interest points should be the width of the image plus a pre-defined threshold. This constraint assumes no significant scale changes which is again feasible based on the current application domain. A pre-defined threshold of $200$ pixels has been chosen based in visual analysis. As can be seen in \figref{figref:distanceConstraint}, the longer line does not pass the distance constraint and is marked as being invalid.\\
+The distance constraint states that the length of the line connecting two matched interest points should be the width of the image plus a pre-defined threshold. This constraint assumes no significant scale changes which is again feasible based on the current application domain. A pre-defined threshold of $200$ pixels has been chosen based in visual analysis. As can be seen in \figref{fig:distanceConstraint}, the longer line does not pass the distance constraint and is marked as being invalid.\\
 
 \begin{figure}[ht!]
 \begin{minipage}[b]{0.5\linewidth}
@@ -719,7 +716,7 @@ The Radius Matching algorithm therefore computes the descriptors for all of the 
 
  \begin{figure}[h!] 
   \centering
-    \includegraphics[width=0.8\textwidth]{../Drawings/Matching/feature_matching/dataset1_without_validation_radius.jpg}
+    \includegraphics[width=0.8\textwidth]{../Drawings/Matching/feature_matching/dataset1_without_validation_radius_photo.jpg}
     \caption{Matched interest points due to Radius Matching. Note the interest point with more than two matches.}
     \label{fig:radius_match}
 \end{figure}
@@ -921,8 +918,8 @@ The algorithm will be able to disambiguate the robots position on the field by r
 %Discuss how the Natural landmark detection has been placed into the bhuman code structure
 %include a diagram from the simRobot interface
 
-\section{Summary}
-\label{sec:summary4}
+%\section{Summary}
+%\label{sec:summary4}
 
 
 
@@ -930,6 +927,7 @@ The algorithm will be able to disambiguate the robots position on the field by r
 \label{sec:experimentsResults}
 This section aims to determine which feature extraction algorithm exhibits the best  computational performance and matching accuracy. Computational performance involves comparing the algorithms based on the time taken to detect interest points, computing the interest point descriptors and matching the descriptors using the matching techniques mentioned in \secref{sec:matching}. Matching accuracy is defined in this context as the ability of the algorithm to determine whether or not a pair of images \textit{overlap} and hence match one another. The criteria defining a pair of overlapping images is detailed in \secref{sec:datasets}.\\
 
+All experiments were performed using a laptop with an Intel Core 2 Duo T6400 $2.00$GHz processor. The Nao robot for which these algorithms have been designed uses an ATOM Z530 $1.6$GHz processor \cite{NaoHead}. Thus, the computational times presented in this chapter are faster than the times expected on the Nao. In addition to this, the Nao's camera can process $30$ Frames Per Second (FPS) meaning that the feature extraction algorithm must be able to perform a detection, extraction and matching routine in under $33$ ms.\\
 
 The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are BRISK0, BRISK, BRISK0-UBRISK, BRISK0-2D SURF and 1D SURF. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, Radius Matching and RANSAC as described in \secref{sec:matching}. Both 2-Nearest Neighbors and Radius Matching have been implemented on all of the BRISK-based feature extraction algorithms. This includes all algorithms that use BRISK0 or BRISK feature detectors and/or descriptors. 1D SURF utilises RANSAC matching which has been previously implemented by the \textit{rUNSWift} team \cite{Anderson}. This implementation has been used for the experiments in this section.\\ 
 
@@ -976,11 +974,18 @@ This chapter will be developed as follows. Initially the optimal parameters for 
 \label{sec:datasets}
 The \textit{Main Robocup Environment} (MRE) has been used extensively in experiments throughout this chapter and the image datasets generated from this environment need to be explained.\\
 
-Four image datasets are generated in this environment for each experiment. The images in these datasets have been captured using the Nao's upper camera. In addition, the Nao's head is tilted towards the ceiling at the maximum possible pitch angle \textit{REFERENCE}. This ensures that the Nao is able to see features as high above the Robocup soccer field as possible which allows for the detection of potentially static interest points. The Nao's camera is focused on the regions behind the goalposts. The first set of goalposts will be referred to as the Player's Goal (PG). The second set of goalposts will be referred to as the Opponents Goal (OG). \\
+Four image datasets are generated in this environment for each experiment. The images in these datasets have been captured using the Nao's upper camera. In addition, the Nao's head is tilted towards the ceiling at the maximum possible pitch angle \textit{REFERENCE}. This ensures that the Nao is able to see features as high above the Robocup football field as possible which allows for the detection of potentially static interest points. The Nao's camera is focused on the regions behind the goalposts. The first set of goalposts will be referred to as the Player's Goal (PG). The second set of goalposts will be referred to as the Opponents Goal (OG) as seen in \figref{fig:datasetSetup}. \\
 
-\textbf{IMAGE HERE OF THE GOALPOSTS}\\
 
-The first dataset is of the area to the left of the player's goal (\textit{PG Left}). The second dataset is to the right of the player's goal (\textit{PG Right}). The third dataset is to the left of the opponent's goal (\textit{OG Left}). The fourth dataset is to the right of the opponents goal (\textit{OG Right}). The abbreviations, shown in braces, will be used to refer to these datasets for the remainder of this chapter. Typical images from each of these datasets are shown in \figref{fig:dataset1} to \figref{fig:dataset4} respectively.\\
+\begin{figure}%[ht!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/RobocupDataset/DatasetSetup.jpg}
+    \caption{The Robocup field setup and typical images corresponding to regions behind each respective goal} 
+    \label{fig:datasetSetup}
+ \end{figure}
+
+
+As can be seen in the figure, the first dataset is of the area to the left of the player's goal (\textit{PG Left}). The second dataset is to the right of the player's goal (\textit{PG Right}). The third dataset is to the left of the opponent's goal (\textit{OG Left}). The fourth dataset is to the right of the opponents goal (\textit{OG Right}). The abbreviations, shown in braces, will be used to refer to these datasets for the remainder of this chapter. Typical images from each of these datasets are shown in \figref{fig:dataset1} to \figref{fig:dataset4} respectively.\\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
@@ -1008,7 +1013,7 @@ The first dataset is of the area to the left of the player's goal (\textit{PG Le
 \end{minipage}
 \end{figure}
 
-Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. This has been manually performed to ensure that the images do indeed overlap. Pairs of images with no overlap, taken from different datasets, are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the soccer field were compared. Thus datasets \textit{PG Left} and \textit{PG Right} have been separately compared with datasets \textit{OG Left} and \textit{OG Right} respectively. Generating overlapping and non-overlapping image pairs has therefore been achieved by combining datasets as shown in \tabref{table:overlap}. If the same dataset appears in both columns in the table, then images within the same dataset are compared to one another generating overlapping image pairs. \\
+Pairs of images taken from the same dataset are referred to as overlapping images. A pair of images are considered to overlap one another if at least $50\%$ of the first image visually overlaps the second image. This has been manually performed to ensure that the images do indeed overlap. Pairs of images with no overlap, taken from different datasets, are referred to as non-overlapping images. In order to ensure that images do not overlap, datasets from opposite sides of the football field were compared. Thus datasets \textit{PG Left} and \textit{PG Right} have been separately compared with datasets \textit{OG Left} and \textit{OG Right} respectively. Generating overlapping and non-overlapping image pairs has therefore been achieved by combining datasets as shown in \tabref{table:overlap}. If the same dataset appears in both columns in the table, then images within the same dataset are compared to one another generating overlapping image pairs. \\
 
 \begin{table}
 \caption{Combinations of datasets used to generate overlapping and non-overlapping image pairs in the \textit{MRE}}
@@ -1204,7 +1209,7 @@ Graphs showing the parameters for the CPS settings are presented in \figref{fig:
 
 These experiments produced a set of optimal parameters that were generated for both the MPS and CPS parameter settings. The parameter settings are shown in \tabref{tab:knnStatistics} and \tabref{tab:hammingStatistics} for each respective matching technique. For the 2-NN tests, only the Minimum Interest Point Detection Threshold (MIPDT) parameter was varied in the range $20 \rightarrow 115$ in increments of $5$. For the Radius Matching tests, both the MIPDT and the MAHD/MAED threshold parameters were varied. The MIPDT was varied in the same range as the 2-NN tests. The MAHD is varied from $40 \rightarrow 135$ in increments of $5$ whereas the MAED is varied from $0.1 \rightarrow 0.28$ in increments of $0.01$.\\
 
-As can be seen from the tables, the MPS parameter values tend to favour higher MIPDT thresholds compared to the CPS setting. This has the effect of detecting less interest points resulting in an increase in computational performance. In addition to this, lower MAHD/MAED values are also favoured by the MPS parameter setting which has the effect of producing less matches. In spite of these settings, a sufficient number of matches using the MPS setting are generated as will be shown in \secref{sec:overallPerformance}. This setting also increases the computational performance when computing matches between pairs of images.\\
+As can be seen from the tables, the MPS parameter values tend to favour higher MIPDT thresholds compared to the CPS setting. This has the effect of detecting less interest points resulting in an increase in computational performance. In addition to this, lower MAHD/MAED values are also favoured by the MPS parameter setting which has the effect of producing less matches. In spite of these settings, a sufficient number of matches using the MPS setting are generated as will be shown in the sections to follow. This setting also increases the computational performance when computing matches between pairs of images.\\
 
 Furthermore, both the MPS and CPS settings have been compared in three different environments as will be discussed in the sections to follow. It has been found that the MPS setting exhibits marginally better feature extraction performance in these environments. Based on this fact and since computational performance is a crucial aspect in developing a feature extraction algorithm that is suitable for real-time use on the Nao, the MPS setting will be used as the default setting for each of the relevant feature extraction algorithms. Therefore, the MPS setting is assumed to have generated the statistics unless otherwise stated in the sections to follow.\\
 
@@ -1330,7 +1335,7 @@ IMS_{i1, i2} = \sum_{ip1, ip2} MS_{ip1, ip2}
 
 In order to determine whether or not this score is a good metric for classifying whether images match or not, an experiment was performed. The experiment involves utilising the images from the \textit{Main Robocup Parameter Datasets} to compute the IMS for pairs of overlapping images and pairs of non-overlapping images respectively. It was expected that the IMS for the overlapping images would be larger than that of the non-overlapping images. The feature extraction algorithms utilised for this experiment include BRISK0, BRISK, BRISK0-SURF2D and BRISK0- UBRISK. Both 2-NN and Radius Matching techniques were used to calculate separate IMS values for each feature extraction algorithm.\\
 
-The mean IMS for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, the IMS values for overlapping images are at least an order of magnitude larger than the IMS for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criteria that has been used to determine the overall performance of each of the feature extraction algorithms detailed in \secref{sec:overallPerformance}.\\
+The mean IMS for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, the IMS values for overlapping images are at least an order of magnitude larger than the IMS for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criteria that has been used to determine the overall performance of each of the feature extraction algorithms in the sections to follow.\\
 
 \begin{table}
 \caption{The matching scores for each of the feature extraction algorithms. This is for overlapping and non-overlapping images respectively for the Main Robocup Datasets}
@@ -1610,7 +1615,7 @@ The BRISK0 algorithm detects on average $53.21$ and $20.51$ interest points for 
 
 This algorithm achieves good performance when utilising 2-NN matching, attaining an AUC value of $97.41\%$ using MPS values as seen in \tabref{tab:mrd_times_knn}. One of the reasons for large AUC values are the number Image of Zero Matches (IZMs) that are generated by a feature extraction algorithm. As mentioned previously, an IZM means that a pair of images contain zero valid interest point matches. If an overlapping pair of images contain zero valid matches, then the $IMS_{best}$ score will be $0$ for this image pair. Thus when computing the ROC curve, only once the $IMS_{best}$ threshold reaches zero, will this pair of images be classified as an image match. This ultimately reduces the AUC value as the TP rate is reduced, and IZMs are therefore undesirable for overlapping images. On the other hand, it is desirable for every non-overlapping image pair to have zero valid matches as these images do not overlap and therefore should not match. Thus datasets of non-overlapping images should ideally have a large value of IZMs.\\
 
-BRISK0 generates $60$ and $55$ IZMs for MPS values using 2-NN and Radius Matching respectively as seen in \tabref{tab:mrd_izm}. This is a comparatively low number of IZMs and therefore is one of the reasons why large AUC values result as tabulated in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}. One of the possible reasons why BRISK0 has a low number of IZMs is due to the fact that it only performs non-maximal suppression in an image neighborhood on a single octave. This causes weak interest points to be detected. Weak interest points are those that are significantly brighter or darker than their surrounding neighborhood of pixels on a single octave only. As a result of relaxing the non-maximal suppression constraint, more interest points will be detected, decreasing the chances of an image pair becoming an IZM. This can cause a problem whereby weak interest points are incorrectly matched and this will be elaborated on in \secref{sec:discussionConclusion}. An example of weak interest points that are correctly matched is shown in \figref{fig:weakMatch}.\\
+BRISK0 generates $60$ and $55$ IZMs for MPS values using 2-NN and Radius Matching respectively as seen in \tabref{tab:mrd_izm}. This is a comparatively low number of IZMs and therefore is one of the reasons why large AUC values result as tabulated in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}. One of the possible reasons why BRISK0 has a low number of IZMs is due to the fact that it only performs non-maximal suppression in an image neighborhood on a single octave. This causes weak interest points to be detected. Weak interest points are those that are significantly brighter or darker than their surrounding neighborhood of pixels on a single octave only. As a result of relaxing the non-maximal suppression constraint, more interest points will be detected, decreasing the chances of an image pair becoming an IZM. This can cause a problem whereby weak interest points are incorrectly matched and this will be elaborated on in \secref{sec:Conclusion}. An example of weak interest points that are correctly matched is shown in \figref{fig:weakMatch}.\\
 
  
 \begin{figure}
@@ -1644,7 +1649,7 @@ One final point to note about the BRISK0 algorithm is that it contains an unusua
 
 \begin{figure}
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/reflectionsBrisk0.jpg}
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/reflectionsBrisk0_photo.jpg}
     \caption{FP matches due to lighting and reflections in overlapping images} 
     \label{fig:reflectionsBrisk0}
 \end{figure}
@@ -2248,7 +2253,7 @@ UBRISK & 13.00\tabularnewline
 
 
 
-From the results shown in \figref{tp_rate_oe} for 2-NN and Radius Matching respectively, it can be seen that the $TP_{FP=0}^{max}$ value for each of the methods has increased. This is mainly due to the variation in the images creating a large number of strong salient interest points which has been shown previously to improve matching performance.\\
+From the results shown in \figref{fig:tp_rate_oe} for 2-NN and Radius Matching respectively, it can be seen that the $TP_{FP=0}^{max}$ value for each of the methods has increased. This is mainly due to the variation in the images creating a large number of strong salient interest points which has been shown previously to improve matching performance.\\
 
 A notable increase in the $TP_{FP=0}^{max}$ value to $0.81$ is achieved for the BRISK0 - U-BRISK algorithm when using Radius Matching. A larger mean $IMS_{best}$ value compared to the \textit{Main Robocup Environment} is a central factor in generating this statistic. This causes more overlapping image pairs to be matched at higher $IMS_{best}$ thresholds. This has the effect of increasing the TP rate faster whilst maintaining a zero FP rate yielding a higher $TP_{FP=0}^{max}$ value.\\
 
@@ -2517,9 +2522,15 @@ Since BRISK - U-BRISK using Radius Matching has been chosen as the feature extra
 
 For each scenario $i$ four image datasets were generated as in \secref{sec:datasets}. These include  two datasets of images behind the player's goal namely, \textit{$PG Left_{i}$} and \textit{$PG Right_i$} as well as two datasets behind the opponent's goal, namely \textit{$OG Left_i$} and \textit{$OG Right_i$} respectively. Each image dataset contains $15$ images. All of the images in each dataset were taken at the same scale since only the performance under varying illumination is being tested in this experiment.\\ 
 
-The lighting setup in the Robocup test environment is as follows. The environment contains \textit{Main Lights} that are responsible for providing soft lighting to the room. In addition to these lights are two adjacent \textit{Fluorescent Lights} on the ceiling denoted \textit{Left Fluorescent Light} and \textit{Right Fluorescent Light}. Each fluorescent light stretches the length of the room and provides harder lighting than the main lights to the scene. \\
+The lighting setup in the Robocup test environment is shown in  \figref{fig:lighting_setup}. The environment contains \textit{Main Lights} that are responsible for providing soft lighting to the room. In addition to these lights are two adjacent \textit{Fluorescent Lights} on the ceiling denoted \textit{Left Fluorescent Light} and \textit{Right Fluorescent Light}. Each fluorescent light stretches the length of the room and provides harder lighting than the main lights to the scene. \\
 
-\textbf{ANM IMAGE OF THE LIGHTING SETUP IN THE ENVIRONMENT}
+\begin{figure}[h!] 
+  \centering
+    \includegraphics[width=1.0\textwidth]{../Drawings/lighting/LightingSetup.jpg}
+    \caption{The typical lighting setup in the \textit{Main Robocup Environment}}
+    \label{fig:lighting_setup}
+\end{figure}
+
 
 Scenario $1$ involves switching off only the \textit{Left Fluorescent Light} located on the ceiling. Typical images from each dataset generated in this scenario are shown in \figref{fig:leftmgleft} to \figref{fig:leftogright} respectively. Scenario $2$ involves turning off only the \textit{Right Fluorescent Light} located on the ceiling as well as the \textit{Main Lights}. Typical images from these datasets are shown in \figref{fig:rightmgleft} to \figref{fig:rightogright} respectively. Scenario $3$ involves turning off both the \textit{Left Fluorescent Light} and \textit{Right Fluorescent Light}, leaving only the \textit{Main Lights} on in the environment. Typical images from these datasets are shown in \figref{fig:bothmgleft} to \figref{fig:bothogright} respectively. It should be noted that scenario $3$ has the lowest illumination compared to the other two scenarios. \\
 
@@ -2692,7 +2703,7 @@ The statistics corresponding to the ROC curves are tabulated in \tabref{tab:ligh
 
 
 
-The $IMS_{best}$ values for each of the scenarios are shown in \figref{fig:ms_lighting}. Scenario $1$ and $2$ generate similar $IMS_{best}$ values for both overlapping and non-overlapping images. Scenario $3$ has the lowest $IMS_{best}$ value for overlapping images and the largest $IMS_{best}$ value for non-overlapping images. This contributes to the lower performance previously discussed.\\
+The $IMS_{best}$ values for each of the scenarios are shown in \tabref{tab:ms_lighting}. Scenario $1$ and $2$ generate similar $IMS_{best}$ values for both overlapping and non-overlapping images. Scenario $3$ has the lowest $IMS_{best}$ value for overlapping images and the largest $IMS_{best}$ value for non-overlapping images. This contributes to the lower performance previously discussed.\\
 
 The $TP_{FP=0}^{max}$ values are also lower for scenarios with varying illumination as shown in \figref{fig:tp_rate_lighting}. This is to be expected based on the above-mentioned statistics. Thus, in conclusion, less valid matches and less total matches are to be expected in scenes of lower illumination. A sufficient number of valid matches can still be detected and overlapping image pairs can still be matched based on the $TP_{FP=0}^{max}$ values calculated for each scenario.\\
 
@@ -2782,7 +2793,7 @@ One possible reason why the robot is able to match pairs of overlapping images u
 \subsection{Main Robocup Dataset with Nikon Camera}
 \label{sec:nikonRobocup}
 
-The Nikon camera was used to capture $60$ images to create $4$ datasets of the \textit{Main Robocup Environment}, each containing $15$ images. The datasets are of the same regions as that detailed in \secref{sec:datasets}. The \textit{Main Robocup Testing Datasets} from \secref{mrdPerformance} have been used in this experiment and will be referred to as the \textit{Nao-only Datasets} as these datasets only contain images captured by the Nao's camera.\\
+The Nikon camera was used to capture $60$ images to create $4$ datasets of the \textit{Main Robocup Environment}, each containing $15$ images. The datasets are of the same regions as that detailed in \secref{sec:datasets}. The \textit{Main Robocup Testing Datasets} from \secref{sec:mrdPerformance} have been used in this experiment and will be referred to as the \textit{Nao-only Datasets} as these datasets only contain images captured by the Nao's camera.\\
 
 Pairs of overlapping and non-overlapping images were generated by combining the images from the \textit{Nao-only Datasets} with the Nikon camera images. These newly formed image datasets will be referred to as the \textit{Nao-Nikon Datasets}. In total, $420$ overlapping image pairs were generated as well as $3024$ non-overlapping image pairs from the \textit{Nao-Nikon Datasets}. An example of an overlapping pair of images is shown in \figref{fig:cameraOverlapRobocup}. Here, the left image is that captured by the Nao and the right image has been captured by the Nikon camera.\\
 
@@ -2956,7 +2967,7 @@ Nao only & 93.150 & 3.249 & 2.516 & 2.614 & 0.026 & 12.824\tabularnewline
 \label{tab:naoNikonLargeHall}
 \end{table}
 
-The interest point matching statistics can be seen in \tabref{tab:nikon_lh_matches_keypoints}. Less valid matches and total matches have been detected for the same reasons as in \secref{sec:nikonRobocup}. There is an expected drop in the $IMS_{best}$ value for the \textit{Nao-Nikon Datasets} as seen in \tabref{tab:ms_nikon_lh} and the $TP_{FP=0}^{max}$ value is also significantly lower than the \textit{Nao-only Datasets}.\\
+The interest point matching statistics can be seen in \figref{fig:nikon_lh_matches_keypoints}. Less valid matches and total matches have been detected for the same reasons as in \secref{sec:nikonRobocup}. There is an expected drop in the $IMS_{best}$ value for the \textit{Nao-Nikon Datasets} as seen in \tabref{tab:ms_nikon_lh} and the $TP_{FP=0}^{max}$ value is also significantly lower than the \textit{Nao-only Datasets}.\\
 
 Based on the above datasets taken from two different environments, it appears that the camera settings and quality have an overall negative effect on the ability of the BRISK0 - U-BRISK algorithm to match overlapping and non-overlapping image pairs.\\
 
@@ -3165,8 +3176,8 @@ Nao and Google Street View Images & 0.36 & 0.39\tabularnewline
 
 
 
-\section{Summary}
-\label{sec:summary}
+%\section{Summary}
+%\label{sec:summary}
 
 \chapter{Conclusion}
 \label{sec:Conclusion}
@@ -3199,8 +3210,8 @@ Due to the weak non-maximal suppression criteria imposed on the BRISK0 - U-BRISK
 
 \begin{figure}
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_valid_invalid_matches.jpg}
-    \caption{Invalid matches that has passed through the matching constraints} 
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/dataset_valid_invalid_matches_photo.jpg}
+    \caption{Invalid matches that have passed through the matching constraints} 
     \label{fig:weak}
 \end{figure}
 
@@ -3208,7 +3219,7 @@ BRISK0 - U-BRISK is rotation variant which may prevent interest points from matc
 
 \begin{figure}
   \centering
-    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/rotationsUBRISK.jpg}
+    \includegraphics[width=1.0\textwidth]{../Drawings/Matching/rotationsUBRISK_photo.jpg}
     \caption{Matches lost due to BRISK0 - U-BRISK being rotation variant} 
     \label{fig:rotationUbrisk}
 \end{figure}
@@ -3238,15 +3249,19 @@ BRISK0 - U-BRISK was analysed further and it was found that varying the illumina
 %Recommendations for future work
 \section{Recommendations for Future Work}
 \label{sec:recommend}
-The following recommendations are suggested for future work. The BRISK0 - U-BRISK algorithm should be implemented on the Nao robot in order to evaluate the robot's subsequent real-time performance.\\
+The \textit{Multi-Image Score}(MIS) currently uses a grid search to find the optimal parameters. It has been shown that a random search can find parameters more efficiently than a grid search and this may enable more optimal parameters to be found at a lower computational cost \cite{Bergstra2012}.\\
 
-BRISK0 - U-BRISK is currently rotation variant and this may cause problems outside of the Robocup environment if the Nao is subject to large rotations. Thus enforcing rotation invariance and optimising the algorithm differently may create more robust matching performance.\\
+BRISK0 - U-BRISK is currently rotation variant and this may cause problems outside of the Robocup environment if the Nao is subject to large rotations. Thus enforcing rotation invariance and optimising the algorithm differently may create more robust matching performance. This includes using a reduced sampling pattern as suggest in \cite{Leutenegger2011}. It may also be feasible to reduce the dimensionality of the bit vector by performing less intensity comparisons. \\
 
-The localisation algorithm should also be implemented on the Nao incorporating BRISK0 - U-BRISK for the purposes of Robocup. In addition, the localisation algorithm is limited to the Robocup domain. This could be extended to a more general domain by calculating the distance to visual landmarks. One possible solution is to utilise a \textit{Markox Random Field} to estimate detailed 3D structure using a single image \cite{Saxena}. It may also be possible to calculate the bearing to the visual landmarks.  
+It may also be possible to utilise the order of the features in the BRISK-based techniques to yield better matching of overlapping image pairs. Previous work has been done using scanlines and 1D panoramas to match features using a dynamic programming algorithm \cite{Birchfield1998, Way1996, Briggs} and it may be possible to extend this algorithm to the 2D case.\\
+
+It may also be useful to explore other types of feature extraction algorithms such as using vector quantisation histograms to represent features. This has been applied using SIFT and is entitled VQ-SIFT \cite{Chen2011}.\\
+
+The localisation algorithm should also be implemented on the Nao robot incorporating BRISK0 - U-BRISK for the purposes of Robocup and this should be tested in real-time. In addition, the localisation algorithm is limited to the Robocup domain. This could be extended to a more general domain by calculating the distance to visual landmarks. One possible solution is to utilise a \textit{Markox Random Field} to estimate detailed 3D structure using a single image \cite{Saxena}. It may also be possible to calculate the bearing to the visual landmarks. \\ 
 
 More extensive analysis needs to be performed on matching Nao images with Google Street View images to determine further improvements that need to be made to the algorithm in order to increase matching accuracy. It would also be interesting to test the other feature extraction algorithms on Google Street View images and compare their respective performance.\\
 
-The BRISK0 and BRISK0 - U-BRISK algorithms can be further optimised to increase their efficiency. This includes using a reduced sampling pattern as suggest in \cite{Leutenegger2011}. It may also be feasible to reduce the dimensionality of the bit vector by performing less intensity comparisons.\\ 
+
 
 \bibliographystyle{witseie}
 \bibliography{bibliography}
@@ -3259,11 +3274,11 @@ The BRISK0 and BRISK0 - U-BRISK algorithms can be further optimised to increase 
 \makeatletter \renewcommand{\thefigure}{A.\@arabic\c@figure} \renewcommand{\thetable}{A.\@arabic\c@table} \renewcommand{\thesection}{A.\@arabic\c@section} \makeatother
 \section*{APPENDIX A}
 
-\section{Edit-Distance Constraint}
-\label{app:editDistance}
-An important observation that has been made is that if the same features are observed in images from two different views, they will still be viewed in the same order in both images. This assumes that either image has not been drastically rotated such that the features appear in a different order. This is a valid assumption in the case of the Robocup as the Nao is not subject to drastic rotations when coming onto the field after serving a penalty ban.\\
-
-\textbf{TO DO}
+%\section{Edit-Distance Constraint}
+%\label{app:editDistance}
+%An important observation that has been made is that if the same features are observed in images from two different views, they will still be viewed in the same order in both images. This assumes that either image has not been drastically rotated such that the features appear in a different order. This is a valid assumption in the case of the Robocup as the Nao is not subject to drastic rotations when coming onto the field after serving a penalty ban.\\
+%
+%\textbf{TO DO}
 %The Edit-Distance algorithm is a useful matching algorithm
 %
 % that imposes two important constraints \cite{Way1996}. The first constraint is that of \textit{Uniqueness}. This means that a feature in the query image can match only a single feature in the stored image. The second constraint is that of \textit{Monotonic Ordering}. This means that if a feature $f_{i_1}$ is matched to a feature $f_{i_2}$, then the next feature $f_{i_1 + 1}$ can only be matched to a feature $f_{i_2 + j}$ where $j \gt 0$. 
