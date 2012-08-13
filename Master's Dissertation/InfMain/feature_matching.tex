@@ -9,7 +9,7 @@ Once the interest points have been detected and the descriptors have been comput
     \label{fig:matchesIntro}
 \end{figure}
 
-The methods used to calculate the distance between interest point descriptors will be detailed. The various constraints imposed to determine whether a match between two interest point is indeed valid will be described below. In addition to this, the various matching techniques utilised to match interest points will also be detailed in the sections to follow.\\
+The methods used to calculate the distance between interest point descriptors will be detailed. The various constraints imposed to determine whether a match between two interest points is indeed valid will be described in \secref{sec:validation}. In addition to this, the various matching techniques utilised to match interest points will also be detailed in \secref{sec:matchingTechniques}.\\
 
 \section{Calculating Distance between Feature Descriptors}
 \label{sec:distance}
@@ -26,7 +26,7 @@ This is a very efficient algorithm and has been effectively performed in BRIEF \
 \label{sec:euclidean}
 In SURF-based approaches,  the Euclidean distance is used as a metric to determine whether or not there is a match between two feature descriptors \citep{Lowe2004}. Given two feature descriptors of length $64$, the Euclidean distance is calculated between descriptors in feature space and results in a value indicating the difference between the two feature descriptors. As in BRISK, it is desired that the Euclidean distance is as small as possible between the descriptors for them to be a match. A match occurs if the nearest neighboring feature descriptor corresponding to an interest point in image $A$ is within a specified euclidean distance from the descriptor of the corresponding matched interest point in image $B$.\\
 
-In addition to this, in order to speed up matching, the sign of the Laplacian, which is the trace of the Hessian matrix is used to determine whether or not each blob response in the respective images are of a similar contrast \citep{Bay2008}. The sign of the Laplacian determines whether the interest point in question is a dark blob on a light background or a light blob on a dark background. This enables interest points of different contrasts to be rejected as matches without having to compute the euclidean distance between the points.\\
+In addition to this, in order to speed up matching, the sign of the Laplacian, which is the trace of the Hessian matrix, is used to determine whether or not each blob response in the respective images are of a similar contrast \citep{Bay2008}. The sign of the Laplacian determines whether the interest point in question is a dark blob on a light background or a light blob on a dark background. This enables interest points of different contrasts to be rejected as matches without having to compute the euclidean distance between the points.\\
 
 \section{Validating Matched Features}
 \label{sec:validation}

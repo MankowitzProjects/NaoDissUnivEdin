@@ -8,26 +8,48 @@ frame in order to find an image match
 
 2. The overall time is not very relevant for the rUNSWift team since they use different image processing techniques on the robot.
 
-3. Do I change BRISK0 to SBRISK
+3. Do I change BRISK0 to SBRISK - DONE
 
 4. Reference IRP where info is reused
 
 5. Find the conversion between my laptop and the robot
 
+6. Re-read the thesis
+
+7. Fix the bibliography
+
+8. Check which camera is being used to capture the images
+
+9. Add Bhuman code to the Appendix
+
+10. Do NOT use nouns when discussing references
+
+11. Center the tables and figures
 
 
+For Paper:
+**********************************************************************************************
+Keywords: field robotics
+Tell a story
+Emphasize that localisation is important for all types of robots. 
+However, many types of robots are constrained for processing power and are therefore cannot run the best algorithm
+since they arent able to feasibly work in real time.
 
-
-
-
-
-
-
-
-
-
-
-
+I can state that I have utilised a method called BRISK0 - U-BRISK in order to enable robots with constrained processing power to
+detect features.
+- Here I will discuss the fact that time was crucial and therefore BRISK became BRISK0 and BRISK became U-BRISK
+- Once this was achieved, the optimal parameters had to be found and this was performed through the development of
+a novel matching function.
+- It is important that valid matches are found using this method and in order to prevent matches from being rejected,
+an angle and distance constraint has been developed in addition to the 2-NN ratio constraint
+- Using this method, it was tested using images captured from the Nao's upper camera. 
+- This was tested in a number of environments and it was found that it achieved good matching performance.
+- This was compared with the 1D SURF method developed by the rUNSWift robocup team and it was foud that my method 
+had better generalisation performance whereas their method was faster
+- This was then tested outside since localisation cannot be constrained to indoor environments and achieved relatively good 
+performance.
+- This implies that it could be used on processing constrained systems for street navigation
+**********************************************************************************************
 
 1. 300 Pixels from the top of the image for the other image processing techniques RB - DONE
 2. An angle of 10 degrees CONS - DONE
