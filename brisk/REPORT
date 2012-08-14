@@ -10,7 +10,7 @@ frame in order to find an image match
 
 3. Do I change BRISK0 to SBRISK - DONE
 
-4. Reference IRP where info is reused
+4. Reference IRP where info is reused - NOT NECESSARY
 
 5. Find the conversion between my laptop and the robot
 
@@ -26,6 +26,7 @@ frame in order to find an image match
 
 11. Center the tables and figures - DONE
 
+12. Find the reference for the tilting angle
 
 For Paper:
 **********************************************************************************************

@@ -1,12 +1,12 @@
 \chapter{Experiments and Results}
 \label{sec:experimentsResults}
-This section aims to determine which feature extraction algorithm exhibits the best  computational performance and matching accuracy. Computational performance involves comparing the algorithms based on the time taken to detect interest points, computing the interest point descriptors and matching the descriptors using the matching techniques mentioned in \secref{sec:matching}. Matching accuracy is defined in this context as the ability of the algorithm to determine whether or not a pair of images \textit{overlap} and hence match one another. The criteria defining a pair of overlapping images is detailed in \secref{sec:datasets}.\\
+This section aims to determine which feature extraction algorithm exhibits the best  computational performance and matching accuracy. Computational performance involves comparing the algorithms based on the time taken to detect interest points, computing the interest point descriptors and matching the descriptors using the matching techniques mentioned in \secref{sec:matchingTechniques}. Matching accuracy is defined in this context as the ability of the algorithm to determine whether or not a pair of images \textit{overlap} and hence match one another. The criteria defining a pair of overlapping images is detailed in \secref{sec:datasets}.\\
 
-All experiments were performed using a laptop with an Intel Core 2 Duo T6400 $2.00$GHz processor. The Nao robot for which these algorithms have been designed uses an ATOM Z530 $1.6$GHz processor \citep{NaoHead}. Thus, the computational times presented in this chapter are faster than the times expected on the Nao. In addition to this, the Nao's camera can process $30$ Frames Per Second (FPS) meaning that the feature extraction algorithm must be able to perform a detection, extraction and matching routine in under $33$ ms.\\
+All experiments were performed using a laptop with an Intel Core 2 Duo T6400 $2.00$GHz processor. The Nao robot for which these algorithms have been designed uses an ATOM Z530 $1.6$GHz processor \citep{NaoHead}. Thus, the computational times presented in this chapter are faster than the times expected on the Nao. In addition to this, the Nao's camera can process $30$ Frames Per Second (FPS) meaning that the feature extraction algorithm must be able to perform a detection, extraction and matching routine in under $33$ ms. This will enable the Nao to process every image which is crucial to obtaining robust, real-time matching performance. \\
 
-The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are BRISK0, BRISK, BRISK0-UBRISK, BRISK0-2D SURF and 1D SURF. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, Radius Matching and RANSAC as described in \secref{sec:matching}. Both 2-Nearest Neighbors and Radius Matching have been implemented on all of the BRISK-based feature extraction algorithms. This includes all algorithms that use BRISK0 or BRISK feature detectors and/or descriptors. 1D SURF utilises RANSAC matching which has been previously implemented by the \textit{rUNSWift} team \citep{Anderson}. This implementation has been used for the experiments in this section.\\ 
+The experiments were conducted on a variety of feature extraction and matching algorithms. The feature extraction algorithms tested and compared in these experiments are BRISK0, BRISK, BRISK0-U-BRISK, BRISK0-SURF2D and 1D SURF. There are three types of matching techniques utilised for these experiments. They are 2-Nearest Neighbors, Radius Matching and RANSAC as described in \secref{sec:matchingTechniques}. Both 2-Nearest Neighbors and Radius Matching have been implemented on all of the BRISK-based feature extraction algorithms. This includes all algorithms that use BRISK0 or BRISK feature detectors and/or descriptors. 1D SURF utilises RANSAC matching which has been previously implemented by the \textit{rUNSWift} team \citep{Anderson}. This implementation has been used for the experiments in this section.\\ 
 
-The algorithms are run in a variety of different environments as will be discussed in \secref{sec:datasets}. The main image datasets are those captured in the \textit{Main Robocup Environment}. Since the immediate focus of this project is on developing a robust feature extraction technique on the Nao robot for the purpose of Robocup, the above-mentioned environment  and its corresponding datasets are most relevant and will therefore be the core focus of the experiments.\\
+%The algorithms are run in a variety of different environments as will be discussed in \secref{sec:datasets}. The main image datasets are those captured in the \textit{Main Robocup Environment}. Since the immediate focus of this project is on developing a robust feature extraction technique on the Nao robot for the purpose of Robocup, the above-mentioned environment  and its corresponding datasets are most relevant and will therefore be the core focus of the experiments.\\
 
 Parameters $p$ in this chapter correspond to the various thresholds required for detecting interest points and determining matches. The parameters used for each method are shown in \tabref{tab:parameters}. The Minimum Interest Point Detection Threshold (MIPDT) is the threshold above which a pixel is detected as an interest point. The Maximum Accepted Hamming Distance (MAHD) is the maximum number of bits that can differ when comparing two feature descriptors, below which the descriptors are to be considered a match. The Maximum Accepted Euclidean Distance (MAED) is the maximum euclidean distance below which two feature descriptors are considered to be a match.\\
 
@@ -41,16 +41,14 @@ BRISK0 - UBRISK & MIPDT & MAHD\tabularnewline
 \label{tab:parameters}
 \end{table}
 
-This chapter will be developed as follows. Initially the optimal parameters for each of the feature extraction algorithms will be calculated using a score function that I developed. Using these parameters, various matching properties will be verified which includes verification of the 2-NN ratio constraint mentioned in \secref{sec:matchingTechniques}. The Image Matching Score (IMS) will be defined and used to determine how well two images match one another. Some potentially useful properties regarding interest points have been identified and will be discussed. Following this, the feature extraction algorithms will then use these optimal parameters in order to match pairs of images on datasets in different environments and the best algorithm to be used on the Nao robot will then be determined.\\   
-
-
+This chapter will be developed as follows. Initially the optimal parameters for each of the feature extraction algorithms will be calculated using a score function that I developed. Using these parameters, various matching properties will be verified which includes verification of the 2-NN ratio constraint mentioned in \secref{sec:matchingTechniques}. The Image Matching Score (IMS) will be defined and used to determine how well two images match one another. Some potentially useful properties regarding interest points have been identified and will be discussed. Following this, the feature extraction algorithms will then use these optimal parameters in order to match pairs of images on datasets in different environments. The best algorithm to be used on the Nao robot will then be determined.\\   
 
 
 \section{The Main Robocup Environment}
 \label{sec:datasets}
-The \textit{Main Robocup Environment} (MRE) has been used extensively in experiments throughout this chapter and the image datasets generated from this environment need to be explained.\\
+The \textit{Main Robocup Environment} has been used extensively in experiments throughout this chapter and the image datasets generated from this environment need to be detailed.\\
 
-Four image datasets are generated in this environment for each experiment. The images in these datasets have been captured using the Nao's upper camera. In addition, the Nao's head is tilted towards the ceiling at the maximum possible pitch angle \textit{REFERENCE}. This ensures that the Nao is able to see features as high above the Robocup football field as possible which allows for the detection of potentially static interest points. The Nao's camera is focused on the regions behind the goalposts. The first set of goalposts will be referred to as the Player's Goal (PG). The second set of goalposts will be referred to as the Opponents Goal (OG) as seen in \figref{fig:datasetSetup}. \\
+Four image datasets are generated in this environment for each experiment. The images in these datasets have been captured using the Nao's upper camera. The Nao's camera is focused on the regions behind the goalposts. The first set of goalposts will be referred to as the Player's Goal (PG). The second set of goalposts will be referred to as the Opponents Goal (OG) as seen in \figref{fig:datasetSetup}. \\
 
 
 \begin{figure}%[ht!]
@@ -93,7 +91,7 @@ Pairs of images taken from the same dataset are referred to as overlapping image
 
 \begin{table}
 \centering
-\caption{Combinations of datasets used to generate overlapping and non-overlapping image pairs in the \textit{MRE}}
+\caption{Combinations of datasets used to generate overlapping and non-overlapping image pairs in the \textit{Main Robocup Environment}}
 \begin{tabular}{|c|c|}
 \hline 
 \textbf{Dataset A} & \textbf{Dataset B}\tabularnewline
@@ -123,7 +121,7 @@ MG RIGHT & OG RIGHT\tabularnewline
 \label{table:overlap}
 \end{table}
 
-The \textit{MRE} has been used as the test environment in \secref{sec:optimalParameters} and \secref{sec:matchingProperties}. Four image datasets of regions behind the Robocup goalposts have been captured specifically for the experiments in these sections and will be referred to as the \textit{Main Robocup Parameter Datasets}. In total, these datasets collectively contain $108$ overlapping images which have been used to generate $1421$ overlapping image pairs. This is achieved by pairing all combinations of images without repetition in each image dataset. A further $108$ non-overlapping images have been used to generate $2808$ non-overlapping image pairs. The combinations of the various datasets and the number of image pairs generated are shown in \tabref{tab:mrpd}. \\
+The \textit{Main Robocup Environment} has been used as the test environment in \secref{sec:optimalParameters}, \secref{sec:matchingProperties} and \secref{sec:matchingStats}. Four image datasets of regions behind the Robocup goalposts have been captured specifically for the experiments in these sections and will be referred to as the \textit{Main Robocup Parameter Datasets}. In total, these datasets collectively contain $108$ overlapping images which have been used to generate $1421$ overlapping image pairs. This is achieved by pairing all combinations of images without repetition in each image dataset. A further $108$ non-overlapping images have been used to generate $2808$ non-overlapping image pairs. The combinations of the various datasets and the number of image pairs generated are shown in \tabref{tab:mrpd}. \\
 
 \begin{table}
 \centering
@@ -164,27 +162,23 @@ MG RIGHT & OG RIGHT & 28 & 23 & 616\tabularnewline
 %Throughout this chapter, the term \textit{Image Match} refers to whether or not two images overlap one another. A matching of individual interest point descriptors in corresponding images will be referred to as a \textit{Match}.\\
 \section{Calculating the Optimal Feature Extraction Parameters}
 \label{sec:optimalParameters}
-This section describes the calculation of the optimal parameters for each of the feature extraction algorithms. As mentioned previously, these parameters are calculated in the \textit{MRE} and utilise the \textit{Main Robocup Parameter Datasets}. The parameters are the MIPDT, MAHD and MAED as discussed in \secref{sec:matching}. The 1D SURF implementation does not undergo this procedure since the recommended parameter settings as defined in \citep{Anderson} have been used to perform the subsequent experiments.\\
-
-The overlapping image pairs from the \textit{Main Robocup Parameter Datasets} are used to determine the optimal parameters for each of the feature extraction algorithms. Once the optimal parameters have been found, each feature extraction algorithm is initialised with its respective optimal parameter settings. Using these settings, the image matching performance for each algorithm is calculated on a variety of different image datasets in three different environments. The best performing algorithm can then be determined.\\
-
+This section describes the calculation of the optimal parameters for each of the feature extraction algorithms. As mentioned previously, these parameters are calculated in the \textit{Main Robocup Environment} and utilise the \textit{Main Robocup Parameter Datasets}. The parameters are the MIPDT, MAHD and MAED as shown in \tabref{tab:parameters}. The 1D SURF implementation does not undergo this procedure since the recommended parameter settings by \citet{Anderson} have been used to perform the subsequent experiments.\\
 
 %Describes how to find the optimal hamming distance, euclidean distance, and response thresholds for each method
-The procedure used to determine the optimal parameters for each of the feature extraction algorithms will now be detailed. The four image datasets, \textit{MG LEFT}, \textit{MG RIGHT}, \textit{OG LEFT} and \textit{OG RIGHT}, containing in total $108$ overlapping images, were used to determine the optimal parameter values. All possible combinations of overlapping image pairs were matched in each of the four datasets, without repetition, for various parameter values which will be mentioned below. 
+The procedure used to determine the optimal parameters for each of the feature extraction algorithms will now be detailed. The four image datasets, \textit{MG LEFT}, \textit{MG RIGHT}, \textit{OG LEFT} and \textit{OG RIGHT}, containing in total $108$ overlapping images, were used to determine the optimal parameter values. All possible combinations of overlapping image pairs were matched in each of the four datasets, without repetition, for various parameter values which will be mentioned below. \\
 
-For each image pair, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. The SIS represents how well a pair of images, $i_1, i_2$, match one another in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of parameters, $p$. For example, if the feature extraction algorithm used is BRISK0, then the $SIS_{(i_1, i_2), d}^{BRISK0, \textbf{p}}$ presents the SIS score for the pair of images $i_1, i_2$ for specific MIPDT and MAHD values, $p$, in a particular dataset $d$. \\
+For each image pair, the Single Image Score (SIS) needs to be computed. This equation is shown in \eqnref{eqn:optimalParameters}. The SIS represents how well a pair of images, $i_1, i_2$, match one another in a particular dataset $d$, for a particular Feature Extraction algorithm $FE$, using a certain set of parameters, \textbf{p}. For example, if the feature extraction algorithm used is BRISK0, then the $SIS_{(i_1, i_2), d}^{BRISK0, \textbf{p}}$ presents the SIS score for the pair of images $i_1, i_2$ for specific MIPDT and MAHD values \textbf{p}, in a particular dataset $d$. \\
 
-\begin{eqnarray}
-SIS_{(i_1, i_2), d}^{FE, \textbf{p}} &=& \alpha f(t_{i_1,i_2}) + (1-\alpha) g(\textit{NVM}_{i_1,i_2})\\ 
-\quad 0 \leq \alpha \leq 1 
+\begin{equation}
+SIS_{(i_1, i_2), d}^{FE, \textbf{p}} = \alpha f(t_{i_1,i_2}) + (1-\alpha) g(\textit{NVM}_{i_1,i_2}) \quad 0 \leq \alpha \leq 1
 \label{eqn:optimalParameters}
-\end{eqnarray}
+\end{equation}
 
-This SIS score is composed of two normalised scoring functions, namely $f(t_{i_1, i_2})$ and $g(NVM_{i_1, i_2})$ shown in \eqnref{eqn:time} and \eqnref{eqn:nvm} respectively. $f(t_{i_1, i_2})$ represents the timing score for a pair of images $i_1, i_2$ for a particular dataset based on the overall time, $t$, taken to perform the image processing, detection, extraction and matching routines respectively between these images. The unit of $t$ is milliseconds and the value of $t$ is normalised to a scale between $0$ and $1$. This is achieved by multiplying $t$ by $0.9$ and dividing this result by $t_{max}$ where $t_{max}$ is the largest time tabulated for the current dataset $d$ in milliseconds. A value of $0.1$ is then added to this ratio in order to  prevent $log(0) = \infty$ which would largely bias the results as well as ensuring that the value $(\frac{0.9 t}{t_{max}} + 0.1)$ is normalised between $0$ and $1$. The function $f(t_{i_1, i_2})$ will ensure that, for large $t$, meaning that the algorithm takes a large amount of time to perform the routine, the timing score will be low, whereas for small $t$, the timing score will be high. \\
+This SIS score is composed of two normalised scoring functions, namely $f(t_{i_1, i_2})$ and $g(NVM_{i_1, i_2})$ shown in \eqnref{eqn:time} and \eqnref{eqn:nvm} respectively. $f(t_{i_1, i_2})$ represents the timing score for a pair of images $i_1, i_2$ for a particular dataset based on the overall time $t$, taken to perform the image processing, detection, extraction and matching routines respectively between these images. The unit of $t$ is milliseconds and the value of $t$ is normalised to a scale between $0$ and $1$. This is achieved by multiplying $t$ by $0.9$ and dividing this result by $t_{max}$ where $t_{max}$ is the largest time tabulated for the current dataset $d$ in milliseconds. A value of $0.1$ is then added to this ratio in order to  prevent $log(0) = \infty$ which would largely bias the results as well as ensuring that the value $(\frac{0.9 t}{t_{max}} + 0.1)$ is normalised between $0$ and $1$. The function $f(t_{i_1, i_2})$ will ensure that, for large $t$, meaning that the algorithm takes a large amount of time to perform the routine, the timing score will be low, whereas for small $t$ the timing score will be high. \\
 
-The second scoring function used to calculate the SIS score is $g(NVM_{i_1, i_2})$. This scoring function rewards a pair of images $i_1, i_2$ if they contain a large amount of valid matches. This is intuitive as the more valid matches there are between two images, the more certain it is that the pair of images overlap one another. The variable $NVM$ represents the Number of Valid Matches (NVM) between two images. This function is normalised between $0$ and  $0.9$ by dividing this variable by the total amount of matches,$M_{total}$, generated from the pair of images $i_1, i_2$. The reason $M_{total}$ has been chosen as the normalisation factor is because it prevents a biased score. A biased score can occur in the following scenario. Assume that a pair of images $a_1, a_2$ generate a large amount of matches, but only a small proportion of these matches are valid. This is in contrast to another pair of images $b_1, b_2$ from the same dataset that generated a small set of matches, but a high proportion of valid matches. If $M_{total}$ was denoted as the maximum number of matches in the dataset, then images $b_1, b_2$ would have a smaller score than that of $a_1, a_2$ even though $b_1, b_2$ has a higher proportion of valid matches. Thus $M_{total}$ has been chosen to be the total number of matches between a pair of images $i_1, i_2$. This relative value largely prevents the biased scores. The value $\epsilon$ has been added to ensure that no infinite scores are computed. $\epsilon$ can take any value greater than $0$ and has been chosen to have a value of $0.1$, based on observation, for these experiments.\\ 
+The second scoring function used to calculate the SIS score is $g(NVM_{i_1, i_2})$. This scoring function rewards a pair of images $i_1, i_2$ if they contain a large amount of valid interest point matches. This is intuitive as the more valid matches there are between two images, the more certain it is that the pair of images overlap one another. The variable $NVM$ represents the Number of Valid Matches (NVM) between two images. This function is normalised between $0$ and  $1$ by dividing this variable by the total amount of matches, $M_{total}$, generated from the pair of images $i_1, i_2$. The reason $M_{total}$ has been chosen as the normalisation factor is because it prevents a biased score. A biased score can occur in the following scenario. Assume that a pair of images $a_1, a_2$ generate a large amount of matches, but only a small proportion of these matches are valid. This is in contrast to another pair of images $b_1, b_2$ from the same dataset that generated a small set of matches, but a high proportion of valid matches. If $M_{total}$ was denoted as the maximum number of matches in the dataset, then images $b_1, b_2$ would have a smaller score than that of $a_1, a_2$ even though $b_1, b_2$ has a higher proportion of valid matches. Thus $M_{total}$ has been chosen to be the total number of matches between a pair of images $i_1, i_2$. This relative value largely prevents the biased scores. The value $\epsilon$ has been added to ensure that no infinite scores are computed. $\epsilon$ can take any value greater than $0$ and has been chosen to have a value of $0.1$, based on observation, for these experiments.\\ 
 
-The parameter $\alpha$ is a weight that is used to bias the effects of the two scoring functions. Thus it can be used as a control to determine whether time or the number of valid matches should have a larger influence on the SIS. $\alpha$ is defined between $0$ and $1$. For these experiments, $\alpha$ was set to $0.6$. This value has been chosen as a slight bias towards faster algorithms is desired. This is because computational performance is a crucial aspect of the algorithm if it is to be implemented on the Nao robot.\\
+The parameter $\alpha$ is a weight that is used to bias the effects of the two scoring functions. Thus it can be used as a control to determine whether time or the number of valid matches should have a larger influence on the SIS. $\alpha$ is defined between $0$ and $1$. For these experiments, $\alpha$ was set to $0.6$. This value has been chosen as a slight bias towards more computationally efficient algorithms is desired. This is because computational performance is a crucial aspect of the algorithm if it is to be implemented on the Nao robot.\\
 
 \begin{equation}
 f(t_{i_1, i_2}) = \mid log_{10}(\frac{0.9 t_{i_1, i_2}}{t_{max}^{FE}} + 0.1) \mid \quad f(t_{i_1, i_2})\in [0, 1]
@@ -196,35 +190,37 @@ g(NVM_{i_1, i_2}) = \frac{NVM_{i_1, i_2}}{M_{total, (i_1, i_2)} + \epsilon} \qua
 \label{eqn:nvm}
 \end{equation}
 
-Once the SIS score has been calculated for each pair of images $i_1, i_2$, these scores are then summed together for a particular set of parameter values $p$ using a specific feature extraction algorithm $FE$ in a particular dataset $d$. The resulting score is called the Multi-Image Score (MIS) and is shown in \eqnref{eqn:mims}.\\
+Once the SIS score has been calculated for each pair of images $i_1, i_2$, these scores are then summed together for a particular set of parameter values \textbf{p} using a specific feature extraction algorithm $FE$ in a particular dataset $d$. The resulting score is called the Multi-Image Score (MIS) and is shown in \eqnref{eqn:mims}.\\
+
+
 
 \begin{equation}
-\tau = \frac{\sum_{i_1, i_2=1 , i_1 \neq i_2}^{N} \textit{SIS}_{(i_1, i_2),d}^{FE,p}}{N}
-\label{eqn:tau}
-\end{equation}
-
-\begin{equation}
-MIS_{p, d}^{FE} = \beta \tau + (1-\beta) h(\textit{IZM}) \quad 0 \leq \beta \leq 1
+MIS_{\textbf{p}, d}^{FE} = \beta \tau + (1-\beta) h(\textit{IZM}) \quad 0 \leq \beta \leq 1
 \label{eqn:mims}
 \end{equation}
 
-The first term of the MIS score is the computation of the mean of all SIS scores for a particular set of parameter values $p$, using a specific feature extraction algorithm $FE$, in a particular dataset $d$. This value is referred to as $\tau$ and is shown in \eqnref{eqn:tau}.\\
+\begin{equation}
+\tau = \frac{\sum_{i_1, i_2=1 , i_1 \neq i_2}^{N} \textit{SIS}_{(i_1, i_2),d}^{FE,\textbf{p}}}{N}
+\label{eqn:tau}
+\end{equation}
 
-The second term is a scoring function that accounts for the number of Image Zero Matches (\textit{IZM}) for a particular set of parameter values. A \textit{IZM} is defined as a pair of images containing no valid matches. The function $h(IZM)$, defined in \eqnref{eqn:izm}, determines the number of \textit{IZMs} in a particular dataset $d$, for a particular set of parameter values $p$ using feature extraction algorithm $FE$. This equation has the same form as equation \eqnref{eqn:time} and therefore behaves in the same way. However, in this case the denominator $\textit{IZM}_{max}^{FE}$ represents the maximum number of IZMs found for a particular parameter setting in particular dataset using a particular feature extraction algorithm. This function therefore penalises parameter settings that result in a large number of \textit{IZM}s since \textit{IZM}s should not be present in a dataset of overlapping images. \\
+The first term of the MIS score is the computation of the mean of all SIS scores for a particular set of parameter values \textbf{p}, using a specific feature extraction algorithm $FE$, in a particular dataset $d$. This value is referred to as $\tau$ and is shown in \eqnref{eqn:tau}.\\
+
+The second term is a scoring function that accounts for the number of Image Zero Matches (\textit{IZM}) for a particular set of parameter values. An \textit{IZM} is defined as a pair of images containing no valid interest point matches. The function $h(IZM)$, defined in \eqnref{eqn:izm}, determines the number of \textit{IZMs} in a particular dataset $d$, for a particular set of parameter values \textbf{p} using feature extraction algorithm $FE$. This equation has the same form as equation \eqnref{eqn:time} and therefore behaves in the same way. However, in this case the denominator $\textit{IZM}_{max}^{FE}$ represents the maximum number of IZMs found for a particular parameter setting in a particular dataset using a particular feature extraction algorithm. This function therefore penalises parameter settings that result in a large number of \textit{IZM}s since \textit{IZM}s should not be present in a dataset of overlapping images. \\
 
 \begin{equation}
-h(\textit{IZM})_{p, d}^{FE} = \mid log_{10}(\frac{0.9\textit{IZM}_{p}^{FE}}{\textit{IZM}_{max}^{FE}} + 0.1) \mid \quad h(\textit{IZM}_{p}^{FE})\in [0, 1]
+h(\textit{IZM})_{\textbf{p}, d}^{FE} = \mid log_{10}(\frac{0.9\textit{IZM}_{\textbf{p}}^{FE}}{\textit{IZM}_{max}^{FE}} + 0.1) \mid \quad h(\textit{IZM}_{p}^{FE})\in [0, 1]
 \label{eqn:izm}
 \end{equation}
 
-The MIS score contains a weighting parameter $\beta$ that can again be used to control the influence of each term in the function. $\beta$, like $\alpha$, is again between $0$ and $1$. $\beta$ has been set to a value of $0.4$. This creates a slight bias towards feature extraction algorithms that have a small number of IZMs. \\
+The MIS score contains a weighting parameter $\beta$ that can again be used to control the influence of each term in the function. $\beta$, like $\alpha$, is again between $0$ and $1$. $\beta$ has been set to a value of $0.6$. This creates a slight bias towards feature extraction algorithms that are computationally efficient and have many valid interest point matches. \\
 
-\eqnref{eqn:mims} therefore provides an overall score of how well image pairs are matched for a specific setting of parameter values $p$ in dataset $d$ using feature extraction algorithm $FE$. \\
+\eqnref{eqn:mims} therefore provides an overall score of how well image pairs are matched for a specific setting of parameter values \textbf{p} in dataset $d$ using feature extraction algorithm $FE$. \\
 
-The \textit{Main Robocup Parameter Datasets} consist of four image datasets and thus  optimal parameter values are generated for each specific dataset. In order to determine the best overall set of parameters for each feature extraction algorithm, $FE$, over all datasets, two methods were utilised. The first involved finding the maximum $\textit{MIS}_{(p, d)}^{FE}$ score for each dataset, $d$, for a particular feature extraction algorithm $FE$, as well as the corresponding parameter values, $p$, that generated this \textit{MIS} score. Since there are four datasets, four sets of parameters are generated. These parameters are then averaged as shown in \eqnref{eqn:average}, and the resulting parameter values are set as the optimal parameters, $p^*$ for the feature extraction algorithm. Here, $d_i$ represents the $i^{th}$ dataset.\\
+The \textit{Main Robocup Parameter Datasets} consist of four image datasets and thus  optimal parameter values are generated for each specific dataset. In order to determine the best overall set of parameters for each feature extraction algorithm $FE$, over all datasets, two methods were utilised. The first involved finding the maximum $\textit{MIS}_{(\textbf{p}, d)}^{FE}$ score for each dataset $d$, for a particular feature extraction algorithm $FE$, as well as the corresponding parameter values \textbf{p} that generated this \textit{MIS} score. Since there are four datasets, four sets of parameters are generated. These parameters are then averaged as shown in \eqnref{eqn:average}, and the resulting parameter values are set as the optimal parameters, $\textbf{p}^*$ for the feature extraction algorithm. Here, $d_i$ represents the $i^{th}$ dataset.\\
 
 \begin{equation}
-p^* = mean( max(p_{d_1}), max(p_{d_2}), max(p_{d_3}) ...) \quad d = 1,2...m
+\textbf{p}^* = mean( max(p_{d_1}), max(p_{d_2}), max(p_{d_3}) ...) \quad d = 1,2...m
 \label{eqn:average}
 \end{equation}
 
@@ -240,23 +236,23 @@ Graphs showing the parameters for the CPS settings are presented in \figref{fig:
 \begin{figure}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SBRISK_KNN.jpg}
-\caption{The optimal parameters for BRISK0 with 2-NN}
+\caption{The optimal parameters for BRISK0 with 2-NN Matching}
 \label{fig:BRISK0knnOptimal}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SBRISK_hamming.jpg}
-\caption{The optimal parameters for BRISK0 with Hamming Distance}
+\caption{The optimal parameters for BRISK0 with Radius Matching}
 \label{fig:BRISK0hammingOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_BRISK4_BRISK4_KNN.jpg}
-\caption{The optimal parameters for BRISK with 2-NN Distance}
+\caption{The optimal parameters for BRISK with 2-NN Matching}
 \label{fig:BRISKknnOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_BRISK4_BRISK4_Hamming.jpg}
-\caption{The optimal parameters for BRISK with Hamming Distance}
+\caption{The optimal parameters for BRISK with Radius Matching}
 \label{fig:BRISKhammingOptimal}
 \end{minipage}
 \end{figure}
@@ -264,23 +260,23 @@ Graphs showing the parameters for the CPS settings are presented in \figref{fig:
 \begin{figure}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SURF2D_KNN.jpg}
-\caption{The optimal parameters for BRISK0 SURF2D with 2-NN}
+\caption{The optimal parameters for BRISK0 SURF2D with 2-NN Matching}
 \label{fig:BRISK0surfknnOptimal}
 \end{minipage}
 \hspace{0.5cm}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_SURF2D_Hamming.jpg}
-\caption{The optimal parameters for BRISK0 SURF2D with Hamming Distance}
+\caption{The optimal parameters for BRISK0 SURF2D with Radius Matching}
 \label{fig:BRISK0surfHammingOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_UBRISK_KNN.jpg}
-\caption{The optimal parameters for BRISK0 - U-BRISK with 2-NN Distance}
+\caption{The optimal parameters for BRISK0 - U-BRISK with 2-NN Matching}
 \label{fig:BRISK0UBRISKknnOptimal}
 \end{minipage}
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/OptimalParameters_SBRISK_UBRISK_Hamming.jpg}
-\caption{The optimal parameters for BRISK0 - U-BRISK with Hamming Distance}
+\caption{The optimal parameters for BRISK0 - U-BRISK with Radius Matching}
 \label{fig:BRISK0UBRISKHammingOptimal}
 \end{minipage}
 \end{figure}
@@ -339,9 +335,9 @@ BRISK0 & UBRISK & Radius & 0.6 & 0.4 & 75 & 121.25 & 75 & 130\tabularnewline
 
 \subsection{2-NN Matching Constraint}
 \label{sec:knnMatchingConstraint}
-In order to verify the 2-NN ratio constraint mentioned in \secref{sec:2nnMatching} and subsequently determine the optimum threshold for accepting valid matches, a number of experiments were performed using the four BRISK-based feature extraction techniques; namely BRISK0, BRISK, UBRISK and BRISK0-SURF2D. 1D SURF is not utilised since it does not use the 2-NN ratio constraint for matching.\\
+In order to verify the 2-NN ratio constraint mentioned in \secref{sec:2nnMatching} and subsequently determine the optimum threshold for accepting valid interest point matches, a number of experiments were performed using the four BRISK-based feature extraction algorithms; namely BRISK0, BRISK, U-BRISK and BRISK0-SURF2D. 1D SURF is not utilised since it does not use the 2-NN ratio constraint for matching.\\
 
-In order to generate invalid matches, images with no overlap were compared, and any matches found during the comparison were flagged as invalid matches. This was performed on $2808$ non-overlapping image pairs from the \textit{Main Robocup Parameters Datasets}. To generate the valid matches, $108$ identical images from these datasets were compared and all matches found between these images were flagged as valid matches. An example of valid matches for two identical images are shown in \figref{fig:validKnn}.\\
+In order to generate invalid interest point matches, images with no overlap were compared, and any matches found during the comparison were flagged as invalid matches. This was performed on $2808$ non-overlapping image pairs from the \textit{Main Robocup Parameters Datasets}. To generate the valid matches, $108$ identical images from these datasets were compared and all matches found between these images were flagged as valid matches. An example of valid matches for two identical images are shown in \figref{fig:validKnn}.\\
 
  \begin{figure}%[ht!]
   \centering
@@ -350,14 +346,14 @@ In order to generate invalid matches, images with no overlap were compared, and 
     \label{fig:validKnn}
  \end{figure}
 
-For both overlapping and non-overlapping images, 2-NN matching was performed generating two matches for every interest point. The distances in feature space of the first and second nearest neighbors from each interest point is then recorded. The ratio of these distances is then computed for both valid and invalid matches and the respective mean ratios are subsequently generated. The results are shown in \tabref{tab:knnCriterion} for each of the four methods. As can be seen in the table, invalid matches have a mean ratio which is over $0.9$. Valid matches have a ratio of zero for BRISK-based descriptors and $0.0004$ for the SURF2D descriptor. A ratio of zero for the BRISK-based descriptors simply means that the hamming distance between the interest point and its first nearest neighbor in a corresponding image is $0$. This is possible in identical images as shown in \figref{fig:validKnn}.\\ 
+For both overlapping and non-overlapping images, 2-NN matching was performed generating two matches for every interest point. The distances in feature space of the first and second nearest neighbors from each interest point is then recorded. The ratio of these distances is then computed for both valid and invalid matches and the respective mean ratios are subsequently calculated. The results are shown in \tabref{tab:knnCriterion} for each of the four methods. As can be seen in the table, invalid matches have a mean ratio which is over $0.9$. Valid matches have a ratio of zero for BRISK-based descriptors and $0.0004$ for the SURF2D descriptor. A ratio of zero for the BRISK-based descriptors simply means that the hamming distance between the interest point and its first nearest neighbor in a corresponding image is $0$. This is possible in identical images as shown in \figref{fig:validKnn}.\\ 
 
 This result illustrates a significant difference between the first and second nearest neighbors for valid and invalid matches. Based on this data, all matches whose 2-NN ratio is below $0.7$ are considered valid matches whereas all matches above $0.7$ are considered to be invalid matches. This value has been chosen based on the standard deviations shown in the table in order to ensure that the majority of 2-NN invalid matches are rejected. Graphs of the 2-NN ratio for both the BRISK0 - U-BRISK method and BRISK0 method are shown in \figref{fig:b0ubknnratio} and \figref{fig:b0knnratio} respectively. \\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/KNNRatio_SBRISK_UBRISK_20_60.jpg}
-\caption{The 2-NN ratio for non-overlapping and overlapping images respectively using the BRISK0 - UBRISK method}
+\caption{The 2-NN ratio for non-overlapping and overlapping images respectively using the BRISK0 - U-BRISK method}
 \label{fig:b0ubknnratio}
 \end{minipage}
 \hspace{0.5cm}
@@ -376,8 +372,8 @@ In addition to this, the mean distance in feature space between the first and se
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline 
-\textbf{Method} & \textbf{Match Type} & \textbf{Mean KNN} & \textbf{Std } & \textbf{Mean Distance } & \textbf{Std }\tabularnewline
- &  & \textbf{ Ratio} & \textbf{Deviation} & \textbf{between KNN neighbors} & \textbf{Deviation}\tabularnewline
+\textbf{Method} & \textbf{Match Type} & \textbf{Mean 2-NN} & \textbf{Std } & \textbf{Mean Distance } & \textbf{Std }\tabularnewline
+ &  & \textbf{ Ratio} & \textbf{Deviation} & \textbf{between 2-NN neighbors} & \textbf{Deviation}\tabularnewline
 \hline 
 \hline 
 \textbf{BRISK0} & Invalid Matches & 0.94 & 0.06 & 7.45 & 7.58\tabularnewline
@@ -402,7 +398,7 @@ In addition to this, the mean distance in feature space between the first and se
 
 \subsection{Matching Score}
 \label{sec:matchingScore}
-As mentioned in \secref{sec:matching}, in the case of 2D SURF, interest point pairs can be matched based on the euclidean distance in feature space between interest point descriptors. Similarly, in the case of BRISK, interest points can be matched based on the hamming distance in feature space between the descriptors. In both cases, taking the inverse of this distance can produce a Matching Score (MS) as shown in \eqnref{eqn:inverseDistance}. This score has been utilised previously in \citep{AndersonTechnical, Briggs}. Here, $ip_1, ip_2$ represents the pair of interest points being compared and $D$ is the hamming/euclidean distance in feature space between the interest points' descriptors. The smaller the distance between descriptors, the more similar the interest points are, resulting in a high matching score and vice versa. In order to determine the Image Matching Score (IMS) between a pair of images, all of the individual MS values are summed together for each of the matched interest points as seen in \eqnref{eqn:ims}. Here, $i_1, i_2$ represent the image pair. \\
+As mentioned in \secref{sec:matching}, in the case of 2D SURF, interest point pairs can be matched based on the euclidean distance in feature space between interest point descriptors. Similarly, in the case of BRISK, interest points can be matched based on the hamming distance between the descriptors. In both cases, taking the inverse of this distance can produce a Matching Score (MS) as shown in \eqnref{eqn:inverseDistance} \citep{AndersonTechnical, Briggs}. Here, $ip_1, ip_2$ represents the pair of interest points being compared and $D$ is the hamming/euclidean distance in feature space between the interest points' descriptors. The smaller the distance between descriptors, the more similar the interest points are, resulting in a high matching score and vice versa. In order to determine the Image Matching Score (IMS) between a pair of images, all of the individual MS values are summed together for each of the matched interest points as seen in \eqnref{eqn:ims}. Here, $i_1, i_2$ represent the image pair. \\
 
 \begin{equation}
 MS_{ip1, ip2} = \frac{1}{D_{ip1, ip2}}
@@ -414,41 +410,41 @@ IMS_{i1, i2} = \sum_{ip1, ip2} MS_{ip1, ip2}
 \label{eqn:ims}
 \end{equation}
 
-In order to determine whether or not this score is a good metric for classifying whether images match or not, an experiment was performed. The experiment involves utilising the images from the \textit{Main Robocup Parameter Datasets} to compute the IMS for pairs of overlapping images and pairs of non-overlapping images respectively. It was expected that the IMS for the overlapping images would be larger than that of the non-overlapping images. The feature extraction algorithms utilised for this experiment include BRISK0, BRISK, BRISK0-SURF2D and BRISK0- UBRISK. Both 2-NN and Radius Matching techniques were used to calculate separate IMS values for each feature extraction algorithm.\\
+In order to determine whether or not this score is a good metric for classifying whether images match or not, an experiment was performed. The experiment involves utilising the images from the \textit{Main Robocup Parameter Datasets} to compute the IMS for pairs of overlapping images and pairs of non-overlapping images respectively. It was expected that the IMS for the overlapping images would be larger than that of the non-overlapping images. The feature extraction algorithms utilised for this experiment include BRISK0, BRISK, BRISK0-SURF2D and BRISK0 - U-BRISK. Both 2-NN and Radius Matching techniques were used to calculate separate IMS values for each feature extraction algorithm.\\
 
-The mean IMS for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, the IMS values for overlapping images are at least an order of magnitude larger than the IMS for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a match has occurred between a pair of images. This score is one of the criteria that has been used to determine the overall performance of each of the feature extraction algorithms in the sections to follow.\\
+The mean IMS for $1421$ overlapping images and $2808$ non-overlapping images are shown in \tabref{tab:matchingScoreCompare}. As can be seen in the table, BRISK-based IMS values for overlapping images are at least an order of magnitude larger than the corresponding IMS values for non-overlapping images. This indicates that \eqnref{eqn:ims} can be utilised as a means to classify whether or not a pair of images overlap one another. This score is one of the criteria that has been used to determine the overall performance of each of the feature extraction algorithms in the sections to follow.\\
 
 \begin{table}
 \centering
-\caption{The matching scores for each of the feature extraction algorithms. This is for overlapping and non-overlapping images respectively for the Main Robocup Datasets}
+\caption{The matching scores for each of the feature extraction algorithms. This is for overlapping and non-overlapping images respectively for the Main Robocup Parameter Datasets}
 \begin{tabular}{|c|c|c|}
 \hline 
 \textbf{Method} & \textbf{Overlapping Score} & \textbf{Non-overlapping Score}\tabularnewline
 \hline 
 \hline 
- & 2-NN & \tabularnewline
+ & \multicolumn{2}{c|}{\textbf{2-NN}}\tabularnewline
 \hline 
-\textbf{BRISK0} & 0.286 & 0.003\tabularnewline
+BRISK0 & 0.213 & 0.002\tabularnewline
 \hline 
-\textbf{BRISK4} & 0.222 & 0.004\tabularnewline
+BRISK & 0.167 & 0.002\tabularnewline
 \hline 
-\textbf{BRISK0- SURF2D} & 77.500 & 3.259\tabularnewline
+BRISK0- SURF2D & 66.620 & 3.520\tabularnewline
 \hline 
-\textbf{UBRISK} & 0.232 & 0.002\tabularnewline
+UBRISK & 0.177 & 0.001\tabularnewline
 \hline 
-\textbf{1D SURF} & 99.756 & 31.537\tabularnewline
+1D SURF & 99.756 & 31.537\tabularnewline
 \hline 
- & \textbf{Radius Matching} & \tabularnewline
+ & \multicolumn{2}{c|}{\textbf{Radius Matching}}\tabularnewline
 \hline 
-\textbf{BRISK0} & 0.226 & 0.020\tabularnewline
+BRISK0 & 0.220 & 0.020\tabularnewline
 \hline 
-\textbf{BRISK4} & 0.171 & 0.006\tabularnewline
+BRISK & 0.210 & 0.010\tabularnewline
 \hline 
-\textbf{BRISK0- SURF2D} & 47.783 & 1.612\tabularnewline
+BRISK0- SURF2D & 50.160 & 3.150\tabularnewline
 \hline 
-\textbf{UBRISK} & 0.209 & 0.010\tabularnewline
+UBRISK & 0.200 & 0.010\tabularnewline
 \hline 
-\textbf{1D SURF} & 99.756 & 31.537\tabularnewline
+1D SURF & 99.756 & 31.537\tabularnewline
 \hline 
 \end{tabular}
 \label{tab:matchingScoreCompare}
@@ -484,7 +480,7 @@ In addition to this, BRISK0 and BRISK exhibit a large difference in interest poi
 
 Finally, difference in detected scales $\bar{dS}$ has been found to be much smaller for valid matches than for invalid matches. As mentioned previously, this statistic is only valid for BRISK-based detectors with more than one octave. BRISK0 is therefore not included among these detectors.\\
 
-Therefore, it may be possible to utilise these properties in order to further detect and remove invalid matches in images. This is a recommendation for further work on this topic.\\
+Therefore, it may be possible to utilise these properties in order to further detect and remove invalid matches in images. Further experiments need to be performed to draw more concrete conclusions.\\
 
 %The keypoints in image A were subtracted from the keypoints in image B.
 
@@ -536,7 +532,7 @@ Therefore, it may be possible to utilise these properties in order to further de
 
 \section{Interest Point and Matching Statistics}
 \label{sec:matchingStats}
-In total, three environments have been used for comparing the various feature extraction algorithms to determine the best algorithm according to the criteria defined in \secref{sec:optimalParameters}. These include the Main Robocup Environment, the Office Environment and the Large Hall Environment. Matching statistics have been generated for each of these environments and compared for each of the feature extraction algorithms. The matching statistics have been computed for the 2-NN, Radius Matching and RANSAC matching techniques respectively. It should be noted that 1D SURF uses RANSAC and does not use 2-NN or Radius Matching. However, 1D SURF has been included as a means of comparison with the 2-NN and Radius Matching techniques. The mean number of interest points for 2-NN and Radius Matching in each of the environments is shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius} respectively. The total number of matches for these techniques are presented in \figref{fig:overall_tnm} and \figref{fig:overall_tnm_radius}. Finally, the total number of valid matches are shown in \figref{fig:overall_nvm} and \figref{fig:overall_nvm_radius} respectively. These statistics will be referred to for the remainder of this section when discussing the various feature extraction algorithms and analysing their performance. As mentioned previously these statistics have been generated using the MPS values.\\
+In total, three environments have been used for comparing the various feature extraction algorithms to determine the best algorithm according to the criteria defined in \secref{sec:optimalParameters}. These include the Main Robocup Environment, the Office Environment and the Large Hall Environment. Matching statistics have been generated for each of these environments and compared for each of the feature extraction algorithms. The matching statistics have been computed for the 2-NN, Radius Matching and RANSAC matching techniques respectively. It should be noted that 1D SURF uses RANSAC and does not use 2-NN or Radius Matching. However, 1D SURF has been included as a means of comparison with the 2-NN and Radius Matching techniques. The mean number of interest points for 2-NN, Radius Matching and RANSAC in each of the environments is shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. The total number of matches for these techniques are presented in \figref{fig:overall_tnm} and \figref{fig:overall_tnm_radius}. Finally, the total number of valid matches are shown in \figref{fig:overall_nvm} and \figref{fig:overall_nvm_radius}. These statistics will be referred to for the remainder of this section when discussing the various feature extraction algorithms and analysing their performance. As mentioned previously these statistics have been generated using the MPS values. The CPS statistics can be found in Appendix A, \secref{app:cps}.\\\\
 
  \begin{figure}%[ht!]
   \centering
@@ -582,12 +578,12 @@ In total, three environments have been used for comparing the various feature ex
 
 \section{Main Robocup Environment}
 \label{sec:mrdPerformance}
-A set of optimal parameters were previously calculated in \secref{sec:optimalParameters}. Using these parameters, each of the feature extraction algorithms have been tested in different environments in order to determine which algorithm produces the best overall performance. The first environment is the \textit{MRE}. The \textit{Main Robocup Parameter Datasets} that were used to find the optimal parameters should not be used to test the performance of the feature extraction algorithms. This would risk overfitting to the data since you would be testing the performance of the algorithms on the same data used to find the optimal parameters. Thus, a new set of datasets have been generated in the \textit{MRE}. These datasets are referred to as the \textit{Main Robocup Testing Datasets}. The datasets have the same structure as those used to calculate the optimal parameters. However, each dataset now contains $30$ images, producing in total $120$ overlapping images and $120$ non-overlapping images as shown in \tabref{tab:mrtd}. These images were then combined to create $1740$ overlapping image pairs and $3480$ non-overlapping image pairs.\\
+The first environment used for experiments is the \textit{Main Robocup Environment}. The \textit{Main Robocup Parameter Datasets} that were used to find the optimal parameters should not be used to test the performance of the feature extraction algorithms. This would risk overfitting to the data since you would be testing the performance of the algorithms on the same data used to find the optimal parameters. Thus, a new set of datasets have been generated in the \textit{Main Robocup Environment}. These datasets are referred to as the \textit{Main Robocup Testing Datasets}. The datasets have the same structure as those used to calculate the optimal parameters. However, each dataset now contains $30$ images, producing in total $120$ overlapping images and $120$ non-overlapping images as shown in \tabref{tab:mrtd}. These images were then combined to create $1740$ overlapping image pairs and $3480$ non-overlapping image pairs.\\
 
 \begin{table}
 \centering
 \caption{The set of overlapping and non-overlapping images generated using
-the Main Robocup Validation Datasets}
+the Main Robocup Testing Datasets}
 \begin{tabular}{|c|c|c|c|c|}
 \hline 
 \textbf{Dataset A} & \textbf{Dataset B} & \textbf{Images in A} & \textbf{Images in B} & \textbf{Image Pairs}\tabularnewline
@@ -621,13 +617,17 @@ MG RIGHT & OG RIGHT & 30 & 30 & 870\tabularnewline
 \label{tab:mrtd}
 \end{table}
 
-Using these new datasets, the following procedure was performed. The optimal parameters (both MPS and CPS) for both the 2-NN and Radius Matching feature extraction algorithms were used as the parameter settings. Using these settings, each feature extraction algorithm was then run on all of the overlapping and non-overlapping image pairs respectively. The $IMS_{best}$, as mentioned in \secref{sec:matchingScore}, was then calculated for each image pair. It should be noted that, since the MPS values produce marginally better performance than the CPS values, the algorithms will be analysed with respect to the statistics generated using the MPS values. The CPS statistics can be found in Appendix \secref{app:cps}. \\
+ROC curves have been generated for each of the five feature extraction algorithms by utilising the overlapping and non-overlapping images respectively. \figref{fig:compareHamming} and \figref{fig:compareKNN} shows the ROC curves for the five feature extraction algorithms for each matching technique. 1D SURF uses the RANSAC matching technique but features in these graphs as a means of comparison with the BRISK-based algorithms.\\
 
-ROC curves have been generated for each of the five feature extraction algorithms by utilising the overlapping and non-overlapping images respectively. The threshold used for classifying whether or not two images match one another is the $IMS_{best}$. This implies that interest points with duplicate matches will only contribute their best match (lowest hamming/euclidean distance in feature space) to the $IMS_{best}$. \\
+The threshold used to generate the ROC curves is the $IMS_{best}$. The $IMS_{best}$ threshold is varied in a range from the maximum $IMS_{best}$ found in the datasets to $0$.  All overlapping image pairs with a larger $IMS_{best}$ than the $IMS_{best}$ threshold are classified as a TP match. The False Positives (FP) are generated from the non-overlapping image pairs. Again, the $IMS_{best}$ threshold is varied along the same range and all non-overlapping image pairs above the threshold are defined as a FP match. \\
 
-Overlapping images generate the True Positive (TP) matches. The $IMS_{best}$ threshold is varied in a range from the maximum $IMS_{best}$ in the datasets to $0$.  All overlapping image pairs with a larger $IMS_{best}$ than the $IMS_{best}$ threshold are classified as matching one another and all overlapping image pairs below the $IMS_{best}$ threshold are classified as not matching one another. The False Positives (FP) are generated from the non-overlapping image pairs. Again, the $IMS_{best}$ threshold is varied along the same range and all non-overlapping image pairs above the threshold are defined as matching one another and vice versa. If a non-overlapping image pair is defined as a match, then it is a FP. The ROC curves for the five algorithms are shown in \figref{fig:compareHamming} and \figref{fig:compareKNN}.\\
+%The ROC curves for the five algorithms are shown in \figref{fig:compareHamming} and \figref{fig:compareKNN}.\\
 
-\figref{fig:compareHamming} shows the ROC curves for the five methods using Radius Matching, and MPS values which were calculated in \secref{sec:optimalParameters}. \figref{fig:compareKNN} shows the ROC curves for 2-NN Matching, using the MPS values. Area Under the ROC Curve (AUC) values have been calculated for each of the ROC curves and are presented in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming} respectively. This table also contains the average performance times corresponding to each section of the feature extraction algorithms. The detection time is defined as the amount of time required to detect all of the interest points in a single detector module. The extraction time is the time taken to compute the descriptors of the detected interest points for a single descriptor module. The matching time is the time taken to match all of the interest points for a single pair of images. The verification time is the time taken to detect and remove invalid interest points. Finally the overall time is the summation of these times as well as the time taken to process and extract the image from the robot. These statistics will now be analysed for each feature extraction algorithm. \\
+%This implies that interest points with duplicate matches will only contribute their best match (lowest hamming/euclidean distance in feature space) to the $IMS_{best}$. \\
+
+Area Under the ROC Curve (AUC) values have been calculated for each of the ROC curves and are presented in \tabref{tab:mrd_times}. This table also contains the mean performance times corresponding to each feature extraction algorithm. The mean times are defined in \tabref{tab:definitions}. These statistics will now be analysed for each of the feature extraction algorithms.\\
+
+%The detection time is defined as the amount of time required to detect all of the interest points in a single detector module. The extraction time is the time taken to compute the descriptors of the detected interest points for a single descriptor module. The matching time is the time taken to match all of the interest points for a single pair of images. The verification time is the time taken to detect and remove invalid interest points. Finally the overall time is the summation of these times as well as the time taken to process and extract the image from the robot. These statistics will now be analysed for each feature extraction algorithm. \\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
@@ -647,13 +647,13 @@ Overlapping images generate the True Positive (TP) matches. The $IMS_{best}$ thr
 
 \begin{table}
 \centering
-\caption{The AUC and performance statistics for the Main Robocup Dataset using
-2-NN}
+\caption{The AUC and performance statistics for the Main Robocup Testing Datasets using
+each of the matching techniques}
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\textbf{Method } & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+\textbf{2-NN Matching} &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & MPS & 97.407 & 3.348 & 4.766 & 0.942 & 0.022 & 13.073\tabularnewline
@@ -664,22 +664,8 @@ BRISK0-SURF2D & MPS & 98.654 & 3.432 & 9.312 & 0.359 & 0.028 & 17.179\tabularnew
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{95.356} & \textbf{3.224} & \textbf{2.244} & \textbf{0.588} & \textbf{0.018} & \textbf{10.049}\tabularnewline
 \hline 
-\textbf{SURF 1D} & \textbf{Given} & \textbf{74.039} & \textbf{0.271} & \textbf{0.134} & \textbf{0.242} & \textbf{0.030} & \textbf{13.301}\tabularnewline
 \hline 
-\end{tabular}
-\label{tab:mrd_times_knn}
-\end{table}
-
-\begin{table}
-\centering
-\caption{The AUC and performance statistics for the Main Robocup Dataset using
-Radius Matching}
-\footnotesize
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & MPS & 92.455 & 2.965 & 2.608 & 0.207 & 0.012 & 9.734\tabularnewline
 \hline 
@@ -689,19 +675,49 @@ BRISK0-SURF2D & MPS & 96.033 & 3.115 & 5.711 & 0.192 & 0.007 & 13.027\tabularnew
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{97.242} & \textbf{2.973} & \textbf{1.672} & \textbf{0.207} & \textbf{0.008} & \textbf{8.805}\tabularnewline
 \hline 
-\textbf{SURF 1D} & \textbf{Given} & \textbf{74.039} & \textbf{0.271} & \textbf{0.134} & \textbf{0.242} & \textbf{0.030} & \textbf{13.301}\tabularnewline
+\hline 
+\textbf{RANSAC Matching} &  &  &  &  &  &  & \tabularnewline
+\hline 
+SURF 1D & Given & 74.039 & 0.271 & 0.134 & 0.242 & 0.030 & 13.301\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:mrd_times_hamming}
+\label{tab:mrd_times}
 \end{table}
 
-BRISK0 is able to achieve comparatively fast times achieving a best time of $9.73 ms$ when using Radius Matching and the MPS values. This is not as fast as BRISK0 - U-BRISK since the BRISK0 algorithm is rotation invariant and therefore has to rotate the sampling pattern around the interest point as defined in \secref{sec:brisk}. This causes a larger extraction time as can be seen in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}.\\
+\begin{table}
+\centering
+\caption{Definitions of each of the time parameters}
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Statistic} & \textbf{Definition}\tabularnewline
+\hline 
+\hline 
+\textbf{Detection time} & The mean time required to detect \tabularnewline
+ & all of the interest points for an image pair\tabularnewline
+\hline 
+\textbf{Extraction time} & The mean time taken to compute the descriptors \tabularnewline
+ & of the detected interest points for an image pair\tabularnewline
+\hline 
+\textbf{Matching time} & The mean time taken to match \tabularnewline
+ & all of the interest points for an image pair\tabularnewline
+\hline 
+\textbf{Verification time} & The mean time taken to detect and \tabularnewline
+ & remove invalid interest points for an image pair\tabularnewline
+\hline 
+\textbf{Overall time} & The summation of the above times\tabularnewline
+ &  as well as the image processing time\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:definitions}
+\end{table}
+
+BRISK0 is able to achieve comparatively fast times achieving a best time of $9.73 ms$ when using Radius Matching. This is not as fast as BRISK0 - U-BRISK since the BRISK0 algorithm is rotation invariant and therefore has to rotate the sampling pattern around the interest point as defined in \secref{sec:brisk}. This causes a larger extraction time as can be seen in \tabref{tab:mrd_times}.\\
 
 The BRISK0 algorithm detects on average $53.21$ and $20.51$ interest points for both 2-NN and Radius Matching respectively as seen in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. It must be noted that a different number of interest points have been detected for 2-NN Matching and Radius Matching since these techniques operate using different MPS values. \\
 
-This algorithm achieves good performance when utilising 2-NN matching, attaining an AUC value of $97.41\%$ using MPS values as seen in \tabref{tab:mrd_times_knn}. One of the reasons for large AUC values are the number Image of Zero Matches (IZMs) that are generated by a feature extraction algorithm. As mentioned previously, an IZM means that a pair of images contain zero valid interest point matches. If an overlapping pair of images contain zero valid matches, then the $IMS_{best}$ score will be $0$ for this image pair. Thus when computing the ROC curve, only once the $IMS_{best}$ threshold reaches zero, will this pair of images be classified as an image match. This ultimately reduces the AUC value as the TP rate is reduced, and IZMs are therefore undesirable for overlapping images. On the other hand, it is desirable for every non-overlapping image pair to have zero valid matches as these images do not overlap and therefore should not match. Thus datasets of non-overlapping images should ideally have a large value of IZMs.\\
+This algorithm achieves comparatively good performance when utilising 2-NN Matching, attaining an AUC value of $97.41\%$ as seen in \tabref{tab:mrd_times}. One of the reasons for large AUC values are the number Image of Zero Matches (IZMs) that are generated by a feature extraction algorithm. As mentioned previously, an IZM means that a pair of images contain zero valid interest point matches. If an overlapping pair of images contain zero valid matches, then the $IMS_{best}$ score will be $0$ for this image pair. Thus when computing the ROC curve, only once the $IMS_{best}$ threshold reaches zero, will this pair of images be classified as a TP match. This ultimately reduces the AUC value as the TP rate is reduced, and IZMs are therefore undesirable for overlapping images. On the other hand, it is desirable for every non-overlapping image pair to have zero valid matches as these images do not overlap and therefore should not match. Thus datasets of non-overlapping images should ideally have a large value of IZMs.\\
 
-BRISK0 generates $60$ and $55$ IZMs for MPS values using 2-NN and Radius Matching respectively as seen in \tabref{tab:mrd_izm}. This is a comparatively low number of IZMs and therefore is one of the reasons why large AUC values result as tabulated in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}. One of the possible reasons why BRISK0 has a low number of IZMs is due to the fact that it only performs non-maximal suppression in an image neighborhood on a single octave. This causes weak interest points to be detected. Weak interest points are those that are significantly brighter or darker than their surrounding neighborhood of pixels on a single octave only. As a result of relaxing the non-maximal suppression constraint, more interest points will be detected, decreasing the chances of an image pair becoming an IZM. This can cause a problem whereby weak interest points are incorrectly matched and this will be elaborated on in \secref{sec:Conclusion}. An example of weak interest points that are correctly matched is shown in \figref{fig:weakMatch}.\\
+BRISK0 generates $60$ and $55$ IZMs for MPS values using 2-NN and Radius Matching respectively as seen in \tabref{tab:mrd_izm}. This is a comparatively low number of IZMs and therefore is one of the reasons why large AUC values result as tabulated in \tabref{tab:mrd_times}. One of the possible reasons why BRISK0 has a low number of IZMs is due to the fact that it only performs non-maximal suppression in an image neighborhood on a single octave. This causes weak interest points to be detected. Weak interest points are those that are significantly brighter or darker than their surrounding neighborhood of pixels on a single octave only. As a result of relaxing the non-maximal suppression constraint, more interest points will be detected, decreasing the chances of an image pair becoming an IZM. This can cause a problem whereby weak interest points are incorrectly matched and this will be elaborated on in \secref{sec:Conclusion}. An example of weak interest points that are correctly matched is shown in \figref{fig:weakMatch}.\\
 
  
 \begin{figure}
@@ -711,7 +727,44 @@ BRISK0 generates $60$ and $55$ IZMs for MPS values using 2-NN and Radius Matchin
     \label{fig:weakMatch}
 \end{figure}
 
-In addition to this, the $IMS_{best}$ for overlapping and non-overlapping images needs to be analysed. As can be seen in \tabref{tab:matchingScoreCompare}, the mean IMS for BRISK0 is at least an order of magnitude larger for overlapping images compared to non-overlapping images. A graph has been generated in \figref{fig:ms_brisk0}, plotting the $IMS_{best}$ of overlapping images and non-overlapping images' $IMS_{best}$ respectively. As can be seen in the figure, as the $IMS_{best}$ threshold is varied from the maximum value to zero, the TP rate will consistently increase as overlapping images will be classified as image matches. Only near very low thresholds will the FP rate begin to increase as non-overlapping images will begin to be classified as image matches. This contributes to the large AUC value. It will be shown in \secref{sec:zfp} that even though the overlapping $IMS_{best}$ values have a large amount of variation as seen in the figure, a suitable separation boundary can be established that enables BRISK0 to match pairs of overlapping images and reject pairs of non-overlapping images to a reasonable degree of accuracy.\\
+In addition to this, the $IMS_{best}$ for overlapping and non-overlapping images needs to be analysed. As can be seen in \tabref{tab:ms_mrd}, the mean IMS for BRISK0 is at least an order of magnitude larger for overlapping images compared to non-overlapping images. A graph has been generated in \figref{fig:ms_brisk0}, plotting the $IMS_{best}$ values for overlapping and non-overlapping image pairs. As can be seen in the figure, as the $IMS_{best}$ threshold is varied from the far right of the graph to zero, the TP rate will consistently increase as overlapping images will be classified as TPs. Only near very low thresholds will the FP rate begin to increase as non-overlapping images will begin to be classified as image matches. This contributes to the large AUC value. It will be shown in \secref{sec:zfp} that even though the overlapping $IMS_{best}$ values have a large amount of variation as seen in the figure, a suitable separation boundary can be established that enables BRISK0 to match pairs of overlapping images and reject pairs of non-overlapping images to a reasonable degree of accuracy.\\
+
+\begin{table}
+\caption{The Matching Score for the Main Robocup Testing Datasets}
+
+
+\begin{tabular}{|c|c|c|}
+\hline 
+\textbf{Method} & \textbf{Overlapping Score} & \textbf{Non-overlapping Score}\tabularnewline
+\hline 
+\hline 
+ & 2-NN & \tabularnewline
+\hline 
+\textbf{BRISK0} & 0.286 & 0.003\tabularnewline
+\hline 
+\textbf{BRISK4} & 0.222 & 0.004\tabularnewline
+\hline 
+\textbf{BRISK0- SURF2D} & 77.500 & 3.259\tabularnewline
+\hline 
+\textbf{UBRISK} & 0.232 & 0.002\tabularnewline
+\hline 
+\textbf{1D SURF} & 99.756 & 31.537\tabularnewline
+\hline 
+ & \textbf{Radius Matching} & \tabularnewline
+\hline 
+\textbf{BRISK0} & 0.226 & 0.020\tabularnewline
+\hline 
+\textbf{BRISK4} & 0.171 & 0.006\tabularnewline
+\hline 
+\textbf{BRISK0- SURF2D} & 47.783 & 1.612\tabularnewline
+\hline 
+\textbf{UBRISK} & 0.209 & 0.010\tabularnewline
+\hline 
+\textbf{1D SURF} & 99.756 & 31.537\tabularnewline
+\hline 
+\end{tabular}
+\label{tab:ms_mrd}
+\end{table}
 
 \begin{figure}
   \centering
@@ -720,9 +773,9 @@ In addition to this, the $IMS_{best}$ for overlapping and non-overlapping images
     \label{fig:ms_brisk0}
 \end{figure}
 
-BRISK0's Radius Matching performance is slightly worse in comparison as seen in \tabref{tab:mrd_times_hamming} achieving an AUC of $92.45\%$. This is due an increase in the $IMS_{best}$ value, from $0.003$ to $0.02$, for non-overlapping images as seen in \tabref{tab:matchingScoreCompare}. This implies that more interest points are matched in non-overlapping images. This is possible since the 2-NN ratio constraint is not applied for Radius Matching which may result in invalid interest points being matched in non-overlapping images.\\
+BRISK0's Radius Matching performance is slightly worse in comparison as seen in \tabref{tab:mrd_times} achieving an AUC of $92.45\%$. This is due an increase in the $IMS_{best}$ value, from $0.003$ to $0.02$, for non-overlapping images as seen in \tabref{tab:ms_mrd}. This implies that more interest points are matched in non-overlapping images.\\
 
-This scenario can occur if a pair of non-overlapping images have similar features such as lights, plug sockets or dangling wires. Interest points in these regions can generate a large number of incorrect matches causing a larger $IMS_{best}$ value for the non-overlapping image pair. An example of this is shown in \figref{fig:duplicateMatchesBrisk0} where the lights have caused multiple incorrect matches between non-overlapping images. An interest point located at one of the ceiling lights will tend to match with interest points located on any of the other lights in the corresponding image. This is because the intensities are very similar in the neighborhoods surrounding these interest points resulting in duplicate matches. As a result of the larger mean non-overlapping $IMS_{best}$ value, the AUC will decrease as seen in \figref{fig:compareHamming}.\\
+This can occur if a pair of non-overlapping images have similar features such as lights, plug sockets or dangling wires. Interest points in these regions can generate a large number of incorrect matches causing a larger $IMS_{best}$ value for the non-overlapping image pair. An example of this is shown in \figref{fig:duplicateMatchesBrisk0} where the lights have caused multiple incorrect matches between non-overlapping images. An interest point located at one of the ceiling lights will tend to match with interest points located on any of the other lights in the corresponding image. This is because the intensities are very similar in the pixel neighborhoods surrounding these interest points resulting in duplicate matches. As a result of the larger mean non-overlapping $IMS_{best}$ value, the AUC will decrease as seen in \figref{fig:compareHamming}.\\
 
 \begin{figure}
   \centering
@@ -731,32 +784,36 @@ This scenario can occur if a pair of non-overlapping images have similar feature
     \label{fig:duplicateMatchesBrisk0}
 \end{figure}
 
-One final point to note about the BRISK0 algorithm is that it contains an unusually large number of total matches when using Radius Matching as seen in \figref{fig:overall_tnm_radius}. This number is unusual since the \textit{Office Environment} and \textit{Large Hall Environment} have more salient features and therefore detect more interest points as shown in \figref{fig:overall_tn_ip_radius}. The reason for the large number of matches when using Radius Matching is due to reflections as well as lights as shown in \figref{fig:reflectionsBrisk0}. Since the lights and reflections of the fluorescent lights create similar intensity neighborhoods, a large number of duplicate matches result. Radius Matching does not limit the number of matches causing a large number of interest points to be detected.\\
+One final point to note about the BRISK0 algorithm is that it contains an unusually large number of mean total matches when using Radius Matching as seen in \figref{fig:overall_tnm_radius}. This number is unusual since the \textit{Office Environment} and \textit{Large Hall Environment} have more salient features and therefore detect more interest points as shown in \figref{fig:overall_tn_ip_radius}. The reason for the large number of matches is due to reflections as well as lights as shown in \figref{fig:reflectionsBrisk0}. Since the lights and reflections of the fluorescent lights create similar intensity neighborhoods, a large number of  matches result for each interest point.\\
 
 \begin{figure}
   \centering
     \includegraphics[width=1.0\textwidth]{../Drawings/Matching/reflectionsBrisk0_photo.jpg}
-    \caption{FP matches due to lighting and reflections in overlapping images} 
+    \caption{Duplicate matches generated by the BRISK0 algorithm due to lights and reflections} 
     \label{fig:reflectionsBrisk0}
 \end{figure}
 
 
-The BRISK algorithm has a large feature detection time as seen in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}. This is because the method is calculating features across multiple scales. A 3D interpolation is also performed as mentioned previously in order to generate continuous scale refinements. This is a time consuming operation and results in the large detection times seen in the tables. As a result, BRISK is the slowest of the five algorithms and achieves a best overall time of $14.62 ms$ when using Radius Matching and the MPS values.\\
+The BRISK algorithm has a large feature detection time as seen in \tabref{tab:mrd_times}. This is because the method is calculating features across multiple scales. A 3D interpolation is also performed as mentioned previously in order to generate continuous scale refinements. This is a time consuming operation and results in the large detection times seen in the tables. As a result, BRISK is the slowest of the five algorithms and achieves a best overall time of $14.62 ms$ when using Radius Matching.\\
 
-BRISK detects on average $45.47$ interest points when using 2-NN matching and $16.37$ interest points when using Radius Matching. The small amount of interest points detected when performing Radius Matching is partially due to the MPS values. The MIPDT threshold is higher than the other algorithms enabling BRISK to only detect strong interest points and therefore salient features. In addition to this, the non-maximal suppression across multiple scales reduces the amount of interest points that can be detected.\\
+%BRISK detects on average $45.47$ interest points when using 2-NN matching and $16.37$ interest points when using Radius Matching. The small amount of interest points detected when performing Radius Matching is partially due to the MPS values. The MIPDT threshold is higher than the other algorithms enabling BRISK to only detect strong interest points and therefore salient features. In addition to this, the non-maximal suppression across multiple scales reduces the amount of interest points that can be detected.\\
 
-In the 2-NN Matching experiments, the matching performance of the algorithm achieves a comparatively large AUC value of $95.04\%$. This is less than BRISK0 and can be explained by the number of IZMs for overlapping image pairs generated from this algorithm. As can be seen in \tabref{tab:mrd_izm}, BRISK has $105$ IZMs for overlapping image pairs and therefore results in a smaller AUC value. After analysing the data, it was found that the increase in IZMs is due to the non-maximal suppression constraint and the large MIPDT value. This reduces the number of detected interest points and causes overlapping image pairs to have very few and often $0$ interest points and therefore produces no matches. An example of this scenario is seen in \figref{fig:noMatchesBrisk4}. The left image in the figure has very few interest points and does not match any of these points with the right image even though the two images overlap.\\
+%In the 2-NN Matching experiments, the matching performance of the algorithm achieves a comparatively large AUC value of $95.04\%$. This is less than BRISK0 and can be explained by the number of IZMs for overlapping image pairs generated from this algorithm. As can be seen in \tabref{tab:mrd_izm}, BRISK has $105$ IZMs for overlapping image pairs and therefore results in a smaller AUC value. After analysing the data, it was found that the increase in IZMs is due to the non-maximal suppression constraint and the large MIPDT value. 
+
+The non-maximal suppression constraint across scale space causes a comparatively small amount of interest points to be detected as seen in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. This causes overlapping image pairs to have very few and often zero interest points, therefore producing an IZM. An example of this scenario is seen in \figref{fig:noMatchesBrisk4}. The left image in the figure has very few interest points and does not match any of these points with the right image even though the two images overlap.\\
 
 \begin{figure}
   \centering
     \includegraphics[width=1.0\textwidth]{../Drawings/Matching/noMatchesBrisk4.jpg}
-    \caption{No matches in overlapping images resulting from very few interest points being detected for the BRISK4 algortihm }
+    \caption{No matches in overlapping images resulting from very few interest points being detected for the BRISK algortihm }
     \label{fig:noMatchesBrisk4}
 \end{figure}
 
-The BRISK technique does not produce a large AUC when utilising Radius Matching. It achieves a  value in this case of $83.29\%$ which is one of the lower AUC values compared to the other feature extraction algorithms. This may seem to be a strange outcome since this algorithm detects the largest number of matches as shown in \figref{fig:overall_tnm_radius}. However, the core of the problem arises from the number of IZMs that are generated for overlapping image pairs. As can be seen in \tabref{tab:mrd_izm}, BRISK has $402$ IZMs. In addition to this, the MIPDT value has been increased to $80$ for the MPS values as seen in \tabref{tab:hammingStatistics}. This causes fewer interest points to be detected resulting in less valid matches and poor performance. The reason for the increase in the MIPDT value is due to the optimal parameters algorithm discussed in \secref{sec:optimalParameters} requiring efficient computational performance at an expense in matching performance. Since BRISK is the slowest of the algorithms, it can only achieve good computational performance by having higher thresholds and therefore less interest points being detected.\\
+This is part of the reason why BRISK does not generate a large AUC when utilising Radius Matching. It achieves a  value in this case of $83.29\%$ which is one of the lower AUC values compared to the other feature extraction algorithms. The core of the problem arises from the number of IZMs that are generated for overlapping image pairs. As can be seen in \tabref{tab:mrd_izm}, BRISK has $402$ IZMs which reduces the TP rate and, as a consequence of this, the AUC value.\\
 
-Reflections and lights again cause a problem for BRISK resulting in a large number of duplicate matches respectively as shown in \figref{fig:overall_tnm_radius}. The duplicate matches are generally detected on or near the ceiling lights as shown in \figref{fig:duplicateMatchesBrisk}. Areas near the lights will have similar intensities and this causes the incorrect detection of interest points.\\
+In addition to this, the MIPDT value has been increased to $80$ as seen in \tabref{tab:hammingStatistics}. This causes fewer interest points to be detected resulting in less valid matches. The reason for the increase in the MIPDT value is due to the optimal parameters algorithm discussed in \secref{sec:optimalParameters} requiring efficient computational performance at an expense in matching performance. Since BRISK is the slowest of the algorithms, it can only achieve good computational performance by having higher thresholds and therefore less interest points being detected.\\
+
+Reflections and lights again cause a problem for BRISK resulting in a large number of duplicate matches as shown in \figref{fig:overall_tnm_radius}. The duplicate matches are generally detected on or near the ceiling lights as shown in \figref{fig:duplicateMatchesBrisk}. Areas near the lights will have similar intensities and this causes the incorrect detection of interest points.\\
 
 \begin{figure}
   \centering
@@ -767,14 +824,14 @@ Reflections and lights again cause a problem for BRISK resulting in a large numb
 
 
 
-In terms of speed, BRISK0 - U-BRISK is the best performing algorithm with a best overall time of $8.81 ms$ as seen in \tabref{tab:mrd_times_hamming} using the Radius Matching technique.  This is expected since a number of constraints have been relaxed. These include the single scale constraint as well as removing rotation invariance as mentioned in \secref{sec:brisk0}. These constraints have been relaxed in order to maximise computational efficiency and therefore satisfy the computational requirements of the Nao robot. This method therefore has the fastest extraction time of $1.67 ms$ as the sampling pattern is not rotated in this variation of the BRISK technique. \\
+In terms of speed, BRISK0 - U-BRISK is the best performing algorithm with a best overall time of $8.81 ms$ as seen in \tabref{tab:mrd_times} using the Radius Matching technique.  This is expected since a number of constraints have been relaxed. These include the single scale constraint as well as removing rotation invariance as mentioned in \secref{sec:brisk0}. These constraints have been relaxed in order to maximise computational efficiency and therefore satisfy the computational requirements of the Nao robot. This method therefore has the fastest extraction time of $1.67 ms$ as the sampling pattern is not rotated in this variation of the BRISK technique. \\
 
-The BRISK0 - U-BRISK algorithm detects on average $38.23$ and $21.30$ interest points for 2-NN and Radius Matching respectively as shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. When using 2-NN matching, this algorithm achieves an AUC value of $95.35\%$. This is relatively low compared to the other feature extraction algorithms for 2-NN matching. This is due to the algorithm having the largest number of IZMs. It has $108$ IZMs as shown in \tabref{tab:mrd_izm}. This is expected, since this method is not rotation invariant since the sampling pattern is not rotated in order to achieve better computational performance. This causes a number of matches to be lost since large image rotations cause corresponding interest points to be set at different orientations which may prevent these points from being matched. This problem will be discussed in \secref{sec:problemsLimitations}.\\
+The BRISK0 - U-BRISK algorithm detects on average $38.23$ and $21.30$ interest points for 2-NN and Radius Matching respectively as shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. When using 2-NN matching, this algorithm achieves an AUC value of $95.35\%$. This is relatively low compared to the other feature extraction algorithms for 2-NN matching. This is due to the algorithm having the largest number of IZMs. It has $108$ IZMs as shown in \tabref{tab:mrd_izm}. This is expected since this method is not rotation invariant as the sampling pattern has not been rotated. This causes a number of matches to be lost since large image rotations cause corresponding interest points to be set at different orientations which may prevent these points from being matched. This problem will be discussed in \secref{sec:problemsLimitations}.\\
 %When using 2-NN matching, this method achieves an AUC value of $87.83\%$ as seen in \tabref{tab:overall_times_knn}. This algorithm also has a small number of FP matches as seen in \figref{fig:mrd_nvm_nol}. This results in a lower matching score for non-overlapping images which ultimately produces a larger AUC value since there is a large difference between the overlapping matching score and the non-overlapping matching score as shown in \tabref{tab:matchingScoreCompare}. 
 
-This algorithm produces very good classification performance when using Radius Matching as an AUC value of $97.24\%$ is achieved. This good performance is mainly due the lower number of IZMs. This value has significantly decreased for Radius Matching to a mean value of $33$ for overlapping image pairs. This is mainly due to the MPS's MAHD value that determines the threshold, below which, two interest point descriptors match one another. This value causes an increase in the number of detected matches resulting in the improved performance.\\
+This algorithm produces very good classification performance when using Radius Matching as an AUC value of $97.24\%$ is achieved. This good performance is mainly due the lower number of IZMs. This value has significantly decreased for Radius Matching to a mean value of $33$ for overlapping image pairs. This is mainly due to the MPS's MAHD value that determines the threshold, below which, two interest point descriptors match one another. This value causes an increase in the number of detected interest point matches resulting in the improved performance.\\
 
-The $IMS_{best}$ is again at least an order of magnitude higher for overlapping images than for non-overlapping images which generates a larger TP rate. A graph showing the separation of matching scores is shown in \figref{fig:ms_ubrisk}. Again, it can be seen that non-overlapping image pairs have a very low $IMS_{best}$ compared to overlapping images. Even though the IMS for overlapping images have a large amount of variation, it will be shown in \secref{sec:zfp} that a suitable separation boundary can be established that enables BRISK - U-BRISK to effectively match pairs of overlapping images and reject pairs of non-overlapping images.\\
+The $IMS_{best}$ is again at least an order of magnitude higher for overlapping images than for non-overlapping images which generates a larger TP rate. A graph showing a plot of the $IMS_{best}$ is shown in \figref{fig:ms_ubrisk}. Again, it can be seen that non-overlapping image pairs have a very low $IMS_{best}$ compared to overlapping images. Even though the $IMS_{best}$ scores for overlapping images have a large amount of variation, it will be shown in \secref{sec:zfp} that a suitable separation boundary can be established that enables BRISK - U-BRISK to effectively match pairs of overlapping images and reject pairs of non-overlapping images.\\
 
 \begin{figure}
   \centering
@@ -787,16 +844,16 @@ BRISK0 - SURF2D has better computational performance than BRISK but still suffer
 
 BRISK0 - 2D SURF detects on average $64.71$ and $32.21$ interest points for 2-NN matching and Radius matching respectively as seen in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. These are the most interest points detected compared to the other BRISK-based algorithms and can be explained by noting that this algorithm uses the lowest MIPDT threshold of $43.75$ when detecting interest points. \\
 
-As can be seen in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}, the algorithm producing the marginally best AUC is BRISK0 - 2D SURF with a value of $98.64\%$. This performance is achieved when utilising 2-NN matching. This is partly due to the fact that this algorithm produces only $7$ IZMs which is the lowest of all the algorithms. This is due to the low MIPDT threshold which enables more interest points to be detected as can be seen in \figref{fig:overall_tn_ip}. This results in more matches as shown in \figref{fig:overall_tnm} and this produces the largest mean number of valid matches as seen in \figref{fig:overall_nvm}.\\
+As can be seen in \tabref{tab:mrd_times}, the algorithm producing the marginally best AUC is BRISK0 - 2D SURF with a value of $98.64\%$. This performance is achieved when utilising 2-NN matching. This is partly due to the fact that this algorithm produces only $7$ IZMs which is the lowest of all the algorithms. This is due to the low MIPDT threshold which enables more interest points to be detected as can be seen in \figref{fig:overall_tn_ip}. This results in more matches as shown in \figref{fig:overall_tnm} and this produces the largest mean number of valid matches as seen in \figref{fig:overall_nvm}.\\
 
 In addition to this the $IMS_{best}$ value for overlapping image pairs is at least an order of magnitude larger than the $IMS_{best}$ value for non-overlapping image pairs which yields the above-mentioned classification performance. \\
 
-The AUC value decreases slightly to $96.03\%$ when utilising Radius Matching. One reason for this drop is the increase in the number of IZMs to a value of $77$. This seems to be due to the MAED threshold chosen for this algorithm of $0.28$ as seen in \tabref{tab:hammingStatistics}. The range for this threshold may need to be increased in the optimisation algorithm detailed in \secref{sec:optimalParameters} in order to allow for more interest points to be detected. However, fairly good performance is still maintained since there is a large gap, by more than an order of magnitude, between the overlapping matching scores and the non-overlapping matching scores respectively. \\
+%The AUC value decreases slightly to $96.03\%$ when utilising Radius Matching. One reason for this drop is the increase in the number of IZMs to a value of $77$. This seems to be due to the MAED threshold chosen for this algorithm of $0.28$ as seen in \tabref{tab:hammingStatistics}. The range for this threshold may need to be increased in the optimisation algorithm detailed in \secref{sec:optimalParameters} in order to allow for more interest points to be detected. However, fairly good performance is still maintained since there is a large gap, by more than an order of magnitude, between the overlapping matching scores and the non-overlapping matching scores respectively. \\
 
 %This is partially due to the fact that the BRISK4 algorithm detects interest points by performing a non-maximal suppression over scale space. This filters out more interest points as these points have to fulfil a more demanding constraint than that imposed in the BRISK0 implementation. The BRISK0 implementation simply detects interest points if they are not suppressed in a single scale dimensional.\\
 
 
-In terms of overall speed, the 1D SURF algorithm has the fastest extraction and detection times by an order of magnitude compared to the BRISK-based techniques as seen in \tabref{tab:mrd_times_knn} and \tabref{tab:mrd_times_hamming}. This is because interest points are only detected along a single dimension which creates a very fast detection time. The extraction time is also very efficient since Haar Wavelet Responses are only calculated in the $x$ direction and a feature descriptor of length $6$ is generated as opposed to the $64$ length descriptor generated by 2D SURF. It should be noted that the mean overall time taken to determine whether an image pair matches or not is slower than BRISK0 - U-BRISK. However, this can definitely be increased in order to perform more efficiently than the BRISK-based techniques.\\
+In terms of overall speed, the 1D SURF algorithm has the fastest extraction and detection times by an order of magnitude compared to the BRISK-based techniques as seen in \tabref{tab:mrd_times}. This is because interest points are only detected along a single dimension which creates a very fast detection time. The extraction time is also very efficient since Haar Wavelet Responses are only calculated in the $x$ direction and a feature descriptor of length $6$ is generated as opposed to the $64$ length descriptor generated by 2D SURF. It should be noted that the mean overall time taken to determine whether an image pair matches or not is slower than BRISK0 - U-BRISK. However, this can definitely be increased in order to perform more efficiently than the BRISK-based techniques.\\
 
 This algorithm detects on average $51.22$ interest points. However,the 1D SURF technique seems to struggle in this environment as it only manages to attain an AUC of $74.04\%$. It is possible that since there is a small amount of variation in the scene, there may be a problem identifying unique features since the single row of pixels may have a large number of similar pixel values. Evidence to support this claim can be seen in \figref{fig:ambiguities} where pixels are matched with the fluorescent light on the left hand side of the upper left image. Since this algorithm seems to have been designed for areas containing a significant amount of variation as presented in \citep{Anderson}, some further additions may be necessary in order to adjust the algorithm such that it can efficiently detect features in images containing low variation. There is an improvement in performance when matching pairs of images in the \textit{Office Environment} and \textit{Large Hall Environment} due to the significant amount of variation in the images as will be discussed in \secref{sec:additionalDataset}.\\
 
@@ -869,170 +926,7 @@ As can be seen in the figure, BRISK0 - U-BRISK produces a $TP_{FP=0}^{max}$ valu
 
 Based on the above results, BRISK0 - U-BRISK seems to produce the best overall performance. Since processing time is a crucial factor in determining which algorithm is best, the main candidates are BRISK0 - U-BRISK and 1D SURF. However, 1D SURF is not able to attain a large $TP_{FP=0}^{max}$ value in this environment. In order to verify that the BRISK0 - U-BRISK algorithm does indeed have better overall performance than the other feature extraction algorithms, the algorithms need to be tested in various different environments.\\ 
 
-%This data was generated by considering overlapping and non-overlapping images
-%The valid matches and invalid matches should differ between the matching and overlapping sets respectively.
 
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Main Robocup Datasets
-%using 2-NN matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%SBRISK  & 175.56 & 15.420 & 160.14 & 87.780\tabularnewline
-%\hline 
-%BRISK4 & 175.63 & 13.230 & 162.41 & 87.820\tabularnewline
-%\hline 
-%SBRISK-SURF2D  & 218.88 & 19.010 & 199.86 & 109.44\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 135.76 & 16.140 & 119.62 & 67.880\tabularnewline
-%\hline 
-%1D SURF & 15.850 & 9.1000 & 6.7500 & 50.880\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%SBRISK  & 72.260 & 0.25000 & 72.010 & 42.850\tabularnewline
-%\hline 
-%BRISK4  & 69.930 & 0.28000 & 69.640 & 41.530\tabularnewline
-%\hline 
-%SBRISK-SURF2D & 98.700 & 1.3900 & 97.310 & 56.840\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 54.560 & 0.22000 & 54.340 & 32.610\tabularnewline
-%\hline 
-%1D SURF & 12.960 & 6.4800 & 6.4700 & 53.290\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:mrdMKKnn}
-%\end{table}
-
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Main Robocup Datasets
-%using Radius Matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%SBRISK  & 99.960 & 54.210 & 45.760 & 39.190\tabularnewline
-%\hline 
-%BRISK4 & 255.84 & 152.47 & 103.37 & 56.370\tabularnewline
-%\hline 
-%SBRISK-SURF2D  & 24.870 & 15.200 & 9.6600 & 68.990\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 51.030 & 32.750 & 18.280 & 39.190\tabularnewline
-%\hline 
-%1D SURF & 15.850 & 9.1000 & 6.7500 & 50.880\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%SBRISK  & 18.940 & 8.4400 & 10.490 & 17.020\tabularnewline
-%\hline 
-%BRISK4  & 30.530 & 14.260 & 16.280 & 22.550\tabularnewline
-%\hline 
-%SBRISK-SURF2D & 3.4900 & 1.1700 & 2.3200 & 34.920\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 6.4100 & 2.9400 & 3.4700 & 17.020\tabularnewline
-%\hline 
-%1D SURF & 12.960 & 6.4800 & 6.4700 & 53.290\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:mrdMKHamming}
-%\end{table}
-
-% \begin{figure}%[ht!]
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/mrd_ip.pdf}
-%    \caption{The mean number of interest points found for each matching technique in the Main Robocup datasets} 
-%    \label{fig:mrd_ip}
-% \end{figure}
-% 
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/mrd_tnm.pdf}
-%    \caption{The mean number total number of matches for each matching technique in the Main Robocup datasets} 
-%    \label{fig:mrd_tnm}
-%\end{figure}
-%
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/mrd_nvm.pdf}
-%    \caption{The mean total number of valid matches for each matching technique in the Main Robocup datasets} 
-%    \label{fig:mrd_nvm}
-%\end{figure}
-
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/mrd_ratio.pdf}
-%    \caption{The mean ratio of total number of valid matches to the total number of interest points detected for each matching technique in the Main Robocup datasets} 
-%    \label{fig:mrd_ratio}
-%\end{figure}
-
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/mrb_nvm_nol.pdf}
-%    \caption{The number of mean valid matches detected for non-overlapping images in the Main Robocup datasets} 
-%    \label{fig:mrd_nvm_nol}
-%\end{figure}
-
-%
-% \begin{figure}%[ht!]
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/ms_ratio_mrd.pdf}
-%    \caption{The Matching Score Ratio of the matching score of overlapping images to the matching score of non-overlapping images} 
-%    \label{fig:ms_ratio_mrd}
-% \end{figure}
-
-
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for 2-NN matching}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Method & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%BRISK0 & 0.0600 & 0.595\tabularnewline
-%\hline 
-%BRISK4 & 0.0500 & 0.572\tabularnewline
-%\hline 
-%BRISK0-SURF2D & 30 & 0.579\tabularnewline
-%\hline 
-%BRISK0-UBRISK & 0.0500 & 0.560\tabularnewline
-%\hline 
-%SURF 1D & 294 & 0.057\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:tpRateRobocupKnn}
-%\end{table}
-%
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for Radius Matching}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Method & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%BRISK0 & 0.160 & 0.398\tabularnewline
-%\hline 
-%BRISK4 & 0.220 & 0.414\tabularnewline
-%\hline 
-%BRISK0-SURF2D & 32 & 0.465\tabularnewline
-%\hline 
-%BRISK0-UBRISK & 0.130 & 0.377\tabularnewline
-%\hline 
-%SURF 1D & 294 & 0.057\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:tpRateRobocupHamming}
-%\end{table}
 \section{Performance in Additional Environments}
 \label{sec:additionalDataset}
 The first additional environment is a random office and the second environment is a large hall. The random office has been selected in order to add natural light into the scene from a large window and will be presented in \secref{sec:office}. It also has a large number of salient features that may improve or inhibit feature extraction performance. The large hall has been chosen such that the resolution of the images are lower since the Nao is observing features at large distances. This environment also has many salient features. \\
@@ -1058,7 +952,7 @@ Two datasets have been created from a random office environment. In total $25$ o
 
 In total $600$ overlapping pairs of images and $600$ non-overlapping pairs of images were generated. Utilising the MPS values calculated in \secref{sec:optimalParameters}, the feature extraction algorithms were tested on each of the overlapping and non-overlapping image pairs. The feature extraction algorithms were tested using both the 2-NN matching and Radius Matching techniques respectively. The corresponding ROC curves generated from this data are displayed in \figref{fig:compareKnnOffice} and \figref{fig:compareHammingOffice}. The CPS statistics can be found in Appendix A, \secref{app:oe}. \\
 
-\figref{fig:compareKnnOffice} and \figref{fig:compareHammingOffice} shows the ROC curves that were generated when using the MPS values and 2-NN and Radius Matching respectively. The statistics quantifying the computational performance as well as AUC values for each of the feature extraction algorithms are shown in \tabref{tab:oe_times_knn} and \tabref{tab:oe_times_hamming} for 2-NN and Radius Matching respectively. \\
+\figref{fig:compareKnnOffice} and \figref{fig:compareHammingOffice} shows the ROC curves that were generated when using the MPS values and 2-NN and Radius Matching respectively. The statistics quantifying the computational performance as well as AUC values for each of the feature extraction algorithms are shown in \tabref{tab:oe_times}. \\
 
 An important observation from these image datasets is the fact that more interest points are found on average in the \textit{Office Environment} compared to the \textit{Main Robocup Environment} using each of the feature extraction algorithms. This is verified by analysing the graphs shown in \figref{fig:overall_tn_ip} and \figref{fig:overall_tn_ip_radius}. The reason more interest points are detected is based on the nature of the \textit{Office Environment}. There are salient features present in the \textit{Office Environment} such as the large window seen in \figref{fig:dataset5}. Features such as these have strong edges which generate interest points. Interest points are also detected in regions of high texture \citep{Szeliski2010}. An example of this is shown in \figref{fig:oe_interestPoints}. As can be seen in the figure, the edges of the windows have a large number of interest points. In addition to this, the bookshelf  in the right image also generates a large number of interest points due to the variation in texture. These salient image features tend to create strong interest points and this ultimately improves the performance in matching overlapping image pairs and rejecting non-overlapping image pairs. The natural light from the window is also partially responsible for generating stronger edges as a large number of interest points are detected in the window region as shown in \figref{fig:oe_interestPoints}. \\
 
@@ -1072,14 +966,14 @@ An important observation from these image datasets is the fact that more interes
 \end{figure}
 
 
-In addition to an increase in the number of interest points, the total number of matches found for 2-NN Matching have increased as expected as shown in \figref{fig:overall_tnm}. The total number of matches have increased for BRISK0-SURF2D, BRISK0 - U-BRISK and 1D SURF when using Radius Matching as shown in \figref{fig:overall_tnm_radius}. However, they have decreased for BRISK0 and BRISK. As mentioned in \secref{sec:mrdPerformance}, the large number of matches generated by these two algorithms in the \textit{Main Robocup Environment} were largely due to duplicate matches from the ceiling lights. The \textit{Office Environment} does not contain lighting that saturates the pixels as was the case in the \textit{Main Robocup Environment}. Thus, a decrease in the amount of detected interest points seems plausible.\\
+In addition to an increase in the number of interest points, the total number of matches found for 2-NN Matching have increased as expected as shown in \figref{fig:overall_tnm}. The total number of matches have increased for BRISK0-SURF2D, BRISK0 - U-BRISK and 1D SURF when using Radius Matching as shown in \figref{fig:overall_tnm_radius}. However, they have decreased for BRISK0 and BRISK. As mentioned in \secref{sec:mrdPerformance}, the large number of matches generated by these two algorithms in the \textit{Main Robocup Environment} were largely due to duplicate matches from the ceiling lights. The \textit{Office Environment} does not contain lighting that saturates the pixels as was the case in the \textit{Main Robocup Environment}. Thus, a decrease in the amount of detected interest points seems plausible for BRISK0 and BRISK.\\
 
 
-Some important observations should be noted when analysing the computational performance of each of the feature extraction algorithms shown in \tabref{tab:oe_times_knn} and \tabref{tab:oe_times_hamming}. In general, there is an increase in the matching time for each of the algorithms using both 2-NN and Radius Matching since more matches are detected. In addition BRISK0 and BRISK have larger extraction times since rotating the sampling pattern for more interest points is a time consuming operation.\\
+Some important observations should be noted when analysing the computational performance of each of the feature extraction algorithms shown in \tabref{tab:oe_times}. In general, there is an increase in the matching time for each of the algorithms using both 2-NN and Radius Matching since more matches are detected. In addition BRISK0 and BRISK have larger extraction times since rotating the sampling pattern for more interest points is a time consuming operation.\\
 
 Less IZMs are generated as shown in \tabref{tab:oe_izm} for both matching techniques since more matches are detected due to the salient features in the \textit{Office Environment}. \\
 
-As mentioned previously in \secref{sec:matchingScore}, the mean $IMS_{best}$ value between image pairs is generally much larger for overlapping images compared to non-overlapping images. However, the non-overlapping $IMS_{best}$ value is larger compared to the \textit{Main Robocup Environment} since more interest points are being matched in non-overlapping images. This may explain the slight decrease in AUC values seen in \tabref{tab:oe_times_knn} and \tabref{tab:oe_times_hamming} .\\
+As mentioned previously in \secref{sec:matchingScore}, the mean $IMS_{best}$ value between image pairs is generally much larger for overlapping images compared to non-overlapping images. However, the non-overlapping $IMS_{best}$ value is larger compared to the \textit{Main Robocup Environment} since more interest points are being matched in non-overlapping images. This may explain the slight decrease in AUC values seen in \tabref{tab:oe_times}.\\
 
 %The images are also taken in a setting of higher contrast.
 
@@ -1102,16 +996,16 @@ As mentioned previously in \secref{sec:matchingScore}, the mean $IMS_{best}$ val
 \end{figure}
 
 
-
 \begin{table}
 \centering
 \caption{The AUC and performance statistics for the office environment using
-2-NN}
+each matching technique}
+
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\textbf{Method } & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+\textbf{2-NN Matching} &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & MPS & 97.441 & 3.695 & 8.166 & 5.512 & 0.065 & 21.838\tabularnewline
@@ -1122,22 +1016,8 @@ BRISK0-SURF2D & MPS & 94.795 & 3.793 & 17.157 & 1.497 & 0.083 & 26.936\tabularne
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{95.134} & \textbf{3.469} & \textbf{3.112} & \textbf{3.245} & \textbf{0.052} & \textbf{14.245}\tabularnewline
 \hline 
-\textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.277} & \textbf{0.197} & \textbf{0.483} & \textbf{0.043} & \textbf{14.144}\tabularnewline
 \hline 
-\end{tabular}
-\label{tab:oe_times_knn}
-\end{table}
-
-\begin{table}
-\centering
-\caption{The AUC and performance statistics for the office environment using
-Radius Matching}
-\footnotesize
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- & Some  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & MPS & 94.846 & 3.094 & 3.461 & 0.808 & 0.011 & 11.710\tabularnewline
 \hline 
@@ -1147,118 +1027,14 @@ BRISK0-SURF2D & MPS & 96.054 & 3.255 & 8.495 & 0.489 & 0.019 & 16.626\tabularnew
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{96.149} & \textbf{3.125} & \textbf{2.057} & \textbf{0.883} & \textbf{0.014} & \textbf{10.453}\tabularnewline
 \hline 
+\hline 
+\textbf{RANSAC Matching} &  &  &  &  &  &  & \tabularnewline
+\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{92.333} & \textbf{0.277} & \textbf{0.197} & \textbf{0.483} & \textbf{0.043} & \textbf{14.144}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:oe_times_hamming}
+\label{tab:oe_times}
 \end{table}
-
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Office Environment
-%Datasets using 2-NN matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method  & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%SBRISK  & 266.36 & 36.940 & 229.43 & 133.18\tabularnewline
-%\hline 
-%BRISK4 & 262.03 & 26.670 & 235.36 & 131.01\tabularnewline
-%\hline 
-%SBRISK-SURF2D  & 338.03 & 39.260 & 298.78 & 169.02\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 202.14 & 32.570 & 169.58 & 101.07\tabularnewline
-%\hline 
-%1D SURF & 25.680 & 16 & 9.6900 & 69.430\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%SBRISK  & 257.44 & 0.92000 & 256.52 & 131.22\tabularnewline
-%\hline 
-%BRISK4  & 324.24 & 0.64000 & 323.60 & 138.74\tabularnewline
-%\hline 
-%SBRISK-SURF2D & 317.28 & 6.4600 & 310.83 & 165.87\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 207.68 & 0.72000 & 206.96 & 101.17\tabularnewline
-%\hline 
-%1D SURF & 11.690 & 5.9000 & 5.7900 & 70.930\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:oeMKKnn}
-%\end{table}
-%
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Office Environment
-%Datasets using Radius Matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%SBRISK  & 27.720 & 20.090 & 7.6300 & 51.450\tabularnewline
-%\hline 
-%BRISK4 & 24.680 & 19.230 & 5.4500 & 51.870\tabularnewline
-%\hline 
-%SBRISK-SURF2D  & 52.610 & 35.400 & 17.210 & 84.430\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 45.660 & 34.940 & 10.710 & 53.400\tabularnewline
-%\hline 
-%1D SURF & 25.680 & 16 & 9.6900 & 69.430\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%SBRISK  & 1.8800 & 0.85000 & 1.0400 & 52.930\tabularnewline
-%\hline 
-%BRISK4  & 1.6700 & 0.89000 & 0.78000 & 58.720\tabularnewline
-%\hline 
-%SBRISK-SURF2D & 4.7400 & 1.5200 & 3.2200 & 85.830\tabularnewline
-%\hline 
-%SBRISK - UBRISK & 2.7500 & 1.2700 & 1.4800 & 55.140\tabularnewline
-%\hline 
-%1D SURF & 11.690 & 5.9000 & 5.7900 & 70.930\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:oeMKHamming}
-%\end{table}
-
-%\begin{figure}%[ht!]
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/oe_ip.pdf}
-%    \caption{The mean number of interest points found for each matching technique in the Office Environment datasets} 
-%    \label{fig:oe_ip}
-% \end{figure}
-% 
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/oe_tnm.pdf}
-%    \caption{The mean number total number of matches for each matching technique in the Office Environment datasets} 
-%    \label{fig:oe_tnm}
-%\end{figure}
-%
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/oe_nvm.pdf}
-%    \caption{The mean total number of valid matches for each matching technique in the Office Environment datasets} 
-%    \label{fig:oe_nvm}
-%\end{figure}
-
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/oe_ratio.pdf}
-%    \caption{The mean ratio of total number of valid matches to the total number of interest points detected for each matching technique in the Office Environment datasets} 
-%    \label{fig:oe_ratio}
-%\end{figure}
-
-%\begin{figure}
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/oe_nvm_nol.pdf}
-%    \caption{The number of mean valid matches detected for non-overlapping images in the Office Environment datasets} 
-%    \label{fig:oe_nvm_nol}
-%\end{figure}
 
 \begin{table}
 \centering
@@ -1335,65 +1111,10 @@ UBRISK & 13.00\tabularnewline
 \label{tab:oeMS}
 \end{table}
 
-% \begin{figure}%[ht!]
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/ms_ratio_oe.pdf}
-%    \caption{The Matching Score Ratio of the matching score of overlapping images to the matching score of non-overlapping images for the Office Environment Datasets} 
-%    \label{fig:ms_ratio_oe}
-% \end{figure}
-
-
 
 From the results shown in \figref{fig:tp_rate_oe} for 2-NN and Radius Matching respectively, it can be seen that the $TP_{FP=0}^{max}$ value for each of the methods has increased. This is mainly due to the variation in the images creating a large number of strong salient interest points which has been shown previously to improve matching performance.\\
 
 A notable increase in the $TP_{FP=0}^{max}$ value to $0.81$ is achieved for the BRISK0 - U-BRISK algorithm when using Radius Matching. A larger mean $IMS_{best}$ value compared to the \textit{Main Robocup Environment} is a central factor in generating this statistic. This causes more overlapping image pairs to be matched at higher $IMS_{best}$ thresholds. This has the effect of increasing the TP rate faster whilst maintaining a zero FP rate yielding a higher $TP_{FP=0}^{max}$ value.\\
-
-
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for 2-NN of the Office Environment}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Method & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%BRISK0 & 0.090 & 0.758\tabularnewline
-%\hline 
-%BRISK4 & 0.070 & 0.738\tabularnewline
-%\hline 
-%BRISK0-SURF2D & 79 & 0.585\tabularnewline
-%\hline 
-%BRISK0-UBRISK & 0.10 & 0.633\tabularnewline
-%\hline 
-%SURF 1D & 432 & 0.180\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:tpRocOfficeKnn}
-%\end{table}
-%
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for Radius Matching of the Office Environment}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Method & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%BRISK0 & 0.080 & 0.718\tabularnewline
-%\hline 
-%BRISK4 & 0.080 & 0.71\tabularnewline
-%\hline 
-%BRISK0-SURF2D & 54 & 0.682\tabularnewline
-%\hline 
-%BRISK0-UBRISK & 0.080 & 0.81\tabularnewline
-%\hline 
-%SURF 1D & 432 & 0.18\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tpRocOfficeHamming}
-%\end{table}
 
 \begin{figure}
   \centering
@@ -1404,7 +1125,7 @@ A notable increase in the $TP_{FP=0}^{max}$ value to $0.81$ is achieved for the 
 
 As can be seen in the \textit{Office Environment}, BRISK0 - U-BRISK has the best timing of the BRISK-based techniques achieving a mean overall time of $10.45 ms$ in the best case when using Radius Matching. It also maintains a comparably good AUC value and has the largest $TP_{FP=0}^{max}$ value of all the algorithms.\\  
 
-The 1D SURF implementation has also improved upon its performance as expected due an increase in the amount of salient features in the dataset images. The algorithm is able to better discriminate the features, detecting stronger interest points, and subsequently generate a larger AUC value. In addition to this improvement, the algorithm still maintains its speed and produces the fastest feature detection and matching performance as seen in \tabref{tab:oe_times_knn} and \tabref{tab:oe_times_hamming}. However, the $TP_{FP=0}^{max}$ value still suffers due to the comparably large $IMS_{best}$ score for non-overlapping images. This causes FPs to be generated at higher $IMS_{best}$ thresholds yielding the low $TP_{FP=0}^{max}$ value of $0.18$. \\
+The 1D SURF implementation has also improved upon its performance as expected due an increase in the amount of salient features in the dataset images. The algorithm is able to better discriminate the features, detecting stronger interest points, and subsequently generate a larger AUC value. In addition to this improvement, the algorithm still maintains its speed and produces the fastest feature detection and matching performance as seen in \tabref{tab:oe_times}. However, the $TP_{FP=0}^{max}$ value still suffers due to the comparably large $IMS_{best}$ score for non-overlapping images. This causes FPs to be generated at higher $IMS_{best}$ thresholds yielding the low $TP_{FP=0}^{max}$ value of $0.18$. \\
 
 
 \subsection{Large Hall Environment}
@@ -1425,7 +1146,7 @@ The second environment, as mentioned previously, has been generated in a large h
 \end{minipage}
 \end{figure}
 
-Again, all five of the feature extraction techniques have been tested on overlapping and non-overlapping images. In this case there are $210$ overlapping image pairs and $210$ non-overlapping image pairs. The ROC curves generated from this experiment are shown in \figref{fig:compareKnnOffice3} and \figref{fig:compareHammingOffice3}. The statistics quantifying these ROC curves are shown in \tabref{tab:lh_times_knn} and \tabref{tab:lh_times_hamming} respectively.\\
+Again, all five of the feature extraction techniques have been tested on overlapping and non-overlapping images. In this case there are $210$ overlapping image pairs and $210$ non-overlapping image pairs. The ROC curves generated from this experiment are shown in \figref{fig:compareKnnOffice3} and \figref{fig:compareHammingOffice3}. The statistics quantifying these ROC curves are shown in \tabref{tab:lh_times} respectively.\\
 
 \begin{figure}[h!]
 \begin{minipage}[b]{0.5\linewidth}
@@ -1444,7 +1165,8 @@ Again, all five of the feature extraction techniques have been tested on overlap
 \begin{table}
 \centering
 \caption{The AUC and performance statistics for the large hall environment
-using 2-NN}
+using each matching technique}
+
 \footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
@@ -1460,22 +1182,8 @@ BRISK0-SURF2D & MPS & 95.697 & 4.208 & 22.242 & 4.241 & 0.188 & 35.389\tabularne
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{97.430} & \textbf{3.701} & \textbf{3.804} & \textbf{9.849} & \textbf{0.109} & \textbf{21.885}\tabularnewline
 \hline 
-\textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.273} & \textbf{0.161} & \textbf{0.351} & \textbf{0.044} & \textbf{14.032}\tabularnewline
 \hline 
-\end{tabular}
-\label{tab:lh_times_knn}
-\end{table}
-
-
-\begin{table}
-\caption{The AUC and performance statistics for the Large Hall Environment
-using Radius Matching}
-\footnotesize
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
-\hline 
-\textbf{Method} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & MPS & 96.739 & 3.233 & 4.565 & 2.321 & 0.021 & 14.642\tabularnewline
 \hline 
@@ -1485,10 +1193,13 @@ BRISK0-SURF2D & MPS & 98.803 & 3.436 & 11.197 & 1.260 & 0.039 & 20.345\tabularne
 \hline 
 \textbf{BRISK0-UBRISK} & \textbf{MPS} & \textbf{93.150} & \textbf{3.249} & \textbf{2.516} & \textbf{2.614} & \textbf{0.026} & \textbf{12.824}\tabularnewline
 \hline 
+\hline 
+\textbf{RANSAC Matching} &  &  &  &  &  &  & \tabularnewline
+\hline 
 \textbf{SURF 1D} & \textbf{Given} & \textbf{90.836} & \textbf{0.273} & \textbf{0.161} & \textbf{0.351} & \textbf{0.044} & \textbf{14.032}\tabularnewline
 \hline 
 \end{tabular}
-\label{tab:lh_times_hamming}
+\label{tab:lh_times}
 \end{table}
 
 The first important statistic to note is that the number of interest points for both 2-NN and Radius Matching have increased considerably for all of the BRISK and 2D SURF-based techniques as seen in \figref{fig:overall_tnm} and \figref{fig:overall_tnm_radius}. This can again be explained by the increased texture in the images found in these datasets. This causes a comparably large number of interest points to be detected as can be seen in \figref{fig:lh_ip}. However, as can be seen in the right image, since features such as lights have been captured at a lower resolution due to distance, less interest points have been detected in these regions. Thus it seems that distance, and hence image resolution, effects the number of interest points that are detected.\\
@@ -1506,7 +1217,7 @@ The first important statistic to note is that the number of interest points for 
 
 In addition, the total number of matches and the total number of valid matches, shown in \figref{fig:overall_tnm} and \figref{fig:overall_nvm}, increase as expected for the BRISK and 2D-SURF based algorithms.\\
 
-The matching times and extraction times increase for the respective algorithms as in the \textit{Office Environment} due to an increase in the number of detected interest points and total matches. There are far fewer IZMs for each of the algorithms as can be seen in \tabref{tab:lh_izm}. In addition to this, the overlapping $IMS_{best}$ value has increased for each of the BRISK and 2D SURF-based algorithms. Both these statistics result in the increased AUC values seen in \tabref{tab:lh_times_knn} and \tabref{tab:lh_times_hamming}. \\
+The matching times and extraction times increase for the respective algorithms as in the \textit{Office Environment} due to an increase in the number of detected interest points and total matches. There are far fewer IZMs for each of the algorithms as can be seen in \tabref{tab:lh_izm}. In addition to this, the overlapping $IMS_{best}$ value has increased for each of the BRISK and 2D SURF-based algorithms. Both these statistics result in the increased AUC values seen in \tabref{tab:lh_times}. \\
 
 
 
@@ -1583,12 +1294,6 @@ UBRISK & 3.00\tabularnewline
 \label{tab:lhMS}
 \end{table}
 
-% \begin{figure}%[ht!]
-%  \centering
-%    \includegraphics[width=1.0\textwidth]{../Drawings/Graphs/ms_ratio_lh.pdf}
-%    \caption{The Matching Score Ratio of the matching score of overlapping images to the matching score of non-overlapping images for the Large Hall Environment Datasets} 
-%    \label{fig:ms_ratio_mrd}
-% \end{figure}
 
 There has also been an increase in the $TP_{FP=0}^{max}$ value as shown in \figref{fig:tp_rate_lh}. The best performance is achieved in this environment with BRISK0 generating the largest $TP_{FP=0}^{max}$ value of $0.92$ using 2-NN Matching. BRISK0 - U-BRISK has comparably good performance attaining a best case $TP_{FP=0}^{max}$ value of $0.90$ when utilising Radius Matching. 1D SURF has also increased its $TP_{FP=0}^{max}$ value to $0.60$ which is its highest of all the environments. This seems to indicate that 1D SURF relies on a textured environment to detect a sufficient number of discriminative, unambiguous interest points.\\
 
@@ -1976,53 +1681,6 @@ Nao and Nikon & 0.099 & 0.005\tabularnewline
     \label{fig:tp_rate_nikon_mrd}
 \end{figure}
 
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for Radius Matching of the Robocup Environment with Nikon camera
-%images}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Scenario & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%Nao only  & 0.130 & 0.377\tabularnewline
-%\hline 
-%Nao and Nikon & 0.0800 & 0.364\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:tpNaoNikonRobocup}
-%\end{table}
-
-
-
-
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Main Robocup Datasets
-%and Nikon Camera Datasets using Radius Matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%Nao only  & 51.030 & 32.750 & 18.280 & 39.190\tabularnewline
-%\hline 
-%Nao and Nikon & 18.430 & 11.730 & 6.7000 & 28.600\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%Nao only & 6.4100 & 2.9400 & 3.4700 & 17.020\tabularnewline
-%\hline 
-%Nao and Nikon & 1.8100 & 0.85000 & 0.96000 & 34.110\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:ncmrdMK}
-%\end{table}
-
-
-
 
 \subsection{Large Hall Dataset with Nikon Camera}
 \label{sec:nikonlargeHall}
@@ -2103,50 +1761,6 @@ Nao and Nikon & 0.142 & 0.021\tabularnewline
     \caption{The $TP_{FP=0}$ Rate for the Nao-only and Nao-Nikon images in the Large hall Environment}
     \label{fig:tp_rate_nikon_lh}
 \end{figure}
-%\begin{table}
-%\caption{The thresholds at which the TP rate is a maximum whilst still maintaining
-%a FP rate of 0 for each of the feature extraction algorithms. This
-%is for Radius Matching of the Large Hall Environment with Nikon camera
-%images}
-%\begin{tabular}{|c|c|c|}
-%\hline 
-%Scenario & Threshold & TP rate\tabularnewline
-%\hline 
-%\hline 
-%Nao only & 0.070 & 0.90\tabularnewline
-%\hline 
-%Nao and Nikon & 0.090 & 0.56\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:tpNaoNikonLargeHall}
-%\end{table}
-
-%\begin{table}
-%\caption{The matched point and keypoint statistics for the Large Hall Environment
-%Datasets and Nikon Camera Datasets using Radius Matching}
-%\begin{tabular}{|c|c|c|c|c|}
-%\hline 
-%Method & Overlapping images &  &  & \tabularnewline
-%\hline 
-%\hline 
-% & Total Matches & Valid Matches & Invalid Matches & Mean Num Interest Points\tabularnewline
-%\hline 
-%Nao only & 96.880 & 78.650 & 18.230 & 98.380\tabularnewline
-%\hline 
-%Nao and Nikon & 27.160 & 18.260 & 8.9000 & 98.440\tabularnewline
-%\hline 
-% & Non-overlapping images &  &  & \tabularnewline
-%\hline 
-%Nao and Nikon & 7.5500 & 3.5000 & 4.0500 & 110.76\tabularnewline
-%\hline 
-%Nao only & 8.3000 & 2.6700 & 5.6300 & 88.960\tabularnewline
-%\hline 
-%\end{tabular}
-%\label{tab:nclhMK}
-%\end{table}
-
-
-
 \section{Google Street View Dataset}
 \label{sec:streetView}
 This experiment refers to \secref{sec:motivation} since, if the Nao can detect overlapping images in a city whilst walking along the street, then in principal it can localise itself using an image database such as Google Street View. Therefore, images available on Google Street View have been utilised for this experiment. The Google Street view images were downloaded using the Google Street View API \citep{StreetView}. These images are $640 \times 480$ (the same resolution as the Nao's images) and are found at latitude: $55.94474$ and longitude: $-3.18779$. In total, $30$ Google Street View images were downloaded and sub-divided into two datasets of $15$ images each. Each dataset represents the view of a single side of a street found at the given location. Example images from either side of the street are shown in \figref{fig:googleStreetImages}.\\
@@ -2276,10 +1890,3 @@ Nao and Google Street View Images & 0.36 & 0.39\tabularnewline
 \end{tabular}
 \label{tab:tp_rate_google}
 \end{table}
-
-
-
-
-
-%\section{Summary}
-%\label{sec:summary}
