@@ -1,6 +1,10 @@
 \chapter{Feature Matching}
 \label{sec:matching}
-Once the interest points have been detected and the descriptors have been computed, the interest points can be matched between pairs of images. This is achieved by first calculating the distance in feature space between the interest point descriptors in each image. The interest points are then matched if their descriptor distances are within various thresholds or constraints of one another as pre-defined by the matching technique that is being utilised. An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}. Matched interest points in corresponding images are connected by a green line as seen in the figure. Interest points that have not been matched are represented by red circles.\\
+Once the interest points have been detected and the descriptors have been computed, the interest points can be matched between pairs of images. This is achieved by first calculating the distance in feature space between the interest point descriptors in each image. The interest points are then matched if their descriptor distances are within various thresholds or constraints of one another as pre-defined by the matching technique that is being utilised.\\
+
+Two such constraints are the \textit{Angle} and \textit{Distance} constraints. These are novel constraints that have been developed in this thesis and will be described in \secref{sec:angleDistanceConstraints}.\\
+
+An example of matches found from comparing a pair of images is shown in \figref{fig:matchesIntro}. Matched interest points in corresponding images are connected by a green line as seen in the figure. Interest points that have not been matched are represented by red circles.\\
 
 \begin{figure}[h!] 
   \centering
@@ -67,7 +71,7 @@ Two novel matching constraints have been developed during this thesis in order t
 
 The angle constraint calculates the angle from the interest point in the left image relative to the interest point in the right image. It has been determined through visual analysis that the angle between two matched interest points should be less than  $10^{\circ}$. This is because corresponding matches should be placed at approximately the same height provided there are no large image rotations. Since Robocup is the immediate application, negligible rotation is expected while the robot is localising itself. If the angle is within the pre-defined threshold then the match is valid, otherwise it is invalid. As can be seen in the figure, $\alpha$ is larger than the pre-defined threshold and therefore the match is marked as invalid. $\beta$ is within the threshold and therefore pertains to a valid match. \\
 
-The distance constraint states that the length of the line connecting two matched interest points should be the width of the image plus a pre-defined threshold. This constraint assumes no significant scale changes which is again feasible based on the current application domain. A pre-defined threshold of $200$ pixels has been chosen based on visual analysis. As can be seen in \figref{fig:distanceConstraint}, the longer line does not pass the distance constraint and is marked as being invalid.\\
+The distance constraint states that the length of the line connecting two matched interest points should be the width of the image plus a pre-defined threshold. This constraint assumes small changes in scale and rotation which is again feasible based on the current application domain. Valid matches in this case will generally be separated by the image width plus some threshold. A pre-defined threshold of $200$ pixels has been chosen based on visual analysis. As can be seen in \figref{fig:distanceConstraint}, the longer line does not pass the distance constraint and is marked as being invalid.\\
 
 \begin{figure}[ht!]
 \begin{minipage}[b]{0.5\linewidth}

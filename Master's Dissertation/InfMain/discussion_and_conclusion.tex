@@ -8,7 +8,7 @@
 %3. Essence of innovation
 \section{Key Results}
 \label{sec:keyResults}
-In this thesis, five feature extraction algorithms have been compared using images captured by a Nao humanoid robot. A novel scoring function termed the \textit{Multi-Image Score} (MIS) has been developed in order to determine the optimal parameters for each  of the BRISK-based feature extraction algorithms.\\
+In this thesis, five feature extraction algorithms have been compared using images captured by a Nao humanoid robot. A novel scoring function termed the \textit{Multi-Image Score} (MIS) has been developed in order to determine the optimal parameters for each  of the BRISK-based feature extraction algorithms. This scoring function can also be applied to other feature extraction algorithms.\\
 
 Using these parameters, it was found that BRISK0 - U-BRISK generated the best overall performance. In the best case, this algorithm can match $90\%$ of the overlapping image pairs whilst maintaining a FP rate of $0$. This algorithm is also computationally efficient with a mean overall time of $8.8 ms$ in the best case which is well within the computational requirements of the Nao. BRISK0 - U-BRISK can therefore be implemented on the Nao. This algorithm can still work under varying illumination and can match overlapping images captured from different sensors albeit with decreased matching performance.\\
 
@@ -34,7 +34,7 @@ Due to the weak non-maximal suppression criteria imposed on the BRISK0 - U-BRISK
     \label{fig:weak}
 \end{figure}
 
-BRISK0 - U-BRISK is rotation variant which may prevent interest points from matching if either of the image pair undergo a significant rotation. To illustrate this, an identical image was  rotated clockwise by approximately $45^{\circ}$ and compared with its original version as shown in \figref{fig:rotationUbrisk}. An interest point has been identified between both of the fluorescent lights in each image but the interest point has not been matched due to this rotation. However, since the Nao will not be subject to rotations of this magnitude when coming onto the pitch after serving a penalty ban in the Robocup environment, this method is still a feasible option for Robocup. \\
+BRISK0 - U-BRISK is not rotation invariant which may prevent interest points from matching if either of the image pair undergo a rotation of more than $10^{\circ}$ \cite{Leutenegger2011}. To illustrate this, an identical image was rotated clockwise by approximately $45^{\circ}$ and compared with its original version as shown in \figref{fig:rotationUbrisk}. An interest point has been identified between both of the fluorescent lights in each image but the interest point has not been matched due to this rotation. However, since the Nao will not be subject to rotations of this magnitude when coming onto the pitch after serving a penalty ban in the Robocup environment, this method is still a feasible option for Robocup. \\
 
 \begin{figure}
   \centering

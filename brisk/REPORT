@@ -7,14 +7,38 @@ It is a good idea to begin the thesis by informing the reader of where your nove
 style of good essays - state what you are going to talk about, say it, recap what you
 have just said).
 
+At a high level, it looks fine. Feel free to submit when you are happy. When I read the
+final version, I'll spend time going through all of the experimental details!
+
+Cheers,
+Ram
 
 
+1. Conclude the work
 
+2. Describe innovations in feature matching - DONE
 
+3. Finish definition of feature extraction algorithm - DONE
 
+4. Add comment to localisation algorithm - DONE
 
+5. Note the weaknesses/noteworthy points in prior work and summarise it to fit objectives - DONE
 
+6. Use visual landmarks and interest points interchangeably - DONE
 
+7. Identify the difference between overlapping images and matching interest points
+
+8. Finish proof reading thesis
+
+9. Add in changes from friends
+
+10. Reference Code
+
+11. Fix Appendix
+
+12. Discuss 1D SURF time
+
+13. Section Names
 
 
 

@@ -3,7 +3,7 @@
 
 \section{General Feature Extraction Algorithms}
 \label{sec:genFeatureExtract}
-This chapter describes two feature extraction algorithms, 2D SURF and BRISK, on which the algorithms used for this thesis are based. From here on in, \textit{Detector} will refer to the module of the feature extraction algorithm that is used to detect the interest points. \textit{Descriptor} will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point.\\
+This chapter describes two feature extraction algorithms, 2D SURF and BRISK, on which the algorithms used for this thesis are based. From here on in, \textit{Detector} will refer to the module of the feature extraction algorithm that is used to detect the interest points. \textit{Descriptor} will refer to the module of the feature extraction algorithm that computes the descriptor for each interest point. Matching of the descriptors is described separately in Chapter \ref{sec:matching}.\\
 
 
 \subsection{2D SURF}
@@ -99,7 +99,7 @@ If the pixel is not suppressed, then its image space and scale space locations a
 
 \subsubsection{Descriptor}
 \label{sec:2dsurfdescribe}
-The SURF descriptor is a $64$ length vector that contains information about the intensity content of the neighborhood surrounding the interest point. In developing the descriptor, a number of important steps need to be implemented. The first step is creating a reproducable orientation for the interest point \citep{Bay2008}. If the interest point is detected at a scale, $\sigma$, then Haar Wavelets of size $4\sigma$ are used to calculate Haar Wavelet Responses (HWRs) for all pixels within a circular radius of $6\sigma$ from the detected interest point.  Haar Wavelets are simple filters that are used in SURF to calculate gradients in the $x$ and $y$ directions respectively. Examples of these wavelets are shown in \figref{fig:haar}. Once the HWRs have been calculated, they are then weighted by a Gaussian whose mean is centered on the interest point. This means that the pixels found further away from the interest point have a smaller influence on the reproducible interest point orientation.\\
+The SURF descriptor is a $64$ length vector that contains information about the intensity content of the neighborhood surrounding the interest point. An advantage of SURF is that its descriptor is half the length of the SIFT descriptor but still manages to achieve comparable performance \citep{Baye2008}. This is important for resource constrained systems. In developing the descriptor, a number of important steps need to be implemented. The first step is creating a reproducable orientation for the interest point \citep{Bay2008}. If the interest point is detected at a scale, $\sigma$, then Haar Wavelets of size $4\sigma$ are used to calculate Haar Wavelet Responses (HWRs) for all pixels within a circular radius of $6\sigma$ from the detected interest point.  Haar Wavelets are simple filters that are used in SURF to calculate gradients in the $x$ and $y$ directions respectively. Examples of these wavelets are shown in \figref{fig:haar}. Once the HWRs have been calculated, they are then weighted by a Gaussian whose mean is centered on the interest point. This means that the pixels found further away from the interest point have a smaller influence on the reproducible interest point orientation.\\
 
 
 \begin{figure}[h!] 
@@ -109,7 +109,7 @@ The SURF descriptor is a $64$ length vector that contains information about the 
     \label{fig:haar}
 \end{figure}
 
-In order to find the reproducible orientation, a circular segment of width $\frac{\pi}{3}$ is rotated around the interest point and the HWRs in the $x$ and $y$ directions, within this circular segment, are calculated to yield a vector for that particular circular segment as shown in \figref{fig:circularSegment}. The longest vector resulting from the rotation of this circular segment around the interest point is assigned to the interest point as the reproducible orientation.\\
+In order to find the reproducible orientation, a circular segment of width $\frac{\pi}{3}$ is rotated around the interest point and the HWRs in the $x$ and $y$ directions, within this circular segment, are calculated to yield a vector for that particular circular segment as shown in \figref{fig:circularSegment}. The longest vector resulting from the rotation of this circular segment around the interest point is assigned to the interest point as the reproducible orientation. This step can be omitted depending on the application and therefore may be unnecessary for the Robocup domain. This is because the Nao robot does not experience a large amount of rotation whilst on the football field.\\
 
 \begin{figure}[h!] 
   \centering
@@ -137,6 +137,8 @@ descriptor_{sub} = [\Sigma d_x, \Sigma d_y,  \Sigma \mid d_x \mid , \Sigma \mid 
 \subsection{BRISK}
 \label{sec:brisk}
 A new method has been developed by \citet{Leutenegger2011} that yields computational performance bettering SURF by an order of magnitude in various domains. This method is called Binary Robust Invariant Scalable Keypoints (BRISK) \citep{Leutenegger2011}. This method utilises a technique called Adapative and Generic Corner Detection Based on the Accelerated Segment Test (AGAST) in order to compute a score for a pixel in location $(x,y)$ in image $I$ \citep{Mair2010}. AGAST is largely based on the Features from Accelerated Segment Test (FAST) \citep{Rosten2006} method but incorporates some improvements such as adaptive tree switching which will be briefly discussed. If the pixel's score is above a predefined threshold, then it is detected as an interest point. A binary feature descriptor of length $512$ is then generated for each interest point as a result of some simple brightness comparison tests. Interest points are then matched in different images by computing the Hamming distance between the feature descriptors. \\
+
+Due to the computational performance, this method is more suitable than SURF for a resource constrained system. One of the main reasons for this performance is due to the FAST-based interest point detector. This detector computes a score called the FAST score for each pixel and uses this as one of the criterion to identify interest points.\\
 
 \subsubsection{FAST Score}
 \label{sec:fastScore}
@@ -214,14 +216,14 @@ The overall pattern direction for the interest point is determined by computing 
 \label{eqn:longGradients}
 \end{equation}
 
-This gradient is then used to find the angle with which to rotate the sampling pattern around the interest point in order to achive rotation invariance. The angle is computed as shown in \eqnref{eqn:angle}. \\
+This gradient is then used to find the angle with which to rotate the sampling pattern around the interest point in order to achive rotation invariance. The angle is computed as shown in \eqnref{eqn:angle}. As in SURF, for the purpose of Robocup, assigning an orientation might not be necessary since the Nao robot is not subject to large rotations whilst playing football. This would also make the method more computationally efficient.\\
 
 \begin{equation}
 \alpha = atan(\frac{m_y}{m_x})
 \label{eqn:angle}
 \end{equation}
 
-Once the pattern has been rotated, the descriptor vector is computed. This vector is $512$ bits long and is formed using intensity comparisons between the rotated short distance pairings $S$. Therefore, for each short-distance pairing, a brightness comparison test as shown in \eqnref{eqn:brightness} is performed to yield the descriptor entry $d_k$, $k = 1,2,3...512$ \citep{Leutenegger2011}.\\
+Once the pattern has been rotated, the descriptor vector is computed. This vector is $512$ bits long and is formed using intensity comparisons between the rotated short distance pairings $S$. Therefore, for each short-distance pairing, a brightness comparison test as shown in \eqnref{eqn:brightness} is performed to yield the descriptor entry $d_k$, $k = 1,2,3...512$ \citep{Leutenegger2011}. This is computationally efficient and is one of the strengths of this method.\\
 
 \begin{equation}
 d_k = \left\{ \begin{array}{rl}
@@ -232,3 +234,8 @@ d_k = \left\{ \begin{array}{rl}
 \end{equation}
 
 This produces the rotation and scale invariant descriptor vector.\\
+
+In summary, SURF 2D is a robust feature extraction algorithm that is more computationally efficient than SIFT \cite{Bay2008}. It has a lower $64$ dimensional descriptor and performs efficient computations using integral images and box filters. However, BRISK achieves even better computational performance whilst still maintaining comparative overall performance with SURF \cite{Leutenegger2011}. This method is therefore more suitable for a resource constrained Nao robot. Variations of this method such as removing rotation invariance will speed up the method and may be suitable for the Robocup scenario.\\
+
+
+
