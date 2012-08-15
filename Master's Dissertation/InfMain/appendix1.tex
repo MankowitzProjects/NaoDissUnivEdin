@@ -5,7 +5,7 @@
 \section{CPS Statistics}
 \label{app:cps}
 
-\subsection{Main Robocup Dataset Environment}
+\subsection{Main Robocup, Office and Large Hall Environments}
 \label{app:mrd}
 
 \begin{figure}[ht!]
@@ -27,13 +27,13 @@
 \centering
 
 \caption{The AUC and performance statistics for the Main Robocup Dataset using
-2-NN using CPS parameters}
+CPS parameters for each matching technique}
 
-
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\textbf{Method } & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+\textbf{2-NN Matching} &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & CPS & 98.000 & 3.863 & 8.342 & 3.380 & 0.039 & 19.622\tabularnewline
@@ -44,23 +44,8 @@ BRISK0-SURF2D & CPS & 98.498 & 3.872 & 15.580 & 0.852 & 0.048 & 24.358\tabularne
 \hline 
 BRISK0-UBRISK & CPS & 97.375 & 3.619 & 3.285 & 2.020 & 0.032 & 12.934\tabularnewline
 \hline 
-\end{tabular}
-\label{app:mrd_knn}
-\end{table}
-
-
-
-\begin{table}
-\centering
-\caption{The AUC and performance statistics for the Main Robocup Dataset using
-Radius Matching using CPS parameters}
-
-
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & CPS & 92.952 & 2.980 & 2.666 & 0.227 & 0.015 & 9.818\tabularnewline
 \hline 
@@ -121,10 +106,6 @@ UBRISK & 29.00\tabularnewline
 \end{figure}
 
 
-
-\subsection{Office Environment}
-\label{app:oe}
-
 \begin{figure}[ht!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset2_ROC_General_KNN_Consistent.jpg}
@@ -142,11 +123,13 @@ UBRISK & 29.00\tabularnewline
 \begin{table}
 \centering
 \caption{The AUC and performance statistics for the Office Environment Datasets
-using 2-NN using CPS parameters}
+CPS parameters for each matching technique}
+
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\textbf{Method } & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+\textbf{2-NN Matching} &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & CPS & 98.457 & 4.499 & 14.911 & 17.984 & 0.112 & 41.889\tabularnewline
@@ -157,19 +140,8 @@ BRISK0-SURF2D & CPS & 96.210 & 4.520 & 28.129 & 3.600 & 0.131 & 40.822\tabularne
 \hline 
 BRISK0-UBRISK & CPS & 95.182 & 4.149 & 5.298 & 11.723 & 0.090 & 25.666\tabularnewline
 \hline 
-\end{tabular}
-\label{app:oe_knn}
-\end{table}
-
-\begin{table}
-\centering
-\caption{The AUC and performance statistics for the Office Environment Datasets
-using Radius Macthing and CPS parameters}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & CPS & 94.697 & 3.118 & 3.590 & 0.889 & 0.014 & 11.948\tabularnewline
 \hline 
@@ -230,10 +202,6 @@ UBRISK & 6.00\tabularnewline
 \label{app:oe_izm}
 \end{table}
 
-
-\subsection{Large Hall Environment}
-\label{app:lh}
-
 \begin{figure}[ht!]
 \begin{minipage}[b]{0.5\linewidth}
 \includegraphics[scale=0.4]{../Drawings/dataset3_ROC_General_KNN_Consistent.jpg}
@@ -251,11 +219,13 @@ UBRISK & 6.00\tabularnewline
 \begin{table}
 \centering
 \caption{The AUC and performance statistics for the Large Hall Environment
-Datasets using 2-NN Matching and CPS parameters}
+Datasets using CPS parameters for each matching technique}
+
+\footnotesize
 \begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
+\textbf{Method } & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
+\textbf{2-NN Matching} &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
 \hline 
 \hline 
 BRISK0 & CPS & 98.798 & 5.412 & 22.181 & 81.944 & 0.306 & 114.365\tabularnewline
@@ -266,20 +236,8 @@ BRISK0-SURF2D & CPS & 97.024 & 5.443 & 42.449 & 14.060 & 0.349 & 66.809\tabularn
 \hline 
 BRISK0-UBRISK & CPS & 96.186 & 4.787 & 7.248 & 46.827 & 0.232 & 63.541\tabularnewline
 \hline 
-\end{tabular}
-\label{app:lh_hamming}
-\end{table}
-
-
-\begin{table}
-\centering
-\caption{The AUC and performance statistics for the Large Hall Environment
-Datasets using Radius Matching and CPS parameters}
-\begin{tabular}{|c|c|c|c|c|c|c|c|}
 \hline 
-\textbf{Method (2-NN)} & \textbf{Parameters} & \textbf{\% AUC} & \textbf{Detection} & \textbf{Extraction} & \textbf{Matching} & \textbf{Verification} & \textbf{Overall}\tabularnewline
- &  &  & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)} & \textbf{Time (ms)}\tabularnewline
-\hline 
+\textbf{Radius Matching} &  &  &  &  &  &  & \tabularnewline
 \hline 
 BRISK0 & CPS & 96.070 & 3.268 & 4.762 & 2.618 & 0.028 & 15.091\tabularnewline
 \hline 
